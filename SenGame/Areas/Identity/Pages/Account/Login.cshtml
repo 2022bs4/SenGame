@@ -1,0 +1,245 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "登入";
+}
+
+ <main id="forum" class="container-fluid">
+            <!-- 登入畫面 -->
+    <div class="login-content">
+        <!-- 登入畫面左側 -->
+        <div class="login-left col-12 col-lg-6">
+            <div class="login-bgi">
+                <div class="login-title">登入</div>
+                <!-- 輸入帳號密碼之表單 -->
+                <form class="login-form"  method="post">
+                    <div class="login-account">
+                        <p class="login-text">帳戶名稱</p>
+                        <input id="account" type="email">
+                    </div>
+                    <div class="login-password">
+                        <p class="login-text">密碼</p>
+                        <input id="password" type="password">
+                    </div>
+                </form>
+                <div class="login-btn-ctrl">
+                   <button class="login-btn">登入</button>
+                    <a href="forget.html">忘記密碼?</a>
+                </div>
+            </div>
+            </div>
+        <!-- 登入畫面右側 -->
+        <div class="login-right col-12 col-lg-6">
+            <p class="login-p">
+                加入Steam   ，發掘千款可玩遊戲
+            </p>
+            <a href="#">深入了解</a>
+            <div class="login-img">
+                <img class="w-100" src="https://store.akamai.steamstatic.com/public/shared/images/login/join_pc.png?v=1">
+            </div>
+            <p class="login-p pt-3">免費加入又容易使用</p>
+            <button class="login-btn2">加入Steam</button>
+        </div>
+    </div>
+    </main>
+@*<div class="row">
+    <div class="col-md-4">
+        <section>
+            <form id="account" method="post">
+                <h4>Use a local account to log in.</h4>
+                <hr />
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Input.Email"></label>
+                    <input asp-for="Input.Email" class="form-control" />
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.Password"></label>
+                    <input asp-for="Input.Password" class="form-control" />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label asp-for="Input.RememberMe">
+                            <input asp-for="Input.RememberMe" />
+                            @Html.DisplayNameFor(m => m.Input.RememberMe)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Log in</button>
+                </div>
+                <div class="form-group">
+                    <p>
+                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+                    </p>
+                    <p>
+                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+                    </p>
+                    <p>
+                        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
+                    </p>
+                </div>
+            </form>
+        </section>
+    </div>
+    <div class="col-md-6 col-md-offset-2">
+        <section>
+            <h4>Use another service to log in.</h4>
+            <hr />
+            @{
+                if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                {
+                    <div>
+                        <p>
+                            There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
+                            for details on setting up this ASP.NET application to support logging in via external services.
+                        </p>
+                    </div>
+                }
+                else
+                {
+                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                        <div>
+                            <p>
+                                @foreach (var provider in Model.ExternalLogins)
+                                {
+                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                }
+                            </p>
+                        </div>
+                    </form>
+                }
+            }
+        </section>
+    </div>
+</div>*@
+
+@section endScripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+@section topCss{
+    <style>
+        .login-content {
+  text-align: center;
+}
+
+.login-left {
+  height: 100vh;
+  background-image: url(https://store.akamai.steamstatic.com/public/shared/images/joinsteam/acct_creation_bg.jpg);
+  background-blend-mode: multiply;
+  background-position: left center;
+  background-size: contain;
+}
+
+.login-left .login-bgi {
+  padding-top: 7em;
+  height: 100vh;
+}
+.login-left .login-title {
+  font-size: 3em;
+  color: #fff;
+}
+
+.login-left .login-text {
+  text-align: start;
+  padding-top: 3em;
+  padding-left: 15.5em;
+  color: #b8b6b4;
+}
+
+.login-left a {
+  text-decoration: none;
+}
+
+.login-right {
+  background-color: #edf1f2;
+  height: 100vh;
+  padding-top: 12em;
+}
+
+.login-right p {
+  max-width: 60%;
+  margin: auto;
+}
+
+.login-right a {
+  display: inline-block;
+  color: #2ac4f5;
+}
+
+.login-right .login-img {
+  padding-top: 30px;
+  margin: auto;
+  width: 20em;
+}
+
+.login-btn {
+  background-color: #f56c2d;
+  width: 150px;
+  height: 40px;
+  border: 1px;
+  border-radius: 3px;
+  margin-top: 30px;
+  color: #fff;
+}
+
+.login-btn2 {
+  background-color: #212429;
+  width: 150px;
+  height: 40px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin-top: 30px;
+  color: #fff;
+}
+
+input {
+  background-color: #e8f0fe;
+}
+
+@@media (min-width: 576px) {
+  .login-content {
+    display: block;
+  }
+  footer {
+    display: none;
+  }
+  input {
+    width: 15em;
+  }
+}
+
+@@media (min-width: 992px) {
+  input {
+    width: 15em;
+  }
+}
+
+@@media (min-width: 1200px) {
+  .login-content {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  footer {
+    display: block;
+  }
+  input {
+    width: 20em;
+  }
+}
+ul{
+    padding-left0;
+}
+.check{
+    width:20px;
+}
+.register-text{
+    margin-top:1em;
+    margin-bottom:.5em;
+}
+    </style>
+}
