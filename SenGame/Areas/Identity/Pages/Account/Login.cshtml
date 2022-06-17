@@ -5,117 +5,54 @@
     ViewData["Title"] = "登入";
 }
 
- <main id="forum" class="container-fluid">
-            <!-- 登入畫面 -->
-    <div class="login-content">
-        <!-- 登入畫面左側 -->
-        <div class="login-left col-12 col-lg-6">
+<div class="login-content">
+        <div class="login-left  col-12 col-lg-6">
             <div class="login-bgi">
                 <div class="login-title">登入</div>
-                <!-- 輸入帳號密碼之表單 -->
-                <form class="login-form"  method="post">
-                    <div class="login-account">
-                        <p class="login-text">帳戶名稱</p>
-                        <input id="account" type="email">
-                    </div>
-                    <div class="login-password">
-                        <p class="login-text">密碼</p>
-                        <input id="password" type="password">
-                    </div>
-                </form>
-                <div class="login-btn-ctrl">
-                   <button class="login-btn">登入</button>
-                    <a href="forget.html">忘記密碼?</a>
-                </div>
-            </div>
-            </div>
-        <!-- 登入畫面右側 -->
-        <div class="login-right col-12 col-lg-6">
-            <p class="login-p">
-                加入Steam   ，發掘千款可玩遊戲
-            </p>
-            <a href="#">深入了解</a>
-            <div class="login-img">
-                <img class="w-100" src="https://store.akamai.steamstatic.com/public/shared/images/login/join_pc.png?v=1">
-            </div>
-            <p class="login-p pt-3">免費加入又容易使用</p>
-            <button class="login-btn2">加入Steam</button>
-        </div>
-    </div>
-    </main>
-@*<div class="row">
-    <div class="col-md-4">
-        <section>
-            <form id="account" method="post">
-                <h4>Use a local account to log in.</h4>
+                  <form id="account" method="post">
                 <hr />
-                <div asp-validation-summary="All" class="text-danger"></div>
+                <div asp-validation-summary="All" class="text-danger text-center"></div>
                 <div class="form-group">
-                    <label asp-for="Input.Email"></label>
-                    <input asp-for="Input.Email" class="form-control" />
-                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    <label asp-for="Input.Email" class="text-light d-block">電子郵件</label>
+                    <input asp-for="Input.Email" class="" />
+                    @*<span asp-validation-for="Input.Email" class="text-danger d-block"></span>*@
                 </div>
                 <div class="form-group">
-                    <label asp-for="Input.Password"></label>
-                    <input asp-for="Input.Password" class="form-control" />
-                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    <label asp-for="Input.Password" class="text-light d-block">密碼</label>
+                    <input asp-for="Input.Password" class="" />
+                    @*<span asp-validation-for="Input.Password" class="text-danger d-block"></span>*@
                 </div>
                 <div class="form-group">
                     <div class="checkbox">
-                        <label asp-for="Input.RememberMe">
-                            <input asp-for="Input.RememberMe" />
-                            @Html.DisplayNameFor(m => m.Input.RememberMe)
+                        <label asp-for="Input.RememberMe" class="text-light w-100">
+                            <input asp-for="Input.RememberMe" class="check" /><span>記住我</span>
                         </label>
                     </div>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Log in</button>
+                    <button type="submit" class="login-btn">登入</button>
                 </div>
                 <div class="form-group">
-                    <p>
-                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
-                    </p>
-                    <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
-                    </p>
-                    <p>
-                        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
-                    </p>
+                        <a id="forgot-password" asp-page="./ForgotPassword">忘記密碼?</a>
                 </div>
             </form>
-        </section>
+            </div>
+        </div>
+                    <div class="login-right col-12 col-lg-6">
+            <p class="login-p">
+                加入Steam   ，發掘千款可玩遊戲
+            </p>
+            <a href="#" class="text-decoration-none">深入了解</a>
+            <div class="login-img">
+                <img class="w-100" src="https://store.akamai.steamstatic.com/public/shared/images/login/join_pc.png?v=1">
+            </div>
+            <p class="login-p py-3">免費加入又容易使用</p>
+             <p class="login-btn2">
+                 <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="text-light new-user d-block text-decoration-none pt-2">註冊新用戶</a>
+             </p>
+        </div>
     </div>
-    <div class="col-md-6 col-md-offset-2">
-        <section>
-            <h4>Use another service to log in.</h4>
-            <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
-                            for details on setting up this ASP.NET application to support logging in via external services.
-                        </p>
-                    </div>
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins)
-                                {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
-                            </p>
-                        </div>
-                    </form>
-                }
-            }
-        </section>
-    </div>
-</div>*@
+
 
 @section endScripts {
     <partial name="_ValidationScriptsPartial" />
@@ -240,6 +177,9 @@ ul{
 .register-text{
     margin-top:1em;
     margin-bottom:.5em;
+}
+ul{
+    padding-left:0;
 }
     </style>
 }

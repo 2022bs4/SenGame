@@ -4,10 +4,49 @@
     ViewData["Title"] = "Register";
 }
 
-<h1>@ViewData["Title"]</h1>
+        <div class="register">
+            <div class="register-content pt-2">
+                <div class="register-title">建立您的帳戶</div>
+                <!-- 輸入帳號密碼之表單 -->
+                <form class="register-form" >
+                    <div asp-validation-summary="All" class="text-danger text-center"></div>
+                    <div class="register-account">
+                        <label asp-for="Input.Email" class="register-email">電子信箱</label>
+                        <input asp-for="Input.Email" class="" />
+                    </div>
+                    <div class="register-email">
+                        <p class="register-text">確認您的電子郵件地址</p>
+                        <input id="emailcheck"type="email">
+                    </div>
+                    <div class="register-password">
+                        <label asp-for="Input.Password" class="register-text">密碼</label>
+                        <input asp-for="Input.Password" class="" /> 
+                    </div>
+                    <div class="register-password">
+                        <label asp-for="Input.ConfirmPassword" class="register-text">確認您的密碼</label>
+                        <input asp-for="Input.ConfirmPassword" class="" />
+                    </div>
+                    <div class="register-live">
+                        <p class="register-text">居住地</p>
+                        <select name="" id="live" value="">
+                            <option value="">請選擇居住地</option>
+                            <option value="">台灣中國</option>
+                            <option value="">台灣中國</option>
+                            <option value="">台灣中國</option>
+                        </select>
+                    </div>
+                    <div class="agree pt-3">
+                        <input type="checkbox" name="" id="check">
+                        <p class="agree-p pb-0 mb-0">我已年滿 13 歲並同意<a href="#">用戶協議</a>與<a href="#">隱私政策</a>。</p>
+                    </div>
+                    <div class="register-btn-ctrl pt-3">
+                        <button type="submit" class="register-btn">繼續</button>
+                    </div>
+                </form>
+            </div>
+        </div>
 
-<div class="row">
-    <div class="col-md-4">
+@*    <div class="col-md-4">
         <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
             <h4>Create a new account.</h4>
             <hr />
@@ -37,31 +76,99 @@
             @{
                 if ((Model.ExternalLogins?.Count ?? 0) == 0)
                 {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
-                            for details on setting up this ASP.NET application to support logging in via external services.
-                        </p>
-                    </div>
+                        <div>
+                            <p>
+                                There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
+                                for details on setting up this ASP.NET application to support logging in via external services.
+                            </p>
+                        </div>
                 }
                 else
                 {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins)
+                        <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                            <div>
+                                <p>
+                                    @foreach (var provider in Model.ExternalLogins)
                                 {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                        <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
                                 }
-                            </p>
-                        </div>
-                    </form>
+                                </p>
+                            </div>
+                        </form>
                 }
             }
         </section>
     </div>
-</div>
-
+*@
 @section endScripts {
     <partial name="_ValidationScriptsPartial" />
 }
+@section topCSS{
+    <style>
+        label{
+            display:block;
+        }
+.register-content {
+  text-align: center;
+  padding-top: 10em;
+  padding-bottom: 20em;
+}
+
+.register-content .register-title {
+  font-size: 3em;
+}
+
+.agree {
+  text-align: center;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+}
+
+.agree .agree-p {
+  padding-top: 0.3em;
+  padding-left: 0.3em;
+}
+
+.register-btn-ctrl {
+  padding-bottom: 3em;
+}
+
+.register-btn-ctrl .register-btn {
+  background-color: #f56c2d;
+  width: 150px;
+  height: 40px;
+  border: 1px;
+  border-radius: 10px;
+  color: #fff;
+}
+
+select {
+  width: 20em;
+  height: 2em;
+}
+
+body {
+  background-color: #edf1f2;
+}
+
+#check {
+  position: relative;
+  width: 1em;
+  top: 0.7em;
+}
+div[class^="register"]{
+    margin-top:.5em;
+}
+
+div[class^="register"]:first-child {
+  padding-bottom: 0;
+}
+
+input {
+  width: 20em;
+  background-color: #e8f0fe;
+}
+    </style>
+}
+
