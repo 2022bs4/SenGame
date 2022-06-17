@@ -30,8 +30,8 @@ namespace SenGame.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
-            [EmailAddress]
+            [Required(ErrorMessage = "請輸入電子郵件")]
+            [RegularExpression(@"/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/", ErrorMessage = "電子郵件格式不正確")]
             public string Email { get; set; }
         }
 
