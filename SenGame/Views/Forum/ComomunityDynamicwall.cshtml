@@ -1,0 +1,265 @@
+﻿@{
+    Layout = "_Layoutforum";
+}
+@section topCss{
+        <style>
+            #forum {
+              height: 100%;
+              background: #edf1f2;
+              -webkit-transition: all 0.5s;
+              transition: all 0.5s;
+              margin-left: auto;
+              margin-right: 0px;
+            }
+
+            @@media (min-width: 576px) {
+              #forum {
+                width: calc(100% - 60px);
+              }
+            }
+
+            #forum .page-nav {
+              display: -webkit-box;
+              display: -ms-flexbox;
+              display: flex;
+              -webkit-box-pack: center;
+                  -ms-flex-pack: center;
+                      justify-content: center;
+              background: #1e262c;
+              margin-left: -15px;
+              margin-right: -15px;
+              padding: 10px;
+            }
+
+            #forum .page-nav-item {
+              font-size: 1rem;
+              margin: 0 10px;
+              padding: 5px 10px;
+              border-radius: 1rem;
+              background: #373737;
+              color: #fff;
+            }
+
+            #forum .page-nav-item.active {
+              color: #1e262c;
+              background: #f8f9fa;
+            }
+
+            @@media (min-width: 768px) {
+              #forum .page-nav {
+                width: calc(100%-100px);
+              }
+            }
+
+            #forum .dynamic-wall {
+              display: -webkit-box;
+              display: -ms-flexbox;
+              display: flex;
+            }
+
+            #forum .dynamic-wall-news {
+              margin-left: auto;
+              margin-right: auto;
+              padding-left: 50px;
+              padding-right: 50px;
+            }
+
+            #forum .dynamic-wall-article {
+              margin-bottom: 20px;
+            }
+
+            #forum .dynamic-wall .card {
+              display: -webkit-box;
+              display: -ms-flexbox;
+              display: flex;
+              -webkit-box-orient: horizontal;
+              -webkit-box-direction: normal;
+                  -ms-flex-direction: row;
+                      flex-direction: row;
+              -webkit-box-align: center;
+                  -ms-flex-align: center;
+                      align-items: center;
+              -webkit-box-pack: center;
+                  -ms-flex-pack: center;
+                      justify-content: center;
+              border-radius: 16px;
+              overflow: hidden;
+              position: relative;
+              background-color: white;
+            }
+
+            #forum .dynamic-wall .card::before {
+              content: '';
+              position: absolute;
+              width: 1000px;
+              height: 50px;
+              background: -webkit-gradient(linear, left top, left bottom, from(#00ccff), to(#d400d4));
+              background: linear-gradient(#00ccff, #d400d4);
+              -webkit-animation: animate 4s linear infinite;
+                      animation: animate 4s linear infinite;
+            }
+
+            @@-webkit-keyframes animate {
+              0% {
+                -webkit-transform: rotate(0deg);
+                        transform: rotate(0deg);
+              }
+              100% {
+                -webkit-transform: rotate(360deg);
+                        transform: rotate(360deg);
+              }
+            }
+
+            @@keyframes animate {
+              0% {
+                -webkit-transform: rotate(0deg);
+                        transform: rotate(0deg);
+              }
+              100% {
+                -webkit-transform: rotate(360deg);
+                        transform: rotate(360deg);
+              }
+            }
+
+            #forum .dynamic-wall .card::after {
+              content: '';
+              position: absolute;
+              inset: 4px;
+              background-color: white;
+              border-radius: 16px;
+            }
+
+            #forum .dynamic-wall .card-img {
+              width: 30%;
+              text-align: center;
+              margin: 5px 5px;
+              z-index: 2;
+            }
+
+            #forum .dynamic-wall .card-img img {
+              width: 100%;
+            }
+
+            #forum .dynamic-wall .card-main {
+              display: -webkit-box;
+              display: -ms-flexbox;
+              display: flex;
+              -webkit-box-orient: vertical;
+              -webkit-box-direction: normal;
+                  -ms-flex-direction: column;
+                      flex-direction: column;
+              -ms-flex-pack: distribute;
+                  justify-content: space-around;
+              height: 100%;
+              width: 70%;
+              z-index: 2;
+            }
+
+            #forum .dynamic-wall .card-main h3 {
+              font-size: 1.5rem;
+            }
+
+            #forum .dynamic-wall .card-main p {
+              width: 80%;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              overflow: hidden;
+            }
+
+            #forum .dynamic-wall .card-main a:nth-child(3) {
+              display: -webkit-box;
+              display: -ms-flexbox;
+              display: flex;
+              -webkit-box-pack: end;
+                  -ms-flex-pack: end;
+                      justify-content: flex-end;
+            }
+
+            #forum .recommend {
+              position: -webkit-sticky;
+              position: sticky;
+              height: 100%;
+              top: 0px;
+            }
+
+            #forum .recommend-img {
+              margin-bottom: 30px;
+            }
+
+            #forum .recommend-img img {
+              width: 100%;
+            }
+
+            .MainScreen {
+              width: 100% !important;
+            }
+
+            @@media (min-width: 576px) {
+              .open-section {
+                width: calc(100% - 220px) !important;
+                -webkit-transition: 0.5s;
+                transition: 0.5s;
+              }
+            }
+    </style>
+}
+
+<div id = forum>
+    <div class="dynamic-wall">
+            <div class="dynamic-wall-news col-9 col-md-9 col-lg-9 col-xl-9">
+                <div class="dynamic-wall-article">
+                    <div class="card col-12 col-md-12 col-lg-12">
+                        <div class="card-img ">
+                            <img src="https://p2.bahamut.com.tw/S/2KU/92/0e3c7a46472fffa8b548f7dbb51gu8c5.JPG">
+                            
+                        </div>
+                        <div class="card-main ">
+                            <a href="#article"><h3>【心得】分享虛寶碼以及這遊戲的前世今生，陸版大佬的攻略文</h3></a>
+                            <p class="zxc">可用序號如下：PMBX666sgcoserSG66XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx幹</p>
+                            <a href="#文章內容導向">繼續閱讀</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="dynamic-wall-article">
+                    <div class="card col-12 col-md-12 col-lg-12">
+                        <div class="card-img ">
+                            <img src="https://p2.bahamut.com.tw/S/2KU/92/0e3c7a46472fffa8b548f7dbb51gu8c5.JPG">
+                            
+                        </div>
+                        <div class="card-main ">
+                            <a href="#article"><h3>【心得】分享虛寶碼以及這遊戲的前世今生，陸版大佬的攻略文</h3></a>
+                            <p class="zxc">可用序號如下：PMBX666sgcoserSG66XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx幹</p>
+                            <a href="#文章內容導向">繼續閱讀</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="dynamic-wall-article">
+                    <div class="card col-12 col-md-12 col-lg-12">
+                        <div class="card-img ">
+                            <img src="https://p2.bahamut.com.tw/S/2KU/92/0e3c7a46472fffa8b548f7dbb51gu8c5.JPG">
+                            
+                        </div>
+                        <div class="card-main ">
+                            <a href="#article"><h3>【心得】分享虛寶碼以及這遊戲的前世今生，陸版大佬的攻略文</h3></a>
+                            <p class="zxc">可用序號如下：PMBX666sgcoserSG66XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx幹</p>
+                            <a href="#文章內容導向">繼續閱讀</a>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="recommend col-3 col-md-3 col-lg-3 col-xl-3">
+        
+                <div class="recommend-img   top">
+                    <!-- 亂數抓取推薦遊戲圖片 -->
+                    <img src="https://steamuserimages-a.akamaihd.net/ugc/1858312451618214968/03B00B85916700A23601179A49E412EB636459C0/?imw=1920&&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false"
+                        alt="">
+                </div>
+                <div class="recommend-img down">
+                    <img src="https://steamuserimages-a.akamaihd.net/ugc/1858312451618214968/03B00B85916700A23601179A49E412EB636459C0/?imw=1920&&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false"
+                        alt="">
+                </div>
+            </div>
+ </div>
+</div>
+

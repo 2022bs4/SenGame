@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] -SenGame</title>
+    <title>@ViewData["Title"] - SenGame</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/public/navbar.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/css/public/footer.css" asp-append-version="true"/>
@@ -15,8 +15,13 @@
     <header class="header">
         <partial name="_NavbarPartial"/>
     </header>
-    <main class="container-fluid">
-        
+    <main id="forum" class="container-fluid">
+        <ul class="list-unstyled page-nav">
+            <li class="page-nav-item active">所有看板</li>
+            <li class="page-nav-item">我的看板</li>
+            <li class="page-nav-item">我的遊戲</li>
+            <li class="page-nav-item">動態</li>
+        </ul>
             @RenderBody()
         
     </main>

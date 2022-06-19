@@ -56,4 +56,9 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\css\forum\" />
+    <Folder Include="wwwroot\js\forum\" />
+  </ItemGroup>
+
 </Project>

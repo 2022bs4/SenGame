@@ -1,0 +1,258 @@
+﻿@{
+    Layout = "_Layoutforum";
+}
+@section topCss{
+    <style>
+        #forum {
+          height: 100%;
+          background: #edf1f2;
+          -webkit-transition: all 0.5s;
+          transition: all 0.5s;
+          margin-left: auto;
+          margin-right: 0px;
+        }
+
+        @@media (min-width: 768px) {
+          #forum {
+            width: calc(100% - 60px);
+          }
+        }
+
+        #forum .page-nav {
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-pack: center;
+              -ms-flex-pack: center;
+                  justify-content: center;
+          background: #1e262c;
+          margin-left: -15px;
+          margin-right: -15px;
+          padding: 10px;
+        }
+
+        #forum .page-nav-item {
+          font-size: 1rem;
+          margin: 0 10px;
+          padding: 5px 10px;
+          border-radius: 1rem;
+          background: #373737;
+          color: #fff;
+        }
+
+        #forum .page-nav-item.active {
+          color: #1e262c;
+          background: #f8f9fa;
+        }
+
+        .community-body {
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+        }
+
+        .community-body-right {
+          width: 100%;
+        }
+
+        .community-body-sticky {
+          width: 150px;
+          height: 500px;
+          position: -webkit-sticky;
+          position: sticky;
+          top: 100px;
+          background-color: pink;
+          margin-right: 5px;
+          display: none;
+        }
+
+        @@media (min-width: 992px) {
+          .community-body-sticky {
+            display: block;
+          }
+        }
+
+        .community-body-swpier {
+          width: 90%;
+          height: 400px;
+          margin: auto;
+          display: none;
+        }
+
+        @@media (min-width: 992px) {
+          .community-body-swpier {
+            display: block;
+          }
+        }
+
+        .community-body-dynamics {
+          margin-top: 20px;
+        }
+
+        .community-body-populargames {
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -ms-flex-wrap: wrap;
+              flex-wrap: wrap;
+          height: 250px;
+        }
+
+        .community-body-populargames-card {
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          width: 50%;
+          height: 50px;
+          -webkit-box-align: center;
+              -ms-flex-align: center;
+                  align-items: center;
+        }
+
+        .community-body-populargames-card a {
+          font-size: 1rem;
+        }
+
+        .community-body-forum .card {
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-orient: vertical;
+          -webkit-box-direction: normal;
+              -ms-flex-direction: column;
+                  flex-direction: column;
+          -webkit-box-pack: center;
+              -ms-flex-pack: center;
+                  justify-content: center;
+          -webkit-box-align: center;
+              -ms-flex-align: center;
+                  align-items: center;
+          -webkit-transition: all 1s;
+          transition: all 1s;
+          margin: 10px 0;
+        }
+
+        @@media (min-width: 992px) {
+          .community-body-forum .card {
+            -webkit-box-orient: horizontal;
+            -webkit-box-direction: normal;
+                -ms-flex-direction: row;
+                    flex-direction: row;
+          }
+        }
+
+        .community-body-forum .card-img {
+          width: 100%;
+          border-radius: 10px;
+        }
+
+        .swiper {
+          width: 700px;
+          height: 400px;
+          display: none;
+        }
+
+        @@media (min-width: 992px) {
+          .swiper {
+            display: block;
+          }
+        }
+
+        @@media (min-width: 1200px) {
+          .swiper {
+            width: 900px;
+          }
+        }
+
+        .swiper-slide img {
+          width: 100%;
+        }
+
+        .MainScreen {
+          width: 100% !important;
+        }
+
+        @@media (min-width: 768px) {
+          .open-section {
+            width: calc(100% - 220px) !important;
+            margin-left: auto;
+          }
+}
+    </style>
+}
+
+
+
+<div class="community-body">
+
+    <div class="community-body-right">
+        <div class="community-body-swpier">
+            <div class="swiper">
+                <!-- Additional required wrapper -->
+                <div class="swiper-wrapper">
+                    <!-- Slides -->
+
+                </div>
+                <!-- If we need pagination -->
+                <div class="swiper-pagination"></div>
+
+                <!-- If we need navigation buttons -->
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+
+                <!-- If we need scrollbar -->
+                <div class="swiper-scrollbar"></div>
+            </div>
+        </div>
+        <div class="community-body-dynamics ">
+            <h3>社群動態</h3>
+            <span>近期閱覽看版</span>
+            <div class="community-body-populargames">
+                <div class="community-body-populargames-card">
+                    <img src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/1457510/eeb2d83245398663462cdf194f892fb254c6b5c3.jpg"
+                         alt="">
+                    <a href="#">英雄傳說 閃之軌跡IV -THE END OF SAGA-</a>
+                </div>
+                <div class="community-body-populargames-card">
+                    <img src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/1457510/eeb2d83245398663462cdf194f892fb254c6b5c3.jpg"
+                         alt="">
+                    <a href="#">英雄傳說 閃之軌跡IV -THE END OF SAGA-</a>
+                </div>
+                <div class="community-body-populargames-card">
+                    <img src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/1457510/eeb2d83245398663462cdf194f892fb254c6b5c3.jpg"
+                         alt="">
+                    <a href="#">英雄傳說 閃之軌跡IV -THE END OF SAGA-</a>
+                </div>
+                <div class="community-body-populargames-card">
+                    <img src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/1457510/eeb2d83245398663462cdf194f892fb254c6b5c3.jpg"
+                         alt="">
+                    <a href="#">英雄傳說 閃之軌跡IV -THE END OF SAGA-</a>
+                </div>
+                <div class="community-body-populargames-card">
+                    <img src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/1457510/eeb2d83245398663462cdf194f892fb254c6b5c3.jpg"
+                         alt="">
+                    <a href="#">英雄傳說 閃之軌跡IV -THE END OF SAGA-</a>
+                </div>
+                <div class="community-body-populargames-card">
+                    <img src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/1457510/eeb2d83245398663462cdf194f892fb254c6b5c3.jpg"
+                         alt="">
+                    <a href="#">英雄傳說 閃之軌跡IV -THE END OF SAGA-</a>
+                </div>
+            </div>
+        </div>
+        <div class="commuity-body-popularrticles">
+            <h3>熱門文章</h3>
+            <div class="community-body-forum">
+
+            </div>
+        </div>
+    </div>
+    <div class="community-body-left">
+        <div class="community-body-sticky">
+            card
+        </div>
+    </div>
+
+
+
+</div>
