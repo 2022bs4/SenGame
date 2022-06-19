@@ -35,6 +35,49 @@ let addblock = document.querySelector(".add")
 //modal內的確認按鈕
 let check = document.querySelector(".check")
 let friendgroup = document.querySelector(".friends")
+let AllFriends = [
+    {
+        'img': "https://memeprod.ap-south-1.linodeobjects.com/user-gif/fc83a3a705767ab42688e4e858777196.gif",
+        'name': "張添宇",
+        'line': "上線",
+    },
+    {
+        'img': "https://memeprod.ap-south-1.linodeobjects.com/user-gif-post/1654151736656.gif",
+        'name': "大帥哥",
+        'line': "上線",
+    },
+    {
+        'img': "https://memeprod.ap-south-1.linodeobjects.com/user-gif-thumbnail/d4dd77bf2820f1c7c7b43121d4f7477b.gif",
+        'name': "AKA",
+        'line': "上線",
+    },
+    {
+        'img': "https://memeprod.ap-south-1.linodeobjects.com/user-gif/f3712e057175f57539872d740878b3df.gif",
+        'name': "新竹",
+        'line': "上線",
+    },
+    {
+        'img': "https://miro.medium.com/max/676/1*XEgA1TTwXa5AvAdw40GFow.png",
+        'name': "金城武",
+        'line': "上線",
+    },
+    {
+        'img': "https://miro.medium.com/max/676/1*XEgA1TTwXa5AvAdw40GFow.png",
+        'name': "不服來辯",
+        'line': "上線",
+    },
+    {
+        'img': "https://miro.medium.com/max/676/1*XEgA1TTwXa5AvAdw40GFow.png",
+        'name': "帥哥",
+        'line': "上線",
+    },
+    {
+        'img': "https://miro.medium.com/max/676/1*XEgA1TTwXa5AvAdw40GFow.png",
+        'name': "帥哥",
+        'line': "上線",
+    },
+
+]
 //載入的時候判斷裝置，決定有什麼樣功能
 window.onload = function () {
     Setnavbar(".container-fluid");
@@ -231,14 +274,15 @@ function computer() {
                         bool = true
                     })
                     //按下enter鍵後送出對話
-                    $("#text").keypress(function (e) {
+                    $("#text").keydown(function (e) {
                         if (e.which == 13) {
                             var time = new Date()
                             let text = document.getElementById("text")
                             let p = document.createElement("p")
                             let timep = document.createElement("p")
                             timep.setAttribute("class", "pt-3 mb-0")
-                            timep.innerText = `${time.getHours()}:${time.getMinutes()}`
+                            debugger
+                            timep.innerText = `${time.getHours().toString().padStart(2, "0")}:${time.getMinutes().toString().padStart(2, "0")}`
                             let div = document.createElement("div")
                             div.style.display = 'flex'
                             p.setAttribute("class", "content px-2 py-2 my-1")

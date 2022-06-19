@@ -42,8 +42,8 @@ namespace SenGame.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required(ErrorMessage = "請輸入電子郵件信箱")]
-            [RegularExpression(@"/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/", ErrorMessage = "電子郵件格式不正確")]
+            [Required]
+            [EmailAddress]
             public string Email { get; set; }
 
             [Required(ErrorMessage = "請輸入密碼")]

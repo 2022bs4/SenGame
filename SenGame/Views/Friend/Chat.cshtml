@@ -1,4 +1,4 @@
-﻿@page
+﻿
     <div class="chat-content position-relative">
         <div class="chat-left">
             <div class="user-content position-relative">
@@ -20,7 +20,11 @@
                 <div class="friend-group w-100">
                     <span class="friends-span w-100 pl-2 py-2 d-block user-select-none">好友名單(<span class="count">0</span>)</span>
                     <div class="friend-ul w-100">
-                </div>
+  @*                      @foreach(var friend in Model)
+                        {
+                            <partial name="_FriendCardPartial" model="friend"/>
+                        }*@
+                    </div>
                 </div>
             </div>
         </div>
