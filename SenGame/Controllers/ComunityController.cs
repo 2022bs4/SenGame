@@ -2,16 +2,14 @@
 
 namespace SenGame.Controllers
 {
-    public class ForumController : Controller
+    public class ComunityController : Controller
     {
         public IActionResult Index()
         {
             return View();
         }
-        public IActionResult ComomunityHome()
-        {
-            return View();
-        }
+        //顯示討論區
+        public IActionResult Forum() { return View(); }
         public IActionResult ComomunityDynamicwall()
         {
             return View();
