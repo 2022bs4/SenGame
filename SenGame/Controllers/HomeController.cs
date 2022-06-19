@@ -37,5 +37,9 @@ namespace SenGame.Controllers
         {
             return View();
         }
+        public IActionResult CustomerService()
+        {
+            return View();
+        }
     }
 }

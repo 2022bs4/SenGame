@@ -1,0 +1,67 @@
+﻿.help {
+    text-align: center;
+}
+
+    .help span {
+        font-size: 3em;
+    }
+
+    .help p {
+        font-size: 2em;
+        padding-top: 1em;
+    }
+
+.question {
+    text-align: center;
+}
+
+    .question span {
+        font-size: 1.5em;
+    }
+
+    .question #game-type {
+        display: block;
+        margin: auto;
+        width: 20em;
+        margin-top: 1em;
+    }
+
+    .question #game-name {
+        display: block;
+        margin: auto;
+        width: 20em;
+        margin-top: 1em;
+    }
+
+.question-content {
+    padding-top: 2em;
+    padding-bottom: 2em;
+}
+
+    .question-content span {
+        font-size: 1.5em;
+    }
+
+    .question-content button {
+        width: 150px;
+        height: 40px;
+        border: 1px;
+        border-radius: 3px;
+        margin-top: 30px;
+        color: #fff;
+        background-color: #1e262c;
+    }
+
+    .question-content textarea {
+        resize: none;
+    }
+
+footer {
+    display: none;
+}
+
+@media (min-width: 1200px) {
+    .question-content textarea {
+        width: 35em;
+    }
+}
