@@ -1,0 +1,131 @@
+﻿.login-content {
+    text-align: center;
+}
+
+.login-left {
+    height: 100vh;
+    background-image: url(https://store.akamai.steamstatic.com/public/shared/images/joinsteam/acct_creation_bg.jpg);
+    background-blend-mode: multiply;
+    background-position: left center;
+    background-size: contain;
+}
+
+    .login-left .login-bgi {
+        padding-top: 7em;
+        height: 100vh;
+    }
+
+    .login-left .login-title {
+        font-size: 3em;
+        color: #fff;
+    }
+
+    .login-left .login-text {
+        text-align: start;
+        padding-top: 3em;
+        padding-left: 15.5em;
+        color: #b8b6b4;
+    }
+
+    .login-left a {
+        text-decoration: none;
+    }
+
+.login-right {
+    background-color: #edf1f2;
+    height: 100vh;
+    padding-top: 12em;
+}
+
+    .login-right p {
+        max-width: 60%;
+        margin: auto;
+    }
+
+    .login-right a {
+        display: inline-block;
+        color: #2ac4f5;
+    }
+
+    .login-right .login-img {
+        padding-top: 30px;
+        margin: auto;
+        width: 20em;
+    }
+
+.login-btn {
+    background-color: #f56c2d;
+    width: 150px;
+    height: 40px;
+    border: 1px;
+    border-radius: 3px;
+    margin-top: 30px;
+    color: #fff;
+}
+
+.login-btn2 {
+    background-color: #212429;
+    width: 150px;
+    height: 40px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin-top: 30px;
+    color: #fff;
+}
+
+input {
+    background-color: #e8f0fe;
+}
+
+@media (min-width: 576px) {
+    .login-content {
+        display: block;
+    }
+
+    footer {
+        display: none;
+    }
+
+    input {
+        width: 15em;
+    }
+}
+
+@media (min-width: 992px) {
+    input {
+        width: 15em;
+    }
+}
+
+@media (min-width: 1200px) {
+    .login-content {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+    }
+
+    footer {
+        display: block;
+    }
+
+    input {
+        width: 20em;
+    }
+}
+
+ul {
+    padding-left0;
+}
+
+.check {
+    width: 20px;
+}
+
+.register-text {
+    margin-top: 1em;
+    margin-bottom: .5em;
+}
+
+ul {
+    padding-left: 0;
+}
