@@ -7,8 +7,6 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/public/navbar.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/css/public/footer.css" asp-append-version="true"/>
-    
-    @await RenderSectionAsync("topScripts", required: false)
     @await RenderSectionAsync("topCss", required: false)
    
 </head>
@@ -16,12 +14,9 @@
     <header class="header">
         <partial name="_NavbarPartial"/>
     </header>
-    <main class="container-fluid">
-        
-            @RenderBody()
-        
+    <main class="container-fluid">        
+            @RenderBody()    
     </main>
-
     <footer class="border-top footer text-muted">
         <partial name="_FooterPartial"/>
     </footer>
@@ -32,8 +27,5 @@
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script src="~/js/public/navbar.js"></script>
     @await RenderSectionAsync("endScripts", required: false)
-    @await RenderSectionAsync("endCss", required: false)
-    
-    
 </body>
 </html>

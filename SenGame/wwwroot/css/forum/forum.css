@@ -1,16 +1,8 @@
 ﻿#forum {
-    min-height: 100vh;
-    border-left: 60px solid transparent;
     background: #edf1f2;
     transition: all 0.5s;
-}
-
-@media (max-width: 576px) {
-    #forum {
-        border-left: 0px solid transparent;
         padding: 0px 0px;
         margin: 0px 0px;
-    }
 }
 
 #forum .page-nav {
