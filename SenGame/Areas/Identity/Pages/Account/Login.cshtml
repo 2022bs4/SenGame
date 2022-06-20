@@ -21,7 +21,9 @@
                     <label asp-for="Input.Password" class="text-light d-block">密碼</label>
                     <input asp-for="Input.Password" class="" />
                     <span asp-validation-for="Input.Password" class="text-danger d-block"></span>
+
                 </div>
+
                 <div class="form-group">
                     <div class="checkbox">
                         <label asp-for="Input.RememberMe" class="text-light w-100">
@@ -30,6 +32,14 @@
                     </div>
                 </div>
                 <div class="form-group">
+                                            <div
+    class="g-recaptcha"
+    data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+    data-theme="light" data-size="normal"
+    data-callback="verify"
+    data-expired-callback="expired"
+    data-error-callback="error">
+</div>
                     <button type="submit" class="login-btn">登入</button>
                 </div>
                 <div class="form-group">
@@ -54,9 +64,37 @@
     </div>
 
 
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 @section endScripts {
     <partial name="_ValidationScriptsPartial" />
 }
 @section topCss{
     <link rel="stylesheet" href="~/css/Account/Login.css" asp-append-version="true"/>
 }
+@*<script>
+    function verifyCallback(token) {
+  var formData = new FormData();
+  formData.append('token', token);
+  formData.append('ip', ip);
+	
+  // Google Apps Script 部署為網路應用程式後取得的 URL
+  var uriGAS = "xxxxxxxxxxxx";
+      
+  fetch(uriGAS, {
+    method: "POST",
+    body: formData
+  }).then(response => response.json())
+    .then(result => {
+      if(result.success) {
+      	// 後端驗證成功，success 會是 true
+      	// 這邊寫驗證成功後要做的事
+      } else {
+      	// success 為 false 時，代表驗證失敗，error-codes 會告知原因
+      	window.alert(result['error-codes'][0])
+      }
+    })
+    .catch(err => {
+    	window.alert(err)
+    })
+}
+</script>*@
