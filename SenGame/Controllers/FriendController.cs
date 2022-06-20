@@ -17,7 +17,12 @@ namespace SenGame.Controllers
             return View();
         }
 
-        public IActionResult a_Edit_Member()
+        public IActionResult a1_Edit_Member()
+        {
+            return View();
+        }
+
+        public IActionResult a2_Edit_MemberPhoto()
         {
             return View();
         }
