@@ -498,38 +498,43 @@
 }
 
 #forum .dynamic-wall-article {
-  margin-bottom: 20px;
+  padding-bottom: 20px;
 }
 
 #forum .dynamic-wall .card {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  background-color: white;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  border-radius: 16px;
-  overflow: hidden;
-  position: relative;
-  background-color: white;
+}
+
+@media (min-width: 768px) {
+  #forum .dynamic-wall .card {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+  }
 }
 
 #forum .dynamic-wall .card::before {
   content: '';
   position: absolute;
-  width: 1000px;
+  width: 1200px;
   height: 50px;
-  background: -webkit-gradient(linear, left top, left bottom, from(#00ccff), to(#d400d4));
-  background: linear-gradient(#00ccff, #d400d4);
-  -webkit-animation: animate 4s linear infinite;
-          animation: animate 4s linear infinite;
+  background: -webkit-gradient(linear, left top, right top, from(#bdc3c7), to(#2c3e50));
+  background: linear-gradient(to right, #bdc3c7, #2c3e50);
+  -webkit-animation: animate 10s linear infinite;
+          animation: animate 10s linear infinite;
 }
 
 @-webkit-keyframes animate {
@@ -559,18 +564,33 @@
   position: absolute;
   inset: 4px;
   background-color: white;
-  border-radius: 16px;
+  border-radius: 10px;
 }
 
 #forum .dynamic-wall .card-img {
-  width: 30%;
+  width: 100%;
   text-align: center;
   margin: 5px 5px;
   z-index: 2;
 }
 
+@media (min-width: 768px) {
+  #forum .dynamic-wall .card-img {
+    width: 30%;
+  }
+}
+
 #forum .dynamic-wall .card-img img {
+  border-top-left-radius: 10px;
   width: 100%;
+}
+
+@media (min-width: 768px) {
+  #forum .dynamic-wall .card-img img {
+    border-top-right-radius: 0px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
 }
 
 #forum .dynamic-wall .card-main {
@@ -584,8 +604,14 @@
   -ms-flex-pack: distribute;
       justify-content: space-around;
   height: 100%;
-  width: 70%;
+  width: 100%;
   z-index: 2;
+}
+
+@media (min-width: 768px) {
+  #forum .dynamic-wall .card-main {
+    width: 70%;
+  }
 }
 
 #forum .dynamic-wall .card-main h3 {
@@ -606,6 +632,11 @@
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end;
+}
+
+#forum .dynamic-wall .card:hover {
+  background: -webkit-gradient(linear, left top, right top, from(#b993d6), to(#8ca6db));
+  background: linear-gradient(to right, #b993d6, #8ca6db);
 }
 
 #forum .recommend {
