@@ -27,6 +27,16 @@ namespace SenGame.Controllers
             return View();
         }
 
+        public IActionResult a3_Edit_MemberTopic()
+        {
+            return View();
+        }
+
+        public IActionResult a4_Edit_MemberPrivacy()
+        {
+            return View();
+        }
+
         public IActionResult AddFriend()
         {
             return View();
