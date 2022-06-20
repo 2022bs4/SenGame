@@ -21,5 +21,10 @@ namespace SenGame.Controllers
         {
             return View();
         }
+
+        public IActionResult AddFriend()
+        {
+            return View();
+        }
     }
 }
