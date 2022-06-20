@@ -12,5 +12,9 @@ namespace SenGame.Controllers
         {
             return View();
         }
+        public IActionResult member__information()
+        {
+            return View();
+        }
     }
 }
