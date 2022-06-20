@@ -16,5 +16,10 @@ namespace SenGame.Controllers
         {
             return View();
         }
+
+        public IActionResult a_Edit_Member()
+        {
+            return View();
+        }
     }
 }
