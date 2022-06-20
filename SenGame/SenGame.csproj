@@ -57,7 +57,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\js\forum\" />
+    <Folder Include="wwwroot\img\" />
   </ItemGroup>
 
 </Project>
