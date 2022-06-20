@@ -1,7 +1,9 @@
 ﻿.login-content {
     text-align: center;
 }
-
+.g-recaptcha{
+    margin-left:13em;
+}
 .login-left {
     height: 100vh;
     background-image: url(https://store.akamai.steamstatic.com/public/shared/images/joinsteam/acct_creation_bg.jpg);

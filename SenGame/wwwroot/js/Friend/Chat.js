@@ -1,4 +1,12 @@
-﻿//忍術:全域變數
+﻿//在JS中建立集線器
+var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+//與Service建立連線
+connection.start()
+    .then(function () { })
+    .catch(function (err) {
+    alert('連線錯誤: ' + err.toString());
+});
+//忍術:全域變數
 let del = document.querySelector(".delete-type")
 let rightmenudel = document.querySelector(".group-delete")
 let group = document.querySelector(".friend-group")
