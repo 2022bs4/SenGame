@@ -1,13 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace SenGame.Controllers
 {
+    [Authorize]
     public class FriendController : Controller
     {
         public IActionResult Index()
         {
             return View();
         }
+        [Authorize]
         public IActionResult Chat()
         {
             return View();

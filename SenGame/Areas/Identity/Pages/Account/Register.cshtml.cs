@@ -45,14 +45,15 @@ namespace SenGame.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required(ErrorMessage = "請輸入電子郵件信箱")]
-            [RegularExpression(@"/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/", ErrorMessage = "電子郵件格式不正確")]
+            //[Required(ErrorMessage = "請輸入電子郵件信箱")]
+            //[RegularExpression(@"/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/", ErrorMessage = "電子郵件格式不正確")]
+            [EmailAddress]
             public string Email { get; set; }
 
-            [Required(ErrorMessage = "請輸入電子郵件信箱")]
-            [RegularExpression(@"/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/", ErrorMessage = "電子郵件格式不正確")]
-            [Compare("Email", ErrorMessage = "兩次輸入的Email不一致")]
-            public string ConfirmEmail { get; set; }
+            //[Required(ErrorMessage = "請輸入電子郵件信箱")]
+            //[RegularExpression(@"/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/", ErrorMessage = "電子郵件格式不正確")]
+            //[Compare("Email", ErrorMessage = "兩次輸入的Email不一致")]
+            //public string ConfirmEmail { get; set; }
             [Required(ErrorMessage = "請輸入密碼")]
             [StringLength(12, MinimumLength = 6, ErrorMessage = "最少輸入6個字元")]
             [DataType(DataType.Password)]
