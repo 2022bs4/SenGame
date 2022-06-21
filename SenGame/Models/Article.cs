@@ -9,21 +9,22 @@ namespace SenGame.Models
     {
         public Article()
         {
-            Likes = new HashSet<Like>();
+            ArticleLikes = new HashSet<ArticleLike>();
             Replies = new HashSet<Reply>();
         }
 
         public int ArticleId { get; set; }
         public int UserId { get; set; }
-        public string Message { get; set; }
-        public DateTime Date { get; set; }
-        public string Check { get; set; }
+        public string ArticleContent { get; set; }
+        public DateTime PostDate { get; set; }
         public string Title { get; set; }
-        public int GameId { get; set; }
-        public DateTime LastTime { get; set; }
+        public int ForumId { get; set; }
+        public DateTime LastReplyTime { get; set; }
+        public int ArticleTagId { get; set; }
 
-        public virtual Game Game { get; set; }
-        public virtual ICollection<Like> Likes { get; set; }
+        public virtual ArticleTag ArticleTag { get; set; }
+        public virtual Forum Forum { get; set; }
+        public virtual ICollection<ArticleLike> ArticleLikes { get; set; }
         public virtual ICollection<Reply> Replies { get; set; }
     }
 }

@@ -5,17 +5,16 @@ using System.Collections.Generic;
 
 namespace SenGame.Models
 {
-    public partial class Visa
+    public partial class UserBackground
     {
-        public Visa()
+        public UserBackground()
         {
             Users = new HashSet<User>();
         }
 
-        public int PayId { get; set; }
-        public string VisaCard { get; set; }
-        public string VisaDate { get; set; }
-        public string VisaSaft { get; set; }
+        public int UserBackgroundId { get; set; }
+        public string BackgroundColor { get; set; }
+        public int UserId { get; set; }
 
         public virtual ICollection<User> Users { get; set; }
     }

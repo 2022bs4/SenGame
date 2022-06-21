@@ -8,6 +8,11 @@ namespace SenGame.Controllers
         {
             return View();
         }
+        public IActionResult ProductDetails()
+        {
+
+            return View();
+        }
         public IActionResult ShoppingCart()
         {
             //var Ecpay = new EcpayService();

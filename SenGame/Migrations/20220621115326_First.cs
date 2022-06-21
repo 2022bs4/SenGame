@@ -8,6 +8,18 @@ namespace SenGame.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "ArticleTag",
+                columns: table => new
+                {
+                    ArticleTagID = table.Column<int>(type: "int", nullable: false),
+                    TagName = table.Column<string>(type: "nchar(10)", fixedLength: true, maxLength: 10, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ArticleTag", x => x.ArticleTagID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
                 {
@@ -47,11 +59,24 @@ namespace SenGame.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "FriendGroup",
+                columns: table => new
+                {
+                    FriendGoupID = table.Column<int>(type: "int", nullable: false),
+                    GroupName = table.Column<string>(type: "nchar(10)", fixedLength: true, maxLength: 10, nullable: false),
+                    UserID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FriendGroup", x => x.FriendGoupID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "GameDiscount",
                 columns: table => new
                 {
                     DiscountID = table.Column<int>(type: "int", nullable: false),
-                    DiscountTake = table.Column<int>(type: "int", nullable: true),
+                    DiscountTake = table.Column<double>(type: "float", nullable: false),
                     StarDate = table.Column<DateTime>(type: "date", nullable: true),
                     EndDate = table.Column<DateTime>(type: "date", nullable: true)
                 },
@@ -61,16 +86,55 @@ namespace SenGame.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PurchaseData",
+                name: "GamePicture",
                 columns: table => new
                 {
-                    PurchaseDataID = table.Column<int>(type: "int", nullable: false),
-                    Price = table.Column<decimal>(type: "money", nullable: false),
-                    Date = table.Column<DateTime>(type: "date", nullable: false)
+                    GamePictureID = table.Column<int>(type: "int", nullable: false),
+                    PhotoUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    GameID = table.Column<int>(type: "int", nullable: false, comment: "是甚麼影片"),
+                    Instructions = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true, comment: "用途")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PurchaseData", x => x.PurchaseDataID);
+                    table.PrimaryKey("PK_GamePicture", x => x.GamePictureID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GameVideo",
+                columns: table => new
+                {
+                    GameVideoID = table.Column<int>(type: "int", nullable: false),
+                    VideoUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    GameID = table.Column<int>(type: "int", nullable: false),
+                    Instructions = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GameVideo", x => x.GameVideoID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OrderStatus",
+                columns: table => new
+                {
+                    OrderStatusID = table.Column<int>(type: "int", nullable: false),
+                    StatusName = table.Column<string>(type: "nchar(10)", fixedLength: true, maxLength: 10, nullable: true, comment: "狀態")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderStatus", x => x.OrderStatusID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SystemType",
+                columns: table => new
+                {
+                    SystmTypeID = table.Column<int>(type: "int", nullable: false),
+                    TypeName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SystemType", x => x.SystmTypeID);
                 });
 
             migrationBuilder.CreateTable(
@@ -86,6 +150,19 @@ namespace SenGame.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UserBackground",
+                columns: table => new
+                {
+                    UserBackgroundID = table.Column<int>(type: "int", nullable: false),
+                    BackgroundColor = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    UserID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserBackground", x => x.UserBackgroundID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserCountry",
                 columns: table => new
                 {
@@ -95,20 +172,6 @@ namespace SenGame.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserCountry", x => x.UserCountryID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Visa",
-                columns: table => new
-                {
-                    PayID = table.Column<int>(type: "int", nullable: false),
-                    VisaCard = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    VisaDate = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    VisaSaft = table.Column<string>(type: "nchar(3)", fixedLength: true, maxLength: 3, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Visa", x => x.PayID);
                 });
 
             migrationBuilder.CreateTable(
@@ -241,31 +304,32 @@ namespace SenGame.Migrations
                 columns: table => new
                 {
                     UserID = table.Column<int>(type: "int", nullable: false),
-                    PayID = table.Column<int>(type: "int", nullable: false),
+                    Account = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     EmailConfirm = table.Column<bool>(type: "bit", nullable: false),
-                    PassWordTest = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PassWord = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     UserPicture = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    UserUrl = table.Column<string>(type: "nchar(10)", fixedLength: true, maxLength: 10, nullable: true),
                     UsernickName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    UserCountryID = table.Column<int>(type: "int", nullable: true)
+                    UserCountryID = table.Column<int>(type: "int", nullable: true),
+                    CreateDate = table.Column<DateTime>(type: "date", nullable: true),
+                    UserAbout = table.Column<string>(type: "nvarchar(max)", nullable: true, comment: "自介"),
+                    UserBackgroundID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_User", x => x.UserID);
                     table.ForeignKey(
+                        name: "FK_User_UserBackground",
+                        column: x => x.UserBackgroundID,
+                        principalTable: "UserBackground",
+                        principalColumn: "UserBackgroundID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_User_UserCountry",
                         column: x => x.UserCountryID,
                         principalTable: "UserCountry",
                         principalColumn: "UserCountryID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_User_Visa",
-                        column: x => x.PayID,
-                        principalTable: "Visa",
-                        principalColumn: "PayID",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -276,18 +340,11 @@ namespace SenGame.Migrations
                     GameID = table.Column<int>(type: "int", nullable: false),
                     DiscountID = table.Column<int>(type: "int", nullable: false),
                     GameTypleID = table.Column<int>(type: "int", nullable: false),
-                    PurchaseDataID = table.Column<int>(type: "int", nullable: true),
                     GamePrice = table.Column<decimal>(type: "money", nullable: true),
-                    GamePicture = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    GameVideo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     GameIntroduction = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     GameDetailsText = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TotalBuyCount = table.Column<int>(type: "int", nullable: true),
-                    SystemOperation = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SystemUseSize = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    SystemGraphCard = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    SystemMemory = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    ReleadeDate = table.Column<DateTime>(type: "date", nullable: true)
+                    ReleaseDate = table.Column<DateTime>(type: "date", nullable: false, comment: "發布日期")
                 },
                 constraints: table =>
                 {
@@ -304,11 +361,46 @@ namespace SenGame.Migrations
                         principalTable: "GameType",
                         principalColumn: "GameTypeID",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Blockade",
+                columns: table => new
+                {
+                    BlockadeID = table.Column<int>(type: "int", nullable: false),
+                    UserID = table.Column<int>(type: "int", nullable: true),
+                    BlockadeUserID = table.Column<string>(type: "nchar(10)", fixedLength: true, maxLength: 10, nullable: true, comment: "被封鎖人之ID")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Blockade", x => x.BlockadeID);
                     table.ForeignKey(
-                        name: "FK_Game_PurchaseData",
-                        column: x => x.PurchaseDataID,
-                        principalTable: "PurchaseData",
-                        principalColumn: "PurchaseDataID",
+                        name: "FK_Blockade_User",
+                        column: x => x.UserID,
+                        principalTable: "User",
+                        principalColumn: "UserID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Chat",
+                columns: table => new
+                {
+                    ChatID = table.Column<int>(type: "int", nullable: false),
+                    FriendID = table.Column<string>(type: "nchar(10)", fixedLength: true, maxLength: 10, nullable: true),
+                    ChatContent = table.Column<string>(type: "nvarchar(max)", nullable: true, comment: "聊天紀錄"),
+                    LastChatDate = table.Column<DateTime>(type: "date", nullable: false, comment: "最後聊天時間"),
+                    ChatTime = table.Column<DateTime>(type: "date", nullable: false, comment: "現在聊天時間"),
+                    UserID = table.Column<int>(type: "int", nullable: false, comment: "使用者自身")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Chat", x => x.ChatID);
+                    table.ForeignKey(
+                        name: "FK_Chat_User",
+                        column: x => x.UserID,
+                        principalTable: "User",
+                        principalColumn: "UserID",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -316,15 +408,22 @@ namespace SenGame.Migrations
                 name: "FriendList",
                 columns: table => new
                 {
-                    FriendListID = table.Column<int>(type: "int", nullable: false),
+                    FriendLIstID = table.Column<int>(type: "int", nullable: false),
                     UserID = table.Column<int>(type: "int", nullable: false),
-                    GroupName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    BlockadeList = table.Column<bool>(type: "bit", nullable: false),
-                    FriendID = table.Column<int>(type: "int", nullable: true)
+                    FriendID = table.Column<int>(type: "int", nullable: false),
+                    FriendGroupID = table.Column<int>(type: "int", nullable: true),
+                    FriendNickName = table.Column<string>(type: "nchar(10)", fixedLength: true, maxLength: 10, nullable: true),
+                    IsBlockade = table.Column<bool>(type: "bit", nullable: true, comment: "是否被封鎖")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FriendList", x => x.FriendListID);
+                    table.PrimaryKey("PK_FriendList", x => x.FriendLIstID);
+                    table.ForeignKey(
+                        name: "FK_FriendList_FriendGroup",
+                        column: x => x.FriendLIstID,
+                        principalTable: "FriendGroup",
+                        principalColumn: "FriendGoupID",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_FriendList_User",
                         column: x => x.UserID,
@@ -344,8 +443,8 @@ namespace SenGame.Migrations
                 columns: table => new
                 {
                     InviteID = table.Column<int>(type: "int", nullable: false),
-                    UserID = table.Column<int>(type: "int", nullable: false),
-                    SendID = table.Column<int>(type: "int", nullable: false),
+                    UserID = table.Column<int>(type: "int", nullable: false, comment: "被邀請者"),
+                    SenderID = table.Column<int>(type: "int", nullable: false, comment: "邀請者"),
                     Message = table.Column<string>(type: "nchar(50)", fixedLength: true, maxLength: 50, nullable: true)
                 },
                 constraints: table =>
@@ -359,59 +458,80 @@ namespace SenGame.Migrations
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Invite_User1",
-                        column: x => x.SendID,
+                        column: x => x.SenderID,
                         principalTable: "User",
                         principalColumn: "UserID",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Article",
+                name: "Order",
                 columns: table => new
                 {
-                    ArticleID = table.Column<int>(type: "int", nullable: false),
+                    OrderID = table.Column<int>(type: "int", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "date", nullable: false, comment: "訂單時間"),
                     UserID = table.Column<int>(type: "int", nullable: false),
-                    Message = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Date = table.Column<DateTime>(type: "date", nullable: false),
-                    Check = table.Column<string>(type: "nchar(10)", fixedLength: true, maxLength: 10, nullable: true),
-                    Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    GameID = table.Column<int>(type: "int", nullable: false),
-                    LastTime = table.Column<DateTime>(type: "date", nullable: false)
+                    TotalPrice = table.Column<int>(type: "int", nullable: false),
+                    OrderStatusID = table.Column<int>(type: "int", nullable: false, comment: "訂單單狀態"),
+                    EcpayID = table.Column<int>(type: "int", nullable: false, comment: "Ecpay訂單編號"),
+                    invoice = table.Column<string>(type: "nchar(10)", fixedLength: true, maxLength: 10, nullable: true, comment: "發票票")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Article", x => x.ArticleID);
+                    table.PrimaryKey("PK_Order", x => x.OrderID);
                     table.ForeignKey(
-                        name: "FK_Article_Game",
-                        column: x => x.GameID,
-                        principalTable: "Game",
-                        principalColumn: "GameID",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "MyForum",
-                columns: table => new
-                {
-                    MyForumID = table.Column<int>(type: "int", nullable: false),
-                    ForumID = table.Column<int>(type: "int", nullable: false),
-                    UserID = table.Column<int>(type: "int", nullable: false),
-                    GameID = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MyForum", x => x.MyForumID);
-                    table.ForeignKey(
-                        name: "FK_MyForum_Game",
-                        column: x => x.GameID,
-                        principalTable: "Game",
-                        principalColumn: "GameID",
+                        name: "FK_Order_OrderStatus",
+                        column: x => x.OrderStatusID,
+                        principalTable: "OrderStatus",
+                        principalColumn: "OrderStatusID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_MyForum_User",
+                        name: "FK_Order_User",
                         column: x => x.UserID,
                         principalTable: "User",
                         principalColumn: "UserID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserEdit",
+                columns: table => new
+                {
+                    UserEditID = table.Column<int>(type: "int", nullable: false, comment: ""),
+                    PersonalFile = table.Column<int>(type: "int", nullable: false, comment: "個人檔案"),
+                    GameFile = table.Column<int>(type: "int", nullable: true, comment: "遊戲資料"),
+                    FriendsList = table.Column<int>(type: "int", nullable: false, comment: "好友名單"),
+                    ReplyName = table.Column<int>(type: "int", nullable: false, comment: "是否能回復於個人主頁"),
+                    UserID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserEdit", x => x.UserEditID);
+                    table.ForeignKey(
+                        name: "FK_UserEdit_User",
+                        column: x => x.UserID,
+                        principalTable: "User",
+                        principalColumn: "UserID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Forum",
+                columns: table => new
+                {
+                    ForumID = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Banner = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    GameID = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Forum", x => x.ForumID);
+                    table.ForeignKey(
+                        name: "FK_Forum_Game",
+                        column: x => x.GameID,
+                        principalTable: "Game",
+                        principalColumn: "GameID",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -437,6 +557,34 @@ namespace SenGame.Migrations
                         column: x => x.UserID,
                         principalTable: "User",
                         principalColumn: "UserID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SystemSpecification",
+                columns: table => new
+                {
+                    SystemID = table.Column<int>(type: "int", nullable: false),
+                    SystemTypeID = table.Column<int>(type: "int", nullable: false),
+                    HDDspace = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true, comment: "硬碟使用空間"),
+                    System = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true, comment: "系統類別"),
+                    SystemRam = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true, comment: "記憶體"),
+                    GameID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SystemSpecification", x => x.SystemID);
+                    table.ForeignKey(
+                        name: "FK_SystemSpecification_Game",
+                        column: x => x.GameID,
+                        principalTable: "Game",
+                        principalColumn: "GameID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_SystemSpecification_SystemType",
+                        column: x => x.SystemTypeID,
+                        principalTable: "SystemType",
+                        principalColumn: "SystmTypeID",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -467,26 +615,27 @@ namespace SenGame.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Chat",
+                name: "MemderReply",
                 columns: table => new
                 {
-                    Chatid = table.Column<int>(type: "int", nullable: false),
-                    UserID = table.Column<int>(type: "int", nullable: true),
-                    FriendListID = table.Column<int>(type: "int", nullable: true),
-                    ChatDate = table.Column<DateTime>(type: "date", nullable: true),
-                    ChatContext = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true)
+                    MemderReplyID = table.Column<int>(type: "int", nullable: false),
+                    ReplyContent = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    UserID = table.Column<int>(type: "int", nullable: false),
+                    ReplyDate = table.Column<DateTime>(type: "date", nullable: true, comment: "留言當下時間"),
+                    FriendID = table.Column<int>(type: "int", nullable: false, comment: "好友才能去主頁留言"),
+                    ParentID = table.Column<int>(type: "int", nullable: true, comment: "判斷回復的回覆")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Chat", x => x.Chatid);
+                    table.PrimaryKey("PK_MemderReply", x => x.MemderReplyID);
                     table.ForeignKey(
-                        name: "FK_Chat_FriendList",
-                        column: x => x.FriendListID,
+                        name: "FK_MemderReply_FriendList",
+                        column: x => x.FriendID,
                         principalTable: "FriendList",
-                        principalColumn: "FriendListID",
+                        principalColumn: "FriendLIstID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Chat_User",
+                        name: "FK_MemderReply_User",
                         column: x => x.UserID,
                         principalTable: "User",
                         principalColumn: "UserID",
@@ -494,19 +643,134 @@ namespace SenGame.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Like",
+                name: "Orderdetails",
+                columns: table => new
+                {
+                    OrderdetailID = table.Column<int>(type: "int", nullable: false),
+                    OrderID = table.Column<int>(type: "int", nullable: false),
+                    GameID = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<int>(type: "int", nullable: false),
+                    Discount = table.Column<double>(type: "float", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orderdetails", x => x.OrderdetailID);
+                    table.ForeignKey(
+                        name: "FK_Orderdetails_Order",
+                        column: x => x.OrderID,
+                        principalTable: "Order",
+                        principalColumn: "OrderID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserPrivacy",
+                columns: table => new
+                {
+                    UserPrivacyID = table.Column<int>(type: "int", nullable: false),
+                    UserEditID = table.Column<int>(type: "int", nullable: false),
+                    PrivacyState = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false, comment: "隱私狀況")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserPrivacy", x => x.UserPrivacyID);
+                    table.ForeignKey(
+                        name: "FK_UserPrivacy_UserEdit",
+                        column: x => x.UserEditID,
+                        principalTable: "UserEdit",
+                        principalColumn: "UserEditID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Article",
+                columns: table => new
+                {
+                    ArticleID = table.Column<int>(type: "int", nullable: false),
+                    UserID = table.Column<int>(type: "int", nullable: false),
+                    ArticleContent = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PostDate = table.Column<DateTime>(type: "date", nullable: false, comment: "發文日期"),
+                    Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    ForumID = table.Column<int>(type: "int", nullable: false),
+                    LastReplyTime = table.Column<DateTime>(type: "date", nullable: false, comment: "最後回文時間"),
+                    ArticleTagID = table.Column<int>(type: "int", nullable: false, comment: "種類:討論、心得")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Article", x => x.ArticleID);
+                    table.ForeignKey(
+                        name: "FK_Article_ArticleTag",
+                        column: x => x.ArticleTagID,
+                        principalTable: "ArticleTag",
+                        principalColumn: "ArticleTagID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Article_Forum",
+                        column: x => x.ForumID,
+                        principalTable: "Forum",
+                        principalColumn: "ForumID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MyForum",
+                columns: table => new
+                {
+                    MyForumID = table.Column<int>(type: "int", nullable: false),
+                    UserID = table.Column<int>(type: "int", nullable: false),
+                    ForumID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MyForum", x => x.MyForumID);
+                    table.ForeignKey(
+                        name: "FK_MyForum_Forum",
+                        column: x => x.ForumID,
+                        principalTable: "Forum",
+                        principalColumn: "ForumID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_MyForum_User",
+                        column: x => x.UserID,
+                        principalTable: "User",
+                        principalColumn: "UserID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CustomerService",
+                columns: table => new
+                {
+                    ServiceID = table.Column<int>(type: "int", nullable: false),
+                    MyGameID = table.Column<int>(type: "int", nullable: false),
+                    QuestionContent = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreateTime = table.Column<DateTime>(type: "date", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CustomerService", x => x.ServiceID);
+                    table.ForeignKey(
+                        name: "FK_CustomerService_MyGame",
+                        column: x => x.MyGameID,
+                        principalTable: "MyGame",
+                        principalColumn: "MyGameID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ArticleLike",
                 columns: table => new
                 {
                     LikeID = table.Column<int>(type: "int", nullable: false),
                     UserID = table.Column<int>(type: "int", nullable: false),
-                    Article = table.Column<int>(type: "int", nullable: false)
+                    ArticleID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Like", x => x.LikeID);
                     table.ForeignKey(
                         name: "FK_Like_Article",
-                        column: x => x.Article,
+                        column: x => x.ArticleID,
                         principalTable: "Article",
                         principalColumn: "ArticleID",
                         onDelete: ReferentialAction.Restrict);
@@ -525,8 +789,9 @@ namespace SenGame.Migrations
                     ReplyID = table.Column<int>(type: "int", nullable: false),
                     ArticleID = table.Column<int>(type: "int", nullable: false),
                     UserID = table.Column<int>(type: "int", nullable: false),
-                    ReplyMain = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ReplyText = table.Column<string>(type: "nchar(100)", fixedLength: true, maxLength: 100, nullable: false)
+                    ReplyTitle = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    ReplyText = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ParentID = table.Column<int>(type: "int", nullable: true, comment: "回復文章的回覆的回覆")
                 },
                 constraints: table =>
                 {
@@ -546,12 +811,29 @@ namespace SenGame.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ServiceReply",
+                columns: table => new
+                {
+                    ServiceID = table.Column<int>(type: "int", nullable: false),
+                    ReplyContent = table.Column<string>(type: "nvarchar(max)", nullable: false, comment: "客服回應")
+                },
+                constraints: table =>
+                {
+                    table.ForeignKey(
+                        name: "FK_ServiceReply_CustomerService",
+                        column: x => x.ServiceID,
+                        principalTable: "CustomerService",
+                        principalColumn: "ServiceID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ReplyLike",
                 columns: table => new
                 {
                     ReplyLikeID = table.Column<int>(type: "int", nullable: false),
-                    ReplyID = table.Column<int>(type: "int", nullable: true),
-                    UserID = table.Column<int>(type: "int", nullable: true)
+                    ReplyID = table.Column<int>(type: "int", nullable: false),
+                    UserID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -571,9 +853,24 @@ namespace SenGame.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Article_GameID",
+                name: "IX_Article_ArticleTagID",
                 table: "Article",
-                column: "GameID");
+                column: "ArticleTagID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Article_ForumID",
+                table: "Article",
+                column: "ForumID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ArticleLike_ArticleID",
+                table: "ArticleLike",
+                column: "ArticleID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ArticleLike_UserID",
+                table: "ArticleLike",
+                column: "UserID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -615,14 +912,24 @@ namespace SenGame.Migrations
                 filter: "([NormalizedUserName] IS NOT NULL)");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Chat_FriendListID",
-                table: "Chat",
-                column: "FriendListID");
+                name: "IX_Blockade_UserID",
+                table: "Blockade",
+                column: "UserID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Chat_UserID",
                 table: "Chat",
                 column: "UserID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CustomerService_MyGameID",
+                table: "CustomerService",
+                column: "MyGameID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Forum_GameID",
+                table: "Forum",
+                column: "GameID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_FriendList_FriendID",
@@ -645,19 +952,14 @@ namespace SenGame.Migrations
                 column: "GameTypleID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Game_PurchaseDataID",
-                table: "Game",
-                column: "PurchaseDataID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_GameType_TypelistID",
                 table: "GameType",
                 column: "TypelistID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Invite_SendID",
+                name: "IX_Invite_SenderID",
                 table: "Invite",
-                column: "SendID");
+                column: "SenderID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Invite_UserID",
@@ -665,19 +967,19 @@ namespace SenGame.Migrations
                 column: "UserID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Like_Article",
-                table: "Like",
-                column: "Article");
+                name: "IX_MemderReply_FriendID",
+                table: "MemderReply",
+                column: "FriendID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Like_UserID",
-                table: "Like",
+                name: "IX_MemderReply_UserID",
+                table: "MemderReply",
                 column: "UserID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MyForum_GameID",
+                name: "IX_MyForum_ForumID",
                 table: "MyForum",
-                column: "GameID");
+                column: "ForumID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MyForum_UserID",
@@ -693,6 +995,21 @@ namespace SenGame.Migrations
                 name: "IX_MyGame_UserID",
                 table: "MyGame",
                 column: "UserID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Order_OrderStatusID",
+                table: "Order",
+                column: "OrderStatusID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Order_UserID",
+                table: "Order",
+                column: "UserID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orderdetails_OrderID",
+                table: "Orderdetails",
+                column: "OrderID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reply_ArticleID",
@@ -715,14 +1032,39 @@ namespace SenGame.Migrations
                 column: "UserID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_User_PayID",
+                name: "IX_ServiceReply_ServiceID",
+                table: "ServiceReply",
+                column: "ServiceID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SystemSpecification_GameID",
+                table: "SystemSpecification",
+                column: "GameID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SystemSpecification_SystemTypeID",
+                table: "SystemSpecification",
+                column: "SystemTypeID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_User_UserBackgroundID",
                 table: "User",
-                column: "PayID");
+                column: "UserBackgroundID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_User_UserCountryID",
                 table: "User",
                 column: "UserCountryID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserEdit_UserID",
+                table: "UserEdit",
+                column: "UserID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserPrivacy_UserEditID",
+                table: "UserPrivacy",
+                column: "UserEditID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Wish_GameID",
@@ -737,6 +1079,9 @@ namespace SenGame.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "ArticleLike");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -753,22 +1098,40 @@ namespace SenGame.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Blockade");
+
+            migrationBuilder.DropTable(
                 name: "Chat");
+
+            migrationBuilder.DropTable(
+                name: "GamePicture");
+
+            migrationBuilder.DropTable(
+                name: "GameVideo");
 
             migrationBuilder.DropTable(
                 name: "Invite");
 
             migrationBuilder.DropTable(
-                name: "Like");
+                name: "MemderReply");
 
             migrationBuilder.DropTable(
                 name: "MyForum");
 
             migrationBuilder.DropTable(
-                name: "MyGame");
+                name: "Orderdetails");
 
             migrationBuilder.DropTable(
                 name: "ReplyLike");
+
+            migrationBuilder.DropTable(
+                name: "ServiceReply");
+
+            migrationBuilder.DropTable(
+                name: "SystemSpecification");
+
+            migrationBuilder.DropTable(
+                name: "UserPrivacy");
 
             migrationBuilder.DropTable(
                 name: "Wish");
@@ -783,10 +1146,37 @@ namespace SenGame.Migrations
                 name: "FriendList");
 
             migrationBuilder.DropTable(
+                name: "Order");
+
+            migrationBuilder.DropTable(
                 name: "Reply");
 
             migrationBuilder.DropTable(
+                name: "CustomerService");
+
+            migrationBuilder.DropTable(
+                name: "SystemType");
+
+            migrationBuilder.DropTable(
+                name: "UserEdit");
+
+            migrationBuilder.DropTable(
+                name: "FriendGroup");
+
+            migrationBuilder.DropTable(
+                name: "OrderStatus");
+
+            migrationBuilder.DropTable(
                 name: "Article");
+
+            migrationBuilder.DropTable(
+                name: "MyGame");
+
+            migrationBuilder.DropTable(
+                name: "ArticleTag");
+
+            migrationBuilder.DropTable(
+                name: "Forum");
 
             migrationBuilder.DropTable(
                 name: "User");
@@ -795,19 +1185,16 @@ namespace SenGame.Migrations
                 name: "Game");
 
             migrationBuilder.DropTable(
-                name: "UserCountry");
+                name: "UserBackground");
 
             migrationBuilder.DropTable(
-                name: "Visa");
+                name: "UserCountry");
 
             migrationBuilder.DropTable(
                 name: "GameDiscount");
 
             migrationBuilder.DropTable(
                 name: "GameType");
-
-            migrationBuilder.DropTable(
-                name: "PurchaseData");
 
             migrationBuilder.DropTable(
                 name: "Typelist");

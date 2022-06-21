@@ -9,10 +9,10 @@ namespace SenGame.Models
     {
         public int InviteId { get; set; }
         public int UserId { get; set; }
-        public int SendId { get; set; }
+        public int SenderId { get; set; }
         public string Message { get; set; }
 
-        public virtual User Send { get; set; }
+        public virtual User Sender { get; set; }
         public virtual User User { get; set; }
     }
 }

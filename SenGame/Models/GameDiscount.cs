@@ -13,7 +13,7 @@ namespace SenGame.Models
         }
 
         public int DiscountId { get; set; }
-        public int? DiscountTake { get; set; }
+        public double DiscountTake { get; set; }
         public DateTime? StarDate { get; set; }
         public DateTime? EndDate { get; set; }
 

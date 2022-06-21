@@ -7,13 +7,13 @@ namespace SenGame.Models
 {
     public partial class Chat
     {
-        public int? UserId { get; set; }
-        public int? FriendListId { get; set; }
-        public DateTime? ChatDate { get; set; }
-        public string ChatContext { get; set; }
-        public int Chatid { get; set; }
+        public string FriendId { get; set; }
+        public string ChatContent { get; set; }
+        public DateTime LastChatDate { get; set; }
+        public DateTime ChatTime { get; set; }
+        public int ChatId { get; set; }
+        public int UserId { get; set; }
 
-        public virtual FriendList FriendList { get; set; }
         public virtual User User { get; set; }
     }
 }

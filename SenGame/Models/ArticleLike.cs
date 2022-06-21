@@ -5,13 +5,13 @@ using System.Collections.Generic;
 
 namespace SenGame.Models
 {
-    public partial class Like
+    public partial class ArticleLike
     {
         public int LikeId { get; set; }
         public int UserId { get; set; }
-        public int Article { get; set; }
+        public int ArticleId { get; set; }
 
-        public virtual Article ArticleNavigation { get; set; }
+        public virtual Article Article { get; set; }
         public virtual User User { get; set; }
     }
 }
