@@ -289,7 +289,7 @@ function computer() {
                             let p = document.createElement("p")
                             let timep = document.createElement("p")
                             timep.setAttribute("class", "pt-3 mb-0")
-                            debugger
+                           
                             timep.innerText = `${time.getHours().toString().padStart(2, "0")}:${time.getMinutes().toString().padStart(2, "0")}`
                             let div = document.createElement("div")
                             div.style.display = 'flex'
