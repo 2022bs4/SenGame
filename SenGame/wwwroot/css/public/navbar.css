@@ -439,15 +439,3 @@
 .header .list-tour-shop:hover .menu, .header .list-tour-forum:hover .menu, .header .list-tour-friend:hover .menu {
     display: block;
 }
-
-.MainScreen {
-    width: 100% !important;
-}
-
-@media (min-width: 576px) {
-    .open-section {
-        width: calc(100% - 220px) !important;
-        -webkit-transition: 0.5s;
-        transition: 0.5s;
-    }
-}

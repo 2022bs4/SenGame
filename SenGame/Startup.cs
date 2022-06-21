@@ -33,9 +33,9 @@ namespace SenGame
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
-            //services.AddDbContext<SenGameContext>(options =>
-            //   options.UseSqlServer(
-            //      Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<SenGameContext>(options =>
+               options.UseSqlServer(
+                  Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
