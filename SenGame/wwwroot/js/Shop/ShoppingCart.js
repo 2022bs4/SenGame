@@ -1,8 +1,4 @@
 ﻿let btn_buy = document.querySelector(".Continue-Shopping")
-debugger
-//let main = document.querySelector('maim')
-
-//main.setAttribute = ("class"," .ShoppingCart d-md-flex f-md-flex position-relative")
 
 $(document).ready(function () {
     $('main').addClass("ShoppingCart d-md-flex f-md-flex position-relative")
@@ -11,12 +7,14 @@ $(document).ready(function () {
         $('.Spopping-Select').html(' ')
         $('.Shpopping-Price').text('')
     })
+    for (let i = 0; i < 4; i++) {
+        ShoppingTemplate()
+    }
+    RecommendTemplate();
 })
 
 
-for (let i = 0; i < 4; i++) {
-    ShoppingTemplate()
-}
+
 
 btn_buy.addEventListener('click', function () {
     document.getElementById("form").submit();
