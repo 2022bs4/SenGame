@@ -1,6 +1,9 @@
-﻿<!-- 下方區塊 (動態留言+個人狀態)  -->
-        
-        <div class="mb-3 mt-3 ml-5">
+﻿ @section Css{
+    <link rel="stylesheet" href="~/css/Friend/Member.css" asp-append-version="true"/>
+ }
+
+<!-- 下方區塊 (動態留言+個人狀態)  -->      
+        <div class="mb-3 mt-3 ml-auto">
             <!-- 留言 + 新增留言 -->
             <div class="card-Member-Comment mb-3 mt-3 p-3 mr-3 ml-3">
                 <div class="row g-0">
@@ -11,24 +14,24 @@
                             <!-- 整個編輯清單 -->
                             <div class="Edit-left-box">
                                 <!-- 返回個人檔案 -->
-                                <a href="/friend/member__information"
+                                <a href="/friend/User__information"
                                     class="btn btn-primary btn-block">返回個人檔案</a>
                                 <!-- 編輯清單 -->
                                 <div class="Edit-list mt-4 align-middle">
                                     <!-- 一般 (個人圖示+個人檔案背景+迷你個人檔案+主題 -->
-                                    <a href="/friend/a1_Edit_Member" class="list-group-item border-0"><span
+                                    <a href="/friend/Edit1_User" class="list-group-item border-0"><span
                                             class="fa fa-inbox mr-2"></span>一般</a>
-                                    <a href="/friend/a2_Edit_MemberPhoto" class="list-group-item border-0"><span
+                                    <a href="/friend/Edit2_UserPhoto" class="list-group-item border-0"><span
                                             class="fa fa-paper-plane mr-2"></span>個人圖示</a>
                                     
-                                    <a href="/friend/a3_Edit_MemberTopic" class="list-group-item border-0"><span
+                                    <a href="/friend/Edit3_UserTopic" class="list-group-item border-0"><span
                                             class="fa fa-ticket mr-2"></span><b>主題</b></a>
                                 </div>
                                 <!-- 分隔線 -->
                                 <hr class="Edit-divider mt-1 m-b-10">
                                 </hr>
                                 <div class="list-group mail-list">
-                                    <a href="/friend/a4_Edit_MemberPrivacy" class="list-group-item border-0"><span
+                                    <a href="/friend/Edit4_UserPrivacy" class="list-group-item border-0"><span
                                             class="fa fa-tags mr-2"></span>隱私設定</a>
                                     <!-- <a href="#" class="list-group-item border-0"><span class="fa fa-briefcase f-s-14 mr-2"></span>Work</a> 
                                         <a href="#" class="list-group-item border-0"><span class="fa fa-sellsy f-s-14 mr-2"></span>Private</a>
@@ -101,10 +104,6 @@
             </div>
         </div>
 
- @section topCss{
-<link rel="stylesheet" href="~/css/Friend/Member.css" asp-append-version="true"/>
-
- }
- @section endScripts{
+ @section Scripts{
      <script src="~/js/Friend/Chat.js"></script>
  }

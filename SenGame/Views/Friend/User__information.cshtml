@@ -1,5 +1,8 @@
-﻿
-<div class="content-body ml-5 mt-3">
+﻿ @section Css{
+    <link rel="stylesheet" href="~/css/Friend/Member.css" asp-append-version="true"/>
+ }
+
+<div class="content-body ml-auto mt-3">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-4 col-xl-3">
@@ -39,7 +42,7 @@
                                         <button class="btn btn-warning px-5 d-none" >取消加好友Q</button>
                                     </div>
                                     <div class="col-12 text-center mt-3">
-                                        <a href="/friend/a1_Edit_Member" class="btn btn-dark px-5">編輯個人資料</a>
+                                        <a href="/friend/Edit1_User" class="btn btn-dark px-5">編輯個人資料</a>
                                     </div>
 
                                     
@@ -173,10 +176,6 @@
             <!-- #/ container -->
         </div>
 
- @section topCss{
-<link rel="stylesheet" href="~/css/Friend/Member.css" asp-append-version="true"/>
-
- }
- @section endScripts{
+ @section Scripts{
      <script src="~/js/Friend/Chat.js"></script>
  }

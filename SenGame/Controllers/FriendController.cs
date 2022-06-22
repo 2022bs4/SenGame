@@ -3,39 +3,39 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace SenGame.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class FriendController : Controller
     {
         public IActionResult Index()
         {
             return View();
         }
-        [Authorize]
+        //[Authorize]
         public IActionResult Chat()
         {
             return View();
         }
-        public IActionResult member__information()
+        public IActionResult User__information()
         {
             return View();
         }
 
-        public IActionResult a1_Edit_Member()
+        public IActionResult Edit1_User()
         {
             return View();
         }
 
-        public IActionResult a2_Edit_MemberPhoto()
+        public IActionResult Edit2_UserPhoto()
         {
             return View();
         }
 
-        public IActionResult a3_Edit_MemberTopic()
+        public IActionResult Edit3_UserTopic()
         {
             return View();
         }
 
-        public IActionResult a4_Edit_MemberPrivacy()
+        public IActionResult Edit4_UserPrivacy()
         {
             return View();
         }
