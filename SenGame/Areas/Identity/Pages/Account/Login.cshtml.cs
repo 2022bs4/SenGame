@@ -46,8 +46,7 @@ namespace SenGame.Areas.Identity.Pages.Account
             [Required]
             public string Account { get; set; }
             
-            //[EmailAddress]
-            //public string Email { get; set; }
+
 
             [Required(ErrorMessage = "請輸入密碼")]
             [DataType(DataType.Password)]

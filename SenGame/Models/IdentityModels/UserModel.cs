@@ -2,7 +2,7 @@
 
 namespace SenGame.Models.IdentityModels
 {
-    public class UserModel:UserModel
+    public class UserModel:IdentityUser
     {
         public string Account { get; set; }
     }

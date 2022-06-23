@@ -10,8 +10,8 @@ using SenGame.Models;
 namespace SenGame.Migrations
 {
     [DbContext(typeof(SenGameContext))]
-    [Migration("20220623141348_First")]
-    partial class First
+    [Migration("20220623143706_no1")]
+    partial class no1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
