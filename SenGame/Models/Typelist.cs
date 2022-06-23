@@ -7,10 +7,14 @@ namespace SenGame.Models
 {
     public partial class Typelist
     {
+        public Typelist()
+        {
+            GameTypes = new HashSet<GameType>();
+        }
+
         public int TypelistId { get; set; }
         public string Name { get; set; }
-        public int? GameTypeId { get; set; }
 
-        public virtual GameType GameType { get; set; }
+        public virtual ICollection<GameType> GameTypes { get; set; }
     }
 }

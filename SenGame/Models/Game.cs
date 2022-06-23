@@ -10,7 +10,8 @@ namespace SenGame.Models
         public Game()
         {
             Forums = new HashSet<Forum>();
-            GamePictures = new HashSet<GamePicture>();
+            GameMedia = new HashSet<GameMedium>();
+            GameTypes = new HashSet<GameType>();
             GameVideos = new HashSet<GameVideo>();
             MyGames = new HashSet<MyGame>();
             SystemSpecifications = new HashSet<SystemSpecification>();
@@ -19,18 +20,20 @@ namespace SenGame.Models
 
         public int GameId { get; set; }
         public int DiscountId { get; set; }
-        public int GameTypleId { get; set; }
         public string GameName { get; set; }
-        public decimal? GamePrice { get; set; }
+        public decimal GamePrice { get; set; }
         public string GameIntroduction { get; set; }
         public string GameDetailsText { get; set; }
         public int? TotalBuyCount { get; set; }
-        public DateTime ReleaseDate { get; set; }
+        public DateTime ReleaseTime { get; set; }
+        public DateTime? DownTime { get; set; }
+        public string Developer { get; set; }
+        public string Marker { get; set; }
 
         public virtual GameDiscount Discount { get; set; }
-        public virtual GameType GameTyple { get; set; }
         public virtual ICollection<Forum> Forums { get; set; }
-        public virtual ICollection<GamePicture> GamePictures { get; set; }
+        public virtual ICollection<GameMedium> GameMedia { get; set; }
+        public virtual ICollection<GameType> GameTypes { get; set; }
         public virtual ICollection<GameVideo> GameVideos { get; set; }
         public virtual ICollection<MyGame> MyGames { get; set; }
         public virtual ICollection<SystemSpecification> SystemSpecifications { get; set; }

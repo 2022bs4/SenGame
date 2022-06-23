@@ -15,8 +15,10 @@ namespace SenGame.Models
         public int MyGameId { get; set; }
         public int UserId { get; set; }
         public int GameId { get; set; }
+        public int? MyFavouriteId { get; set; }
 
         public virtual Game Game { get; set; }
+        public virtual MyFavouriteId MyFavourite { get; set; }
         public virtual User User { get; set; }
         public virtual ICollection<CustomerService> CustomerServices { get; set; }
     }

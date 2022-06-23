@@ -7,14 +7,15 @@ namespace SenGame.Models
 {
     public partial class SystemSpecification
     {
-        public int SystemId { get; set; }
-        public int SystemTypeId { get; set; }
+        public int SystemSpecificationId { get; set; }
+        public int SystemType { get; set; }
         public string Hddspace { get; set; }
         public string System { get; set; }
         public string SystemRam { get; set; }
+        public string SystemCpu { get; set; }
+        public string SystemGpu { get; set; }
         public int GameId { get; set; }
 
         public virtual Game Game { get; set; }
-        public virtual SystemType SystemType { get; set; }
     }
 }

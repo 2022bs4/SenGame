@@ -27,7 +27,6 @@ namespace SenGame.Models
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUserRole> AspNetUserRoles { get; set; }
         public virtual DbSet<AspNetUserToken> AspNetUserTokens { get; set; }
-        public virtual DbSet<Blockade> Blockades { get; set; }
         public virtual DbSet<Chat> Chats { get; set; }
         public virtual DbSet<CustomerService> CustomerServices { get; set; }
         public virtual DbSet<Forum> Forums { get; set; }
@@ -35,26 +34,23 @@ namespace SenGame.Models
         public virtual DbSet<FriendList> FriendLists { get; set; }
         public virtual DbSet<Game> Games { get; set; }
         public virtual DbSet<GameDiscount> GameDiscounts { get; set; }
-        public virtual DbSet<GamePicture> GamePictures { get; set; }
+        public virtual DbSet<GameMedium> GameMedia { get; set; }
         public virtual DbSet<GameType> GameTypes { get; set; }
         public virtual DbSet<GameVideo> GameVideos { get; set; }
         public virtual DbSet<Invite> Invites { get; set; }
-        public virtual DbSet<MemderReply> MemderReplies { get; set; }
+        public virtual DbSet<MyFavouriteId> MyFavouriteIds { get; set; }
         public virtual DbSet<MyForum> MyForums { get; set; }
         public virtual DbSet<MyGame> MyGames { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
-        public virtual DbSet<OrderStatus> OrderStatuses { get; set; }
         public virtual DbSet<Orderdetail> Orderdetails { get; set; }
         public virtual DbSet<Reply> Replies { get; set; }
         public virtual DbSet<ReplyLike> ReplyLikes { get; set; }
         public virtual DbSet<ServiceReply> ServiceReplies { get; set; }
         public virtual DbSet<SystemSpecification> SystemSpecifications { get; set; }
-        public virtual DbSet<SystemType> SystemTypes { get; set; }
         public virtual DbSet<Typelist> Typelists { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserBackground> UserBackgrounds { get; set; }
         public virtual DbSet<UserCountry> UserCountries { get; set; }
-        public virtual DbSet<UserEdit> UserEdits { get; set; }
         public virtual DbSet<UserPrivacy> UserPrivacies { get; set; }
         public virtual DbSet<Wish> Wishes { get; set; }
 
@@ -88,11 +84,11 @@ namespace SenGame.Models
                 entity.Property(e => e.ForumId).HasColumnName("ForumID");
 
                 entity.Property(e => e.LastReplyTime)
-                    .HasColumnType("date")
+                    .HasColumnType("datetime")
                     .HasComment("最後回文時間");
 
                 entity.Property(e => e.PostDate)
-                    .HasColumnType("date")
+                    .HasColumnType("datetime")
                     .HasComment("發文日期");
 
                 entity.Property(e => e.Title)
@@ -251,28 +247,6 @@ namespace SenGame.Models
                     .HasForeignKey(d => d.UserId);
             });
 
-            modelBuilder.Entity<Blockade>(entity =>
-            {
-                entity.ToTable("Blockade");
-
-                entity.Property(e => e.BlockadeId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("BlockadeID");
-
-                entity.Property(e => e.BlockadeUserId)
-                    .HasMaxLength(10)
-                    .HasColumnName("BlockadeUserID")
-                    .IsFixedLength(true)
-                    .HasComment("被封鎖人之ID");
-
-                entity.Property(e => e.UserId).HasColumnName("UserID");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.Blockades)
-                    .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK_Blockade_User");
-            });
-
             modelBuilder.Entity<Chat>(entity =>
             {
                 entity.ToTable("Chat");
@@ -284,17 +258,10 @@ namespace SenGame.Models
                 entity.Property(e => e.ChatContent).HasComment("聊天紀錄");
 
                 entity.Property(e => e.ChatTime)
-                    .HasColumnType("date")
+                    .HasColumnType("datetime")
                     .HasComment("現在聊天時間");
 
-                entity.Property(e => e.FriendId)
-                    .HasMaxLength(10)
-                    .HasColumnName("FriendID")
-                    .IsFixedLength(true);
-
-                entity.Property(e => e.LastChatDate)
-                    .HasColumnType("date")
-                    .HasComment("最後聊天時間");
+                entity.Property(e => e.PictureFile).HasComment("暫定");
 
                 entity.Property(e => e.UserId)
                     .HasColumnName("UserID")
@@ -360,16 +327,18 @@ namespace SenGame.Models
 
                 entity.ToTable("FriendGroup");
 
-                entity.Property(e => e.FriendGoupId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("FriendGoupID");
+                entity.Property(e => e.FriendGoupId).ValueGeneratedNever();
 
                 entity.Property(e => e.GroupName)
                     .IsRequired()
                     .HasMaxLength(10)
                     .IsFixedLength(true);
 
-                entity.Property(e => e.UserId).HasColumnName("UserID");
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.FriendGroups)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_FriendGroup_User");
             });
 
             modelBuilder.Entity<FriendList>(entity =>
@@ -378,48 +347,37 @@ namespace SenGame.Models
 
                 entity.Property(e => e.FriendListId)
                     .ValueGeneratedNever()
-                    .HasColumnName("FriendLIstID");
-
-                entity.Property(e => e.FriendGroupId).HasColumnName("FriendGroupID");
-
-                entity.Property(e => e.FriendId).HasColumnName("FriendID");
+                    .HasColumnName("FriendLIstId");
 
                 entity.Property(e => e.FriendNickName)
                     .HasMaxLength(10)
                     .IsFixedLength(true);
 
                 entity.Property(e => e.IsBlockade).HasComment("是否被封鎖");
-
-                entity.Property(e => e.UserId).HasColumnName("UserID");
-
-                entity.HasOne(d => d.Friend)
-                    .WithMany(p => p.FriendListFriends)
-                    .HasForeignKey(d => d.FriendId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_FriendList_User1");
-
-                entity.HasOne(d => d.FriendListNavigation)
-                    .WithOne(p => p.FriendList)
-                    .HasForeignKey<FriendList>(d => d.FriendListId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_FriendList_FriendGroup");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.FriendListUsers)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_FriendList_User");
             });
 
             modelBuilder.Entity<Game>(entity =>
             {
                 entity.ToTable("Game");
 
-                entity.Property(e => e.GameId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("GameID");
+                entity.Property(e => e.GameId).ValueGeneratedNever();
 
-                entity.Property(e => e.DiscountId).HasColumnName("DiscountID");
+                entity.Property(e => e.Developer)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasComment("開發商家");
+
+                entity.Property(e => e.DownTime)
+                    .HasColumnType("datetime")
+                    .HasComment("商品下架日期");
+
+                entity.Property(e => e.GameDetailsText)
+                    .IsRequired()
+                    .HasComment("遊戲詳細介紹");
+
+                entity.Property(e => e.GameIntroduction)
+                    .IsRequired()
+                    .HasComment("遊戲簡介");
 
                 entity.Property(e => e.GameName)
                     .IsRequired()
@@ -427,23 +385,22 @@ namespace SenGame.Models
 
                 entity.Property(e => e.GamePrice).HasColumnType("money");
 
-                entity.Property(e => e.GameTypleId).HasColumnName("GameTypleID");
+                entity.Property(e => e.Marker)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasComment("開發者");
 
-                entity.Property(e => e.ReleaseDate)
-                    .HasColumnType("date")
+                entity.Property(e => e.ReleaseTime)
+                    .HasColumnType("datetime")
                     .HasComment("發布日期");
+
+                entity.Property(e => e.TotalBuyCount).HasComment("此遊戲被購買次數");
 
                 entity.HasOne(d => d.Discount)
                     .WithMany(p => p.Games)
                     .HasForeignKey(d => d.DiscountId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Game_GameDiscount");
-
-                entity.HasOne(d => d.GameTyple)
-                    .WithMany(p => p.Games)
-                    .HasForeignKey(d => d.GameTypleId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Game_GameType");
             });
 
             modelBuilder.Entity<GameDiscount>(entity =>
@@ -452,47 +409,52 @@ namespace SenGame.Models
 
                 entity.ToTable("GameDiscount");
 
-                entity.Property(e => e.DiscountId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("DiscountID");
+                entity.Property(e => e.DiscountId).ValueGeneratedNever();
 
-                entity.Property(e => e.EndDate).HasColumnType("date");
+                entity.Property(e => e.EndTime).HasColumnType("datetime");
 
-                entity.Property(e => e.StarDate).HasColumnType("date");
+                entity.Property(e => e.StarTime).HasColumnType("datetime");
             });
 
-            modelBuilder.Entity<GamePicture>(entity =>
+            modelBuilder.Entity<GameMedium>(entity =>
             {
-                entity.ToTable("GamePicture");
+                entity.HasKey(e => e.GameMediaId);
 
-                entity.Property(e => e.GamePictureId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("GamePictureID");
+                entity.Property(e => e.GameMediaId).ValueGeneratedNever();
 
-                entity.Property(e => e.GameId)
-                    .HasColumnName("GameID")
-                    .HasComment("是甚麼影片");
+                entity.Property(e => e.Instruction).HasComment("1.圖片2.影片");
 
-                entity.Property(e => e.Instructions)
-                    .HasMaxLength(50)
-                    .HasComment("用途");
+                entity.Property(e => e.InstructionType).HasComment("1幻燈片.2.簡介3.內文");
+
+                entity.Property(e => e.MediaUrl)
+                    .IsRequired()
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.Sort).HasComment("排序");
 
                 entity.HasOne(d => d.Game)
-                    .WithMany(p => p.GamePictures)
+                    .WithMany(p => p.GameMedia)
                     .HasForeignKey(d => d.GameId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_GamePicture_Game");
+                    .HasConstraintName("FK_GameMedia_Game");
             });
 
             modelBuilder.Entity<GameType>(entity =>
             {
                 entity.ToTable("GameType");
 
-                entity.Property(e => e.GameTypeId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("GameTypeID");
+                entity.Property(e => e.GameTypeId).ValueGeneratedNever();
 
-                entity.Property(e => e.GameId).HasColumnName("GameID");
+                entity.HasOne(d => d.Game)
+                    .WithMany(p => p.GameTypes)
+                    .HasForeignKey(d => d.GameId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_GameType_Game");
+
+                entity.HasOne(d => d.Typelist)
+                    .WithMany(p => p.GameTypes)
+                    .HasForeignKey(d => d.TypelistId)
+                    .HasConstraintName("FK_GameType_Typelist");
             });
 
             modelBuilder.Entity<GameVideo>(entity =>
@@ -505,7 +467,9 @@ namespace SenGame.Models
 
                 entity.Property(e => e.GameId).HasColumnName("GameID");
 
-                entity.Property(e => e.Instructions).HasMaxLength(50);
+                entity.Property(e => e.Instructions)
+                    .HasMaxLength(50)
+                    .HasComment("影片用途");
 
                 entity.HasOne(d => d.Game)
                     .WithMany(p => p.GameVideos)
@@ -518,21 +482,15 @@ namespace SenGame.Models
             {
                 entity.ToTable("Invite");
 
-                entity.Property(e => e.InviteId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("InviteID");
+                entity.Property(e => e.InviteId).ValueGeneratedNever();
 
                 entity.Property(e => e.Message)
                     .HasMaxLength(50)
                     .IsFixedLength(true);
 
-                entity.Property(e => e.SenderId)
-                    .HasColumnName("SenderID")
-                    .HasComment("邀請者");
+                entity.Property(e => e.SenderId).HasComment("邀請者");
 
-                entity.Property(e => e.UserId)
-                    .HasColumnName("UserID")
-                    .HasComment("被邀請者");
+                entity.Property(e => e.UserId).HasComment("被邀請者");
 
                 entity.HasOne(d => d.Sender)
                     .WithMany(p => p.InviteSenders)
@@ -547,41 +505,15 @@ namespace SenGame.Models
                     .HasConstraintName("FK_Invite_User");
             });
 
-            modelBuilder.Entity<MemderReply>(entity =>
+            modelBuilder.Entity<MyFavouriteId>(entity =>
             {
-                entity.ToTable("MemderReply");
+                entity.HasKey(e => e.MyFavouriteId1);
 
-                entity.Property(e => e.MemderReplyId)
+                entity.ToTable("MyFavouriteId");
+
+                entity.Property(e => e.MyFavouriteId1)
                     .ValueGeneratedNever()
-                    .HasColumnName("MemderReplyID");
-
-                entity.Property(e => e.FriendId)
-                    .HasColumnName("FriendID")
-                    .HasComment("好友才能去主頁留言");
-
-                entity.Property(e => e.ParentId)
-                    .HasColumnName("ParentID")
-                    .HasComment("判斷回復的回覆");
-
-                entity.Property(e => e.ReplyContent).HasMaxLength(200);
-
-                entity.Property(e => e.ReplyDate)
-                    .HasColumnType("date")
-                    .HasComment("留言當下時間");
-
-                entity.Property(e => e.UserId).HasColumnName("UserID");
-
-                entity.HasOne(d => d.Friend)
-                    .WithMany(p => p.MemderReplies)
-                    .HasForeignKey(d => d.FriendId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_MemderReply_FriendList");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.MemderReplies)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_MemderReply_User");
+                    .HasColumnName("MyFavouriteId");
             });
 
             modelBuilder.Entity<MyForum>(entity =>
@@ -613,19 +545,20 @@ namespace SenGame.Models
             {
                 entity.ToTable("MyGame");
 
-                entity.Property(e => e.MyGameId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("MyGameID");
+                entity.Property(e => e.MyGameId).ValueGeneratedNever();
 
-                entity.Property(e => e.GameId).HasColumnName("GameID");
-
-                entity.Property(e => e.UserId).HasColumnName("UserID");
+                entity.Property(e => e.MyFavouriteId).HasComment("我的最愛");
 
                 entity.HasOne(d => d.Game)
                     .WithMany(p => p.MyGames)
                     .HasForeignKey(d => d.GameId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_MyGame_Game");
+
+                entity.HasOne(d => d.MyFavourite)
+                    .WithMany(p => p.MyGames)
+                    .HasForeignKey(d => d.MyFavouriteId)
+                    .HasConstraintName("FK_MyGame_MyFavouriteId");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.MyGames)
@@ -638,66 +571,42 @@ namespace SenGame.Models
             {
                 entity.ToTable("Order");
 
-                entity.Property(e => e.OrderId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("OrderID");
+                entity.Property(e => e.OrderId).ValueGeneratedNever();
 
-                entity.Property(e => e.CreateDate)
-                    .HasColumnType("date")
+                entity.Property(e => e.CreateTime)
+                    .HasColumnType("datetime")
                     .HasComment("訂單時間");
 
-                entity.Property(e => e.EcpayId)
-                    .HasColumnName("EcpayID")
-                    .HasComment("Ecpay訂單編號");
+                entity.Property(e => e.EcpayId).HasComment("Ecpay訂單編號");
 
                 entity.Property(e => e.Invoice)
-                    .HasMaxLength(10)
-                    .HasColumnName("invoice")
+                    .IsRequired()
+                    .HasMaxLength(20)
                     .IsFixedLength(true)
-                    .HasComment("發票票");
+                    .HasComment("發票編碼");
 
-                entity.Property(e => e.OrderStatusId)
-                    .HasColumnName("OrderStatusID")
-                    .HasComment("訂單單狀態");
-
-                entity.Property(e => e.UserId).HasColumnName("UserID");
-
-                entity.HasOne(d => d.OrderStatus)
-                    .WithMany(p => p.Orders)
-                    .HasForeignKey(d => d.OrderStatusId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Order_OrderStatus");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.Orders)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Order_User");
-            });
-
-            modelBuilder.Entity<OrderStatus>(entity =>
-            {
-                entity.ToTable("OrderStatus");
-
-                entity.Property(e => e.OrderStatusId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("OrderStatusID");
-
-                entity.Property(e => e.StatusName)
-                    .HasMaxLength(10)
+                entity.Property(e => e.InvoiceWay)
+                    .IsRequired()
+                    .HasMaxLength(20)
                     .IsFixedLength(true)
-                    .HasComment("狀態");
+                    .HasComment("1.電子發票2.載具3.捐贈");
+
+                entity.Property(e => e.OrderStatus).HasComment("1.購物車 2.待付款  3.付款完成  4.申請退款 5.退款完成");
+
+                entity.Property(e => e.TotalPrice).HasColumnType("money");
+
+                entity.Property(e => e.UpdateTime)
+                    .HasColumnType("datetime")
+                    .HasComment("訂單更新時間");
             });
 
             modelBuilder.Entity<Orderdetail>(entity =>
             {
-                entity.Property(e => e.OrderdetailId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("OrderdetailID");
+                entity.Property(e => e.OrderdetailId).ValueGeneratedNever();
 
-                entity.Property(e => e.GameId).HasColumnName("GameID");
+                entity.Property(e => e.Discount).HasComment("訂單當時折購");
 
-                entity.Property(e => e.OrderId).HasColumnName("OrderID");
+                entity.Property(e => e.Price).HasColumnType("money");
 
                 entity.HasOne(d => d.Order)
                     .WithMany(p => p.Orderdetails)
@@ -776,8 +685,6 @@ namespace SenGame.Models
                     .IsRequired()
                     .HasComment("客服回應");
 
-                entity.Property(e => e.ServiceId).HasColumnName("ServiceID");
-
                 entity.HasOne(d => d.Service)
                     .WithMany()
                     .HasForeignKey(d => d.ServiceId)
@@ -787,15 +694,9 @@ namespace SenGame.Models
 
             modelBuilder.Entity<SystemSpecification>(entity =>
             {
-                entity.HasKey(e => e.SystemId);
-
                 entity.ToTable("SystemSpecification");
 
-                entity.Property(e => e.SystemId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("SystemID");
-
-                entity.Property(e => e.GameId).HasColumnName("GameID");
+                entity.Property(e => e.SystemSpecificationId).ValueGeneratedNever();
 
                 entity.Property(e => e.Hddspace)
                     .HasMaxLength(50)
@@ -806,92 +707,84 @@ namespace SenGame.Models
                     .HasMaxLength(50)
                     .HasComment("系統類別");
 
+                entity.Property(e => e.SystemCpu)
+                    .HasMaxLength(50)
+                    .HasComment("處理器");
+
+                entity.Property(e => e.SystemGpu)
+                    .HasMaxLength(50)
+                    .HasComment("顯示卡");
+
                 entity.Property(e => e.SystemRam)
                     .HasMaxLength(50)
                     .HasComment("記憶體");
 
-                entity.Property(e => e.SystemTypeId).HasColumnName("SystemTypeID");
+                entity.Property(e => e.SystemType).HasComment("1:windows 2:Mac");
 
                 entity.HasOne(d => d.Game)
                     .WithMany(p => p.SystemSpecifications)
                     .HasForeignKey(d => d.GameId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_SystemSpecification_Game");
-
-                entity.HasOne(d => d.SystemType)
-                    .WithMany(p => p.SystemSpecifications)
-                    .HasForeignKey(d => d.SystemTypeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_SystemSpecification_SystemType");
-            });
-
-            modelBuilder.Entity<SystemType>(entity =>
-            {
-                entity.HasKey(e => e.SystmTypeId);
-
-                entity.ToTable("SystemType");
-
-                entity.Property(e => e.SystmTypeId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("SystmTypeID");
-
-                entity.Property(e => e.TypeName)
-                    .IsRequired()
-                    .HasMaxLength(50);
             });
 
             modelBuilder.Entity<Typelist>(entity =>
             {
                 entity.ToTable("Typelist");
 
-                entity.Property(e => e.TypelistId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("TypelistID");
-
-                entity.Property(e => e.GameTypeId).HasColumnName("GameTypeID");
+                entity.Property(e => e.TypelistId).ValueGeneratedNever();
 
                 entity.Property(e => e.Name)
                     .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("name");
-
-                entity.HasOne(d => d.GameType)
-                    .WithMany(p => p.Typelists)
-                    .HasForeignKey(d => d.GameTypeId)
-                    .HasConstraintName("FK_Typelist_GameType");
+                    .HasMaxLength(50);
             });
 
             modelBuilder.Entity<User>(entity =>
             {
                 entity.ToTable("User");
 
-                entity.Property(e => e.UserId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("UserID");
+                entity.Property(e => e.UserId).ValueGeneratedNever();
 
                 entity.Property(e => e.Account)
                     .IsRequired()
-                    .HasMaxLength(20);
+                    .HasMaxLength(30);
 
                 entity.Property(e => e.Address).HasMaxLength(256);
 
-                entity.Property(e => e.CreateDate).HasColumnType("date");
+                entity.Property(e => e.CreateTime)
+                    .HasColumnType("datetime")
+                    .HasComment("註冊日期");
 
                 entity.Property(e => e.Email)
                     .IsRequired()
                     .HasMaxLength(256);
 
+                entity.Property(e => e.EmailConfirmDate).HasColumnType("datetime");
+
                 entity.Property(e => e.PassWord).IsRequired();
+
+                entity.Property(e => e.PrivacyFriendsList).HasComment("好友名單隱私狀態");
+
+                entity.Property(e => e.PrivacyGameFile).HasComment("遊戲資料隱私狀態");
+
+                entity.Property(e => e.PrivacyPersonalFile).HasComment("個人檔案隱私狀態");
 
                 entity.Property(e => e.UserAbout).HasComment("自介");
 
-                entity.Property(e => e.UserBackgroundId).HasColumnName("UserBackgroundID");
+                entity.Property(e => e.UserBackgroundId).HasComment("使用者背景顏色");
 
-                entity.Property(e => e.UserCountryId).HasColumnName("UserCountryID");
+                entity.Property(e => e.UserPicture)
+                    .HasMaxLength(256)
+                    .HasComment("使用者大頭照");
 
-                entity.Property(e => e.UserPicture).HasMaxLength(256);
+                entity.Property(e => e.UsernickName)
+                    .HasMaxLength(256)
+                    .HasComment("使用者暱稱");
 
-                entity.Property(e => e.UsernickName).HasMaxLength(256);
+                entity.HasOne(d => d.Order)
+                    .WithMany(p => p.Users)
+                    .HasForeignKey(d => d.OrderId)
+                    .HasConstraintName("FK_User_Order");
 
                 entity.HasOne(d => d.UserBackground)
                     .WithMany(p => p.Users)
@@ -909,91 +802,48 @@ namespace SenGame.Models
             {
                 entity.ToTable("UserBackground");
 
-                entity.Property(e => e.UserBackgroundId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("UserBackgroundID");
+                entity.Property(e => e.UserBackgroundId).ValueGeneratedNever();
 
                 entity.Property(e => e.BackgroundColor)
                     .IsRequired()
                     .HasMaxLength(50);
-
-                entity.Property(e => e.UserId).HasColumnName("UserID");
             });
 
             modelBuilder.Entity<UserCountry>(entity =>
             {
                 entity.ToTable("UserCountry");
 
-                entity.Property(e => e.UserCountryId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("UserCountryID");
+                entity.Property(e => e.UserCountryId).ValueGeneratedNever();
 
                 entity.Property(e => e.CountryName)
                     .IsRequired()
                     .HasMaxLength(20);
             });
 
-            modelBuilder.Entity<UserEdit>(entity =>
-            {
-                entity.ToTable("UserEdit");
-
-                entity.Property(e => e.UserEditId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("UserEditID")
-                    .HasComment("");
-
-                entity.Property(e => e.FriendsList).HasComment("好友名單");
-
-                entity.Property(e => e.GameFile).HasComment("遊戲資料");
-
-                entity.Property(e => e.PersonalFile).HasComment("個人檔案");
-
-                entity.Property(e => e.ReplyName).HasComment("是否能回復於個人主頁");
-
-                entity.Property(e => e.UserId).HasColumnName("UserID");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.UserEdits)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_UserEdit_User");
-            });
-
             modelBuilder.Entity<UserPrivacy>(entity =>
             {
                 entity.ToTable("UserPrivacy");
 
-                entity.Property(e => e.UserPrivacyId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("UserPrivacyID");
+                entity.Property(e => e.UserPrivacyId).ValueGeneratedNever();
 
                 entity.Property(e => e.PrivacyState)
                     .IsRequired()
                     .HasMaxLength(10)
                     .HasComment("隱私狀況");
 
-                entity.Property(e => e.UserEditId).HasColumnName("UserEditID");
-
-                entity.HasOne(d => d.UserEdit)
+                entity.HasOne(d => d.User)
                     .WithMany(p => p.UserPrivacies)
-                    .HasForeignKey(d => d.UserEditId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_UserPrivacy_UserEdit");
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("FK_UserPrivacy_User");
             });
 
             modelBuilder.Entity<Wish>(entity =>
             {
                 entity.ToTable("Wish");
 
-                entity.Property(e => e.WishId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("WishID");
+                entity.Property(e => e.WishId).ValueGeneratedNever();
 
-                entity.Property(e => e.AddDate).HasColumnType("date");
-
-                entity.Property(e => e.GameId).HasColumnName("GameID");
-
-                entity.Property(e => e.UserId).HasColumnName("UserID");
+                entity.Property(e => e.AddTime).HasColumnType("datetime");
 
                 entity.HasOne(d => d.Game)
                     .WithMany(p => p.Wishes)

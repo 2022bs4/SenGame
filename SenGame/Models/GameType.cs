@@ -7,21 +7,11 @@ namespace SenGame.Models
 {
     public partial class GameType
     {
-        public GameType()
-        {
-            Games = new HashSet<Game>();
-            Typelists = new HashSet<Typelist>();
-        }
-
         public int GameTypeId { get; set; }
         public int GameId { get; set; }
+        public int? TypelistId { get; set; }
 
-        public virtual ICollection<Game> Games { get; set; }
-        public virtual ICollection<Typelist> Typelists { get; set; }
-
-        public static implicit operator GameType(int v)
-        {
-            throw new NotImplementedException();
-        }
+        public virtual Game Game { get; set; }
+        public virtual Typelist Typelist { get; set; }
     }
 }

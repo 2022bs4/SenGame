@@ -10,7 +10,7 @@ namespace SenGame.Models
         public int WishId { get; set; }
         public int UserId { get; set; }
         public int GameId { get; set; }
-        public DateTime? AddDate { get; set; }
+        public DateTime? AddTime { get; set; }
 
         public virtual Game Game { get; set; }
         public virtual User User { get; set; }

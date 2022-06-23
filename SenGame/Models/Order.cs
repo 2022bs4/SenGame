@@ -10,18 +10,19 @@ namespace SenGame.Models
         public Order()
         {
             Orderdetails = new HashSet<Orderdetail>();
+            Users = new HashSet<User>();
         }
 
         public int OrderId { get; set; }
-        public DateTime CreateDate { get; set; }
-        public int UserId { get; set; }
-        public int TotalPrice { get; set; }
-        public int OrderStatusId { get; set; }
+        public DateTime CreateTime { get; set; }
+        public DateTime UpdateTime { get; set; }
+        public decimal TotalPrice { get; set; }
+        public int OrderStatus { get; set; }
         public int EcpayId { get; set; }
         public string Invoice { get; set; }
+        public string InvoiceWay { get; set; }
 
-        public virtual OrderStatus OrderStatus { get; set; }
-        public virtual User User { get; set; }
         public virtual ICollection<Orderdetail> Orderdetails { get; set; }
+        public virtual ICollection<User> Users { get; set; }
     }
 }

@@ -14,7 +14,6 @@ namespace SenGame.Models
 
         public int UserBackgroundId { get; set; }
         public string BackgroundColor { get; set; }
-        public int UserId { get; set; }
 
         public virtual ICollection<User> Users { get; set; }
     }
