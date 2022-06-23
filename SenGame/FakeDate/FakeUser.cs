@@ -15,17 +15,15 @@ namespace SenGame.Data
         {
         }
 
-        public DbSet<SenGame.Models.User> User { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder FakeUser)
-        {
-            //List<User> users = new List<User>();
-            //{
-            //    new User { UserId = 1, UsernickName="1哈哈是我啦" , UserAbout="早安你好", UserPicture="網址" ,UserCountryId=1},
-            //    new User { UserId = 2, UsernickName = "2哈哈是我啦", UserAbout = "午安你好", UserPicture = "網址", UserCountryId = 3 },
-            //    new User { UserId = 3, UsernickName = "3哈哈是我啦", UserAbout = "晚安你好", UserPicture = "網址", UserCountryId = 2 }
-            //};
-        }
+        //public DbSet<User> User { get; set; }
+        //List<User> users = new List<User>()
+        //{
+        //    new User { UserId = 1, UsernickName = "1哈哈是我啦", UserAbout = "早安你好", UserPicture = "網址", UserCountryId = 1 },
+        //    new User { UserId = 2, UsernickName = "2哈哈是我啦", UserAbout = "午安你好", UserPicture = "網址", UserCountryId = 3 },
+        //    new User { UserId = 3, UsernickName = "3哈哈是我啦", UserAbout = "晚安你好", UserPicture = "網址", UserCountryId = 2 }
+        //};
+        
 
         //願望清單
         //public DbSet<Wish> Wish { get; set; }
