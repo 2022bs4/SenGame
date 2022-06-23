@@ -11,5 +11,7 @@ namespace SenGame.Models
         public string VideoUrl { get; set; }
         public int GameId { get; set; }
         public string Instructions { get; set; }
+
+        public virtual Game Game { get; set; }
     }
 }

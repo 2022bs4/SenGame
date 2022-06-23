@@ -421,6 +421,10 @@ namespace SenGame.Models
 
                 entity.Property(e => e.DiscountId).HasColumnName("DiscountID");
 
+                entity.Property(e => e.GameName)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
                 entity.Property(e => e.GamePrice).HasColumnType("money");
 
                 entity.Property(e => e.GameTypleId).HasColumnName("GameTypleID");
@@ -472,6 +476,12 @@ namespace SenGame.Models
                 entity.Property(e => e.Instructions)
                     .HasMaxLength(50)
                     .HasComment("用途");
+
+                entity.HasOne(d => d.Game)
+                    .WithMany(p => p.GamePictures)
+                    .HasForeignKey(d => d.GameId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_GamePicture_Game");
             });
 
             modelBuilder.Entity<GameType>(entity =>
@@ -483,14 +493,6 @@ namespace SenGame.Models
                     .HasColumnName("GameTypeID");
 
                 entity.Property(e => e.GameId).HasColumnName("GameID");
-
-                entity.Property(e => e.TypelistId).HasColumnName("TypelistID");
-
-                entity.HasOne(d => d.Typelist)
-                    .WithMany(p => p.GameTypes)
-                    .HasForeignKey(d => d.TypelistId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_GameType_Typelist");
             });
 
             modelBuilder.Entity<GameVideo>(entity =>
@@ -504,6 +506,12 @@ namespace SenGame.Models
                 entity.Property(e => e.GameId).HasColumnName("GameID");
 
                 entity.Property(e => e.Instructions).HasMaxLength(50);
+
+                entity.HasOne(d => d.Game)
+                    .WithMany(p => p.GameVideos)
+                    .HasForeignKey(d => d.GameId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_GameVideo_Game");
             });
 
             modelBuilder.Entity<Invite>(entity =>
@@ -840,10 +848,17 @@ namespace SenGame.Models
                     .ValueGeneratedNever()
                     .HasColumnName("TypelistID");
 
+                entity.Property(e => e.GameTypeId).HasColumnName("GameTypeID");
+
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(50)
                     .HasColumnName("name");
+
+                entity.HasOne(d => d.GameType)
+                    .WithMany(p => p.Typelists)
+                    .HasForeignKey(d => d.GameTypeId)
+                    .HasConstraintName("FK_Typelist_GameType");
             });
 
             modelBuilder.Entity<User>(entity =>
