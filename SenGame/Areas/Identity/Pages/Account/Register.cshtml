@@ -10,14 +10,14 @@
                 <!-- 輸入帳號密碼之表單 -->
                 <form class="register-form" asp-route-returnUrl="@Model.ReturnUrl" method="post" >
                     <div asp-validation-summary="All" class="text-danger text-center"></div>
-                    <div class="register-account">
+                     <div class="register-account">
+                        <label asp-for="Input.Account" class="register-account">請輸入帳號</label>
+                        <input asp-for="Input.Account" class="" />
+                    </div>
+                    <div class="register-email">
                         <label asp-for="Input.Email" class="register-email">電子信箱</label>
                         <input asp-for="Input.Email" class="" />
                     </div>
-  @*                  <div class="register-email">
-                        <label asp-for="Input.ConfirmEmail">確認您的電子郵件地址</label>
-                        <input asp-for="Input.ConfirmEmail" class="" />
-                    </div>*@
                     <div class="register-password">
                         <label asp-for="Input.Password" class="register-text">密碼</label>
                         <input asp-for="Input.Password" class="" /> 
@@ -46,7 +46,7 @@
             </div>
         </div>
 
-@*    <div class="col-md-4">
+@*   <div class="col-md-4">
         <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
             <h4>Create a new account.</h4>
             <hr />
@@ -68,8 +68,8 @@
             </div>
             <button type="submit" class="btn btn-primary">Register</button>
         </form>
-    </div>
-    <div class="col-md-6 col-md-offset-2">
+    </div>*@
+@*    <div class="col-md-6 col-md-offset-2">
         <section>
             <h4>Use another service to register.</h4>
             <hr />
@@ -98,8 +98,8 @@
                 }
             }
         </section>
-    </div>
-*@
+    </div>*@
+
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
