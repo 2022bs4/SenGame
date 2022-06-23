@@ -15,15 +15,16 @@ namespace SenGame.Data
         {
         }
 
-
+        //使用者
+        //PassWord Address CreateDate
         //public DbSet<User> User { get; set; }
         //List<User> users = new List<User>()
         //{
-        //    new User { UserId = 1, UsernickName = "1哈哈是我啦", UserAbout = "早安你好", UserPicture = "網址", UserCountryId = 1 },
-        //    new User { UserId = 2, UsernickName = "2哈哈是我啦", UserAbout = "午安你好", UserPicture = "網址", UserCountryId = 3 },
-        //    new User { UserId = 3, UsernickName = "3哈哈是我啦", UserAbout = "晚安你好", UserPicture = "網址", UserCountryId = 2 }
+        //    new User { UserId = 1, UserCountryId = 1, Account = "123456", Email="Rain@gmail.com", EmailConfirm = true, UsernickName = "張添宇", UserAbout = "早安你好", UserPicture = "https://memeprod.ap-south-1.linodeobjects.com/user-gif/fc83a3a705767ab42688e4e858777196.gif" , UserBackgroundId=2},
+        //    new User { UserId = 2, UserCountryId = 1, Account = "456789", Email="Hand@gmail.com", EmailConfirm = true, UsernickName = "大帥哥", UserAbout = "午安你好", UserPicture = "https://memeprod.ap-south-1.linodeobjects.com/user-gif-post/1654151736656.gif", UserBackgroundId=1},
+        //    new User { UserId = 3, UserCountryId = 1, Account = "789123", Email="AKAQ@gmail.com", EmailConfirm = true, UsernickName = "AKA", UserAbout = "晚安你好", UserPicture = "https://memeprod.ap-south-1.linodeobjects.com/user-gif-thumbnail/d4dd77bf2820f1c7c7b43121d4f7477b.gif" , UserBackgroundId=3}
         //};
-        
+
 
         //願望清單
         //public DbSet<Wish> Wish { get; set; }
