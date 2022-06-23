@@ -57,7 +57,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="FakeDate\" />
+    <Folder Include="FakeData\" />
     <Folder Include="wwwroot\img\" />
   </ItemGroup>
 
