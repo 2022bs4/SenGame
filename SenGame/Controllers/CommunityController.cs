@@ -2,7 +2,7 @@
 
 namespace SenGame.Controllers
 {
-    public class ComunityController : Controller
+    public class CommunityController : Controller
     {
         public IActionResult Index()
         {
