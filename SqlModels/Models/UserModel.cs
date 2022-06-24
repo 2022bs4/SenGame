@@ -1,18 +1,19 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 
 #nullable disable
 
 namespace SqlModels.Models
 {
-    public partial class User
+    public partial class UserModel:IdentityUser
     {
         public int UserId { get; set; }
         public string Account { get; set; }
-        public string Email { get; set; }
-        public bool EmailConfirm { get; set; }
+
+
         public DateTime? EmailConfirmDate { get; set; }
-        public string PassWord { get; set; }
+
         public string Address { get; set; }
         public string UserPicture { get; set; }
         public string UsernickName { get; set; }

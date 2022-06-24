@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
-using SenGame.Models.IdentityModels;
+using SqlModels.Models;
 
 namespace SenGame.Areas.Identity.Pages.Account
 {

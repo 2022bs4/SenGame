@@ -1,32 +1,21 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+using SqlModels.Models;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
-#nullable disable
-
-namespace SqlModels.Models
+namespace SenGame.Data
 {
-    public partial class SenGameContext : DbContext
+    public class SenGameContext : IdentityDbContext<UserModel>
     {
-        public SenGameContext()
-        {
-        }
-
         public SenGameContext(DbContextOptions<SenGameContext> options)
             : base(options)
         {
         }
-
         public virtual DbSet<Article> Articles { get; set; }
         public virtual DbSet<ArticleLike> ArticleLikes { get; set; }
         public virtual DbSet<ArticleTag> ArticleTags { get; set; }
-        public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
-        public virtual DbSet<AspNetRoleClaim> AspNetRoleClaims { get; set; }
-        public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
-        public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
-        public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
-        public virtual DbSet<AspNetUserRole> AspNetUserRoles { get; set; }
-        public virtual DbSet<AspNetUserToken> AspNetUserTokens { get; set; }
         public virtual DbSet<Chat> Chats { get; set; }
         public virtual DbSet<CustomerService> CustomerServices { get; set; }
         public virtual DbSet<Forum> Forums { get; set; }
@@ -47,20 +36,10 @@ namespace SqlModels.Models
         public virtual DbSet<ServiceReply> ServiceReplies { get; set; }
         public virtual DbSet<SystemSpecification> SystemSpecifications { get; set; }
         public virtual DbSet<Typelist> Typelists { get; set; }
-        public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserBackground> UserBackgrounds { get; set; }
         public virtual DbSet<UserCountry> UserCountries { get; set; }
         public virtual DbSet<UserPrivacy> UserPrivacies { get; set; }
         public virtual DbSet<Wish> Wishes { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer("Data Source=(localdb)\\mssqllocaldb;Database=SenGame;");
-            }
-        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
@@ -126,100 +105,7 @@ namespace SqlModels.Models
                     .IsFixedLength(true);
             });
 
-            modelBuilder.Entity<AspNetRole>(entity =>
-            {
-                entity.HasIndex(e => e.NormalizedName, "RoleNameIndex")
-                    .IsUnique()
-                    .HasFilter("([NormalizedName] IS NOT NULL)");
 
-                entity.Property(e => e.Name).HasMaxLength(256);
-
-                entity.Property(e => e.NormalizedName).HasMaxLength(256);
-            });
-
-            modelBuilder.Entity<AspNetRoleClaim>(entity =>
-            {
-                entity.HasIndex(e => e.RoleId, "IX_AspNetRoleClaims_RoleId");
-
-                entity.Property(e => e.RoleId).IsRequired();
-
-                entity.HasOne(d => d.Role)
-                    .WithMany(p => p.AspNetRoleClaims)
-                    .HasForeignKey(d => d.RoleId);
-            });
-
-            modelBuilder.Entity<AspNetUser>(entity =>
-            {
-                entity.HasIndex(e => e.NormalizedEmail, "EmailIndex");
-
-                entity.HasIndex(e => e.NormalizedUserName, "UserNameIndex")
-                    .IsUnique()
-                    .HasFilter("([NormalizedUserName] IS NOT NULL)");
-
-                entity.Property(e => e.Email).HasMaxLength(256);
-
-                entity.Property(e => e.NormalizedEmail).HasMaxLength(256);
-
-                entity.Property(e => e.NormalizedUserName).HasMaxLength(256);
-
-                entity.Property(e => e.UserName).HasMaxLength(256);
-            });
-
-            modelBuilder.Entity<AspNetUserClaim>(entity =>
-            {
-                entity.HasIndex(e => e.UserId, "IX_AspNetUserClaims_UserId");
-
-                entity.Property(e => e.UserId).IsRequired();
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.AspNetUserClaims)
-                    .HasForeignKey(d => d.UserId);
-            });
-
-            modelBuilder.Entity<AspNetUserLogin>(entity =>
-            {
-                entity.HasKey(e => new { e.LoginProvider, e.ProviderKey });
-
-                entity.HasIndex(e => e.UserId, "IX_AspNetUserLogins_UserId");
-
-                entity.Property(e => e.LoginProvider).HasMaxLength(128);
-
-                entity.Property(e => e.ProviderKey).HasMaxLength(128);
-
-                entity.Property(e => e.UserId).IsRequired();
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.AspNetUserLogins)
-                    .HasForeignKey(d => d.UserId);
-            });
-
-            modelBuilder.Entity<AspNetUserRole>(entity =>
-            {
-                entity.HasKey(e => new { e.UserId, e.RoleId });
-
-                entity.HasIndex(e => e.RoleId, "IX_AspNetUserRoles_RoleId");
-
-                entity.HasOne(d => d.Role)
-                    .WithMany(p => p.AspNetUserRoles)
-                    .HasForeignKey(d => d.RoleId);
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.AspNetUserRoles)
-                    .HasForeignKey(d => d.UserId);
-            });
-
-            modelBuilder.Entity<AspNetUserToken>(entity =>
-            {
-                entity.HasKey(e => new { e.UserId, e.LoginProvider, e.Name });
-
-                entity.Property(e => e.LoginProvider).HasMaxLength(128);
-
-                entity.Property(e => e.Name).HasMaxLength(128);
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.AspNetUserTokens)
-                    .HasForeignKey(d => d.UserId);
-            });
 
             modelBuilder.Entity<Chat>(entity =>
             {
@@ -563,49 +449,7 @@ namespace SqlModels.Models
                     .HasMaxLength(50);
             });
 
-            modelBuilder.Entity<User>(entity =>
-            {
-                entity.ToTable("User");
-
-                entity.Property(e => e.UserId).ValueGeneratedNever();
-
-                entity.Property(e => e.Account)
-                    .IsRequired()
-                    .HasMaxLength(30);
-
-                entity.Property(e => e.Address).HasMaxLength(256);
-
-                entity.Property(e => e.CreateTime)
-                    .HasColumnType("datetime")
-                    .HasComment("註冊日期");
-
-                entity.Property(e => e.Email)
-                    .IsRequired()
-                    .HasMaxLength(256);
-
-                entity.Property(e => e.EmailConfirmDate).HasColumnType("datetime");
-
-                entity.Property(e => e.PassWord).IsRequired();
-
-                entity.Property(e => e.PrivacyFriendsList).HasComment("好友名單隱私狀態");
-
-                entity.Property(e => e.PrivacyGameFile).HasComment("遊戲資料隱私狀態");
-
-                entity.Property(e => e.PrivacyPersonalFile).HasComment("個人檔案隱私狀態");
-
-                entity.Property(e => e.UserAbout).HasComment("自介");
-
-                entity.Property(e => e.UserBackgroundId).HasComment("使用者背景顏色");
-
-                entity.Property(e => e.UserPicture)
-                    .HasMaxLength(256)
-                    .HasComment("使用者大頭照");
-
-                entity.Property(e => e.UsernickName)
-                    .HasMaxLength(256)
-                    .HasComment("使用者暱稱");
-            });
-
+            
             modelBuilder.Entity<UserBackground>(entity =>
             {
                 entity.ToTable("UserBackground");
@@ -649,9 +493,9 @@ namespace SqlModels.Models
                 entity.Property(e => e.AddTime).HasColumnType("datetime");
             });
 
-            OnModelCreatingPartial(modelBuilder);
+            base.OnModelCreating(modelBuilder);
         }
 
-        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
-    }
+
+}
 }
