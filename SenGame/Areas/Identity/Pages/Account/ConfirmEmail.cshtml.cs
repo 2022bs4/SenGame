@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using SenGame.Models.IdentityModels;
+using SqlModels.Models;
 
 namespace SenGame.Areas.Identity.Pages.Account
 {
