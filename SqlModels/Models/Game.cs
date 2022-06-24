@@ -12,7 +12,7 @@ namespace SenGame.Models
             Forums = new HashSet<Forum>();
             GameMedia = new HashSet<GameMedium>();
             GameTypes = new HashSet<GameType>();
-            GameVideos = new HashSet<GameVideo>();
+
             MyGames = new HashSet<MyGame>();
             SystemSpecifications = new HashSet<SystemSpecification>();
             Wishes = new HashSet<Wish>();
@@ -34,7 +34,6 @@ namespace SenGame.Models
         public virtual ICollection<Forum> Forums { get; set; }
         public virtual ICollection<GameMedium> GameMedia { get; set; }
         public virtual ICollection<GameType> GameTypes { get; set; }
-        public virtual ICollection<GameVideo> GameVideos { get; set; }
         public virtual ICollection<MyGame> MyGames { get; set; }
         public virtual ICollection<SystemSpecification> SystemSpecifications { get; set; }
         public virtual ICollection<Wish> Wishes { get; set; }

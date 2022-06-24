@@ -18,5 +18,10 @@ namespace SenGame.Models
         public DateTime? EndTime { get; set; }
 
         public virtual ICollection<Game> Games { get; set; }
+
+        public static implicit operator GameDiscount(int v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

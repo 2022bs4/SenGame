@@ -36,7 +36,6 @@ namespace SenGame.Models
         public virtual DbSet<GameDiscount> GameDiscounts { get; set; }
         public virtual DbSet<GameMedium> GameMedia { get; set; }
         public virtual DbSet<GameType> GameTypes { get; set; }
-        public virtual DbSet<GameVideo> GameVideos { get; set; }
         public virtual DbSet<Invite> Invites { get; set; }
         public virtual DbSet<MyFavouriteId> MyFavouriteIds { get; set; }
         public virtual DbSet<MyForum> MyForums { get; set; }
@@ -58,7 +57,7 @@ namespace SenGame.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+
                 optionsBuilder.UseSqlServer("Data Source=(localdb)\\mssqllocaldb;Database=SenGame;");
             }
         }
@@ -455,27 +454,6 @@ namespace SenGame.Models
                     .WithMany(p => p.GameTypes)
                     .HasForeignKey(d => d.TypelistId)
                     .HasConstraintName("FK_GameType_Typelist");
-            });
-
-            modelBuilder.Entity<GameVideo>(entity =>
-            {
-                entity.ToTable("GameVideo");
-
-                entity.Property(e => e.GameVideoId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("GameVideoID");
-
-                entity.Property(e => e.GameId).HasColumnName("GameID");
-
-                entity.Property(e => e.Instructions)
-                    .HasMaxLength(50)
-                    .HasComment("影片用途");
-
-                entity.HasOne(d => d.Game)
-                    .WithMany(p => p.GameVideos)
-                    .HasForeignKey(d => d.GameId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_GameVideo_Game");
             });
 
             modelBuilder.Entity<Invite>(entity =>

@@ -61,4 +61,8 @@
     <Folder Include="wwwroot\img\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SqlModels\SqlModels.csproj" />
+  </ItemGroup>
+
 </Project>
