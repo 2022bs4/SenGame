@@ -1,4 +1,7 @@
-﻿@section Css{
+﻿@model IEnumerable<Game>
+
+@section Css{
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <link rel="stylesheet" href="/css/shop/ProductDetails.css" asp-append-version="true"/>
 }
 
@@ -10,13 +13,13 @@
             <!-- 遊戲名稱、開發商、開發人員、發行日期、簡介 動態載入 -->
             <div class="Game-Introduce d-md-flex flex-md-column justify-content-md-between mb-4 mb-md-0 mt-md-2">
                 <div>   
-                    <img  alt="" class="w-100">
+                    <img alt="" class="w-100">
                     <p class="col-12  p-0 text-left"></p>
                 </div>
                 <div>
-                    <h3 class="Developers">開發商 <a href="#"></a></h3>
-                    <h3 class="Developers_Person ">開發人員 <a href="#"></a></h3>
-                    <h3 class="Selling-Date ">發行日期 <a href="#"></a></h3>
+                    <h3 class="Developers">開發商 <a href="#">@Html.DisplayNameFor(model=>model.Developer)</a></h3>
+                    <h3 class="Developers_Person ">開發人員 <a href="#">@Html.DisplayNameFor(model=>model.Marker)</a></h3>
+                    <h3 class="Selling-Date ">發行日期 <a href="#">@Html.DisplayNameFor(model=>model.ReleaseTime)</a></h3>
                 </div>
                 <!-- 動態標籤 -->
                 <!-- <div class="Game-tag"></div> -->
@@ -106,7 +109,7 @@
             <img src="" alt="" class="w-100">
         </div>
         <div class="text">
-            <h4></h4>
+            <h4>@Html.DisplayNameFor(model=>model.GameName)</h4>
             <p></p>
         </div>
     </template>
@@ -131,17 +134,18 @@
         <div class="col-6 col-md-12  p-0 ">
             <div class=" col-11 p-0 d-flex flex-wrap Recommend-item">
                 <a href="#" class="col-12 p-0">
-                    <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/597180/capsule_184x69_tchinese.jpg?t=1654230486" alt="" class="w-100">
+                    <img src="" alt="" class="w-100">
                 </a>
                 <div class="col-12 d-flex justify-content-between">
                     <span>售價為:</span>
-                    <p class="Recommend-Price">NT $9527</p>
+                    <p class="Recommend-Price">NT: $ @Html.DisplayNameFor(model=>model.GamePrice)</p>
                 </div>
             </div>
         </div>
     </template>
 
 @section Scripts{
+    @*<script src="https://code.jquery.com/jquery-3.6.0.min.js"integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>*@
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="~/js/shop/ProductDetails.js"></script>
     

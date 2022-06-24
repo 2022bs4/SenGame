@@ -24,8 +24,5 @@ namespace SenGame.ViewModels
         
         //媒體
         public string MediaUrl { get; set; }
-        public int InstructionType { get; set; }
-        public int Instruction { get; set; }
-        public int Sort { get; set; }
     }
 }
