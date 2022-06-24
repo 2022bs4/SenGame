@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace SenGame.Models
+namespace SqlModels.Models
 {
     public partial class Invite
     {
@@ -11,8 +11,5 @@ namespace SenGame.Models
         public int UserId { get; set; }
         public int SenderId { get; set; }
         public string Message { get; set; }
-
-        public virtual User Sender { get; set; }
-        public virtual User User { get; set; }
     }
 }

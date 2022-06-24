@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace SenGame.Models
+namespace SqlModels.Models
 {
     public partial class Chat
     {
@@ -12,7 +12,5 @@ namespace SenGame.Models
         public int ChatId { get; set; }
         public int UserId { get; set; }
         public string PictureFile { get; set; }
-
-        public virtual User User { get; set; }
     }
 }

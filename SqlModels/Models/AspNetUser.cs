@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace SenGame.Models
+namespace SqlModels.Models
 {
     public partial class AspNetUser
     {

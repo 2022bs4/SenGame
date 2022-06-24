@@ -8,7 +8,7 @@ namespace SenGame.Controllers
         {
             return View();
         }
-        public IActionResult ProductDetails()
+        public IActionResult ProductDetails(int id)
         {
 
             return View();

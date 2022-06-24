@@ -1,6 +1,6 @@
 using System;
 
-namespace SenGame.Models
+namespace SqlModels.Models
 {
     public class ErrorViewModel
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace SenGame.Models
+namespace SqlModels.Models
 {
     public partial class CustomerService
     {
@@ -11,7 +11,5 @@ namespace SenGame.Models
         public string QuestionContent { get; set; }
         public DateTime CreateTime { get; set; }
         public int ServiceId { get; set; }
-
-        public virtual MyGame MyGame { get; set; }
     }
 }

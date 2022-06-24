@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace SenGame.Models
+namespace SqlModels.Models
 {
     public partial class SystemSpecification
     {
@@ -15,7 +15,5 @@ namespace SenGame.Models
         public string SystemCpu { get; set; }
         public string SystemGpu { get; set; }
         public int GameId { get; set; }
-
-        public virtual Game Game { get; set; }
     }
 }

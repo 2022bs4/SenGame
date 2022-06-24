@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace SenGame.Models
+namespace SqlModels.Models
 {
     public partial class GameMedium
     {
@@ -13,7 +13,5 @@ namespace SenGame.Models
         public int InstructionType { get; set; }
         public int Instruction { get; set; }
         public int Sort { get; set; }
-
-        public virtual Game Game { get; set; }
     }
 }

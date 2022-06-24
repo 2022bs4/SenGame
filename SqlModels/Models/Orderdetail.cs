@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace SenGame.Models
+namespace SqlModels.Models
 {
     public partial class Orderdetail
     {
@@ -12,7 +12,5 @@ namespace SenGame.Models
         public int GameId { get; set; }
         public decimal Price { get; set; }
         public double? Discount { get; set; }
-
-        public virtual Order Order { get; set; }
     }
 }

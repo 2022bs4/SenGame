@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace SenGame.Models
+namespace SqlModels.Models
 {
     public partial class Wish
     {
@@ -11,8 +11,5 @@ namespace SenGame.Models
         public int UserId { get; set; }
         public int GameId { get; set; }
         public DateTime? AddTime { get; set; }
-
-        public virtual Game Game { get; set; }
-        public virtual User User { get; set; }
     }
 }

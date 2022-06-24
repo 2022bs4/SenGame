@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
-namespace SenGame.Models
+namespace SqlModels.Models
 {
     public partial class SenGameContext : DbContext
     {
@@ -57,7 +57,7 @@ namespace SenGame.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseSqlServer("Data Source=(localdb)\\mssqllocaldb;Database=SenGame;");
             }
         }
@@ -95,18 +95,6 @@ namespace SenGame.Models
                     .HasMaxLength(50);
 
                 entity.Property(e => e.UserId).HasColumnName("UserID");
-
-                entity.HasOne(d => d.ArticleTag)
-                    .WithMany(p => p.Articles)
-                    .HasForeignKey(d => d.ArticleTagId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Article_ArticleTag");
-
-                entity.HasOne(d => d.Forum)
-                    .WithMany(p => p.Articles)
-                    .HasForeignKey(d => d.ForumId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Article_Forum");
             });
 
             modelBuilder.Entity<ArticleLike>(entity =>
@@ -123,18 +111,6 @@ namespace SenGame.Models
                 entity.Property(e => e.ArticleId).HasColumnName("ArticleID");
 
                 entity.Property(e => e.UserId).HasColumnName("UserID");
-
-                entity.HasOne(d => d.Article)
-                    .WithMany(p => p.ArticleLikes)
-                    .HasForeignKey(d => d.ArticleId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Like_Article");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.ArticleLikes)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Like_User");
             });
 
             modelBuilder.Entity<ArticleTag>(entity =>
@@ -265,12 +241,6 @@ namespace SenGame.Models
                 entity.Property(e => e.UserId)
                     .HasColumnName("UserID")
                     .HasComment("使用者自身");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.Chats)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Chat_User");
             });
 
             modelBuilder.Entity<CustomerService>(entity =>
@@ -288,12 +258,6 @@ namespace SenGame.Models
                 entity.Property(e => e.MyGameId).HasColumnName("MyGameID");
 
                 entity.Property(e => e.QuestionContent).IsRequired();
-
-                entity.HasOne(d => d.MyGame)
-                    .WithMany(p => p.CustomerServices)
-                    .HasForeignKey(d => d.MyGameId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_CustomerService_MyGame");
             });
 
             modelBuilder.Entity<Forum>(entity =>
@@ -313,11 +277,6 @@ namespace SenGame.Models
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(50);
-
-                entity.HasOne(d => d.Game)
-                    .WithMany(p => p.Forums)
-                    .HasForeignKey(d => d.GameId)
-                    .HasConstraintName("FK_Forum_Game");
             });
 
             modelBuilder.Entity<FriendGroup>(entity =>
@@ -332,12 +291,6 @@ namespace SenGame.Models
                     .IsRequired()
                     .HasMaxLength(10)
                     .IsFixedLength(true);
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.FriendGroups)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_FriendGroup_User");
             });
 
             modelBuilder.Entity<FriendList>(entity =>
@@ -394,12 +347,6 @@ namespace SenGame.Models
                     .HasComment("發布日期");
 
                 entity.Property(e => e.TotalBuyCount).HasComment("此遊戲被購買次數");
-
-                entity.HasOne(d => d.Discount)
-                    .WithMany(p => p.Games)
-                    .HasForeignKey(d => d.DiscountId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Game_GameDiscount");
             });
 
             modelBuilder.Entity<GameDiscount>(entity =>
@@ -430,12 +377,6 @@ namespace SenGame.Models
                     .HasMaxLength(255);
 
                 entity.Property(e => e.Sort).HasComment("排序");
-
-                entity.HasOne(d => d.Game)
-                    .WithMany(p => p.GameMedia)
-                    .HasForeignKey(d => d.GameId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_GameMedia_Game");
             });
 
             modelBuilder.Entity<GameType>(entity =>
@@ -443,17 +384,6 @@ namespace SenGame.Models
                 entity.ToTable("GameType");
 
                 entity.Property(e => e.GameTypeId).ValueGeneratedNever();
-
-                entity.HasOne(d => d.Game)
-                    .WithMany(p => p.GameTypes)
-                    .HasForeignKey(d => d.GameId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_GameType_Game");
-
-                entity.HasOne(d => d.Typelist)
-                    .WithMany(p => p.GameTypes)
-                    .HasForeignKey(d => d.TypelistId)
-                    .HasConstraintName("FK_GameType_Typelist");
             });
 
             modelBuilder.Entity<Invite>(entity =>
@@ -469,18 +399,6 @@ namespace SenGame.Models
                 entity.Property(e => e.SenderId).HasComment("邀請者");
 
                 entity.Property(e => e.UserId).HasComment("被邀請者");
-
-                entity.HasOne(d => d.Sender)
-                    .WithMany(p => p.InviteSenders)
-                    .HasForeignKey(d => d.SenderId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Invite_User1");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.InviteUsers)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Invite_User");
             });
 
             modelBuilder.Entity<MyFavouriteId>(entity =>
@@ -505,18 +423,6 @@ namespace SenGame.Models
                 entity.Property(e => e.ForumId).HasColumnName("ForumID");
 
                 entity.Property(e => e.UserId).HasColumnName("UserID");
-
-                entity.HasOne(d => d.Forum)
-                    .WithMany(p => p.MyForums)
-                    .HasForeignKey(d => d.ForumId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_MyForum_Forum");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.MyForums)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_MyForum_User");
             });
 
             modelBuilder.Entity<MyGame>(entity =>
@@ -526,23 +432,6 @@ namespace SenGame.Models
                 entity.Property(e => e.MyGameId).ValueGeneratedNever();
 
                 entity.Property(e => e.MyFavouriteId).HasComment("我的最愛");
-
-                entity.HasOne(d => d.Game)
-                    .WithMany(p => p.MyGames)
-                    .HasForeignKey(d => d.GameId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_MyGame_Game");
-
-                entity.HasOne(d => d.MyFavourite)
-                    .WithMany(p => p.MyGames)
-                    .HasForeignKey(d => d.MyFavouriteId)
-                    .HasConstraintName("FK_MyGame_MyFavouriteId");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.MyGames)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_MyGame_User");
             });
 
             modelBuilder.Entity<Order>(entity =>
@@ -585,12 +474,6 @@ namespace SenGame.Models
                 entity.Property(e => e.Discount).HasComment("訂單當時折購");
 
                 entity.Property(e => e.Price).HasColumnType("money");
-
-                entity.HasOne(d => d.Order)
-                    .WithMany(p => p.Orderdetails)
-                    .HasForeignKey(d => d.OrderId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Orderdetails_Order");
             });
 
             modelBuilder.Entity<Reply>(entity =>
@@ -614,18 +497,6 @@ namespace SenGame.Models
                     .HasMaxLength(100);
 
                 entity.Property(e => e.UserId).HasColumnName("UserID");
-
-                entity.HasOne(d => d.Article)
-                    .WithMany(p => p.Replies)
-                    .HasForeignKey(d => d.ArticleId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Reply_Article");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.Replies)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Reply_User");
             });
 
             modelBuilder.Entity<ReplyLike>(entity =>
@@ -639,18 +510,6 @@ namespace SenGame.Models
                 entity.Property(e => e.ReplyId).HasColumnName("ReplyID");
 
                 entity.Property(e => e.UserId).HasColumnName("UserID");
-
-                entity.HasOne(d => d.Reply)
-                    .WithMany(p => p.ReplyLikes)
-                    .HasForeignKey(d => d.ReplyId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ReplyLike_Reply");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.ReplyLikes)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ReplyLike_User");
             });
 
             modelBuilder.Entity<ServiceReply>(entity =>
@@ -662,12 +521,6 @@ namespace SenGame.Models
                 entity.Property(e => e.ReplyContent)
                     .IsRequired()
                     .HasComment("客服回應");
-
-                entity.HasOne(d => d.Service)
-                    .WithMany()
-                    .HasForeignKey(d => d.ServiceId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ServiceReply_CustomerService");
             });
 
             modelBuilder.Entity<SystemSpecification>(entity =>
@@ -698,12 +551,6 @@ namespace SenGame.Models
                     .HasComment("記憶體");
 
                 entity.Property(e => e.SystemType).HasComment("1:windows 2:Mac");
-
-                entity.HasOne(d => d.Game)
-                    .WithMany(p => p.SystemSpecifications)
-                    .HasForeignKey(d => d.GameId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_SystemSpecification_Game");
             });
 
             modelBuilder.Entity<Typelist>(entity =>
@@ -758,22 +605,6 @@ namespace SenGame.Models
                 entity.Property(e => e.UsernickName)
                     .HasMaxLength(256)
                     .HasComment("使用者暱稱");
-
-                entity.HasOne(d => d.Order)
-                    .WithMany(p => p.Users)
-                    .HasForeignKey(d => d.OrderId)
-                    .HasConstraintName("FK_User_Order");
-
-                entity.HasOne(d => d.UserBackground)
-                    .WithMany(p => p.Users)
-                    .HasForeignKey(d => d.UserBackgroundId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_User_UserBackground");
-
-                entity.HasOne(d => d.UserCountry)
-                    .WithMany(p => p.Users)
-                    .HasForeignKey(d => d.UserCountryId)
-                    .HasConstraintName("FK_User_UserCountry");
             });
 
             modelBuilder.Entity<UserBackground>(entity =>
@@ -808,11 +639,6 @@ namespace SenGame.Models
                     .IsRequired()
                     .HasMaxLength(10)
                     .HasComment("隱私狀況");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.UserPrivacies)
-                    .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK_UserPrivacy_User");
             });
 
             modelBuilder.Entity<Wish>(entity =>
@@ -822,18 +648,6 @@ namespace SenGame.Models
                 entity.Property(e => e.WishId).ValueGeneratedNever();
 
                 entity.Property(e => e.AddTime).HasColumnType("datetime");
-
-                entity.HasOne(d => d.Game)
-                    .WithMany(p => p.Wishes)
-                    .HasForeignKey(d => d.GameId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Wish_Game");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.Wishes)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Wish_User");
             });
 
             OnModelCreatingPartial(modelBuilder);

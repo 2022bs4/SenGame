@@ -3,16 +3,10 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace SenGame.Models
+namespace SqlModels.Models
 {
     public partial class Order
     {
-        public Order()
-        {
-            Orderdetails = new HashSet<Orderdetail>();
-            Users = new HashSet<User>();
-        }
-
         public int OrderId { get; set; }
         public DateTime CreateTime { get; set; }
         public DateTime UpdateTime { get; set; }
@@ -21,8 +15,5 @@ namespace SenGame.Models
         public int EcpayId { get; set; }
         public string Invoice { get; set; }
         public string InvoiceWay { get; set; }
-
-        public virtual ICollection<Orderdetail> Orderdetails { get; set; }
-        public virtual ICollection<User> Users { get; set; }
     }
 }
