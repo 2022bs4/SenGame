@@ -1,0 +1,230 @@
+﻿#forum {
+    background: #edf1f2;
+    transition: all 0.5s;
+        padding: 0px 0px;
+        margin: 0px 0px;
+}
+
+#forum .page-nav {
+    margin-top: 10px;
+    background: #1e262c;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 15px;
+    position: relative;
+}
+
+    #forum .page-nav ul {
+        display: flex;
+        background: #1e262c;
+        padding: 10px 0;
+        margin: 0px;
+    }
+
+        #forum .page-nav ul li {
+            font-size: 1rem;
+            margin: 0 10px;
+            padding: 5px 10px;
+            border-radius: 1rem;
+            color: #fff;
+        }
+
+            #forum .page-nav ul li.active {
+                color: #1e262c;
+                background: #f8f9fa;
+            }
+
+#forum .page-nav-box {
+    color: #fff;
+    display: flex;
+}
+
+    #forum .page-nav-box .filter {
+        margin-right: 35px;
+        color: #edf1f2;
+        background: #1e262c;
+        border: 0px;
+    }
+
+#forum .page-nav-box-btns {
+    position: relative;
+}
+
+    #forum .page-nav-box-btns button {
+        color: #edf1f2;
+        background: #1e262c;
+        border: 0px;
+        position: absolute;
+        right: 0;
+        display: none;
+        z-index: 0;
+    }
+
+#forum .page-nav .row-cells-dense {
+    display: block;
+    z-index: 1;
+}
+
+#forum.row-dense .row-list {
+    display: block;
+    z-index: 2;
+}
+
+#forum.row-list .row-table-list {
+    display: block;
+    z-index: 3;
+}
+
+#forum.row-table-list .row-cells {
+    display: block;
+    z-index: 3;
+}
+
+#forum .page-content {
+    margin-top: 30px;
+    padding: 0px 10px;
+}
+
+    #forum .page-content .col {
+        flex: 0 0 100%;
+        max-width: 100%;
+        margin-bottom: 15px;
+    }
+
+@media (min-width: 576px) {
+    #forum .page-content .col {
+        margin-bottom: 30px;
+    }
+}
+
+@media (min-width: 992px) {
+    #forum .page-content .col {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+@media (min-width: 1200px) {
+    #forum .page-content .col {
+        flex: 0 0 33.333333%;
+        max-width: 33.333333%;
+    }
+}
+
+#forum .page-content .card-body {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+    #forum .page-content .card-body .card-title {
+        text-align: center;
+    }
+
+#forum .page-content .card-body-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#forum.row-dense .page-content .col {
+    margin-bottom: 15px;
+}
+
+@media (min-width: 576px) {
+    #forum.row-dense .page-content .col {
+        flex: 0 0 50%;
+        max-width: 50%;
+        margin-bottom: 30px;
+    }
+}
+
+@media (min-width: 992px) {
+    #forum.row-dense .page-content .col {
+        flex: 0 0 33.333333%;
+        max-width: 33.333333%;
+    }
+}
+
+@media (min-width: 1200px) {
+    #forum.row-dense .page-content .col {
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+}
+
+#forum.row-list .page-content {
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+
+#forum.row-list .card {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+    #forum.row-list .card img {
+        width: auto;
+        height: 130px;
+    }
+
+    #forum.row-list .card .card-body {
+        flex-direction: column;
+    }
+
+    #forum.row-list .card .card-body-head {
+        flex-direction: row;
+        width: 100%;
+    }
+
+        #forum.row-list .card .card-body-head .card-title {
+            text-align: left;
+        }
+
+    #forum.row-list .card .card-body-text {
+        flex-direction: row;
+        width: 100%;
+    }
+
+#forum.row-list .col {
+    margin-bottom: 15px;
+}
+
+@media (min-width: 576px) {
+    #forum.row-list .col {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+@media (min-width: 992px) {
+    #forum.row-list .col {
+        margin-bottom: 30px;
+    }
+}
+
+#forum.row-table-list .page-content {
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+
+#forum.row-table-list .card {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+    #forum.row-table-list .card img {
+        display: none;
+    }
+
+@media (min-width: 576px) {
+    #forum.row-table-list .col {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}

@@ -1,0 +1,109 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+        <div class="register">
+            <div class="register-content pt-2">
+                <div class="register-title">建立您的帳戶</div>
+                 輸入帳號密碼之表單 
+                <form class="register-form" asp-route-returnUrl="@Model.ReturnUrl" method="post" >
+                    <div asp-validation-summary="All" class="text-danger text-center"></div>
+                     <div class="register-account">
+                        <label asp-for="Input.Account" class="register-account">請輸入帳號</label>
+                        <input asp-for="Input.Account" class="" />
+                    </div>
+                    <div class="register-email">
+                        <label asp-for="Input.Email" class="register-email">電子信箱</label>
+                        <input asp-for="Input.Email" class="" />
+                    </div>
+                    <div class="register-password">
+                        <label asp-for="Input.Password" class="register-text">密碼</label>
+                        <input asp-for="Input.Password" class="" /> 
+                    </div>
+                    <div class="register-password">
+                        <label asp-for="Input.ConfirmPassword" class="register-text">確認您的密碼</label>
+                        <input asp-for="Input.ConfirmPassword" class="" />
+                    </div>
+                    <div class="register-live">
+                        <p class="register-text">居住地</p>
+                        <select name="" id="live" value="">
+                            <option value="">請選擇居住地</option>
+                            <option value="">台灣中國</option>
+                            <option value="">台灣中國</option>
+                            <option value="">台灣中國</option>
+                        </select>
+                    </div>
+                    <div class="agree pt-3">
+                        <input type="checkbox" name="" id="check">
+                        <p class="agree-p pb-0 mb-0">我已年滿 13 歲並同意<a href="#">用戶協議</a>與<a href="#">隱私政策</a>。</p>
+                    </div>
+                    <div class="register-btn-ctrl pt-3">
+                        <button type="submit" class="register-btn">繼續</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+   <div class="col-md-4">
+        <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <h4>Create a new account.</h4>
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Input.Email"></label>
+                <input asp-for="Input.Email" class="form-control" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Password"></label>
+                <input asp-for="Input.Password" class="form-control" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.ConfirmPassword"></label>
+                <input asp-for="Input.ConfirmPassword" class="form-control" />
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+    </div>
+@*   <div class="col-md-6 col-md-offset-2">
+        <section>
+            <h4>Use another service to register.</h4>
+            <hr />
+            @{
+                if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                {
+                        <div>
+                            <p>
+                                There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
+                                for details on setting up this ASP.NET application to support logging in via external services.
+                            </p>
+                        </div>
+                }
+                else
+                {
+                        <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                            <div>
+                                <p>
+                                    @foreach (var provider in Model.ExternalLogins)
+                                {
+                                        <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                }
+                                </p>
+                            </div>
+                        </form>
+                }
+            }
+        </section>
+    </div>*@
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+@section Css{
+<link rel="stylesheet" href="~/css/Account/Register.css" asp-append-version="true"/>
+}
+
