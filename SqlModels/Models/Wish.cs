@@ -11,5 +11,7 @@ namespace SqlModels.Models
         public int UserId { get; set; }
         public int GameId { get; set; }
         public DateTime? AddTime { get; set; }
+
+        public virtual Game Game { get; set; }
     }
 }

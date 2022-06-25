@@ -11,5 +11,8 @@ namespace SqlModels.Models
         public double DiscountTake { get; set; }
         public DateTime? StarTime { get; set; }
         public DateTime? EndTime { get; set; }
+        public int? GameId { get; set; }
+
+        public virtual Game Game { get; set; }
     }
 }

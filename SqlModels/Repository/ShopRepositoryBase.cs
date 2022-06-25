@@ -1,4 +1,4 @@
-﻿using SenGame.Models;
+﻿using SqlModels.Models;
 using System.Collections.Generic;
 
 namespace SenGame.Repository

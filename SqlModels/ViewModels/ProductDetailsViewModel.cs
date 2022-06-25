@@ -1,12 +1,13 @@
 ﻿using System;
 
-namespace SenGame.ViewModels
+namespace SqlModels.ViewModels
 {
     public class ProductDetailsViewModel
     {
         //遊戲主要資訊
         public int GameId { get; set; }
         public string GameName { get; set; }
+        public decimal GamePrice { get; set; }
         public string GameIntroduction { get; set; }
         public string GameDetailsText { get; set; }
         public DateTime ReleaseTime { get; set; }

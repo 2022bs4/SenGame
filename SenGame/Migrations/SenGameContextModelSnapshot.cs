@@ -193,6 +193,10 @@ namespace SenGame.Migrations
 
                     b.HasKey("ArticleId");
 
+                    b.HasIndex("ArticleTagId");
+
+                    b.HasIndex("ForumId");
+
                     b.ToTable("Article");
                 });
 
@@ -213,6 +217,8 @@ namespace SenGame.Migrations
                     b.HasKey("LikeId")
                         .HasName("PK_Like");
 
+                    b.HasIndex("ArticleId");
+
                     b.ToTable("ArticleLike");
                 });
 
@@ -231,6 +237,252 @@ namespace SenGame.Migrations
                     b.HasKey("ArticleTagId");
 
                     b.ToTable("ArticleTag");
+                });
+
+            modelBuilder.Entity("SqlModels.Models.AspNetRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex(new[] { "NormalizedName" }, "RoleNameIndex")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex1")
+                        .HasFilter("([NormalizedName] IS NOT NULL)");
+
+                    b.ToTable("AspNetRole");
+                });
+
+            modelBuilder.Entity("SqlModels.Models.AspNetRoleClaim", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex(new[] { "RoleId" }, "IX_AspNetRoleClaims_RoleId")
+                        .HasDatabaseName("IX_AspNetRoleClaims_RoleId1");
+
+                    b.ToTable("AspNetRoleClaim");
+                });
+
+            modelBuilder.Entity("SqlModels.Models.AspNetUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Account")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreateTime")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<DateTime?>("EmailConfirmDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("PrivacyFriendsList")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PrivacyGameFile")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PrivacyPersonalFile")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserAbout")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserBackgroundId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UserCountryId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("UserPicture")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UsernickName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserBackgroundId");
+
+                    b.HasIndex(new[] { "NormalizedEmail" }, "EmailIndex")
+                        .HasDatabaseName("EmailIndex1");
+
+                    b.HasIndex(new[] { "NormalizedUserName" }, "UserNameIndex")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex1")
+                        .HasFilter("([NormalizedUserName] IS NOT NULL)");
+
+                    b.ToTable("AspNetUser");
+                });
+
+            modelBuilder.Entity("SqlModels.Models.AspNetUserClaim", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex(new[] { "UserId" }, "IX_AspNetUserClaims_UserId")
+                        .HasDatabaseName("IX_AspNetUserClaims_UserId1");
+
+                    b.ToTable("AspNetUserClaim");
+                });
+
+            modelBuilder.Entity("SqlModels.Models.AspNetUserLogin", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex(new[] { "UserId" }, "IX_AspNetUserLogins_UserId")
+                        .HasDatabaseName("IX_AspNetUserLogins_UserId1");
+
+                    b.ToTable("AspNetUserLogin");
+                });
+
+            modelBuilder.Entity("SqlModels.Models.AspNetUserRole", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex(new[] { "RoleId" }, "IX_AspNetUserRoles_RoleId")
+                        .HasDatabaseName("IX_AspNetUserRoles_RoleId1");
+
+                    b.ToTable("AspNetUserRole");
+                });
+
+            modelBuilder.Entity("SqlModels.Models.AspNetUserToken", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LoginProvider")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserToken");
                 });
 
             modelBuilder.Entity("SqlModels.Models.Chat", b =>
@@ -270,7 +522,7 @@ namespace SenGame.Migrations
                     b.Property<DateTime>("CreateTime")
                         .HasColumnType("date");
 
-                    b.Property<int>("MyGameId")
+                    b.Property<int>("GameId")
                         .HasColumnType("int")
                         .HasColumnName("MyGameID");
 
@@ -278,7 +530,12 @@ namespace SenGame.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("ServiceId");
+
+                    b.HasIndex("GameId");
 
                     b.ToTable("CustomerService");
                 });
@@ -305,6 +562,8 @@ namespace SenGame.Migrations
 
                     b.HasKey("ForumId");
 
+                    b.HasIndex("GameId");
+
                     b.ToTable("Forum");
                 });
 
@@ -319,9 +578,6 @@ namespace SenGame.Migrations
                         .HasColumnType("nchar(10)")
                         .IsFixedLength(true);
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("FriendGoupId");
 
                     b.ToTable("FriendGroup");
@@ -335,14 +591,6 @@ namespace SenGame.Migrations
 
                     b.Property<int?>("FriendGroupId")
                         .HasColumnType("int");
-
-                    b.Property<int>("FriendId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FriendNickName")
-                        .HasMaxLength(10)
-                        .HasColumnType("nchar(10)")
-                        .IsFixedLength(true);
 
                     b.Property<bool?>("IsBlockade")
                         .HasColumnType("bit")
@@ -366,9 +614,6 @@ namespace SenGame.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)")
                         .HasComment("開發商家");
-
-                    b.Property<int>("DiscountId")
-                        .HasColumnType("int");
 
                     b.Property<DateTime?>("DownTime")
                         .HasColumnType("datetime")
@@ -422,10 +667,15 @@ namespace SenGame.Migrations
                     b.Property<DateTime?>("EndTime")
                         .HasColumnType("datetime");
 
+                    b.Property<int?>("GameId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("StarTime")
                         .HasColumnType("datetime");
 
                     b.HasKey("DiscountId");
+
+                    b.HasIndex("GameId");
 
                     b.ToTable("GameDiscount");
                 });
@@ -457,6 +707,8 @@ namespace SenGame.Migrations
 
                     b.HasKey("GameMediaId");
 
+                    b.HasIndex("GameId");
+
                     b.ToTable("GameMedia");
                 });
 
@@ -472,6 +724,10 @@ namespace SenGame.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("GameTypeId");
+
+                    b.HasIndex("GameId");
+
+                    b.HasIndex("TypelistId");
 
                     b.ToTable("GameType");
                 });
@@ -529,6 +785,8 @@ namespace SenGame.Migrations
 
                     b.HasKey("MyForumId");
 
+                    b.HasIndex("ForumId");
+
                     b.ToTable("MyForum");
                 });
 
@@ -540,14 +798,15 @@ namespace SenGame.Migrations
                     b.Property<int>("GameId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("MyFavouriteId")
-                        .HasColumnType("int")
-                        .HasComment("我的最愛");
+                    b.Property<bool>("MyFavourite")
+                        .HasColumnType("bit");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("MyGameId");
+
+                    b.HasIndex("GameId");
 
                     b.ToTable("MyGame");
                 });
@@ -557,12 +816,15 @@ namespace SenGame.Migrations
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("CancelTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("CreateTime")
                         .HasColumnType("datetime")
                         .HasComment("訂單時間");
 
-                    b.Property<int>("EcpayId")
-                        .HasColumnType("int")
+                    b.Property<string>("EcpayId")
+                        .HasColumnType("nvarchar(max)")
                         .HasComment("Ecpay訂單編號");
 
                     b.Property<string>("Invoice")
@@ -585,6 +847,9 @@ namespace SenGame.Migrations
 
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("money");
+
+                    b.Property<DateTime?>("TradeTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("UpdateTime")
                         .HasColumnType("datetime")
@@ -614,6 +879,8 @@ namespace SenGame.Migrations
                         .HasColumnType("money");
 
                     b.HasKey("OrderdetailId");
+
+                    b.HasIndex("OrderId");
 
                     b.ToTable("Orderdetails");
                 });
@@ -648,6 +915,8 @@ namespace SenGame.Migrations
 
                     b.HasKey("ReplyId");
 
+                    b.HasIndex("ArticleId");
+
                     b.ToTable("Reply");
                 });
 
@@ -666,6 +935,8 @@ namespace SenGame.Migrations
                         .HasColumnName("UserID");
 
                     b.HasKey("ReplyLikeId");
+
+                    b.HasIndex("ReplyId");
 
                     b.ToTable("ReplyLike");
                 });
@@ -722,6 +993,8 @@ namespace SenGame.Migrations
                         .HasComment("1:windows 2:Mac");
 
                     b.HasKey("SystemSpecificationId");
+
+                    b.HasIndex("GameId");
 
                     b.ToTable("SystemSpecification");
                 });
@@ -913,6 +1186,8 @@ namespace SenGame.Migrations
 
                     b.HasKey("WishId");
 
+                    b.HasIndex("GameId");
+
                     b.ToTable("Wish");
                 });
 
@@ -965,6 +1240,320 @@ namespace SenGame.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("SqlModels.Models.Article", b =>
+                {
+                    b.HasOne("SqlModels.Models.ArticleTag", "ArticleTag")
+                        .WithMany("Articles")
+                        .HasForeignKey("ArticleTagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SqlModels.Models.Forum", "Forum")
+                        .WithMany("Articles")
+                        .HasForeignKey("ForumId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ArticleTag");
+
+                    b.Navigation("Forum");
+                });
+
+            modelBuilder.Entity("SqlModels.Models.ArticleLike", b =>
+                {
+                    b.HasOne("SqlModels.Models.Article", "Article")
+                        .WithMany("ArticleLikes")
+                        .HasForeignKey("ArticleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Article");
+                });
+
+            modelBuilder.Entity("SqlModels.Models.AspNetRoleClaim", b =>
+                {
+                    b.HasOne("SqlModels.Models.AspNetRole", "Role")
+                        .WithMany("AspNetRoleClaims")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("SqlModels.Models.AspNetUser", b =>
+                {
+                    b.HasOne("SqlModels.Models.UserBackground", "UserBackground")
+                        .WithMany("AspNetUsers")
+                        .HasForeignKey("UserBackgroundId")
+                        .HasConstraintName("FK_AspNetUsers_UserBackground")
+                        .IsRequired();
+
+                    b.Navigation("UserBackground");
+                });
+
+            modelBuilder.Entity("SqlModels.Models.AspNetUserClaim", b =>
+                {
+                    b.HasOne("SqlModels.Models.AspNetUser", "User")
+                        .WithMany("AspNetUserClaims")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SqlModels.Models.AspNetUserLogin", b =>
+                {
+                    b.HasOne("SqlModels.Models.AspNetUser", "User")
+                        .WithMany("AspNetUserLogins")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SqlModels.Models.AspNetUserRole", b =>
+                {
+                    b.HasOne("SqlModels.Models.AspNetRole", "Role")
+                        .WithMany("AspNetUserRoles")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SqlModels.Models.AspNetUser", "User")
+                        .WithMany("AspNetUserRoles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Role");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SqlModels.Models.AspNetUserToken", b =>
+                {
+                    b.HasOne("SqlModels.Models.AspNetUser", "User")
+                        .WithMany("AspNetUserTokens")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SqlModels.Models.CustomerService", b =>
+                {
+                    b.HasOne("SqlModels.Models.Game", "Game")
+                        .WithMany("CustomerServices")
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Game");
+                });
+
+            modelBuilder.Entity("SqlModels.Models.Forum", b =>
+                {
+                    b.HasOne("SqlModels.Models.Game", "Game")
+                        .WithMany("Forums")
+                        .HasForeignKey("GameId");
+
+                    b.Navigation("Game");
+                });
+
+            modelBuilder.Entity("SqlModels.Models.GameDiscount", b =>
+                {
+                    b.HasOne("SqlModels.Models.Game", "Game")
+                        .WithMany("GameDiscounts")
+                        .HasForeignKey("GameId");
+
+                    b.Navigation("Game");
+                });
+
+            modelBuilder.Entity("SqlModels.Models.GameMedium", b =>
+                {
+                    b.HasOne("SqlModels.Models.Game", "Game")
+                        .WithMany("GameMedia")
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Game");
+                });
+
+            modelBuilder.Entity("SqlModels.Models.GameType", b =>
+                {
+                    b.HasOne("SqlModels.Models.Game", "Game")
+                        .WithMany("GameTypes")
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SqlModels.Models.Typelist", "Typelist")
+                        .WithMany("GameTypes")
+                        .HasForeignKey("TypelistId");
+
+                    b.Navigation("Game");
+
+                    b.Navigation("Typelist");
+                });
+
+            modelBuilder.Entity("SqlModels.Models.MyForum", b =>
+                {
+                    b.HasOne("SqlModels.Models.Forum", "Forum")
+                        .WithMany("MyForums")
+                        .HasForeignKey("ForumId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Forum");
+                });
+
+            modelBuilder.Entity("SqlModels.Models.MyGame", b =>
+                {
+                    b.HasOne("SqlModels.Models.Game", "Game")
+                        .WithMany("MyGames")
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Game");
+                });
+
+            modelBuilder.Entity("SqlModels.Models.Orderdetail", b =>
+                {
+                    b.HasOne("SqlModels.Models.Order", "Order")
+                        .WithMany("Orderdetails")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("SqlModels.Models.Reply", b =>
+                {
+                    b.HasOne("SqlModels.Models.Article", "Article")
+                        .WithMany("Replies")
+                        .HasForeignKey("ArticleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Article");
+                });
+
+            modelBuilder.Entity("SqlModels.Models.ReplyLike", b =>
+                {
+                    b.HasOne("SqlModels.Models.Reply", "Reply")
+                        .WithMany("ReplyLikes")
+                        .HasForeignKey("ReplyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Reply");
+                });
+
+            modelBuilder.Entity("SqlModels.Models.SystemSpecification", b =>
+                {
+                    b.HasOne("SqlModels.Models.Game", "Game")
+                        .WithMany("SystemSpecifications")
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Game");
+                });
+
+            modelBuilder.Entity("SqlModels.Models.Wish", b =>
+                {
+                    b.HasOne("SqlModels.Models.Game", "Game")
+                        .WithMany("Wishes")
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Game");
+                });
+
+            modelBuilder.Entity("SqlModels.Models.Article", b =>
+                {
+                    b.Navigation("ArticleLikes");
+
+                    b.Navigation("Replies");
+                });
+
+            modelBuilder.Entity("SqlModels.Models.ArticleTag", b =>
+                {
+                    b.Navigation("Articles");
+                });
+
+            modelBuilder.Entity("SqlModels.Models.AspNetRole", b =>
+                {
+                    b.Navigation("AspNetRoleClaims");
+
+                    b.Navigation("AspNetUserRoles");
+                });
+
+            modelBuilder.Entity("SqlModels.Models.AspNetUser", b =>
+                {
+                    b.Navigation("AspNetUserClaims");
+
+                    b.Navigation("AspNetUserLogins");
+
+                    b.Navigation("AspNetUserRoles");
+
+                    b.Navigation("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("SqlModels.Models.Forum", b =>
+                {
+                    b.Navigation("Articles");
+
+                    b.Navigation("MyForums");
+                });
+
+            modelBuilder.Entity("SqlModels.Models.Game", b =>
+                {
+                    b.Navigation("CustomerServices");
+
+                    b.Navigation("Forums");
+
+                    b.Navigation("GameDiscounts");
+
+                    b.Navigation("GameMedia");
+
+                    b.Navigation("GameTypes");
+
+                    b.Navigation("MyGames");
+
+                    b.Navigation("SystemSpecifications");
+
+                    b.Navigation("Wishes");
+                });
+
+            modelBuilder.Entity("SqlModels.Models.Order", b =>
+                {
+                    b.Navigation("Orderdetails");
+                });
+
+            modelBuilder.Entity("SqlModels.Models.Reply", b =>
+                {
+                    b.Navigation("ReplyLikes");
+                });
+
+            modelBuilder.Entity("SqlModels.Models.Typelist", b =>
+                {
+                    b.Navigation("GameTypes");
+                });
+
+            modelBuilder.Entity("SqlModels.Models.UserBackground", b =>
+                {
+                    b.Navigation("AspNetUsers");
                 });
 #pragma warning restore 612, 618
         }

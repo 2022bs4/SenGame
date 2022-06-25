@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Game>
+﻿@model IEnumerable<ProductDetailsViewModel>
 
 @section Css{
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
@@ -9,23 +9,29 @@
         
         <!-- 遊戲主要介紹 -->
         <section class="MainGame-Datial col-12 p-0 d-md-flex flex-md-wrap justify-content-md-between">
-            <h2 class="Table-title w-100"></h2>
+            
             <!-- 遊戲名稱、開發商、開發人員、發行日期、簡介 動態載入 -->
             <div class="Game-Introduce d-md-flex flex-md-column justify-content-md-between mb-4 mb-md-0 mt-md-2">
-                <div>   
-                    <img alt="" class="w-100">
-                    <p class="col-12  p-0 text-left"></p>
-                </div>
-                <div>
-                    <h3 class="Developers">開發商 <a href="#">@Html.DisplayNameFor(model=>model.Developer)</a></h3>
-                    <h3 class="Developers_Person ">開發人員 <a href="#">@Html.DisplayNameFor(model=>model.Marker)</a></h3>
-                    <h3 class="Selling-Date ">發行日期 <a href="#">@Html.DisplayNameFor(model=>model.ReleaseTime)</a></h3>
-                </div>
+                @foreach(var item in Model)
+                {
+                    <h2 class="Table-title w-100">@item.GameName</h2>
+                    <div>
+                        <img src="@item.MediaUrl" alt="@item.GameName" class="w-100">
+                        <p class="col-12  p-0 text-left">@item.GameIntroduction</p>
+                    </div>
+                    <div>
+                        <h3 class="Developers">開發商 <a href="#">@item.Developer</a></h3>
+                        <h3 class="Developers_Person ">開發人員 <a href="#">@item.Marker</a></h3>
+                        <h3 class="Selling-Date ">發行日期 <a href="#">@item.ReleaseTime</a></h3>
+                    </div>
+                }
+            </div>
+                
                 <!-- 動態標籤 -->
                 <!-- <div class="Game-tag"></div> -->
                 <!-- 動態評論 -->
                 <!-- <div class="Game-Comment"></div> -->
-            </div>
+            
             
             <!--影片 動態測入，目前Lol測試版  -->
             <div class="Game-Video-Introduce mt-md-2">
@@ -109,7 +115,7 @@
             <img src="" alt="" class="w-100">
         </div>
         <div class="text">
-            <h4>@Html.DisplayNameFor(model=>model.GameName)</h4>
+            <h4></h4>
             <p></p>
         </div>
     </template>

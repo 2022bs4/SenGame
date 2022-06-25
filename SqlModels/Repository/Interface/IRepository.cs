@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace SenGame.Repository.Interface
+namespace SqlModels.Repository.Interface
 {
         public interface IRepository<TEntity> : IDisposable
         where TEntity : class

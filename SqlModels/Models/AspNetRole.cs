@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace SqlModels.Models
 {
-    public partial class AspNetRole
+    public partial class AspNetRole 
     {
         public AspNetRole()
         {

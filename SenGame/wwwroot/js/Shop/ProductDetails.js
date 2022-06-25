@@ -35,7 +35,7 @@ function GameSlideshow() {
         })
     let mainphoto, thumbs
     function setSliders(namesArray) {
-        debugger
+  
         mainphoto = $("#mainphoto");
         thumbs = $("#thumbs")
         namesArray.forEach((item, index) => {

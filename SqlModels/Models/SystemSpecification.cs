@@ -15,5 +15,7 @@ namespace SqlModels.Models
         public string SystemCpu { get; set; }
         public string SystemGpu { get; set; }
         public int GameId { get; set; }
+
+        public virtual Game Game { get; set; }
     }
 }

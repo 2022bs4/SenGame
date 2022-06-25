@@ -10,5 +10,7 @@ namespace SqlModels.Models
         public int ReplyLikeId { get; set; }
         public int ReplyId { get; set; }
         public int UserId { get; set; }
+
+        public virtual Reply Reply { get; set; }
     }
 }

@@ -7,8 +7,19 @@ namespace SqlModels.Models
 {
     public partial class Game
     {
+        public Game()
+        {
+            CustomerServices = new HashSet<CustomerService>();
+            Forums = new HashSet<Forum>();
+            GameDiscounts = new HashSet<GameDiscount>();
+            GameMedia = new HashSet<GameMedium>();
+            GameTypes = new HashSet<GameType>();
+            MyGames = new HashSet<MyGame>();
+            SystemSpecifications = new HashSet<SystemSpecification>();
+            Wishes = new HashSet<Wish>();
+        }
+
         public int GameId { get; set; }
-        public int DiscountId { get; set; }
         public string GameName { get; set; }
         public decimal GamePrice { get; set; }
         public string GameIntroduction { get; set; }
@@ -18,5 +29,14 @@ namespace SqlModels.Models
         public DateTime? DownTime { get; set; }
         public string Developer { get; set; }
         public string Marker { get; set; }
+
+        public virtual ICollection<CustomerService> CustomerServices { get; set; }
+        public virtual ICollection<Forum> Forums { get; set; }
+        public virtual ICollection<GameDiscount> GameDiscounts { get; set; }
+        public virtual ICollection<GameMedium> GameMedia { get; set; }
+        public virtual ICollection<GameType> GameTypes { get; set; }
+        public virtual ICollection<MyGame> MyGames { get; set; }
+        public virtual ICollection<SystemSpecification> SystemSpecifications { get; set; }
+        public virtual ICollection<Wish> Wishes { get; set; }
     }
 }

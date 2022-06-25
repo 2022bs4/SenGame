@@ -10,6 +10,8 @@ namespace SqlModels.Models
         public int MyGameId { get; set; }
         public int UserId { get; set; }
         public int GameId { get; set; }
-        public int? MyFavouriteId { get; set; }
+        public bool MyFavourite { get; set; }
+
+        public virtual Game Game { get; set; }
     }
 }

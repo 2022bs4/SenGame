@@ -13,5 +13,7 @@ namespace SqlModels.Models
         public int InstructionType { get; set; }
         public int Instruction { get; set; }
         public int Sort { get; set; }
+
+        public virtual Game Game { get; set; }
     }
 }

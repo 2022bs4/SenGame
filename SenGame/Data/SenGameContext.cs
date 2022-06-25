@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using SqlModels.Models;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,15 @@ namespace SenGame.Data
             : base(options)
         {
         }
+        //
+        public virtual DbSet<AspNetRole> AspNetRole { get; set; }
+        public virtual DbSet<AspNetRoleClaim> AspNetRoleClaim { get; set; }
+        public virtual DbSet<AspNetUser> AspNetUser { get; set; }
+        public virtual DbSet<AspNetUserClaim> AspNetUserClaim { get; set; }
+        public virtual DbSet<AspNetUserLogin> AspNetUserLogin { get; set; }
+        public virtual DbSet<AspNetUserRole> AspNetUserRole { get; set; }
+        public virtual DbSet<AspNetUserToken> AspNetUserToken { get; set; }
+        //
         public virtual DbSet<Article> Articles { get; set; }
         public virtual DbSet<ArticleLike> ArticleLikes { get; set; }
         public virtual DbSet<ArticleTag> ArticleTags { get; set; }
@@ -42,6 +52,308 @@ namespace SenGame.Data
         public virtual DbSet<Wish> Wishes { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //modelBuilder.Entity("SqlModels.Models.AspNetRoles", b =>
+            //{
+            //    b.Property<string>("Id")
+            //        .HasColumnType("nvarchar(450)");
+
+            //    b.Property<string>("ConcurrencyStamp")
+            //        .HasColumnType("nvarchar(max)");
+
+            //    b.Property<string>("Name")
+            //        .HasMaxLength(256)
+            //        .HasColumnType("nvarchar(256)");
+
+            //    b.Property<string>("NormalizedName")
+            //        .HasMaxLength(256)
+            //        .HasColumnType("nvarchar(256)");
+
+            //    b.HasKey("Id");
+
+            //    b.HasIndex(new[] { "NormalizedName" }, "RoleNameIndex")
+            //        .IsUnique()
+            //        .HasFilter("([NormalizedName] IS NOT NULL)");
+
+            //    b.ToTable("AspNetRoles");
+            //});
+
+            //modelBuilder.Entity("SqlModels.Models.AspNetRoleClaims", b =>
+            //{
+            //    b.Property<int>("Id")
+            //        .ValueGeneratedOnAdd()
+            //        .HasColumnType("int")
+            //        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            //    b.Property<string>("ClaimType")
+            //        .HasColumnType("nvarchar(max)");
+
+            //    b.Property<string>("ClaimValue")
+            //        .HasColumnType("nvarchar(max)");
+
+            //    b.Property<string>("RoleId")
+            //        .IsRequired()
+            //        .HasColumnType("nvarchar(450)");
+
+            //    b.HasKey("Id");
+
+            //    b.HasIndex(new[] { "RoleId" }, "IX_AspNetRoleClaims_RoleId");
+
+            //    b.ToTable("AspNetRoleClaims");
+            //});
+
+            //modelBuilder.Entity("SqlModels.Models.AspNetUser", b =>
+            //{
+            //    b.Property<string>("Id")
+            //        .HasColumnType("nvarchar(450)");
+
+            //    b.Property<int>("AccessFailedCount")
+            //        .HasColumnType("int");
+
+            //    b.Property<string>("ConcurrencyStamp")
+            //        .HasColumnType("nvarchar(max)");
+
+            //    b.Property<string>("Email")
+            //        .HasMaxLength(256)
+            //        .HasColumnType("nvarchar(256)");
+
+            //    b.Property<bool>("EmailConfirmed")
+            //        .HasColumnType("bit");
+
+            //    b.Property<bool>("LockoutEnabled")
+            //        .HasColumnType("bit");
+
+            //    b.Property<DateTimeOffset?>("LockoutEnd")
+            //        .HasColumnType("datetimeoffset");
+
+            //    b.Property<string>("NormalizedEmail")
+            //        .HasMaxLength(256)
+            //        .HasColumnType("nvarchar(256)");
+
+            //    b.Property<string>("NormalizedUserName")
+            //        .HasMaxLength(256)
+            //        .HasColumnType("nvarchar(256)");
+
+            //    b.Property<string>("PasswordHash")
+            //        .HasColumnType("nvarchar(max)");
+
+            //    b.Property<string>("PhoneNumber")
+            //        .HasColumnType("nvarchar(max)");
+
+            //    b.Property<bool>("PhoneNumberConfirmed")
+            //        .HasColumnType("bit");
+
+            //    b.Property<string>("SecurityStamp")
+            //        .HasColumnType("nvarchar(max)");
+
+            //    b.Property<bool>("TwoFactorEnabled")
+            //        .HasColumnType("bit");
+
+            //    b.Property<string>("UserName")
+            //        .HasMaxLength(256)
+            //        .HasColumnType("nvarchar(256)");
+
+            //    b.HasKey("Id");
+
+            //    b.HasIndex(new[] { "NormalizedEmail" }, "EmailIndex");
+
+            //    b.HasIndex(new[] { "NormalizedUserName" }, "UserNameIndex")
+            //        .IsUnique()
+            //        .HasFilter("([NormalizedUserName] IS NOT NULL)");
+
+            //    b.ToTable("AspNetUsers");
+            //});
+
+            //modelBuilder.Entity("SqlModels.Models.AspNetUserClaim", b =>
+            //{
+            //    b.Property<int>("Id")
+            //        .ValueGeneratedOnAdd()
+            //        .HasColumnType("int")
+            //        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            //    b.Property<string>("ClaimType")
+            //        .HasColumnType("nvarchar(max)");
+
+            //    b.Property<string>("ClaimValue")
+            //        .HasColumnType("nvarchar(max)");
+
+            //    b.Property<string>("UserId")
+            //        .IsRequired()
+            //        .HasColumnType("nvarchar(450)");
+
+            //    b.HasKey("Id");
+
+            //    b.HasIndex(new[] { "UserId" }, "IX_AspNetUserClaims_UserId");
+
+            //    b.ToTable("AspNetUserClaims");
+            //});
+
+            //modelBuilder.Entity("SqlModels.Models.AspNetUserLogin", b =>
+            //{
+            //    b.Property<string>("LoginProvider")
+            //        .HasMaxLength(128)
+            //        .HasColumnType("nvarchar(128)");
+
+            //    b.Property<string>("ProviderKey")
+            //        .HasMaxLength(128)
+            //        .HasColumnType("nvarchar(128)");
+
+            //    b.Property<string>("ProviderDisplayName")
+            //        .HasColumnType("nvarchar(max)");
+
+            //    b.Property<string>("UserId")
+            //        .IsRequired()
+            //        .HasColumnType("nvarchar(450)");
+
+            //    b.HasKey("LoginProvider", "ProviderKey");
+
+            //    b.HasIndex(new[] { "UserId" }, "IX_AspNetUserLogins_UserId");
+
+            //    b.ToTable("AspNetUserLogins");
+            //});
+
+            //modelBuilder.Entity("SqlModels.Models.AspNetUserRoles", b =>
+            //{
+            //    b.Property<string>("UserId")
+            //        .HasColumnType("nvarchar(450)");
+
+            //    b.Property<string>("RoleId")
+            //        .HasColumnType("nvarchar(450)");
+
+            //    b.HasKey("UserId", "RoleId");
+
+            //    b.HasIndex(new[] { "RoleId" }, "IX_AspNetUserRoles_RoleId");
+
+            //    b.ToTable("AspNetUserRoles");
+            //});
+
+            //modelBuilder.Entity("SqlModels.Models.AspNetUserToken", b =>
+            //{
+            //    b.Property<string>("UserId")
+            //        .HasColumnType("nvarchar(450)");
+
+            //    b.Property<string>("LoginProvider")
+            //        .HasMaxLength(128)
+            //        .HasColumnType("nvarchar(128)");
+
+            //    b.Property<string>("Name")
+            //        .HasMaxLength(128)
+            //        .HasColumnType("nvarchar(128)");
+
+            //    b.Property<string>("Value")
+            //        .HasColumnType("nvarchar(max)");
+
+            //    b.HasKey("UserId", "LoginProvider", "Name");
+
+            //    b.ToTable("AspNetUserTokens");
+            //});
+
+
+            //
+            modelBuilder.Entity<AspNetRole>(entity =>
+            {
+                entity.HasIndex(e => e.NormalizedName, "RoleNameIndex")
+                    .IsUnique()
+                    .HasFilter("([NormalizedName] IS NOT NULL)");
+
+                entity.Property(e => e.Name).HasMaxLength(256);
+
+                entity.Property(e => e.NormalizedName).HasMaxLength(256);
+            });
+
+            modelBuilder.Entity<AspNetRoleClaim>(entity =>
+            {
+                entity.HasIndex(e => e.RoleId, "IX_AspNetRoleClaims_RoleId");
+
+                entity.Property(e => e.RoleId).IsRequired();
+
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.AspNetRoleClaims)
+                    .HasForeignKey(d => d.RoleId);
+            });
+
+            modelBuilder.Entity<AspNetUser>(entity =>
+            {
+                entity.HasIndex(e => e.NormalizedEmail, "EmailIndex");
+
+                entity.HasIndex(e => e.NormalizedUserName, "UserNameIndex")
+                    .IsUnique()
+                    .HasFilter("([NormalizedUserName] IS NOT NULL)");
+
+                entity.Property(e => e.CreateTime).HasColumnType("datetime");
+
+                entity.Property(e => e.Email).HasMaxLength(256);
+
+                entity.Property(e => e.NormalizedEmail).HasMaxLength(256);
+
+                entity.Property(e => e.NormalizedUserName).HasMaxLength(256);
+
+                entity.Property(e => e.UserName).HasMaxLength(256);
+
+                entity.HasOne(d => d.UserBackground)
+                    .WithMany(p => p.AspNetUsers)
+                    .HasForeignKey(d => d.UserBackgroundId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_AspNetUsers_UserBackground");
+            });
+
+            modelBuilder.Entity<AspNetUserClaim>(entity =>
+            {
+                entity.HasIndex(e => e.UserId, "IX_AspNetUserClaims_UserId");
+
+                entity.Property(e => e.UserId).IsRequired();
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.AspNetUserClaims)
+                    .HasForeignKey(d => d.UserId);
+            });
+
+            modelBuilder.Entity<AspNetUserLogin>(entity =>
+            {
+                entity.HasKey(e => new { e.LoginProvider, e.ProviderKey });
+
+                entity.HasIndex(e => e.UserId, "IX_AspNetUserLogins_UserId");
+
+                entity.Property(e => e.LoginProvider).HasMaxLength(128);
+
+                entity.Property(e => e.ProviderKey).HasMaxLength(128);
+
+                entity.Property(e => e.UserId).IsRequired();
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.AspNetUserLogins)
+                    .HasForeignKey(d => d.UserId);
+            });
+
+            modelBuilder.Entity<AspNetUserRole>(entity =>
+            {
+                entity.HasKey(e => new { e.UserId, e.RoleId });
+
+                entity.HasIndex(e => e.RoleId, "IX_AspNetUserRoles_RoleId");
+
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.AspNetUserRoles)
+                    .HasForeignKey(d => d.RoleId);
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.AspNetUserRoles)
+                    .HasForeignKey(d => d.UserId);
+            });
+
+            modelBuilder.Entity<AspNetUserToken>(entity =>
+            {
+                entity.HasKey(e => new { e.UserId, e.LoginProvider, e.Name });
+
+                entity.Property(e => e.LoginProvider).HasMaxLength(128);
+
+                entity.Property(e => e.Name).HasMaxLength(128);
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.AspNetUserTokens)
+                    .HasForeignKey(d => d.UserId);
+            });
+
+
+            //
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
 
             modelBuilder.Entity<Article>(entity =>
@@ -140,7 +452,7 @@ namespace SenGame.Data
 
                 entity.Property(e => e.CreateTime).HasColumnType("date");
 
-                entity.Property(e => e.MyGameId).HasColumnName("MyGameID");
+                entity.Property(e => e.GameId).HasColumnName("MyGameID");
 
                 entity.Property(e => e.QuestionContent).IsRequired();
             });
@@ -185,10 +497,6 @@ namespace SenGame.Data
                 entity.Property(e => e.FriendListId)
                     .ValueGeneratedNever()
                     .HasColumnName("FriendLIstId");
-
-                entity.Property(e => e.FriendNickName)
-                    .HasMaxLength(10)
-                    .IsFixedLength(true);
 
                 entity.Property(e => e.IsBlockade).HasComment("是否被封鎖");
             });
@@ -316,7 +624,6 @@ namespace SenGame.Data
 
                 entity.Property(e => e.MyGameId).ValueGeneratedNever();
 
-                entity.Property(e => e.MyFavouriteId).HasComment("我的最愛");
             });
 
             modelBuilder.Entity<Order>(entity =>
