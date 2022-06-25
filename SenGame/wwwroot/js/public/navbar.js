@@ -68,6 +68,10 @@ function Setnavbar(content) {
                 document.querySelector(".list-tour-friend").classList.add("active")
             }
         }
+        else if (controller == "shop") {
+            document.querySelector(".list-tour-shop").classList.add("active")
+        }
+        
     }
 }
 //input點擊後射出來
