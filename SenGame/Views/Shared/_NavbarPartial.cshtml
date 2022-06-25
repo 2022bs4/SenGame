@@ -1,4 +1,10 @@
-﻿<div class="header-box">
+﻿@{
+    string url = (string)ViewContext.RouteData.Values["controller"];
+    string urlac = (string)ViewContext.RouteData.Values["action"];
+}
+    
+
+<div class="header-box">
             <nav class="header-box-nav">
                 <div class="header-box-nav-content">
                     <button class="btn header-box-nav-content-collapse">
@@ -34,7 +40,7 @@
                                 <span>遊戲庫</span>
                             </a>
                         </li>
-                        <li class="list-tour-forum active" style="--clr:#0fc70f" type="buttom">
+                        <li class="list-tour-forum " style="--clr:#0fc70f" type="buttom">
                             <a href="#forum">
                                 <span class="icon">
                                     <ion-icon name="chatbubbles-outline"></ion-icon>
@@ -42,8 +48,8 @@
                                 <span>論壇</span>
                             </a>
                             <ul class="menu" >
-                                <li><a href="~/Comunity/Index">首頁</a></li>
-                                <li><a href="~/Comunity/ComomunityDynamicwall">討論區</a></li>
+                                <li><a href="~/Community/Index">首頁</a></li>
+                                <li><a href="~/Community/ComomunityDynamicwall">討論區</a></li>
                             </ul>
                         </li>
                         <li class="list-tour-friend " style="--clr:#2196f3">
@@ -106,6 +112,8 @@
                 </div>
             </div>
         </div>
+        <div class="controllertype" style="display:none" controller=@url >測試</div>
+        <div class="actiontype" style="display:none" ac=@urlac >測試</div>
     
     
     
