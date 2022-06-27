@@ -12,22 +12,6 @@ function Featured() {
 
         FeaturedWrapper.appendChild(clon)
     }
-    var featuredSwiper = new Swiper(".featured", {
-        slidesPerView: 1,
-        loop: true,
-
-        pagination: {
-            el: ".swiper-pagination",
-            clickable: true,
-        },
-        navigation: {
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev",
-        },
-
-    });
-
-
 }
 function TempForeChoese() {
     var tabNew = document.querySelector('.tab-new');
