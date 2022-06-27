@@ -1,0 +1,275 @@
+﻿        <section class="part-space" style="margin-right:15px;margin-left:15px;">
+            <h2>射擊</h2>
+            <p>最新、最多人玩的遊戲</p>
+            <div class="swiper featured" style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff">
+                <div id="featured-wrapper" class="swiper-wrapper">
+                    <template>
+                        <div id="featured-item" class="swiper-slide">
+                            <div class="row d-flex no-gutters">
+                                <div class="col-12 col-md-6 ">
+                                    <img class="w-100" src="https://picsum.photos/300/200/?random=10">
+                                </div>
+
+                                <div class=" d-none d-md-flex col-md-6  flex-wrap">
+                                    <img class="w-50" src="https://picsum.photos/300/200/?random=10">
+                                    <img class="w-50" src="https://picsum.photos/300/200/?random=10">
+                                    <img class="w-50" src="https://picsum.photos/300/200/?random=10">
+                                    <img class="w-50" src="https://picsum.photos/300/200/?random=10">
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination "></div>
+            </div>
+        </section>
+
+        <div class="row d-md-flex margin_block" style="margin-right:15px;margin-left:15px;">
+            <div class="col-12 col-md-8 ">
+                <nav style="width: 100%;margin-bottom: 10px;">
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <!-- 1 -->
+                        <a class="nav-link active" id="nav-new-tab" data-toggle="tab" href="#nav-new" role="tab"
+                            aria-controls="nav-new" aria-selected="true">新品與話題商品</a>
+                        <!-- 2 -->
+                        <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
+                            aria-controls="nav-profile" aria-selected="false">暢銷商品</a>
+                        <!-- 3 -->
+                        <a class="nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab"
+                            aria-controls="nav-contact" aria-selected="false">熱門即將發行</a>
+                        <!-- 4 -->
+                        <a class="nav-link" id="nav-4-tab" data-toggle="tab" href="#nav-4" role="tab"
+                            aria-controls="nav-4" aria-selected="false">特惠</a>
+                    </div>
+                </nav>
+
+                <div class="tab-content tab-game-left" id="nav-tabContent" style="padding: 0;">
+                    <!-- 1的內容 -->
+                    <div class="tab-new tab-pane fade show active" id="nav-new" role="tabpanel"
+                        aria-labelledby="nav-new-tab">
+                        <div class=" game-body text-center" style="width: 100%; margin-bottom: 10px;">
+                            <p class=" mb-0">結果已根據 <a href="">偏好設定</a> 排除部分產品</p>
+                        </div>
+                        <template>
+                            <a style="width: 100%;" href="">
+                                <div class="game-body"
+                                    style="width: 100%;padding: 5px 0 5px 5px; ; margin-bottom: 10px;">
+                                    <div class="d-flex">
+                                        <img src="https://picsum.photos/184/69/?random=10">
+                                        <div class=" d-flex " style="width: 100%;position: relative;">
+                                            <div class=" d-none d-sm-block" style="margin-left: 10px;padding-top: 5px;">
+                                                <h5 class="mb-0">遊戲名</h5>
+                                                <img class=" d-block" src="https://picsum.photos/15/15/?random=10">
+                                                <small class="text-muted">遊戲類型標籤</small>
+                                            </div>
+                                            <div class="tab-game-price">
+                                                <span class=" discount">-25%</span>
+                                                <div style="width: 100%;">
+                                                    <div class=" original-price">NT$ 560</div>
+                                                    <div class=" discount-price">NT$ 426</div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </template>
+                    </div>
+                    <!-- 2的內容 -->
+                    <div class="tab-bestSell tab-pane fade" id="nav-profile" role="tabpanel"
+                        aria-labelledby="nav-profile-tab">
+                        <div class=" game-body d-flex justify-content-end" style="width: 100%; margin-bottom: 10px;">
+                            <div>
+                                <p class=" mb-0">查看更多: <a class="btn btn-outline-dark" href="">新推出</a></p>
+                            </div>
+                        </div>
+                        <template>
+                            <a style="width: 100%;" href="">
+                                <div class="game-body"
+                                    style="width: 100%;padding: 5px 0 5px 5px; ; margin-bottom: 10px;">
+                                    <div class="d-flex">
+                                        <img src="https://picsum.photos/184/69/?random=10">
+                                        <div class=" d-flex " style="width: 100%;position: relative;">
+                                            <div class=" d-none d-sm-block" style="margin-left: 10px;padding-top: 5px;">
+                                                <h5 class="mb-0">遊戲名</h5>
+                                                <img class=" d-block" src="https://picsum.photos/15/15/?random=10">
+                                                <small class="text-muted">遊戲類型標籤</small>
+                                            </div>
+                                            <div class="tab-game-price">
+                                                <span class=" discount">-25%</span>
+                                                <div style="width: 100%;">
+                                                    <div class=" original-price">NT$ 560</div>
+                                                    <div class=" discount-price">NT$ 426</div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </template>
+                    </div>
+                    <!-- 3的內容 -->
+                    <div class="tab-hotBePost tab-pane fade" id="nav-contact" role="tabpanel"
+                        aria-labelledby="nav-contact-tab">
+                        <div class=" game-body d-flex justify-content-end" style="width: 100%; margin-bottom: 10px;">
+                            <div>
+                                <p class=" mb-0">查看更多: <a class="btn btn-outline-dark" href="">新推出</a></p>
+                            </div>
+                        </div>
+                        <template>
+                            <a style="width: 100%;" href="">
+                                <div class="game-body"
+                                    style="width: 100%;padding: 5px 0 5px 5px; ; margin-bottom: 10px;">
+                                    <div class="d-flex">
+                                        <img src="https://picsum.photos/184/69/?random=10">
+                                        <div class=" d-flex " style="width: 100%;position: relative;">
+                                            <div class=" d-none d-sm-block" style="margin-left: 10px;padding-top: 5px;">
+                                                <h5 class="mb-0">遊戲名</h5>
+                                                <img class=" d-block" src="https://picsum.photos/15/15/?random=10">
+                                                <small class="text-muted">遊戲類型標籤</small>
+                                            </div>
+                                            <div class="tab-game-price">
+                                                <span class=" discount">-25%</span>
+                                                <div style="width: 100%;">
+                                                    <div class=" original-price">NT$ 560</div>
+                                                    <div class=" discount-price">NT$ 426</div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </template>
+                    </div>
+                    <!-- 4的內容 -->
+                    <div class="tab-specialDiscount tab-pane fade" id="nav-4" role="tabpanel"
+                        aria-labelledby="nav-4-tab">
+                        <div class=" game-body d-flex justify-content-end" style="width: 100%; margin-bottom: 10px;">
+                            <div>
+                                <p class=" mb-0">查看更多: <a class="btn btn-outline-dark" href="">新推出</a></p>
+                            </div>
+                        </div>
+                        <template>
+                            <a style="width: 100%;" href="">
+                                <div class="game-body"
+                                    style="width: 100%;padding: 5px 0 5px 5px; ; margin-bottom: 10px;">
+                                    <div class="d-flex">
+                                        <img src="https://picsum.photos/184/69/?random=10">
+                                        <div class=" d-flex " style="width: 100%;position: relative;">
+                                            <div class=" d-none d-sm-block" style="margin-left: 10px;padding-top: 5px;">
+                                                <h5 class="mb-0">遊戲名</h5>
+                                                <img class=" d-block" src="https://picsum.photos/15/15/?random=10">
+                                                <small class="text-muted">遊戲類型標籤</small>
+                                            </div>
+                                            <div class="tab-game-price">
+                                                <span class=" discount">-25%</span>
+                                                <div style="width: 100%;">
+                                                    <div class=" original-price">NT$ 560</div>
+                                                    <div class=" discount-price">NT$ 426</div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </template>
+                    </div>
+                </div>
+
+                <div class="w-100 d-flex justify-content-between">
+                    <p class="mb-0">目前顯示第 <span>1-15</span>筆</p>
+                    <p class="mb-0 text-end"> 共<span>1155</span>筆</p>
+                </div>
+                <nav aria-label="Page navigation example" class=" d-flex justify-content-end">
+                    <ul class="pagination pagination-sm ">
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="col-md-4 ">
+                <section>
+                    <h3>依標籤縮小範圍</h3>
+                    <div class=" d-flex flex-wrap justify-content-between">
+                        <button id="viewSteamBtn" class=" btn-success rounded">標籤</button>
+                        <button id="viewSteamBtn" class=" btn-success rounded">標籤</button>
+                        <button id="viewSteamBtn" class=" btn-success rounded">標籤</button>
+                        <button id="viewSteamBtn" class=" btn-success rounded">標籤</button>
+                        <button id="viewSteamBtn" class=" btn-success rounded">標籤</button>
+                        <button id="viewSteamBtn" class=" btn-success rounded">標籤</button>
+                        <button id="viewSteamBtn" class=" btn-success rounded">標籤</button>
+                        <button id="viewSteamBtn" class=" btn-success rounded">標籤</button>
+                        <button id="viewSteamBtn" class=" btn-success rounded">標籤</button>
+                        <button id="viewSteamBtn" class=" btn-success rounded">標籤</button>
+                        <button id="viewSteamBtn" class=" btn-success rounded">標籤</button>
+                        <button id="viewSteamBtn" class=" btn-success rounded">標籤</button>
+                    </div>
+                </section>
+
+                <section>
+                    <h3>推薦特惠</h3>
+                    <div class="special-offer">
+                        
+                        <template>
+                            <div class="special-offer-item " href="">
+                                <img src="https://picsum.photos/300/200/?random=10" width="100%">
+                                <div class="game-body d-flex justify-content-end">
+                                    <p class="price small">
+                                        <span class="discount">-30%</span>
+                                        <span class="original-price">NT$100</span>
+                                        <span class="discount-price">NT$70</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </template>
+                        <a class="btn-success btn " style="order: 2;" href="">
+                            查看更多
+                        </a>
+                    </div>
+                </section>
+
+                <section style="margin-bottom:20px ;">
+                    <h3>精選組合包</h3>
+                    <div>
+                        <a class="card " href="">
+                            <img src="https://picsum.photos/500/200/?random=10">
+                            <div class="game-body d-flex justify-content-end">
+                                <p class="price small">
+                                    <span class="discount">-30%</span>
+                                    <span class="original-price">NT$100</span>
+                                    <span class="discount-price">NT$70</span>
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+            </div>
+        </div>
+@section Css{
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+
+     <link rel="stylesheet" href="~/css/Game/Game_Category.css" asp-append-version="true"/>
+}
+@section Scripts{
+     <script src="~/js/Game/Game_Category.js"></script>
+     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+     <script src="~/js/Game/Swiper.js"></script>
+ }
