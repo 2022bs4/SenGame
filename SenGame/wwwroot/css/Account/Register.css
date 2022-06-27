@@ -1,0 +1,66 @@
+﻿label {
+    display: block;
+}
+
+.register-content {
+    text-align: center;
+    padding-top: 10em;
+    padding-bottom: 20em;
+}
+
+    .register-content .register-title {
+        font-size: 3em;
+    }
+
+.agree {
+    text-align: center;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+}
+
+    .agree .agree-p {
+        padding-top: 0.3em;
+        padding-left: 0.3em;
+    }
+
+.register-btn-ctrl {
+    padding-bottom: 3em;
+}
+
+    .register-btn-ctrl .register-btn {
+        background-color: #f56c2d;
+        width: 150px;
+        height: 40px;
+        border: 1px;
+        border-radius: 10px;
+        color: #fff;
+    }
+
+select {
+    width: 20em;
+    height: 2em;
+}
+
+body {
+    background-color: #edf1f2;
+}
+
+#check {
+    position: relative;
+    width: 1em;
+    top: 0.7em;
+}
+
+div[class^="register"] {
+    margin-top: .5em;
+}
+
+    div[class^="register"]:first-child {
+        padding-bottom: 0;
+    }
+
+input {
+    width: 20em;
+    background-color: #e8f0fe;
+}

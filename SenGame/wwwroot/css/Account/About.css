@@ -1,0 +1,346 @@
+﻿a {
+    text-decoration: none;
+}
+
+.about-content {
+    padding-top: 7em;
+}
+
+    .about-content .about-left {
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+        .about-content .about-left .about-title img {
+            width: 13em;
+        }
+
+        .about-content .about-left .about-text {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+        }
+
+            .about-content .about-left .about-text .about-p {
+                width: 50%;
+                -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+            }
+
+                .about-content .about-left .about-text .about-p .about-span {
+                    display: inline-block;
+                    width: 10px;
+                    height: 10px;
+                    border-radius: 50%;
+                    background-color: #2828FF;
+                }
+
+                .about-content .about-left .about-text .about-p .about-span2 {
+                    display: inline-block;
+                    width: 10px;
+                    height: 10px;
+                    border-radius: 50%;
+                    background-color: #74fb3a;
+                }
+
+body {
+    background-color: #edf1f2;
+}
+
+.about-text .count {
+    font-size: 3em;
+    color: #000;
+}
+
+.download-btn {
+    width: 100%;
+    background-color: #1e262c;
+    height: 40px;
+    border: 1px;
+    border-radius: 10px;
+    color: #fff;
+    margin-bottom: 1em;
+}
+
+.about-game-content {
+    background: -webkit-gradient(linear, left top, left bottom, from(#edf1f2), to(#333f4f));
+    background: linear-gradient(#edf1f2, #333f4f);
+    padding-top: 20em;
+    padding-bottom: 5em;
+    text-align: center;
+    padding-left: 1em;
+    padding-right: 1em;
+    position: relative;
+}
+
+video {
+    width: 100%;
+}
+
+.game-p:nth-child(1) {
+    font-size: 2em;
+}
+
+.game-img a {
+    position: absolute;
+}
+
+.game-img .img-1 {
+    top: 2em;
+    left: 1em;
+}
+
+.game-img .img-2 {
+    top: 4em;
+    right: 1em;
+}
+
+.game-img .img-3 {
+    top: 8em;
+    right: 5em;
+}
+
+.game-img .img-4 {
+    top: 12em;
+    left: 2em;
+}
+
+.game-img .img-8 {
+    display: none;
+}
+
+.game-img .img-7 {
+    display: none;
+}
+
+.game-img .img-6 {
+    display: none;
+}
+
+.game-img .img-5 {
+    display: none;
+}
+
+.intro {
+    background-color: #1d2024;
+}
+
+    .intro .intro-content {
+        padding-top: 5em;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    }
+
+        .intro .intro-content:nth-child(odd) {
+            -webkit-box-orient: horizontal;
+            -webkit-box-direction: reverse;
+            -ms-flex-direction: row-reverse;
+            flex-direction: row-reverse;
+        }
+
+        .intro .intro-content .content-img {
+            width: 50%;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+            .intro .intro-content .content-img .about-content-img-img {
+                width: 60%;
+            }
+
+        .intro .intro-content .content-text {
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            color: #fff;
+        }
+
+.another {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    text-align: center;
+    padding-top: 5em;
+    padding-bottom: 5em;
+}
+
+.about-right {
+    margin-top: -7em;
+}
+
+.another .another-title {
+    text-align: start;
+}
+
+.another .about-download {
+    text-align: start;
+}
+
+@media (min-width: 576px) {
+    .about-content {
+        display: block;
+    }
+
+    .content-text {
+        padding-top: 5em;
+        padding-right: 0;
+        padding-left: 0;
+        padding-bottom: -5em;
+    }
+}
+
+@media (min-width: 992px) {
+    .about-content {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        padding-left: 4em;
+    }
+
+    .intro {
+        padding-left: 1em;
+        padding-right: 1em;
+        padding-bottom: 10em;
+        line-height: 2em;
+    }
+
+        .intro .content-text {
+            padding-top: 5em;
+            padding-right: 2em;
+            padding-left: 10em;
+        }
+
+    .download-btn {
+        width: 25em;
+    }
+
+    .game-img .img-8 {
+        display: block;
+        top: 0;
+        left: 20em;
+    }
+
+    .game-img .img-7 {
+        display: block;
+        top: 4em;
+        left: 7em;
+    }
+
+    .game-img .img-6 {
+        display: block;
+        left: 5em;
+    }
+
+    .game-img .img-5 {
+        display: block;
+        top: 15em;
+        right: 1em;
+    }
+
+    .game-img .img-1 {
+        display: block;
+        top: 12em;
+        left: .5em;
+    }
+
+    .game-img .img-2 {
+        display: block;
+        top: 0em;
+        right: 15em;
+    }
+
+    .game-img .img-3 {
+        display: block;
+        top: 7em;
+        right: 26em;
+    }
+
+    .game-img .img-4 {
+        display: block;
+        top: 16em;
+        right: 2em;
+    }
+}
+
+@media (min-width: 1200px) {
+    .about-content {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        padding-left: 4em;
+    }
+
+    .download-btn {
+        width: 25em;
+    }
+
+    .intro {
+        padding-left: 1em;
+        padding-right: 1em;
+        padding-bottom: 10em;
+        line-height: 2em;
+    }
+
+        .intro .content-text {
+            padding-top: 5em;
+            padding-right: 2em;
+            padding-left: 10em;
+        }
+
+    .game-img a {
+        position: absolute;
+        display: block;
+    }
+
+    .game-img .img-8 {
+        top: 0;
+        left: 20em;
+    }
+
+    .game-img .img-7 {
+        top: 4em;
+        left: 7em;
+    }
+
+    .game-img .img-6 {
+        left: 5em;
+    }
+
+    .game-img .img-5 {
+        top: 15em;
+    }
+
+    .game-img .img-1 {
+        top: 12em;
+        left: .5em;
+    }
+
+    .game-img .img-2 {
+        top: 0em;
+        right: 15em;
+    }
+
+    .game-img .img-3 {
+        top: 7em;
+        right: 26em;
+    }
+
+    .game-img .img-4 {
+        top: 11em;
+    }
+
+    .another-title h3 {
+        padding-left: 12.5em;
+    }
+
+    .another-title p {
+        padding-left: 22em;
+    }
+}

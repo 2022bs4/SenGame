@@ -1,0 +1,217 @@
+﻿
+.font-icon, .header .header-box-tool .search-form .btn, .header .header-box-tool-end .bell::before, .header .header-box-tool-end .login::before {
+    color: #b3b3b3;
+}
+
+    .font-icon::before, .header .header-box-tool .search-form .btn::before, .header .header-box-tool-end .bell::before, .header .header-box-tool-end .login::before {
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+        text-align: center;
+    }
+.ShoppingCart {
+    background: -webkit-gradient(linear, left top, right top, from(#0c273c), to(#475e6e));
+    background: linear-gradient(to right, #0c273c, #475e6e);
+    color: #fff;
+    width: 100%;
+    margin-left: auto;
+    padding-bottom: 5em;
+}
+
+    .ShoppingCart .title {
+        font-size: 2em;
+        font-weight: 900;
+    }
+
+@media (min-width: 768px) {
+    .ShoppingCart .title {
+        font-size: 3em;
+    }
+}
+
+.ShoppingCart .Main-Content .Shopping-ElseFunction .Continue-Shopping {
+    font-size: 1.5rem;
+    background: -webkit-gradient(linear, left top, left bottom, from(#a5f5b7), color-stop(#337342), to(#275a33));
+    background: linear-gradient(to bottom, #a5f5b7, #337342, #275a33);
+    color: #fff;
+    -webkit-box-shadow: 5px 5px 2px #00000099, -1px -1px 1px #c4d2e0;
+    box-shadow: 5px 5px 2px #00000099, -1px -1px 1px #c4d2e0;
+    padding: 5px 10px;
+    border-radius: 10px;
+    border: none;
+    margin-right: 1.5em;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+    .ShoppingCart .Main-Content .Shopping-ElseFunction .Continue-Shopping:hover {
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        background: #5ec174;
+    }
+
+.ShoppingCart .Main-Content .Shopping-ElseFunction .DelAllItem {
+    font-size: 1.5rem;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 10px;
+    background: -webkit-gradient(linear, left top, left bottom, from(#c2c4c9), color-stop(#3e5379), to(#2664d2));
+    background: linear-gradient(to bottom, #c2c4c9, #3e5379, #2664d2);
+    -webkit-box-shadow: 5px 5px 2px #00000099, -1px -1px 1px #c4d2e0;
+    box-shadow: 5px 5px 2px #00000099, -1px -1px 1px #c4d2e0;
+    font-weight: 700;
+    color: #fff;
+}
+
+    .ShoppingCart .Main-Content .Shopping-ElseFunction .DelAllItem:hover {
+        background: #66c0f4;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
+
+@media (min-width: 576px) {
+    .ShoppingCart .Main-Content {
+        padding: 1em;
+    }
+}
+
+@media (min-width: 768px) {
+    .ShoppingCart .Shopping-Recommend {
+        position: fixed;
+        right: 0;
+        top: 5.5em;
+    }
+}
+
+@media (min-width: 576px) {
+    .ShoppingCart {
+        width: calc(100% - 60px);
+        margin-left: auto;
+    }
+}
+
+.Shpping-else-text {
+    font-size: 0.2em;
+}
+
+    .Shpping-else-text .Shpping-else-text div {
+        border: 1px solid #686868aa;
+        border-radius: 5px;
+        padding: 2em;
+    }
+
+    .Shpping-else-text div img {
+        width: 15em;
+        height: 15em;
+        border: 0px;
+    }
+
+.Shopping-Select-Sum-Pric .Shopping-Checkout {
+    font-size: 1.2em;
+    font-weight: 700;
+}
+
+    .Shopping-Select-Sum-Pric .Shopping-Checkout .Shpopping-Price {
+        font-weight: 900;
+        color: #fff;
+        text-shadow: 3px 2px 1px #0000003d, -1px -1px 1px #c4d2e0;
+    }
+
+@media (min-width: 768px) {
+    .Shopping-Select-Sum-Pric .Shopping-Checkout {
+        font-size: 1.7em;
+    }
+}
+
+@media (min-width: 576px) {
+    .open-section {
+        width: calc(100% - 220px) !important;
+        -webkit-transition: 0.5s;
+        transition: 0.5s;
+    }
+}
+
+.Game-Shopping-Item {
+    padding: 1em 0em 1em 0em;
+    border-bottom: 1px solid #fff;
+}
+
+    .Game-Shopping-Item .Game-Price {
+        position: relative;
+        height: 9em;
+    }
+
+        .Game-Shopping-Item .Game-Price .Select-Game-Title {
+            font-size: 1.8em;
+        }
+
+@media (min-width: 576px) {
+    .Game-Shopping-Item .Game-Price .Select-Game-Title {
+        font-size: 1.5em;
+    }
+}
+
+.Game-Shopping-Item .Game-Price div p {
+    font-size: 1.5em;
+    font-weight: 600;
+}
+
+.Game-Shopping-Item .Game-Price div .Select-Item-Price {
+    font-weight: 900;
+    color: #fff;
+    text-shadow: 3px 2px 1px #0000003d, -1px -1px 1px #c4d2e0;
+}
+
+.Game-Shopping-Item .Game-Price .Remove_btn {
+    font-size: 1.5rem;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    background: -webkit-gradient(linear, left top, left bottom, from(#c2c4c9), color-stop(#3e5379), to(#2664d2));
+    background: linear-gradient(to bottom, #c2c4c9, #3e5379, #2664d2);
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 10px;
+    -webkit-box-shadow: 5px 5px 2px #00000099, -1px -1px 1px #c4d2e0;
+    box-shadow: 5px 5px 2px #00000099, -1px -1px 1px #c4d2e0;
+}
+
+    .Game-Shopping-Item .Game-Price .Remove_btn:hover {
+        background: #66c0f4;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
+
+@media (min-width: 992px) {
+    .Game-Shopping-Item .Game-Price {
+        height: auto;
+    }
+}
+
+.Recommend-Price-Box {
+    padding-top: 1em;
+}
+
+    .Recommend-Price-Box span {
+        font-weight: 600;
+    }
+
+    .Recommend-Price-Box .Recommend-Price {
+        font-weight: 800;
+    }
+
+img {
+    border-radius: 0.4em;
+    border: 1px solid black;
+}
+
+.MainScreen {
+    width: 100% !important;
+}
+
+button {
+    color: #000;
+    font-weight: 700;
+    border-radius: 5px;
+}
+/*# sourceMappingURL=ShoppingCart.css.map */

@@ -1,0 +1,70 @@
+﻿@section Css{
+     <link rel="stylesheet" href="/css/shop/ShoppingCart.css" asp-append-version="true"/>
+}
+        <!--  -->
+        <section class="Main-Content col-12 col-md-8 p-0">
+            <p class="col-12 pt-3 title">您的購物車</p>
+            <div class="Shopping-Area col-12 d-flex flex-wrap p-0">
+                <!-- 動態 -->
+                <div class="Spopping-Select col-12  d-flex flex-wrap pb-2">
+                </div>
+                <div class="Shopping-Select-Sum-Pric col-12 d-flex flex-wrap px-0 pt-2">
+                    <div class="d-flex justify-content-between col-12 Shopping-Checkout">
+                        <p class="">估計總額 :</p>
+                        <p class="Shpopping-Price">NT$ 4000</p>
+                    </div>
+                </div>
+            </div>
+            <div class="Shopping-ElseFunction col-12 d-flex flex-row-reverse">
+                <button class="btn DelAllItem">移除所有項目</button>
+                <button class="btn DelAllItem mr-2">繼續購物</button>
+                <button class="Continue-Shopping">結帳</button>
+            </div>
+        </section>
+        <!-- 推薦區 -->
+        <section class="Shopping-Recommend col-12 col-md-3  d-flex flex-wrap  align-content-start p-0 ">
+        </section>
+
+@*<section class="d-none">
+    <form id="form" name="form" action="https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5" method="POST">
+		@foreach(var key in @Model.Keys.ToList())
+		{
+			@(key)<input type="text" name="@key" value="@Model[key]" /> <br/>
+		}
+	</form>
+</section>*@
+
+    
+
+    <!-- 購物車單項產品 -->
+    <template id="Spopping_Select_Template">
+        <div class="col-12 d-md-flex justify-content-md-between  Game-Shopping-Item">
+            <div class="d-md-flex col-md-6 p-md-0 px-0">
+                <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1158310/header.jpg?t=1653385552" alt="" class="Template_img w-100">
+            </div>
+            <div class="col-md-6 Game-Price p-0 ">
+                <h2 class="Select-Game-Title pl-md-3 d-block    ">Crusader Kings III</h2>
+                <div class="col-md-12 p-0 pl-md-3  d-flex justify-content-between">
+                    <p class=" d-inline-block font-weight-bold">遊戲價格:</p>
+                    <p class="Select-Item-Price">NT$ 1000</p>
+                </div>
+                <button class="Remove_btn">移除</button>
+            </div>
+        </div>
+    </template>
+    <!-- 遊戲推薦 -->
+    <template id="Shopping_Recommend">
+        <div class="col-6 col-md-12 p-0 \">
+            <a href="#" class=" d-inline-block col-12">
+                <img src="" alt="" class="w-100 ">
+            </a>
+            <div class="col-12 d-flex flex-wrap justify-content-between Recommend-Price-Box">
+                <span>售價 : </span>
+                <p class="Recommend-Price">NT$ 9527</p>
+            </div>
+        </div>
+    </template>
+
+@section Scripts{
+    <script src="~/js/shop/ShoppingCart.js"></script>
+}
