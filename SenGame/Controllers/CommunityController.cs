@@ -15,6 +15,7 @@ namespace SenGame.Controllers
         }
         public IActionResult Index()
         {
+
             return View();
         }
         //顯示討論區
