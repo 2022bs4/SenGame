@@ -7,15 +7,22 @@ using System.Linq.Expressions;
 
 namespace SenGame.Repository
 {
-    public interface IRepository<TEntity> : IDisposable
-        where TEntity : class
+    public interface IRepository<TdbModel> : IDisposable
+        where TdbModel : class
     {
-        public void Create(TEntity entity);
-        public void Update(TEntity entity);
-        public void Delete(TEntity entity);
-        //use predicate variable filter data
-        public TEntity GetById(Expression<Func<TEntity, bool>> predicate);
-        public IQueryable<TEntity> GetAll();
+        //Insert New DATA return ID
+        public int Create(TdbModel entity);
+        //Edit DATA
+        public void Update(TdbModel entity);
+        //Remove Delete return ID
+        public int Delete(int _Id);
+        //use predicate with variable filter data
+        public IQueryable<TdbModel> FindBy(Expression<Func<TdbModel, bool>> predicate);
+        //Get All DATA return IQueryable's Collections
+        public IQueryable<TdbModel> GetAll();
+        //Get DATA whit ID return IQueryable's Collections
+        public TdbModel GetById(int _Id);
+        //Save to database
         public void SaveChanges();
     }
 }

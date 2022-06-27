@@ -1,5 +1,4 @@
 ﻿using System;
-//using SenGame.Models;
 using Microsoft.EntityFrameworkCore;
 using SenGame.Repository;
 using System.Linq;
@@ -10,80 +9,55 @@ using SenGame.Data;
 
 namespace SenGame.Repository
 {
-    public class GenericRepository<TEntity> : IRepository<TEntity>
-        where TEntity : class
+    public class GenericRepository<TdbModel> : IRepository<TdbModel>
+        where TdbModel : class
     {
-        public SenGameContext Context
+        public SenGameContext DbContext { get; set; }
+        public DbSet<TdbModel> DbSet { get; set; }
+        public GenericRepository() : this(new SenGameContext())
         {
-            get;
-            set;
+
         }
-
-        //public GenericRepository()
-        //{
-
-        //}
-
         public GenericRepository(SenGameContext context)
         {
-            if (context == null)
-            {
-                throw new ArgumentNullException("context");
-            }
-            Context = context;
+            this.DbContext = context;
+            this.DbSet = DbContext.Set<TdbModel>();
         }
 
-        public void Create(TEntity entity)
+        public int Create(TdbModel entity)
         {
-            if (entity == null)
-            {
-                throw new ArgumentNullException("entity");
-            }
-            else
-            {
-                Context.Set<TEntity>().Add(entity);
-                SaveChanges();
-            }
+            dynamic obj = DbSet.Add(entity);
+            this.SaveChanges();
+            return obj.Id;
         }
 
-        public void Update(TEntity entity)
+        public void Update(TdbModel entity)
         {
-            if (entity == null)
-            {
-                throw new ArgumentNullException("entity");
-            }
-            else
-            {
-                Context.Entry(entity).State = EntityState.Modified;
-                SaveChanges();
-            }
+            DbSet.Update(entity);
+            this.SaveChanges();
         }
 
-        public void Delete(TEntity entity)
+        public int Delete(int _Id)
         {
-            if (entity == null)
-            {
-                throw new ArgumentNullException("entity");
-            }
-            else
-            {
-                Context.Entry(entity).State = EntityState.Deleted;
-                SaveChanges();
-            }
-        }
-        public TEntity GetById(Expression<Func<TEntity, bool>> predicate)
-        {
-            return Context.Set<TEntity>().FirstOrDefault(predicate);
+            var item = DbSet.Find(_Id);
+            dynamic obj = DbSet.Remove(item);
+            this.SaveChanges();
+            return obj.Id;
         }
 
-        public IQueryable<TEntity> GetAll()
+        public IQueryable<TdbModel> FindBy(Expression<Func<TdbModel, bool>> predicate)
         {
-            return Context.Set<TEntity>().AsQueryable();
+            return DbSet.Where(predicate);
         }
 
-        public void SaveChanges()
+        public IQueryable<TdbModel> GetAll()
         {
-            Context.SaveChanges();
+            return DbSet;
+        }
+
+        public TdbModel GetById(int _Id)
+        {
+            return DbSet.Find(_Id);
         }
 
         public void Dispose()
@@ -98,13 +72,17 @@ namespace SenGame.Repository
             if (disposing)
             {
                 //如果有要回收釋放的資源
-                if (Context != null)
+                if (DbContext != null)
                 {
                     //調用方法回收
-                    Context.Dispose();
-                    Context = null;
+                    DbContext.Dispose();
+                    DbContext = null;
                 }
             }
+        }
+        public void SaveChanges()
+        {
+            DbContext.SaveChanges();
         }
     }
 }

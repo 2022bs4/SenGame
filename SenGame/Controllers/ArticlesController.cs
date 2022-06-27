@@ -19,7 +19,7 @@ namespace SenGame.Controllers
         public ArticlesController(SenGameContext context)
         {
             this._Repository = new GenericRepository<Article>(context);
-            _context = _Repository.Context;
+            _context = _Repository.DbContext;
         }
 
         // GET: Articles
