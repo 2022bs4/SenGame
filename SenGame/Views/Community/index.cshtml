@@ -1,88 +1,112 @@
 ﻿@{
-    Layout = "_Layoutforum";
+    Layout = "_Layout";
 }
 
 @section Css{
     <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css">
     <link rel="stylesheet" href="~/css/forum/index.css" asp-append-version="true"/>
 }
-       
 
 
 <div class="community-body">
-
-    <div class="community-body-right">
-        <div class="community-body-swpier">
-            <div class="swiper">
-                <!-- Additional required wrapper -->
-                <div class="swiper-wrapper">
-                    <!-- Slides -->
-
+            <div class="community-body-right col-md-10">
+                <div class="community-body-swpier col-md-12 col-xxl-12">
+                    <div class="swiper">
+                        <!-- Additional required wrapper -->
+                        <div class="swiper-wrapper">
+                            <!-- Slides -->
+    
+                        </div>
+                        <!-- If we need pagination -->
+                        <div class="swiper-pagination"></div>
+    
+                        <!-- If we need navigation buttons -->
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+    
+                        <!-- If we need scrollbar -->
+                        <div class="swiper-scrollbar"></div>
+                    </div>
                 </div>
-                <!-- If we need pagination -->
-                <div class="swiper-pagination"></div>
+                <div class="community-body-dynamics ">
+                    <h3>社群動態</h3>
+                    <span>近期閱覽看版</span>
+                    <div class="community-body-populargames">
+                        <div class="community-body-populargames-card">
+                            <img src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/1457510/eeb2d83245398663462cdf194f892fb254c6b5c3.jpg"
+                                alt="">
+                            <a href="#">英雄傳說 閃之軌跡IV -THE END OF SAGA-</a>
+                        </div>
+                        <div class="community-body-populargames-card">
+                            <img src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/1457510/eeb2d83245398663462cdf194f892fb254c6b5c3.jpg"
+                                alt="">
+                            <a href="#">英雄傳說 閃之軌跡IV -THE END OF SAGA-</a>
+                        </div>
+                        <div class="community-body-populargames-card">
+                            <img src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/1457510/eeb2d83245398663462cdf194f892fb254c6b5c3.jpg"
+                                alt="">
+                            <a href="#">英雄傳說 閃之軌跡IV -THE END OF SAGA-</a>
+                        </div>
+                        <div class="community-body-populargames-card">
+                            <img src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/1457510/eeb2d83245398663462cdf194f892fb254c6b5c3.jpg"
+                                alt="">
+                            <a href="#">英雄傳說 閃之軌跡IV -THE END OF SAGA-</a>
+                        </div>
+                        <div class="community-body-populargames-card">
+                            <img src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/1457510/eeb2d83245398663462cdf194f892fb254c6b5c3.jpg"
+                                alt="">
+                            <a href="#">英雄傳說 閃之軌跡IV -THE END OF SAGA-</a>
+                        </div>
+                        <div class="community-body-populargames-card">
+                            <img src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/1457510/eeb2d83245398663462cdf194f892fb254c6b5c3.jpg"
+                                alt="">
+                            <a href="#">英雄傳說 閃之軌跡IV -THE END OF SAGA-</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="commuity-body-popularrticles ">
+                    <h3>熱門文章</h3>
+                    <div class="community-body-forum">
+                        
+                        <div class="forumcard ">
+                            <div class="forumcard-img col-md-5 col-sm-5 ">
+                                <img src="https://p2.bahamut.com.tw/FORUM/welcome/07650_3_1655731750.JPG?w=720" alt="" class="w-100">
+                            </div>
+                            <div class="forumcard-main col-md-7">
+                                <a href="#"><h3>新楓之谷</h3></a>
+                                <p  class="forumcard-text">【心得】~舞動紫扇 與花狐相伴の陰陽師~介紹x技能建議（更新TMS v244 Destiny）</p>
+                                <li><a href="#">進入看板</a></li>
+                            </div>
+                        </div>
+                        
 
-                <!-- If we need navigation buttons -->
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
-
-                <!-- If we need scrollbar -->
-                <div class="swiper-scrollbar"></div>
+                    </div>
+                    
+                </div>
             </div>
-        </div>
-        <div class="community-body-dynamics ">
-            <h3>社群動態</h3>
-            <span>近期閱覽看版</span>
-            <div class="community-body-populargames">
-                <div class="community-body-populargames-card">
-                    <img src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/1457510/eeb2d83245398663462cdf194f892fb254c6b5c3.jpg"
-                         alt="">
-                    <a href="#">英雄傳說 閃之軌跡IV -THE END OF SAGA-</a>
-                </div>
-                <div class="community-body-populargames-card">
-                    <img src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/1457510/eeb2d83245398663462cdf194f892fb254c6b5c3.jpg"
-                         alt="">
-                    <a href="#">英雄傳說 閃之軌跡IV -THE END OF SAGA-</a>
-                </div>
-                <div class="community-body-populargames-card">
-                    <img src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/1457510/eeb2d83245398663462cdf194f892fb254c6b5c3.jpg"
-                         alt="">
-                    <a href="#">英雄傳說 閃之軌跡IV -THE END OF SAGA-</a>
-                </div>
-                <div class="community-body-populargames-card">
-                    <img src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/1457510/eeb2d83245398663462cdf194f892fb254c6b5c3.jpg"
-                         alt="">
-                    <a href="#">英雄傳說 閃之軌跡IV -THE END OF SAGA-</a>
-                </div>
-                <div class="community-body-populargames-card">
-                    <img src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/1457510/eeb2d83245398663462cdf194f892fb254c6b5c3.jpg"
-                         alt="">
-                    <a href="#">英雄傳說 閃之軌跡IV -THE END OF SAGA-</a>
-                </div>
-                <div class="community-body-populargames-card">
-                    <img src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/1457510/eeb2d83245398663462cdf194f892fb254c6b5c3.jpg"
-                         alt="">
-                    <a href="#">英雄傳說 閃之軌跡IV -THE END OF SAGA-</a>
-                </div>
-            </div>
-        </div>
-        <div class="commuity-body-popularrticles">
-            <h3>熱門文章</h3>
-            <div class="community-body-forum">
 
+            <div class="community-body-left">
+                <div class="community-body-sticky">
+                    <div class="community-body-sticky-img">
+                        <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/552520/capsule_616x353.jpg?t=1628209646" alt="">
+                    </div>
+                    <div class="community-body-sticky-img">
+                        <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/552520/capsule_616x353.jpg?t=1628209646" alt="">
+                    </div>
+                    <div class="community-body-sticky-img">
+                        <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/552520/capsule_616x353.jpg?t=1628209646" alt="">
+                    </div>
+
+                </div>
             </div>
-        </div>
-    </div>
-    <div class="community-body-left">
-        <div class="community-body-sticky">
-            card
-        </div>
-    </div>
-</div>
+        </div>    
+
+
+
 
 @section Scripts{
     <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"> </script>
-    @*<script src="~/js/forum/index.js"></script>*@
+    <script src="~/js/forum/index.js"></script>
 
 }
 

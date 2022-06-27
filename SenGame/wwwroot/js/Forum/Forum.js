@@ -1,30 +1,27 @@
-﻿var row = document.querySelector('#forum');
-var rows = document.querySelector('.page-content');
-
-var btn1 = document.querySelector('.row-cells');
+console.log(document.cookie);
+var btn1 = document.querySelector('.row-large-btn');
 btn1.addEventListener('click', function () {
-    row.setAttribute("class", "container-fluid")
+    ChangeRow("row-large");
+    document.cookie = 'cookie3=value3';
 })
-
-var btn2 = document.querySelector('.row-cells-dense');
+var btn2 = document.querySelector('.row-cells-btn');
 btn2.addEventListener('click', function () {
-    row.setAttribute("class", "container-fluid")
-
-    row.classList.add("row-dense")
+    ChangeRow("row-cells");
 })
-var btn3 = document.querySelector('.row-list');
+var btn3 = document.querySelector('.row-list-btn');
 btn3.addEventListener('click', function () {
-    row.setAttribute("class", "container-fluid")
+    ChangeRow("row-list");
+})
 
-    row.classList.add("row-list")
-})
-var btn4 = document.querySelector('.row-table-list');
-btn4.addEventListener('click', function () {
-    row.setAttribute("class", "container-fluid")
-    row.classList.add("row-table-list")
-})
+function ChangeRow(css){
+    var main = document.querySelector('main');
+    main.setAttribute("class", "container-fluid");
+    main.classList.add(css);
+}
+var content = document.querySelector('#page-content');
 var temp = document.getElementsByTagName("template")[0];
 for (var i = 5; i < 20; i++) {
     var clon = temp.content.cloneNode(true);
-    rows.appendChild(clon);
+    content.appendChild(clon);
 }
+
