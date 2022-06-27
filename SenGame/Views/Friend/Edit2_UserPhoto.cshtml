@@ -1,8 +1,8 @@
 ﻿ @section Css{
     <link rel="stylesheet" href="~/css/Friend/Member.css" asp-append-version="true"/>
  }
-<!-- 下方區塊 (動態留言+個人狀態)  -->
-        <div class="mb-3 mt-3 ml-auto">
+
+        <div class="mb-3 mt-3 ml-auto mt-3" id="card-Edit_User">
             <!-- 留言 + 新增留言 -->
             <div class="card-Member-Comment mb-3 mt-3 p-3 mr-3 ml-3">
                 <div class="row g-0">
@@ -13,22 +13,20 @@
                             <!-- 整個編輯清單 -->
                             <div class="Edit-left-box">
                                 <!-- 返回個人檔案 -->
-                                <a href="/friend/User__information"
-                                    class="btn btn-primary btn-block">返回個人檔案</a>
+                                <a href="/friend/User__information" class="btn btn-primary btn-block">返回個人檔案</a>
                                 <!-- 編輯清單 -->
                                 <div class="Edit-list mt-4 align-middle">
                                     <!-- 一般 (個人圖示+個人檔案背景+迷你個人檔案+主題 -->
                                     <a href="/friend/Edit1_User" class="list-group-item border-0"><span
-                                            class="fa fa-inbox mr-2"></span>一般</a>
+                                            class="fa fa-inbox mr-2"></span><b>一般</b></a>
                                     <a href="/friend/Edit2_UserPhoto" class="list-group-item border-0"><span
-                                            class="fa fa-paper-plane mr-2"></span><b>個人圖示</b></a>
-                                    
+                                            class="fa fa-paper-plane mr-2"></span>個人圖示</a>
+
                                     <a href="/friend/Edit3_UserTopic" class="list-group-item border-0"><span
                                             class="fa fa-ticket mr-2"></span>主題</a>
                                 </div>
                                 <!-- 分隔線 -->
                                 <hr class="Edit-divider mt-1 m-b-10">
-                                </hr>
                                 <div class="list-group mail-list">
                                     <a href="/friend/Edit4_UserPrivacy" class="list-group-item border-0"><span
                                             class="fa fa-tags mr-2"></span>隱私設定</a>
@@ -40,100 +38,69 @@
                         </div>
                     </div>
                     <!-- 編輯畫面 2-->
-                    <div class="card-Edit2 col-md-8">
+                    <div class="card-Edit2 card Member-card card-body col-md-8">
                         <!-- 編輯畫面群組 -->
-                        <div class="Edit2-Group card Member-card">
-                            <div class="card-body">
-                                <!-- 關於個人圖示編輯的說明 -->
-                                <div class="Edit2-text">
-                                    <h5>個人圖示</h5>
-                                    <p>選擇您的個人圖示</p>
-                                    <b class="Edit2-textTitle">
-                                        <!-- 分隔線 -->
-                                        <hr class="Edit-divider mt-1 m-b-10">
-                                        </hr>
-                                    </b>
-                                </div>
+                        <!-- 關於個人圖示編輯的說明 -->
+                        <div class="Edit2-text">
+                            <h5>個人圖示</h5>
+                            <p>選擇您的個人圖示</p>
+                            <!-- 分隔線 -->
+                            <hr class="Edit-divider mt-1 m-b-10">
+                        </div>
+                        <!-- 個人圖示編輯主要部分 -->
+                        <div class="Edit2-main form-validation">
+                            <h5 class="m-b-20"><i class="fa fa-paperclip m-r-5 f-s-18"></i> <b>上傳您的個人圖示</b>
+                            </h5>
 
-                                <!-- 右邊上方按鈕們 -->
-                                <div class="Edit2-btn mb-3">
-                                    <button class="btn btn-info">確定編輯</button>
-                                    <button class="btn btn-warning ml-3">取消編輯</button>
+                            <!-- Star 在當前頁面實現預覽效果 -->
 
-                                </div>
-                                <!-- 每個編輯的title -->
-                                <div class="Edit2-textTitle">
-                                    <!-- 分隔線 -->
-                                    <hr class="Edit-divider mt-1 m-b-10">
-                                    </hr>
-                                </div>
-                                <!-- 個人圖示編輯主要部分 -->
-                                <div class="Edit2-main form-validation">
-                                    <h5 class="m-b-20"><i class="fa fa-paperclip m-r-5 f-s-18"></i> <b>上傳您的個人圖示</b>
-                                    </h5>
+                            <input class="Edit2-PhotoView" type="file" onchange="openFile(event)" accept="image/*">
+                            <div id="Edit2-PhotoBox">
+                                <img id="output" height="200" style="display:none">
+                            </div>
 
-                                    <!-- Star 在當前頁面實現預覽效果 -->
-                                    <div id="Edit2-PhotoBtn">
-                                        <input class="l-border-2" type="file" multiple="multiple"
-                                            accept="image/*">
-                                    </div>
-                                    <div id="Edit2-PhotoBox">
-                                        <img />
-                                    </div>
-                                    <!-- End 在當前頁面實現預覽效果 -->
-                                    <div class="text-left mt-2">
-                                        <button class="btn btn-primary" type="button"><i class="fa fa-paper-plane"></i>
-                                            確定上傳</button>
-                                        <button class="btn btn-dark ml-3" type="button"><i class="fa-solid fa-ban"></i>
-                                            取消上傳</button>
-                                    </div>
-                                    <!-- 每個編輯的title -->
-                                    <div class="Edit2-textTitle">
-                                        <!-- 分隔線 -->
-                                        <b>推薦給您的其他頭貼</b>
-                                        <hr class="Edit-divider mt-1 m-b-10">
-                                        </hr>
-                                    </div>
-
-                                    <div class="Edit2-recoPhoto row mt-3">
-                                        <div class="col-lg-3 col-sm-6">
-                                            <div class="card p-3 btn photo1">
-                                                <img src="./圖片/1.jpg">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3 col-sm-6">
-                                            <div class="card p-3 btn photo2">
-                                                <img src="./圖片/2.jpg">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3 col-sm-6 ">
-                                            <div class="card p-3 btn photo3">
-                                                <img src="./圖片/3.jpg">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3 col-sm-6 ">
-                                            <div class="card p-3 btn photo4">
-                                                <img src="./圖片/4.jpg">
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
+                            <!-- End 在當前頁面實現預覽效果 -->
+                            <div class="text-left mt-2">
+                                <button onclick="ConfirmRpload()" class="btn btn-primary" type="button"><i
+                                        class="fa fa-paper-plane"></i>
+                                    確定上傳</button>
+                                <button onclick="clean()" class="btn btn-dark ml-3" type="button"><i
+                                        class="fa-solid fa-ban"></i>
+                                    取消上傳</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-<!-- 在當前頁面實現預覽效果 -->
-    <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+    <!-- 在當前頁面實現預覽效果 -->
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
     <script>
-        $('input').on('change', function (e) {
-            const file = this.files[0];
-            const objectURL = URL.createObjectURL(file);
-            $('img').attr('src', objectURL);
-        });
+        function openFile(event) {
+            var input = event.target; //取得上傳檔案
+            var reader = new FileReader(); //建立FileReader物件
+            reader.readAsDataURL(input.files[0]); //以.readAsDataURL將上傳檔案轉換為base64字串
+            reader.onload = function () { //FileReader取得上傳檔案後執行以下內容
+                var dataURL = reader.result; //設定變數dataURL為上傳圖檔的base64字串
+                $('#output').attr('src', dataURL).show(); //將img的src設定為dataURL並顯示
+            };
+        }
+        function clean() {
+            alert('取消上傳');
+            // var dataURL = reader.result;
+            // $('#output').attr('src', dataURL);; //清空 Edit2-PhotoBox
+            document.getElementById("output").src = '';
+            document.getElementById("output").multiple = '未選擇任何檔案';
+        }
+
+        function ConfirmRpload() {
+            var yes = confirm('你確定嗎？');
+            if (yes) {
+                alert('上傳成功');
+            } else {
+                alert('取消上傳');
+            }
+        }
     </script>
 
  @section Scripts{

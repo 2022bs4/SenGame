@@ -18,10 +18,4 @@ function ChangeRow(css){
     main.setAttribute("class", "container-fluid");
     main.classList.add(css);
 }
-var content = document.querySelector('#page-content');
-var temp = document.getElementsByTagName("template")[0];
-for (var i = 5; i < 20; i++) {
-    var clon = temp.content.cloneNode(true);
-    content.appendChild(clon);
-}
 
