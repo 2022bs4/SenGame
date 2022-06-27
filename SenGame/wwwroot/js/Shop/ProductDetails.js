@@ -4,11 +4,11 @@ $(document).ready(function () {
     $('main').addClass("CommodityDetials close-section")
     $('main').removeClass("container-fluid")
 
-    CloneGame()
+    //CloneGame()
     GameSlideshow()
     RecommendTemplate()
-    SysClone("Min-Cnfigure", "最低配備 :")
-    SysClone("Suggest-Configure", "建議配置 :")
+/*    SysClone("Min-Cnfigure", "最低配備 :")*/
+    //SysClone("Suggest-Configure", "建議配置 :")
 })
 
 
@@ -75,14 +75,14 @@ function GameSlideshow() {
 }
 
 //詳細圖文介紹區之動態產生
-function CloneGame() {
-    let GameDatails = document.querySelector('.Game-Datails')
-    let GameClone = GamePictureText.content.cloneNode(true)
-    GameClone.querySelector('img').src = ""
-    GameClone.querySelector('h4').innerText = ''
-    GameClone.querySelector('p').innerHTML = ' '
-    GameDatails.append(GameClone);
-}
+//function CloneGame() {
+//    let GameDatails = document.querySelector('.Game-Datails')
+//    let GameClone = GamePictureText.content.cloneNode(true)
+//    GameClone.querySelector('img').src = ""
+//    GameClone.querySelector('h4').innerText = ''
+//    GameClone.querySelector('p').innerHTML = ' '
+//    GameDatails.append(GameClone);
+//}
 
 /* 配置*/
 //function SysClone(configure, configureText) {

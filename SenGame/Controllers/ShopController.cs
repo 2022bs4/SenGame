@@ -100,13 +100,13 @@ namespace SenGame.Controllers
         public IActionResult ProductDetails(int id =1)
         {
 
-            var gameMain = Games.Where(x => x.GameId == id).ToList();
+            var gameMain = Games.Where(x => x.GameId == id);
             foreach (var item in gameMain)
             {
-                var sys = systemSpecifications.Where(x => x.GameId == item.GameId).Where(x=>x.SystemType == 1).ToList();
+                var sys = systemSpecifications.Where(x => x.GameId == item.GameId && x.SystemType == 1);
                 foreach (var syss in sys)
                 {
-                    var introductPicture = gameMedia.Where(x=> x.GameId == item.GameId).Where(x=>x.InstructionType == 2).ToList();
+                    var introductPicture = gameMedia.Where(x=> x.GameId == item.GameId && x.InstructionType == 2);
                     foreach (var pic in introductPicture)
                     {
                         _ProductDetailsViewModel.Add(
