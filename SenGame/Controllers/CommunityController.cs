@@ -21,7 +21,7 @@ namespace SenGame.Controllers
         //顯示討論區
         public IActionResult Forum() { 
             
-            var data=_Repository.GetAll();
+           var data=_Repository.GetAll();
             return View(data);
         }
         public IActionResult ComomunityDynamicwall()
