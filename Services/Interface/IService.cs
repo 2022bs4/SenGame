@@ -5,16 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-namespace Services
+
+namespace Services.Interface
 {
-    internal interface IService<TEntity> where TEntity : class
+    internal interface IService<TdbModel> where TdbModel : class
     {
-        bool Create(TEntity entity);
-        bool Update(TEntity entity);
-        bool Delete(TEntity entity);
+        bool Create(TdbModel entity);
+        bool Update(TdbModel entity);
+        bool Delete(TdbModel entity);
         bool IsExists(int id);
-        TEntity GetById(int id);
+        TdbModel GetById(int id);
         public bool Update(int entity);
-        IEnumerable<Project> GetAll();
+        IEnumerable<TdbModel> GetAll();
     }
 }

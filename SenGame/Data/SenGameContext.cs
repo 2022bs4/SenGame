@@ -10,10 +10,6 @@ namespace SenGame.Data
 {
     public class SenGameContext : IdentityDbContext<UserModel>
     {
-        public SenGameContext()
-        {
-
-        }
         public SenGameContext(DbContextOptions<SenGameContext> options)
             : base(options)
         {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SenGame.Data;
-using SenGame.Repository;
+using SqlModels.Repository;
 using SqlModels.Models;
 using System.Linq;
 

@@ -1,24 +1,16 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
-using SenGame.Repository;
 using System.Linq;
 using System.Linq.Expressions;
-using SqlModels.Models;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using SenGame.Data;
-
-namespace SenGame.Repository
+using SqlModels.Repository.Interface;
+namespace SqlModels.Repository
 {
     public class GenericRepository<TdbModel> : IRepository<TdbModel>
         where TdbModel : class
     {
-        public SenGameContext DbContext { get; set; }
+        public DbContext DbContext { get; set; }
         public DbSet<TdbModel> DbSet { get; set; }
-        public GenericRepository() : this(new SenGameContext())
-        {
-
-        }
-        public GenericRepository(SenGameContext context)
+        public GenericRepository(DbContext context)
         {
             this.DbContext = context;
             this.DbSet = DbContext.Set<TdbModel>();
