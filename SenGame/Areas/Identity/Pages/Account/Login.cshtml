@@ -30,19 +30,36 @@
                     </div>
                 </div>
                 <div class="form-group">
-                                            <div
-    class="g-recaptcha"
-    data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
-    data-theme="light" data-size="normal"
-    data-callback="verify"
-    data-expired-callback="expired"
-    data-error-callback="error">
-</div>
+                    <div
+                        class="g-recaptcha"
+                        data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+                        data-theme="light" data-size="normal"
+                        data-callback="verify"
+                        data-expired-callback="expired"
+                        data-error-callback="error">
+                     </div>
                     <button type="submit" class="login-btn">登入</button>
                 </div>
                 <div class="form-group">
                         <a id="forgot-password" asp-page="./ForgotPassword">忘記密碼?</a>
                 </div>
+                
+             <div class="form-group-google">
+                 <div id="g_id_onload"
+                        data-client_id="319105508231-b14a9vlbq3sobjfruc8sd8kp9iplgrkf.apps.googleusercontent.com"
+                        data-login_uri="https://localhost:44316/Home/ValidGoogleLogin"
+                         data-auto_prompt="false">
+                 </div>
+              
+                <div class="g_id_signin"
+                     data-type="standard"
+                     data-size="large"
+                     data-theme="outline"
+                     data-text="sign_in_with"
+                     data-shape="rectangular"
+                     data-logo_alignment="left">
+                </div>
+                  </div>
             </form>
             </div>
         </div>
@@ -61,7 +78,7 @@
         </div>
     </div>
 
-
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

@@ -81,13 +81,13 @@ namespace SenGame.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = new UserModel { 
-                    Account = Input.Account,UserName = Input.Account , Email = Input.Email,EmailConfirmed = true 
+                    Account = Input.Account,UserName = Input.Account , Email = Input.Email,EmailConfirmed = true ,CreateTime = DateTime.Now
                         };
                 //CreateAsync(user, password) //要建立的使用者，要雜湊和儲存的使用者密碼。
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User創建一組新的帳密.");
+                    _logger.LogInformation("創建一組新的帳密.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
