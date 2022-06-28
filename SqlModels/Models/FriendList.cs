@@ -11,5 +11,7 @@ namespace SqlModels.Models
         public int UserId { get; set; }
         public int? FriendGroupId { get; set; }
         public bool? IsBlockade { get; set; }
+
+        public virtual AspNetUser User { get; set; }
     }
 }

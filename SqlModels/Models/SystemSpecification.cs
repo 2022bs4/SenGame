@@ -9,6 +9,7 @@ namespace SqlModels.Models
     {
         public int SystemSpecificationId { get; set; }
         public int SystemType { get; set; }
+        public int? Configure { get; set; }
         public string Hddspace { get; set; }
         public string System { get; set; }
         public string SystemRam { get; set; }

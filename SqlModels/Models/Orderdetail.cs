@@ -13,6 +13,7 @@ namespace SqlModels.Models
         public decimal Price { get; set; }
         public double? Discount { get; set; }
 
+        public virtual Game Game { get; set; }
         public virtual Order Order { get; set; }
     }
 }
