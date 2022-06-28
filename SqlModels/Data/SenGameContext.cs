@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SenGame.Data
+namespace SqlModels.Data
 {
     public class SenGameContext : IdentityDbContext<UserModel>
     {

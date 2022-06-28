@@ -4,22 +4,21 @@ using System.Linq.Expressions;
 
 namespace SqlModels.Repository.Interface
 {
-    public interface IRepository<TdbModel> : IDisposable
-        where TdbModel : class
+    public interface IRepository : IDisposable
     {
-        //Insert New DATA return ID
-        public int Create(TdbModel entity);
+        //Insert New DATA
+        void Create<TdbModel>(TdbModel data) where TdbModel : class;
         //Edit DATA
-        public void Update(TdbModel entity);
-        //Remove Delete return ID
-        public int Delete(int _Id);
+        void Update<TdbModel>(TdbModel data) where TdbModel : class;
+        //Remove Delete
+        void Delete<TdbModel>(TdbModel data) where TdbModel : class;
         //use predicate with variable filter data
-        public IQueryable<TdbModel> FindBy(Expression<Func<TdbModel, bool>> predicate);
+        IQueryable<TdbModel> FindBy<TdbModel>(Expression<Func<TdbModel, bool>> predicate) where TdbModel : class;
         //Get All DATA return IQueryable's Collections
-        public IQueryable<TdbModel> GetAll();
+        IQueryable<TdbModel> GetAll<TdbModel>() where TdbModel : class;
         //Get DATA whit ID return IQueryable's Collections
-        public TdbModel GetById(int _Id);
+        TdbModel GetById<TdbModel>(int _Id) where TdbModel : class;
         //Save to database
-        public int SaveChanges();
+        int SaveChanges();
     }
 }

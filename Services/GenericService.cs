@@ -2,37 +2,42 @@
 using Services.Interface;
 using SqlModels.Repository;
 using SqlModels.Repository.Interface;
-using SqlModels.Models;
+using SqlModels.Data;
 using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace Services
 {
-    public class GenericService<TdbModel> : IService<TdbModel>
-        where TdbModel : class
+    public class GenericService : IService
     {
-        private readonly IRepository<TdbModel> _repository;
-        public GenericService(DbContext context)
+        private readonly IRepository _repository;
+        public GenericService(IRepository repository)
         {
-            _repository = new GenericRepository<TdbModel>(context);
+            this._repository = repository;
         }
 
-        public void Create(TdbModel entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(TdbModel entity)
+        public void Create<TdbModel>(TdbModel data) where TdbModel : class
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<TdbModel> GetAll()
+        public void Delete<TdbModel>(TdbModel data) where TdbModel : class
         {
-            return _repository.GetAll();
+            throw new NotImplementedException();
         }
 
-        public TdbModel GetById(int id)
+        public IQueryable<TdbModel> FindBy<TdbModel>(Expression<Func<TdbModel, bool>> predicate) where TdbModel : class
+        {
+            throw new NotImplementedException();
+        }
+
+        public IQueryable<TdbModel> GetAll<TdbModel>() where TdbModel : class
+        {
+            return _repository.GetAll<TdbModel>();
+        }
+
+        public TdbModel GetById<TdbModel>(int id) where TdbModel : class
         {
             throw new NotImplementedException();
         }
@@ -42,7 +47,7 @@ namespace Services
             throw new NotImplementedException();
         }
 
-        public void Update(TdbModel entity)
+        public void Update<TdbModel>(TdbModel data) where TdbModel : class
         {
             throw new NotImplementedException();
         }
