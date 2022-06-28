@@ -20,6 +20,6 @@ namespace SqlModels.Repository.Interface
         //Get DATA whit ID return IQueryable's Collections
         public TdbModel GetById(int _Id);
         //Save to database
-        public void SaveChanges();
+        public int SaveChanges();
     }
 }

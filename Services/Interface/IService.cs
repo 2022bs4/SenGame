@@ -8,14 +8,13 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Services.Interface
 {
-    internal interface IService<TdbModel> where TdbModel : class
+    public interface IService<TdbModel> where TdbModel : class
     {
-        bool Create(TdbModel entity);
-        bool Update(TdbModel entity);
-        bool Delete(TdbModel entity);
+        void Create(TdbModel entity);
+        void Update(TdbModel entity);
+        void Delete(TdbModel entity);
         bool IsExists(int id);
         TdbModel GetById(int id);
-        public bool Update(int entity);
         IEnumerable<TdbModel> GetAll();
     }
 }

@@ -12,8 +12,15 @@ namespace SqlModels.Repository
         public DbSet<TdbModel> DbSet { get; set; }
         public GenericRepository(DbContext context)
         {
-            this.DbContext = context;
-            this.DbSet = DbContext.Set<TdbModel>();
+            if (context == null)
+            {
+                throw new ArgumentNullException("Context");
+            }
+            else
+            {
+                this.DbContext = context;
+                this.DbSet = DbContext.Set<TdbModel>();
+            }
         }
 
         public int Create(TdbModel entity)
@@ -69,9 +76,10 @@ namespace SqlModels.Repository
                 }
             }
         }
-        public void SaveChanges()
+        public int SaveChanges()
         {
-            DbContext.SaveChanges();
+            int result=DbContext.SaveChanges();
+            return result;
         }
     }
 }
