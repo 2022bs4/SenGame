@@ -27,21 +27,18 @@ namespace SenGame.Repository
         public int Create(TdbModel entity)
         {
             dynamic obj = DbSet.Add(entity);
-            this.SaveChanges();
             return obj.Id;
         }
 
         public void Update(TdbModel entity)
         {
             DbSet.Update(entity);
-            this.SaveChanges();
         }
 
         public int Delete(int _Id)
         {
             var item = DbSet.Find(_Id);
             dynamic obj = DbSet.Remove(item);
-            this.SaveChanges();
             return obj.Id;
         }
 
