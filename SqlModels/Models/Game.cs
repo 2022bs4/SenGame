@@ -15,6 +15,8 @@ namespace SqlModels.Models
             GameMedia = new HashSet<GameMedium>();
             GameTypes = new HashSet<GameType>();
             MyGames = new HashSet<MyGame>();
+            Orderdetails = new HashSet<Orderdetail>();
+            ShoppingCarts = new HashSet<ShoppingCart>();
             SystemSpecifications = new HashSet<SystemSpecification>();
             Wishes = new HashSet<Wish>();
         }
@@ -36,6 +38,8 @@ namespace SqlModels.Models
         public virtual ICollection<GameMedium> GameMedia { get; set; }
         public virtual ICollection<GameType> GameTypes { get; set; }
         public virtual ICollection<MyGame> MyGames { get; set; }
+        public virtual ICollection<Orderdetail> Orderdetails { get; set; }
+        public virtual ICollection<ShoppingCart> ShoppingCarts { get; set; }
         public virtual ICollection<SystemSpecification> SystemSpecifications { get; set; }
         public virtual ICollection<Wish> Wishes { get; set; }
     }

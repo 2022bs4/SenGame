@@ -12,5 +12,8 @@ namespace SqlModels.Models
         public int ChoosePayment { get; set; }
         public string ClientBackUrl { get; set; }
         public int ExpireDate { get; set; }
+        public DateTime UpdateTime { get; set; }
+        public string HashKey { get; set; }
+        public string HashIv { get; set; }
     }
 }

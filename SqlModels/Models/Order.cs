@@ -9,6 +9,7 @@ namespace SqlModels.Models
     {
         public Order()
         {
+            AspNetUsers = new HashSet<AspNetUser>();
             Orderdetails = new HashSet<Orderdetail>();
         }
 
@@ -23,6 +24,7 @@ namespace SqlModels.Models
         public string Invoice { get; set; }
         public string InvoiceWay { get; set; }
 
+        public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
         public virtual ICollection<Orderdetail> Orderdetails { get; set; }
     }
 }

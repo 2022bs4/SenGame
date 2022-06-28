@@ -20,6 +20,7 @@ namespace SqlModels.Models
         public int? ParentId { get; set; }
 
         public virtual Article Article { get; set; }
+        public virtual AspNetUser User { get; set; }
         public virtual ICollection<ReplyLike> ReplyLikes { get; set; }
     }
 }
