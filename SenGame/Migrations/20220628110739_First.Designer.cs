@@ -10,7 +10,7 @@ using SenGame.Data;
 namespace SenGame.Migrations
 {
     [DbContext(typeof(SenGameContext))]
-    [Migration("20220625145738_First")]
+    [Migration("20220628110739_First")]
     partial class First
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -160,27 +160,24 @@ namespace SenGame.Migrations
             modelBuilder.Entity("SqlModels.Models.Article", b =>
                 {
                     b.Property<int>("ArticleId")
-                        .HasColumnType("int")
-                        .HasColumnName("ArticleID");
-
-                    b.Property<string>("ArticleContent")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("int");
 
                     b.Property<int>("ArticleTagId")
                         .HasColumnType("int")
-                        .HasColumnName("ArticleTagID")
                         .HasComment("種類:討論、心得");
 
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("ForumId")
-                        .HasColumnType("int")
-                        .HasColumnName("ForumID");
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("LastReplyTime")
                         .HasColumnType("datetime")
                         .HasComment("最後回文時間");
 
-                    b.Property<DateTime>("PostDate")
+                    b.Property<DateTime>("PostTime")
                         .HasColumnType("datetime")
                         .HasComment("發文日期");
 
@@ -190,8 +187,7 @@ namespace SenGame.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("UserId")
-                        .HasColumnType("int")
-                        .HasColumnName("UserID");
+                        .HasColumnType("int");
 
                     b.HasKey("ArticleId");
 
@@ -199,27 +195,28 @@ namespace SenGame.Migrations
 
                     b.HasIndex("ForumId");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("Article");
                 });
 
             modelBuilder.Entity("SqlModels.Models.ArticleLike", b =>
                 {
                     b.Property<int>("LikeId")
-                        .HasColumnType("int")
-                        .HasColumnName("LikeID");
+                        .HasColumnType("int");
 
                     b.Property<int>("ArticleId")
-                        .HasColumnType("int")
-                        .HasColumnName("ArticleID");
+                        .HasColumnType("int");
 
                     b.Property<int>("UserId")
-                        .HasColumnType("int")
-                        .HasColumnName("UserID");
+                        .HasColumnType("int");
 
                     b.HasKey("LikeId")
                         .HasName("PK_Like");
 
                     b.HasIndex("ArticleId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("ArticleLike");
                 });
@@ -227,8 +224,7 @@ namespace SenGame.Migrations
             modelBuilder.Entity("SqlModels.Models.ArticleTag", b =>
                 {
                     b.Property<int>("ArticleTagId")
-                        .HasColumnType("int")
-                        .HasColumnName("ArticleTagID");
+                        .HasColumnType("int");
 
                     b.Property<string>("TagName")
                         .IsRequired()
@@ -294,8 +290,8 @@ namespace SenGame.Migrations
 
             modelBuilder.Entity("SqlModels.Models.AspNetUser", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
@@ -321,6 +317,11 @@ namespace SenGame.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Id")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -372,9 +373,6 @@ namespace SenGame.Migrations
                     b.Property<int?>("UserCountryId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -385,9 +383,13 @@ namespace SenGame.Migrations
                     b.Property<string>("UsernickName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("UserId");
+
+                    b.HasIndex("OrderId");
 
                     b.HasIndex("UserBackgroundId");
+
+                    b.HasIndex("UserCountryId");
 
                     b.HasIndex(new[] { "NormalizedEmail" }, "EmailIndex")
                         .HasDatabaseName("EmailIndex1");
@@ -490,8 +492,7 @@ namespace SenGame.Migrations
             modelBuilder.Entity("SqlModels.Models.Chat", b =>
                 {
                     b.Property<int>("ChatId")
-                        .HasColumnType("int")
-                        .HasColumnName("ChatID");
+                        .HasColumnType("int");
 
                     b.Property<string>("ChatContent")
                         .HasColumnType("nvarchar(max)")
@@ -507,10 +508,11 @@ namespace SenGame.Migrations
 
                     b.Property<int>("UserId")
                         .HasColumnType("int")
-                        .HasColumnName("UserID")
                         .HasComment("使用者自身");
 
                     b.HasKey("ChatId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Chat");
                 });
@@ -518,15 +520,13 @@ namespace SenGame.Migrations
             modelBuilder.Entity("SqlModels.Models.CustomerService", b =>
                 {
                     b.Property<int>("ServiceId")
-                        .HasColumnType("int")
-                        .HasColumnName("ServiceID");
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreateTime")
                         .HasColumnType("date");
 
                     b.Property<int>("GameId")
-                        .HasColumnType("int")
-                        .HasColumnName("MyGameID");
+                        .HasColumnType("int");
 
                     b.Property<string>("QuestionContent")
                         .IsRequired()
@@ -542,11 +542,58 @@ namespace SenGame.Migrations
                     b.ToTable("CustomerService");
                 });
 
+            modelBuilder.Entity("SqlModels.Models.Ecpay", b =>
+                {
+                    b.Property<string>("MerchantId")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)")
+                        .HasColumnName("MerchantID")
+                        .HasComment("特店編號,Ecpa提供");
+
+                    b.Property<int>("ChoosePayment")
+                        .HasColumnType("int")
+                        .HasComment("1.Criedit 2. ATM");
+
+                    b.Property<string>("ClientBackUrl")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasColumnName("ClientBackURL")
+                        .HasComment("返回指定網頁");
+
+                    b.Property<int>("ExpireDate")
+                        .HasColumnType("int")
+                        .HasComment("允許繳費有效天數");
+
+                    b.Property<string>("HashIv")
+                        .HasMaxLength(20)
+                        .HasColumnType("nchar(20)")
+                        .HasColumnName("HashIV")
+                        .IsFixedLength(true);
+
+                    b.Property<string>("HashKey")
+                        .HasMaxLength(20)
+                        .HasColumnType("nchar(20)")
+                        .IsFixedLength(true);
+
+                    b.Property<string>("ReturnUrl")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasColumnName("ReturnURL")
+                        .HasComment("付款完成\r\n通知回傳\r\n網址");
+
+                    b.Property<DateTime>("UpdateTime")
+                        .HasColumnType("datetime")
+                        .HasComment("更新資訊時間");
+
+                    b.HasKey("MerchantId");
+
+                    b.ToTable("Ecpay");
+                });
+
             modelBuilder.Entity("SqlModels.Models.Forum", b =>
                 {
                     b.Property<int>("ForumId")
-                        .HasColumnType("int")
-                        .HasColumnName("ForumID");
+                        .HasColumnType("int");
 
                     b.Property<string>("Banner")
                         .IsRequired()
@@ -554,8 +601,7 @@ namespace SenGame.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<int?>("GameId")
-                        .HasColumnType("int")
-                        .HasColumnName("GameID");
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -602,6 +648,8 @@ namespace SenGame.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("FriendListId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("FriendList");
                 });
@@ -754,6 +802,8 @@ namespace SenGame.Migrations
 
                     b.HasKey("InviteId");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("Invite");
                 });
 
@@ -774,20 +824,23 @@ namespace SenGame.Migrations
             modelBuilder.Entity("SqlModels.Models.MyForum", b =>
                 {
                     b.Property<int>("MyForumId")
-                        .HasColumnType("int")
-                        .HasColumnName("MyForumID");
+                        .HasColumnType("int");
 
                     b.Property<int>("ForumId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Sort")
                         .HasColumnType("int")
-                        .HasColumnName("ForumID");
+                        .HasComment("看板排序");
 
                     b.Property<int>("UserId")
-                        .HasColumnType("int")
-                        .HasColumnName("UserID");
+                        .HasColumnType("int");
 
                     b.HasKey("MyForumId");
 
                     b.HasIndex("ForumId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("MyForum");
                 });
@@ -801,7 +854,8 @@ namespace SenGame.Migrations
                         .HasColumnType("int");
 
                     b.Property<bool>("MyFavourite")
-                        .HasColumnType("bit");
+                        .HasColumnType("bit")
+                        .HasComment("判別是否是我的最愛");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -809,6 +863,8 @@ namespace SenGame.Migrations
                     b.HasKey("MyGameId");
 
                     b.HasIndex("GameId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("MyGame");
                 });
@@ -819,13 +875,15 @@ namespace SenGame.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("CancelTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime")
+                        .HasComment("訂單取消時間");
 
                     b.Property<DateTime>("CreateTime")
                         .HasColumnType("datetime")
                         .HasComment("訂單時間");
 
                     b.Property<string>("EcpayId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasComment("Ecpay訂單編號");
 
@@ -845,13 +903,14 @@ namespace SenGame.Migrations
 
                     b.Property<int>("OrderStatus")
                         .HasColumnType("int")
-                        .HasComment("1.購物車 2.待付款  3.付款完成  4.申請退款 5.退款完成");
+                        .HasComment("1.待付款  3.付款完成  4.申請退款 5.退款完成");
 
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("money");
 
                     b.Property<DateTime?>("TradeTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime")
+                        .HasComment("訂單成立時間");
 
                     b.Property<DateTime>("UpdateTime")
                         .HasColumnType("datetime")
@@ -869,7 +928,7 @@ namespace SenGame.Migrations
 
                     b.Property<double?>("Discount")
                         .HasColumnType("float")
-                        .HasComment("訂單當時折購");
+                        .HasComment("購買後則顯示當時折扣");
 
                     b.Property<int>("GameId")
                         .HasColumnType("int");
@@ -882,6 +941,8 @@ namespace SenGame.Migrations
 
                     b.HasKey("OrderdetailId");
 
+                    b.HasIndex("GameId");
+
                     b.HasIndex("OrderId");
 
                     b.ToTable("Orderdetails");
@@ -890,16 +951,13 @@ namespace SenGame.Migrations
             modelBuilder.Entity("SqlModels.Models.Reply", b =>
                 {
                     b.Property<int>("ReplyId")
-                        .HasColumnType("int")
-                        .HasColumnName("ReplyID");
+                        .HasColumnType("int");
 
                     b.Property<int>("ArticleId")
-                        .HasColumnType("int")
-                        .HasColumnName("ArticleID");
+                        .HasColumnType("int");
 
                     b.Property<int?>("ParentId")
                         .HasColumnType("int")
-                        .HasColumnName("ParentID")
                         .HasComment("回復文章的回覆的回覆");
 
                     b.Property<string>("ReplyText")
@@ -912,12 +970,13 @@ namespace SenGame.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("UserId")
-                        .HasColumnType("int")
-                        .HasColumnName("UserID");
+                        .HasColumnType("int");
 
                     b.HasKey("ReplyId");
 
                     b.HasIndex("ArticleId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Reply");
                 });
@@ -925,41 +984,54 @@ namespace SenGame.Migrations
             modelBuilder.Entity("SqlModels.Models.ReplyLike", b =>
                 {
                     b.Property<int>("ReplyLikeId")
-                        .HasColumnType("int")
-                        .HasColumnName("ReplyLikeID");
+                        .HasColumnType("int");
 
                     b.Property<int>("ReplyId")
-                        .HasColumnType("int")
-                        .HasColumnName("ReplyID");
+                        .HasColumnType("int");
 
                     b.Property<int>("UserId")
-                        .HasColumnType("int")
-                        .HasColumnName("UserID");
+                        .HasColumnType("int");
 
                     b.HasKey("ReplyLikeId");
 
                     b.HasIndex("ReplyId");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("ReplyLike");
                 });
 
-            modelBuilder.Entity("SqlModels.Models.ServiceReply", b =>
+            modelBuilder.Entity("SqlModels.Models.ShoppingCart", b =>
                 {
-                    b.Property<string>("ReplyContent")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasComment("客服回應");
-
-                    b.Property<int>("ServiceId")
+                    b.Property<int>("ShoppingCartId")
                         .HasColumnType("int");
 
-                    b.ToTable("ServiceReply");
+                    b.Property<DateTime?>("AddTime")
+                        .HasColumnType("datetime");
+
+                    b.Property<int?>("GameId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ShoppingCartId");
+
+                    b.HasIndex("GameId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ShoppingCart");
                 });
 
             modelBuilder.Entity("SqlModels.Models.SystemSpecification", b =>
                 {
                     b.Property<int>("SystemSpecificationId")
                         .HasColumnType("int");
+
+                    b.Property<int?>("Configure")
+                        .HasColumnType("int")
+                        .HasComment("1.最低配備 2.建議配備");
 
                     b.Property<int>("GameId")
                         .HasColumnType("int");
@@ -1169,7 +1241,27 @@ namespace SenGame.Migrations
 
                     b.HasKey("UserPrivacyId");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("UserPrivacy");
+                });
+
+            modelBuilder.Entity("SqlModels.Models.Usergroup", b =>
+                {
+                    b.Property<int>("FriendGroupId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserGroupId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("FriendGroupId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Usergroup");
                 });
 
             modelBuilder.Entity("SqlModels.Models.Wish", b =>
@@ -1249,18 +1341,26 @@ namespace SenGame.Migrations
                     b.HasOne("SqlModels.Models.ArticleTag", "ArticleTag")
                         .WithMany("Articles")
                         .HasForeignKey("ArticleTagId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasConstraintName("FK_Article_ArticleTag")
                         .IsRequired();
 
                     b.HasOne("SqlModels.Models.Forum", "Forum")
                         .WithMany("Articles")
                         .HasForeignKey("ForumId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasConstraintName("FK_Article_Forum")
+                        .IsRequired();
+
+                    b.HasOne("SqlModels.Models.AspNetUser", "User")
+                        .WithMany("Articles")
+                        .HasForeignKey("UserId")
+                        .HasConstraintName("FK_Article_AspNetUsers")
                         .IsRequired();
 
                     b.Navigation("ArticleTag");
 
                     b.Navigation("Forum");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SqlModels.Models.ArticleLike", b =>
@@ -1268,10 +1368,18 @@ namespace SenGame.Migrations
                     b.HasOne("SqlModels.Models.Article", "Article")
                         .WithMany("ArticleLikes")
                         .HasForeignKey("ArticleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasConstraintName("FK_ArticleLike_Article")
+                        .IsRequired();
+
+                    b.HasOne("SqlModels.Models.AspNetUser", "User")
+                        .WithMany("ArticleLikes")
+                        .HasForeignKey("UserId")
+                        .HasConstraintName("FK_ArticleLike_AspNetUsers")
                         .IsRequired();
 
                     b.Navigation("Article");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SqlModels.Models.AspNetRoleClaim", b =>
@@ -1287,35 +1395,27 @@ namespace SenGame.Migrations
 
             modelBuilder.Entity("SqlModels.Models.AspNetUser", b =>
                 {
+                    b.HasOne("SqlModels.Models.Order", "Order")
+                        .WithMany("AspNetUsers")
+                        .HasForeignKey("OrderId")
+                        .HasConstraintName("FK_AspNetUsers_Order");
+
                     b.HasOne("SqlModels.Models.UserBackground", "UserBackground")
                         .WithMany("AspNetUsers")
                         .HasForeignKey("UserBackgroundId")
                         .HasConstraintName("FK_AspNetUsers_UserBackground")
                         .IsRequired();
 
+                    b.HasOne("SqlModels.Models.UserCountry", "UserCountry")
+                        .WithMany("AspNetUsers")
+                        .HasForeignKey("UserCountryId")
+                        .HasConstraintName("FK_AspNetUsers_UserCountry");
+
+                    b.Navigation("Order");
+
                     b.Navigation("UserBackground");
-                });
 
-            modelBuilder.Entity("SqlModels.Models.AspNetUserClaim", b =>
-                {
-                    b.HasOne("SqlModels.Models.AspNetUser", "User")
-                        .WithMany("AspNetUserClaims")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("SqlModels.Models.AspNetUserLogin", b =>
-                {
-                    b.HasOne("SqlModels.Models.AspNetUser", "User")
-                        .WithMany("AspNetUserLogins")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
+                    b.Navigation("UserCountry");
                 });
 
             modelBuilder.Entity("SqlModels.Models.AspNetUserRole", b =>
@@ -1326,23 +1426,15 @@ namespace SenGame.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SqlModels.Models.AspNetUser", "User")
-                        .WithMany("AspNetUserRoles")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Role");
-
-                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("SqlModels.Models.AspNetUserToken", b =>
+            modelBuilder.Entity("SqlModels.Models.Chat", b =>
                 {
                     b.HasOne("SqlModels.Models.AspNetUser", "User")
-                        .WithMany("AspNetUserTokens")
+                        .WithMany("Chats")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasConstraintName("FK_Chat_AspNetUsers")
                         .IsRequired();
 
                     b.Navigation("User");
@@ -1353,7 +1445,7 @@ namespace SenGame.Migrations
                     b.HasOne("SqlModels.Models.Game", "Game")
                         .WithMany("CustomerServices")
                         .HasForeignKey("GameId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasConstraintName("FK_CustomerService_Game")
                         .IsRequired();
 
                     b.Navigation("Game");
@@ -1363,16 +1455,29 @@ namespace SenGame.Migrations
                 {
                     b.HasOne("SqlModels.Models.Game", "Game")
                         .WithMany("Forums")
-                        .HasForeignKey("GameId");
+                        .HasForeignKey("GameId")
+                        .HasConstraintName("FK_Forum_Game");
 
                     b.Navigation("Game");
+                });
+
+            modelBuilder.Entity("SqlModels.Models.FriendList", b =>
+                {
+                    b.HasOne("SqlModels.Models.AspNetUser", "User")
+                        .WithMany("FriendLists")
+                        .HasForeignKey("UserId")
+                        .HasConstraintName("FK_FriendList_AspNetUsers")
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SqlModels.Models.GameDiscount", b =>
                 {
                     b.HasOne("SqlModels.Models.Game", "Game")
                         .WithMany("GameDiscounts")
-                        .HasForeignKey("GameId");
+                        .HasForeignKey("GameId")
+                        .HasConstraintName("FK_GameDiscount_Game");
 
                     b.Navigation("Game");
                 });
@@ -1382,7 +1487,7 @@ namespace SenGame.Migrations
                     b.HasOne("SqlModels.Models.Game", "Game")
                         .WithMany("GameMedia")
                         .HasForeignKey("GameId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasConstraintName("FK_GameMedia_Game")
                         .IsRequired();
 
                     b.Navigation("Game");
@@ -1393,16 +1498,28 @@ namespace SenGame.Migrations
                     b.HasOne("SqlModels.Models.Game", "Game")
                         .WithMany("GameTypes")
                         .HasForeignKey("GameId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasConstraintName("FK_GameType_Game")
                         .IsRequired();
 
                     b.HasOne("SqlModels.Models.Typelist", "Typelist")
                         .WithMany("GameTypes")
-                        .HasForeignKey("TypelistId");
+                        .HasForeignKey("TypelistId")
+                        .HasConstraintName("FK_GameType_Typelist");
 
                     b.Navigation("Game");
 
                     b.Navigation("Typelist");
+                });
+
+            modelBuilder.Entity("SqlModels.Models.Invite", b =>
+                {
+                    b.HasOne("SqlModels.Models.AspNetUser", "User")
+                        .WithMany("Invites")
+                        .HasForeignKey("UserId")
+                        .HasConstraintName("FK_Invite_AspNetUsers")
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SqlModels.Models.MyForum", b =>
@@ -1410,10 +1527,18 @@ namespace SenGame.Migrations
                     b.HasOne("SqlModels.Models.Forum", "Forum")
                         .WithMany("MyForums")
                         .HasForeignKey("ForumId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasConstraintName("FK_MyForum_Forum")
+                        .IsRequired();
+
+                    b.HasOne("SqlModels.Models.AspNetUser", "User")
+                        .WithMany("MyForums")
+                        .HasForeignKey("UserId")
+                        .HasConstraintName("FK_MyForum_AspNetUsers")
                         .IsRequired();
 
                     b.Navigation("Forum");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SqlModels.Models.MyGame", b =>
@@ -1421,19 +1546,35 @@ namespace SenGame.Migrations
                     b.HasOne("SqlModels.Models.Game", "Game")
                         .WithMany("MyGames")
                         .HasForeignKey("GameId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasConstraintName("FK_MyGame_Game")
+                        .IsRequired();
+
+                    b.HasOne("SqlModels.Models.AspNetUser", "User")
+                        .WithMany("MyGames")
+                        .HasForeignKey("UserId")
+                        .HasConstraintName("FK_MyGame_AspNetUsers")
                         .IsRequired();
 
                     b.Navigation("Game");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SqlModels.Models.Orderdetail", b =>
                 {
+                    b.HasOne("SqlModels.Models.Game", "Game")
+                        .WithMany("Orderdetails")
+                        .HasForeignKey("GameId")
+                        .HasConstraintName("FK_Orderdetails_Game")
+                        .IsRequired();
+
                     b.HasOne("SqlModels.Models.Order", "Order")
                         .WithMany("Orderdetails")
                         .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasConstraintName("FK_Orderdetails_Order")
                         .IsRequired();
+
+                    b.Navigation("Game");
 
                     b.Navigation("Order");
                 });
@@ -1443,10 +1584,18 @@ namespace SenGame.Migrations
                     b.HasOne("SqlModels.Models.Article", "Article")
                         .WithMany("Replies")
                         .HasForeignKey("ArticleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasConstraintName("FK_Reply_Article")
+                        .IsRequired();
+
+                    b.HasOne("SqlModels.Models.AspNetUser", "User")
+                        .WithMany("Replies")
+                        .HasForeignKey("UserId")
+                        .HasConstraintName("FK_Reply_AspNetUsers")
                         .IsRequired();
 
                     b.Navigation("Article");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SqlModels.Models.ReplyLike", b =>
@@ -1454,10 +1603,35 @@ namespace SenGame.Migrations
                     b.HasOne("SqlModels.Models.Reply", "Reply")
                         .WithMany("ReplyLikes")
                         .HasForeignKey("ReplyId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasConstraintName("FK_ReplyLike_Reply")
+                        .IsRequired();
+
+                    b.HasOne("SqlModels.Models.AspNetUser", "User")
+                        .WithMany("ReplyLikes")
+                        .HasForeignKey("UserId")
+                        .HasConstraintName("FK_ReplyLike_AspNetUsers")
                         .IsRequired();
 
                     b.Navigation("Reply");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SqlModels.Models.ShoppingCart", b =>
+                {
+                    b.HasOne("SqlModels.Models.Game", "Game")
+                        .WithMany("ShoppingCarts")
+                        .HasForeignKey("GameId")
+                        .HasConstraintName("FK_ShoppingCart_Game");
+
+                    b.HasOne("SqlModels.Models.AspNetUser", "User")
+                        .WithMany("ShoppingCarts")
+                        .HasForeignKey("UserId")
+                        .HasConstraintName("FK_ShoppingCart_AspNetUsers");
+
+                    b.Navigation("Game");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SqlModels.Models.SystemSpecification", b =>
@@ -1465,10 +1639,39 @@ namespace SenGame.Migrations
                     b.HasOne("SqlModels.Models.Game", "Game")
                         .WithMany("SystemSpecifications")
                         .HasForeignKey("GameId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasConstraintName("FK_SystemSpecification_Game")
                         .IsRequired();
 
                     b.Navigation("Game");
+                });
+
+            modelBuilder.Entity("SqlModels.Models.UserPrivacy", b =>
+                {
+                    b.HasOne("SqlModels.Models.AspNetUser", "User")
+                        .WithMany("UserPrivacies")
+                        .HasForeignKey("UserId")
+                        .HasConstraintName("FK_UserPrivacy_AspNetUsers");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SqlModels.Models.Usergroup", b =>
+                {
+                    b.HasOne("SqlModels.Models.FriendGroup", "FriendGroup")
+                        .WithMany()
+                        .HasForeignKey("FriendGroupId")
+                        .HasConstraintName("FK_Usergroup_FriendGroup")
+                        .IsRequired();
+
+                    b.HasOne("SqlModels.Models.AspNetUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .HasConstraintName("FK_Usergroup_AspNetUsers")
+                        .IsRequired();
+
+                    b.Navigation("FriendGroup");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SqlModels.Models.Wish", b =>
@@ -1476,7 +1679,7 @@ namespace SenGame.Migrations
                     b.HasOne("SqlModels.Models.Game", "Game")
                         .WithMany("Wishes")
                         .HasForeignKey("GameId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasConstraintName("FK_Wish_Game")
                         .IsRequired();
 
                     b.Navigation("Game");
@@ -1503,13 +1706,27 @@ namespace SenGame.Migrations
 
             modelBuilder.Entity("SqlModels.Models.AspNetUser", b =>
                 {
-                    b.Navigation("AspNetUserClaims");
+                    b.Navigation("ArticleLikes");
 
-                    b.Navigation("AspNetUserLogins");
+                    b.Navigation("Articles");
 
-                    b.Navigation("AspNetUserRoles");
+                    b.Navigation("Chats");
 
-                    b.Navigation("AspNetUserTokens");
+                    b.Navigation("FriendLists");
+
+                    b.Navigation("Invites");
+
+                    b.Navigation("MyForums");
+
+                    b.Navigation("MyGames");
+
+                    b.Navigation("Replies");
+
+                    b.Navigation("ReplyLikes");
+
+                    b.Navigation("ShoppingCarts");
+
+                    b.Navigation("UserPrivacies");
                 });
 
             modelBuilder.Entity("SqlModels.Models.Forum", b =>
@@ -1533,6 +1750,10 @@ namespace SenGame.Migrations
 
                     b.Navigation("MyGames");
 
+                    b.Navigation("Orderdetails");
+
+                    b.Navigation("ShoppingCarts");
+
                     b.Navigation("SystemSpecifications");
 
                     b.Navigation("Wishes");
@@ -1540,6 +1761,8 @@ namespace SenGame.Migrations
 
             modelBuilder.Entity("SqlModels.Models.Order", b =>
                 {
+                    b.Navigation("AspNetUsers");
+
                     b.Navigation("Orderdetails");
                 });
 
@@ -1554,6 +1777,11 @@ namespace SenGame.Migrations
                 });
 
             modelBuilder.Entity("SqlModels.Models.UserBackground", b =>
+                {
+                    b.Navigation("AspNetUsers");
+                });
+
+            modelBuilder.Entity("SqlModels.Models.UserCountry", b =>
                 {
                     b.Navigation("AspNetUsers");
                 });

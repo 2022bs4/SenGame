@@ -1,17 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SenGame.Data;
-using SenGame.Repository;
 using SqlModels.Models;
-using System.Linq;
+using Services;
+using Services.Interface;
 
 namespace SenGame.Controllers
 {
     public class CommunityController : Controller
     {
-        private readonly GenericRepository<Forum> _Repository;
+        private readonly IService<Forum> _service;
         public CommunityController(SenGameContext context)
         {
-            this._Repository = new GenericRepository<Forum>(context);
+            //this._service = new GenericService<Forum>(context);
+            this._service = new ForumService(context);
         }
         public IActionResult Index()
         {
@@ -21,7 +22,7 @@ namespace SenGame.Controllers
         //顯示討論區
         public IActionResult Forum() { 
             
-           var data=_Repository.GetAll();
+            var data=_service.GetAll();
             return View(data);
         }
         public IActionResult ComomunityDynamicwall()

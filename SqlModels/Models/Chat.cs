@@ -12,5 +12,7 @@ namespace SqlModels.Models
         public DateTime ChatTime { get; set; }
         public int UserId { get; set; }
         public string PictureFile { get; set; }
+
+        public virtual AspNetUser User { get; set; }
     }
 }

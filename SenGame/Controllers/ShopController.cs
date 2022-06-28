@@ -100,40 +100,44 @@ namespace SenGame.Controllers
         public IActionResult ProductDetails(int id =1)
         {
 
-            var gameMain = Games.Where(x => x.GameId == id);
-            foreach (var item in gameMain)
-            {
-                var sys = systemSpecifications.Where(x => x.GameId == item.GameId && x.SystemType == 1);
-                foreach (var syss in sys)
-                {
-                    var introductPicture = gameMedia.Where(x=> x.GameId == item.GameId && x.InstructionType == 2);
-                    foreach (var pic in introductPicture)
-                    {
-                        _ProductDetailsViewModel.Add(
-                    new ProductDetailsViewModel
-                    {
-                        GameId = item.GameId,
-                        GameName = item.GameName,
-                        GamePrice = item.GamePrice,
-                        GameIntroduction = item.GameIntroduction,
-                        GameDetailsText = item.GameDetailsText,
-                        ReleaseTime = item.ReleaseTime,
-                        Developer = item.Developer,
-                        Marker = item.Marker,
-                        SystemType = syss.SystemType,
-                        SystemCpu = syss.SystemCpu,
-                        SystemGpu = syss.SystemGpu,
-                        Hddspace = syss.Hddspace,
-                        System = syss.System,
-                        SystemRam = syss.SystemRam,
-                        MediaUrl = pic.MediaUrl
-                    });
-                    }
-                    
-                }
-                
-            }
+            //var gameMain = Games.Where(x => x.GameId == id);
+            //foreach (var item in gameMain)
+            //{
+            //    var sys = systemSpecifications.Where(x => x.GameId == item.GameId && x.SystemType == 1);
+            //    foreach (var syss in sys)
+            //    {
+            //        var introductPicture = gameMedia.Where(x=> x.GameId == item.GameId && x.InstructionType == 2);
+            //        foreach (var pic in introductPicture)
+            //        {
+            //            _ProductDetailsViewModel.Add(
+            //        new ProductDetailsViewModel
+            //        {
+            //            GameId = item.GameId,
+            //            GameName = item.GameName,
+            //            GamePrice = item.GamePrice,
+            //            GameIntroduction = item.GameIntroduction,
+            //            GameDetailsText = item.GameDetailsText,
+            //            ReleaseTime = item.ReleaseTime,
+            //            Developer = item.Developer,
+            //            Marker = item.Marker,
+            //            SystemType = syss.SystemType,
+            //            SystemCpu = syss.SystemCpu,
+            //            SystemGpu = syss.SystemGpu,
+            //            Hddspace = syss.Hddspace,
+            //            System = syss.System,
+            //            SystemRam = syss.SystemRam,
+            //            MediaUrl = pic.MediaUrl
+            //        });
+            //        }
 
+            //    }
+
+            //}
+            var test = Games.Join(systemSpecifications, g => g.GameId==id, s => s.GameId==id, 
+                (g, s) => new {g.GameId,g.GameName,g.GamePrice,g.GameIntroduction,g.GameDetailsText, g.Developer, g.Marker,g.ReleaseTime, 
+                               s.SystemType,s.System,s.SystemCpu,s.SystemGpu,s.SystemRam,s.Hddspace 
+                                          
+                });
             return View(_ProductDetailsViewModel);
         }
 

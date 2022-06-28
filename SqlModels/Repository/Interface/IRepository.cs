@@ -1,11 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using SenGame.Data;
-using SqlModels.Models;
-using System;
+﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace SenGame.Repository
+namespace SqlModels.Repository.Interface
 {
     public interface IRepository<TdbModel> : IDisposable
         where TdbModel : class
@@ -23,6 +20,6 @@ namespace SenGame.Repository
         //Get DATA whit ID return IQueryable's Collections
         public TdbModel GetById(int _Id);
         //Save to database
-        public void SaveChanges();
+        public int SaveChanges();
     }
 }

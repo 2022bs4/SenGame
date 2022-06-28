@@ -9,14 +9,21 @@ namespace SqlModels.Models
     {
         public AspNetUser()
         {
-            AspNetUserClaims = new HashSet<AspNetUserClaim>();
-            AspNetUserLogins = new HashSet<AspNetUserLogin>();
-            AspNetUserRoles = new HashSet<AspNetUserRole>();
-            AspNetUserTokens = new HashSet<AspNetUserToken>();
+            ArticleLikes = new HashSet<ArticleLike>();
+            Articles = new HashSet<Article>();
+            Chats = new HashSet<Chat>();
+            FriendLists = new HashSet<FriendList>();
+            Invites = new HashSet<Invite>();
+            MyForums = new HashSet<MyForum>();
+            MyGames = new HashSet<MyGame>();
+            Replies = new HashSet<Reply>();
+            ReplyLikes = new HashSet<ReplyLike>();
+            ShoppingCarts = new HashSet<ShoppingCart>();
+            UserPrivacies = new HashSet<UserPrivacy>();
         }
 
         public string Id { get; set; }
-        public int? UserId { get; set; }
+        public int UserId { get; set; }
         public string Account { get; set; }
         public DateTime? EmailConfirmDate { get; set; }
         public string Address { get; set; }
@@ -45,10 +52,19 @@ namespace SqlModels.Models
         public bool LockoutEnabled { get; set; }
         public int AccessFailedCount { get; set; }
 
+        public virtual Order Order { get; set; }
         public virtual UserBackground UserBackground { get; set; }
-        public virtual ICollection<AspNetUserClaim> AspNetUserClaims { get; set; }
-        public virtual ICollection<AspNetUserLogin> AspNetUserLogins { get; set; }
-        public virtual ICollection<AspNetUserRole> AspNetUserRoles { get; set; }
-        public virtual ICollection<AspNetUserToken> AspNetUserTokens { get; set; }
+        public virtual UserCountry UserCountry { get; set; }
+        public virtual ICollection<ArticleLike> ArticleLikes { get; set; }
+        public virtual ICollection<Article> Articles { get; set; }
+        public virtual ICollection<Chat> Chats { get; set; }
+        public virtual ICollection<FriendList> FriendLists { get; set; }
+        public virtual ICollection<Invite> Invites { get; set; }
+        public virtual ICollection<MyForum> MyForums { get; set; }
+        public virtual ICollection<MyGame> MyGames { get; set; }
+        public virtual ICollection<Reply> Replies { get; set; }
+        public virtual ICollection<ReplyLike> ReplyLikes { get; set; }
+        public virtual ICollection<ShoppingCart> ShoppingCarts { get; set; }
+        public virtual ICollection<UserPrivacy> UserPrivacies { get; set; }
     }
 }
