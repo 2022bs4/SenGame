@@ -14,6 +14,7 @@ namespace SenGame.Controllers
         }
         public IActionResult Index()
         {
+            TempData["action"] = "forum";
 
             return View();
         }

@@ -444,3 +444,17 @@
 .header .list-tour-shop:hover .menu, .header .list-tour-forum:hover .menu, .header .list-tour-friend:hover .menu {
     display: block;
 }
+main {
+    height: 100%;
+    background: #edf1f2;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
+    margin-left: auto;
+    margin-right: 0px;
+}
+
+@media (min-width: 768px) {
+    main {
+        width: calc(100% - 60px);
+    }
+}
