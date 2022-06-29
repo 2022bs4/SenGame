@@ -14,6 +14,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using SqlModels.Models;
+using SenGame.Service;
+using Services;
+using System.Net.Mail;
+using System.Net;
 
 namespace SenGame.Areas.Identity.Pages.Account
 {
@@ -80,9 +84,13 @@ namespace SenGame.Areas.Identity.Pages.Account
             //判斷必填欄位是否都有填
             if (ModelState.IsValid)
             {
-                var user = new UserModel { 
-                    Account = Input.Account,UserName = Input.Account , Email = Input.Email,EmailConfirmed = true ,CreateTime = DateTime.Now
-                        };
+                var user = new UserModel 
+                { 
+                    Account = Input.Account,
+                    UserName = Input.Account, 
+                    Email = Input.Email,
+                    CreateTime = DateTime.Now
+                };
                 //CreateAsync(user, password) //要建立的使用者，要雜湊和儲存的使用者密碼。
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
@@ -94,11 +102,25 @@ namespace SenGame.Areas.Identity.Pages.Account
                     var callbackUrl = Url.Page(
                         "/Account/ConfirmEmail",
                         pageHandler: null,
-                        values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
+                        values: new { area = "Identity", userId = user.Id, code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
+
                     //寄出Email認證
-                    await _emailSender.SendEmailAsync(Input.Email, "驗證您的Email",
-                        $" <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>點擊驗證Email</a>.");
+                    MailMessage msg = new MailMessage();
+                    msg.From = new MailAddress("SenGame@gmail.com","SenGame");
+                    msg.To.Add(Input.Email);
+                    msg.Subject = "SenGame會員驗證";
+                    msg.Body = $" <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>點擊驗證您的帳戶</a>";
+                    msg.IsBodyHtml = true;
+                    using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 25))
+                    {
+
+                        smtp.Credentials = new NetworkCredential("bboyskyovtc@gmail.com", "ohhngaacfvndkxhj");
+                        smtp.EnableSsl = true;
+                        smtp.Send(msg);
+                    }
+                  
+                  
                     //Options:表示您可以用來設定身分識別系統的所有選項。
                     //SignIn:Options內的屬性，取得或設定身分 SignInOptions 識別系統的。
                     //RequireConfirmedAccount:SignIn裡面的屬性，如果使用者必須有已確認的帳戶才能登入，則為 True，否則為 false。

@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using SqlModels.Models;
+using System.Net.Mail;
+using System.Net;
 
 namespace SenGame.Areas.Identity.Pages.Account
 {
@@ -37,7 +39,7 @@ namespace SenGame.Areas.Identity.Pages.Account
             public string Email { get; set; }
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult>OnPostAsync()
         {
             if (ModelState.IsValid)
             {
@@ -58,10 +60,21 @@ namespace SenGame.Areas.Identity.Pages.Account
                     values: new { area = "Identity", code },
                     protocol: Request.Scheme);
 
-                await _emailSender.SendEmailAsync(
-                    Input.Email,
-                    "Reset Password",
-                    $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+                MailMessage msg = new MailMessage();
+                msg.From = new MailAddress("SenGame@gmail.com", "SenGame");
+                msg.To.Add(Input.Email);
+                msg.Subject = "重設密碼";
+                msg.Body = $" <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>點擊重設您的密碼</a>";
+                msg.IsBodyHtml = true;
+                using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 25))
+                {
+
+                    smtp.Credentials = new NetworkCredential("bboyskyovtc@gmail.com", "ohhngaacfvndkxhj");
+                    smtp.EnableSsl = true;
+                    smtp.Send(msg);
+                }
+ 
 
                 return RedirectToPage("./ForgotPasswordConfirmation");
             }
