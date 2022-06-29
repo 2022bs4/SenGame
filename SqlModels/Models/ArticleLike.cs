@@ -12,5 +12,6 @@ namespace SqlModels.Models
         public int ArticleId { get; set; }
 
         public virtual Article Article { get; set; }
+        public virtual AspNetUser User { get; set; }
     }
 }

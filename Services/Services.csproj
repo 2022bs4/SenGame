@@ -22,4 +22,8 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\SqlModels\SqlModels.csproj" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="NewFolder\" />
+	</ItemGroup>
 </Project>

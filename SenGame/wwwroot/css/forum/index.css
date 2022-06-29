@@ -104,8 +104,8 @@
 }
 
 .community-body-forum .forumcard-img {
-    padding-left: 0;
-    padding-right: 0;
+    padding: 10px;
+    margin: auto 0px;
 }
 
     .community-body-forum .forumcard-img img {

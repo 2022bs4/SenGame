@@ -6,32 +6,21 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SenGame.Data
+namespace SqlModels.Data
 {
     public class SenGameContext : IdentityDbContext<UserModel>
     {
-        public SenGameContext()
-        {
-
-        }
         public SenGameContext(DbContextOptions<SenGameContext> options)
             : base(options)
         {
         }
-        //
-        public virtual DbSet<AspNetRole> AspNetRole { get; set; }
-        public virtual DbSet<AspNetRoleClaim> AspNetRoleClaim { get; set; }
-        public virtual DbSet<AspNetUser> AspNetUser { get; set; }
-        public virtual DbSet<AspNetUserClaim> AspNetUserClaim { get; set; }
-        public virtual DbSet<AspNetUserLogin> AspNetUserLogin { get; set; }
-        public virtual DbSet<AspNetUserRole> AspNetUserRole { get; set; }
-        public virtual DbSet<AspNetUserToken> AspNetUserToken { get; set; }
-        //
         public virtual DbSet<Article> Articles { get; set; }
         public virtual DbSet<ArticleLike> ArticleLikes { get; set; }
         public virtual DbSet<ArticleTag> ArticleTags { get; set; }
+        
         public virtual DbSet<Chat> Chats { get; set; }
         public virtual DbSet<CustomerService> CustomerServices { get; set; }
+        public virtual DbSet<Ecpay> Ecpays { get; set; }
         public virtual DbSet<Forum> Forums { get; set; }
         public virtual DbSet<FriendGroup> FriendGroups { get; set; }
         public virtual DbSet<FriendList> FriendLists { get; set; }
@@ -47,212 +36,94 @@ namespace SenGame.Data
         public virtual DbSet<Orderdetail> Orderdetails { get; set; }
         public virtual DbSet<Reply> Replies { get; set; }
         public virtual DbSet<ReplyLike> ReplyLikes { get; set; }
-        public virtual DbSet<ServiceReply> ServiceReplies { get; set; }
+        public virtual DbSet<ShoppingCart> ShoppingCarts { get; set; }
         public virtual DbSet<SystemSpecification> SystemSpecifications { get; set; }
         public virtual DbSet<Typelist> Typelists { get; set; }
         public virtual DbSet<UserBackground> UserBackgrounds { get; set; }
         public virtual DbSet<UserCountry> UserCountries { get; set; }
         public virtual DbSet<UserPrivacy> UserPrivacies { get; set; }
+        public virtual DbSet<Usergroup> Usergroups { get; set; }
         public virtual DbSet<Wish> Wishes { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity("SqlModels.Models.AspNetRoles", b =>
-            //{
-            //    b.Property<string>("Id")
-            //        .HasColumnType("nvarchar(450)");
 
-            //    b.Property<string>("ConcurrencyStamp")
-            //        .HasColumnType("nvarchar(max)");
+            modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
 
-            //    b.Property<string>("Name")
-            //        .HasMaxLength(256)
-            //        .HasColumnType("nvarchar(256)");
+            modelBuilder.Entity<Article>(entity =>
+            {
+                entity.ToTable("Article");
 
-            //    b.Property<string>("NormalizedName")
-            //        .HasMaxLength(256)
-            //        .HasColumnType("nvarchar(256)");
+                entity.Property(e => e.ArticleId).ValueGeneratedNever();
 
-            //    b.HasKey("Id");
+                entity.Property(e => e.ArticleTagId).HasComment("種類:討論、心得");
 
-            //    b.HasIndex(new[] { "NormalizedName" }, "RoleNameIndex")
-            //        .IsUnique()
-            //        .HasFilter("([NormalizedName] IS NOT NULL)");
+                entity.Property(e => e.Content).IsRequired();
 
-            //    b.ToTable("AspNetRoles");
-            //});
+                entity.Property(e => e.LastReplyTime)
+                    .HasColumnType("datetime")
+                    .HasComment("最後回文時間");
 
-            //modelBuilder.Entity("SqlModels.Models.AspNetRoleClaims", b =>
-            //{
-            //    b.Property<int>("Id")
-            //        .ValueGeneratedOnAdd()
-            //        .HasColumnType("int")
-            //        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                entity.Property(e => e.PostTime)
+                    .HasColumnType("datetime")
+                    .HasComment("發文日期");
 
-            //    b.Property<string>("ClaimType")
-            //        .HasColumnType("nvarchar(max)");
+                entity.Property(e => e.Title)
+                    .IsRequired()
+                    .HasMaxLength(50);
 
-            //    b.Property<string>("ClaimValue")
-            //        .HasColumnType("nvarchar(max)");
+                entity.HasOne(d => d.ArticleTag)
+                    .WithMany(p => p.Articles)
+                    .HasForeignKey(d => d.ArticleTagId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Article_ArticleTag");
 
-            //    b.Property<string>("RoleId")
-            //        .IsRequired()
-            //        .HasColumnType("nvarchar(450)");
+                entity.HasOne(d => d.Forum)
+                    .WithMany(p => p.Articles)
+                    .HasForeignKey(d => d.ForumId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Article_Forum");
 
-            //    b.HasKey("Id");
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Articles)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Article_AspNetUsers");
+            });
 
-            //    b.HasIndex(new[] { "RoleId" }, "IX_AspNetRoleClaims_RoleId");
+            modelBuilder.Entity<ArticleLike>(entity =>
+            {
+                entity.HasKey(e => e.LikeId)
+                    .HasName("PK_Like");
 
-            //    b.ToTable("AspNetRoleClaims");
-            //});
+                entity.ToTable("ArticleLike");
 
-            //modelBuilder.Entity("SqlModels.Models.AspNetUser", b =>
-            //{
-            //    b.Property<string>("Id")
-            //        .HasColumnType("nvarchar(450)");
+                entity.Property(e => e.LikeId).ValueGeneratedNever();
 
-            //    b.Property<int>("AccessFailedCount")
-            //        .HasColumnType("int");
+                entity.HasOne(d => d.Article)
+                    .WithMany(p => p.ArticleLikes)
+                    .HasForeignKey(d => d.ArticleId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ArticleLike_Article");
 
-            //    b.Property<string>("ConcurrencyStamp")
-            //        .HasColumnType("nvarchar(max)");
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.ArticleLikes)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ArticleLike_AspNetUsers");
+            });
 
-            //    b.Property<string>("Email")
-            //        .HasMaxLength(256)
-            //        .HasColumnType("nvarchar(256)");
+            modelBuilder.Entity<ArticleTag>(entity =>
+            {
+                entity.ToTable("ArticleTag");
 
-            //    b.Property<bool>("EmailConfirmed")
-            //        .HasColumnType("bit");
+                entity.Property(e => e.ArticleTagId).ValueGeneratedNever();
 
-            //    b.Property<bool>("LockoutEnabled")
-            //        .HasColumnType("bit");
+                entity.Property(e => e.TagName)
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .IsFixedLength(true);
+            });
 
-            //    b.Property<DateTimeOffset?>("LockoutEnd")
-            //        .HasColumnType("datetimeoffset");
-
-            //    b.Property<string>("NormalizedEmail")
-            //        .HasMaxLength(256)
-            //        .HasColumnType("nvarchar(256)");
-
-            //    b.Property<string>("NormalizedUserName")
-            //        .HasMaxLength(256)
-            //        .HasColumnType("nvarchar(256)");
-
-            //    b.Property<string>("PasswordHash")
-            //        .HasColumnType("nvarchar(max)");
-
-            //    b.Property<string>("PhoneNumber")
-            //        .HasColumnType("nvarchar(max)");
-
-            //    b.Property<bool>("PhoneNumberConfirmed")
-            //        .HasColumnType("bit");
-
-            //    b.Property<string>("SecurityStamp")
-            //        .HasColumnType("nvarchar(max)");
-
-            //    b.Property<bool>("TwoFactorEnabled")
-            //        .HasColumnType("bit");
-
-            //    b.Property<string>("UserName")
-            //        .HasMaxLength(256)
-            //        .HasColumnType("nvarchar(256)");
-
-            //    b.HasKey("Id");
-
-            //    b.HasIndex(new[] { "NormalizedEmail" }, "EmailIndex");
-
-            //    b.HasIndex(new[] { "NormalizedUserName" }, "UserNameIndex")
-            //        .IsUnique()
-            //        .HasFilter("([NormalizedUserName] IS NOT NULL)");
-
-            //    b.ToTable("AspNetUsers");
-            //});
-
-            //modelBuilder.Entity("SqlModels.Models.AspNetUserClaim", b =>
-            //{
-            //    b.Property<int>("Id")
-            //        .ValueGeneratedOnAdd()
-            //        .HasColumnType("int")
-            //        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            //    b.Property<string>("ClaimType")
-            //        .HasColumnType("nvarchar(max)");
-
-            //    b.Property<string>("ClaimValue")
-            //        .HasColumnType("nvarchar(max)");
-
-            //    b.Property<string>("UserId")
-            //        .IsRequired()
-            //        .HasColumnType("nvarchar(450)");
-
-            //    b.HasKey("Id");
-
-            //    b.HasIndex(new[] { "UserId" }, "IX_AspNetUserClaims_UserId");
-
-            //    b.ToTable("AspNetUserClaims");
-            //});
-
-            //modelBuilder.Entity("SqlModels.Models.AspNetUserLogin", b =>
-            //{
-            //    b.Property<string>("LoginProvider")
-            //        .HasMaxLength(128)
-            //        .HasColumnType("nvarchar(128)");
-
-            //    b.Property<string>("ProviderKey")
-            //        .HasMaxLength(128)
-            //        .HasColumnType("nvarchar(128)");
-
-            //    b.Property<string>("ProviderDisplayName")
-            //        .HasColumnType("nvarchar(max)");
-
-            //    b.Property<string>("UserId")
-            //        .IsRequired()
-            //        .HasColumnType("nvarchar(450)");
-
-            //    b.HasKey("LoginProvider", "ProviderKey");
-
-            //    b.HasIndex(new[] { "UserId" }, "IX_AspNetUserLogins_UserId");
-
-            //    b.ToTable("AspNetUserLogins");
-            //});
-
-            //modelBuilder.Entity("SqlModels.Models.AspNetUserRoles", b =>
-            //{
-            //    b.Property<string>("UserId")
-            //        .HasColumnType("nvarchar(450)");
-
-            //    b.Property<string>("RoleId")
-            //        .HasColumnType("nvarchar(450)");
-
-            //    b.HasKey("UserId", "RoleId");
-
-            //    b.HasIndex(new[] { "RoleId" }, "IX_AspNetUserRoles_RoleId");
-
-            //    b.ToTable("AspNetUserRoles");
-            //});
-
-            //modelBuilder.Entity("SqlModels.Models.AspNetUserToken", b =>
-            //{
-            //    b.Property<string>("UserId")
-            //        .HasColumnType("nvarchar(450)");
-
-            //    b.Property<string>("LoginProvider")
-            //        .HasMaxLength(128)
-            //        .HasColumnType("nvarchar(128)");
-
-            //    b.Property<string>("Name")
-            //        .HasMaxLength(128)
-            //        .HasColumnType("nvarchar(128)");
-
-            //    b.Property<string>("Value")
-            //        .HasColumnType("nvarchar(max)");
-
-            //    b.HasKey("UserId", "LoginProvider", "Name");
-
-            //    b.ToTable("AspNetUserTokens");
-            //});
-
-
-            //
             modelBuilder.Entity<AspNetRole>(entity =>
             {
                 entity.HasIndex(e => e.NormalizedName, "RoleNameIndex")
@@ -277,15 +148,23 @@ namespace SenGame.Data
 
             modelBuilder.Entity<AspNetUser>(entity =>
             {
+                entity.HasKey(e => e.UserId);
+
                 entity.HasIndex(e => e.NormalizedEmail, "EmailIndex");
 
                 entity.HasIndex(e => e.NormalizedUserName, "UserNameIndex")
                     .IsUnique()
                     .HasFilter("([NormalizedUserName] IS NOT NULL)");
 
+                entity.Property(e => e.UserId).ValueGeneratedNever();
+
                 entity.Property(e => e.CreateTime).HasColumnType("datetime");
 
                 entity.Property(e => e.Email).HasMaxLength(256);
+
+                entity.Property(e => e.Id)
+                    .IsRequired()
+                    .HasMaxLength(450);
 
                 entity.Property(e => e.NormalizedEmail).HasMaxLength(256);
 
@@ -293,11 +172,21 @@ namespace SenGame.Data
 
                 entity.Property(e => e.UserName).HasMaxLength(256);
 
+                entity.HasOne(d => d.Order)
+                    .WithMany(p => p.AspNetUsers)
+                    .HasForeignKey(d => d.OrderId)
+                    .HasConstraintName("FK_AspNetUsers_Order");
+
                 entity.HasOne(d => d.UserBackground)
                     .WithMany(p => p.AspNetUsers)
                     .HasForeignKey(d => d.UserBackgroundId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_AspNetUsers_UserBackground");
+
+                entity.HasOne(d => d.UserCountry)
+                    .WithMany(p => p.AspNetUsers)
+                    .HasForeignKey(d => d.UserCountryId)
+                    .HasConstraintName("FK_AspNetUsers_UserCountry");
             });
 
             modelBuilder.Entity<AspNetUserClaim>(entity =>
@@ -305,10 +194,6 @@ namespace SenGame.Data
                 entity.HasIndex(e => e.UserId, "IX_AspNetUserClaims_UserId");
 
                 entity.Property(e => e.UserId).IsRequired();
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.AspNetUserClaims)
-                    .HasForeignKey(d => d.UserId);
             });
 
             modelBuilder.Entity<AspNetUserLogin>(entity =>
@@ -322,10 +207,6 @@ namespace SenGame.Data
                 entity.Property(e => e.ProviderKey).HasMaxLength(128);
 
                 entity.Property(e => e.UserId).IsRequired();
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.AspNetUserLogins)
-                    .HasForeignKey(d => d.UserId);
             });
 
             modelBuilder.Entity<AspNetUserRole>(entity =>
@@ -337,10 +218,6 @@ namespace SenGame.Data
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.AspNetUserRoles)
                     .HasForeignKey(d => d.RoleId);
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.AspNetUserRoles)
-                    .HasForeignKey(d => d.UserId);
             });
 
             modelBuilder.Entity<AspNetUserToken>(entity =>
@@ -350,86 +227,13 @@ namespace SenGame.Data
                 entity.Property(e => e.LoginProvider).HasMaxLength(128);
 
                 entity.Property(e => e.Name).HasMaxLength(128);
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.AspNetUserTokens)
-                    .HasForeignKey(d => d.UserId);
             });
-
-
-            //
-            modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
-
-            modelBuilder.Entity<Article>(entity =>
-            {
-                entity.ToTable("Article");
-
-                entity.Property(e => e.ArticleId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ArticleID");
-
-                entity.Property(e => e.ArticleContent).IsRequired();
-
-                entity.Property(e => e.ArticleTagId)
-                    .HasColumnName("ArticleTagID")
-                    .HasComment("種類:討論、心得");
-
-                entity.Property(e => e.ForumId).HasColumnName("ForumID");
-
-                entity.Property(e => e.LastReplyTime)
-                    .HasColumnType("datetime")
-                    .HasComment("最後回文時間");
-
-                entity.Property(e => e.PostDate)
-                    .HasColumnType("datetime")
-                    .HasComment("發文日期");
-
-                entity.Property(e => e.Title)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.UserId).HasColumnName("UserID");
-            });
-
-            modelBuilder.Entity<ArticleLike>(entity =>
-            {
-                entity.HasKey(e => e.LikeId)
-                    .HasName("PK_Like");
-
-                entity.ToTable("ArticleLike");
-
-                entity.Property(e => e.LikeId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("LikeID");
-
-                entity.Property(e => e.ArticleId).HasColumnName("ArticleID");
-
-                entity.Property(e => e.UserId).HasColumnName("UserID");
-            });
-
-            modelBuilder.Entity<ArticleTag>(entity =>
-            {
-                entity.ToTable("ArticleTag");
-
-                entity.Property(e => e.ArticleTagId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ArticleTagID");
-
-                entity.Property(e => e.TagName)
-                    .IsRequired()
-                    .HasMaxLength(10)
-                    .IsFixedLength(true);
-            });
-
-
 
             modelBuilder.Entity<Chat>(entity =>
             {
                 entity.ToTable("Chat");
 
-                entity.Property(e => e.ChatId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ChatID");
+                entity.Property(e => e.ChatId).ValueGeneratedNever();
 
                 entity.Property(e => e.ChatContent).HasComment("聊天紀錄");
 
@@ -439,9 +243,13 @@ namespace SenGame.Data
 
                 entity.Property(e => e.PictureFile).HasComment("暫定");
 
-                entity.Property(e => e.UserId)
-                    .HasColumnName("UserID")
-                    .HasComment("使用者自身");
+                entity.Property(e => e.UserId).HasComment("使用者自身");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Chats)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Chat_AspNetUsers");
             });
 
             modelBuilder.Entity<CustomerService>(entity =>
@@ -450,34 +258,76 @@ namespace SenGame.Data
 
                 entity.ToTable("CustomerService");
 
-                entity.Property(e => e.ServiceId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ServiceID");
+                entity.Property(e => e.ServiceId).ValueGeneratedNever();
 
                 entity.Property(e => e.CreateTime).HasColumnType("date");
 
-                entity.Property(e => e.GameId).HasColumnName("MyGameID");
-
                 entity.Property(e => e.QuestionContent).IsRequired();
+
+                entity.HasOne(d => d.Game)
+                    .WithMany(p => p.CustomerServices)
+                    .HasForeignKey(d => d.GameId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_CustomerService_Game");
+            });
+
+            modelBuilder.Entity<Ecpay>(entity =>
+            {
+                entity.HasKey(e => e.MerchantId);
+
+                entity.ToTable("Ecpay");
+
+                entity.Property(e => e.MerchantId)
+                    .HasMaxLength(10)
+                    .HasColumnName("MerchantID")
+                    .HasComment("特店編號,Ecpa提供");
+
+                entity.Property(e => e.ChoosePayment).HasComment("1.Criedit 2. ATM");
+
+                entity.Property(e => e.ClientBackUrl)
+                    .HasMaxLength(200)
+                    .HasColumnName("ClientBackURL")
+                    .HasComment("返回指定網頁");
+
+                entity.Property(e => e.ExpireDate).HasComment("允許繳費有效天數");
+
+                entity.Property(e => e.HashIv)
+                    .HasMaxLength(20)
+                    .HasColumnName("HashIV")
+                    .IsFixedLength(true);
+
+                entity.Property(e => e.HashKey)
+                    .HasMaxLength(20)
+                    .IsFixedLength(true);
+
+                entity.Property(e => e.ReturnUrl)
+                    .HasMaxLength(200)
+                    .HasColumnName("ReturnURL")
+                    .HasComment("付款完成\r\n通知回傳\r\n網址");
+
+                entity.Property(e => e.UpdateTime)
+                    .HasColumnType("datetime")
+                    .HasComment("更新資訊時間");
             });
 
             modelBuilder.Entity<Forum>(entity =>
             {
                 entity.ToTable("Forum");
 
-                entity.Property(e => e.ForumId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ForumID");
+                entity.Property(e => e.ForumId).ValueGeneratedNever();
 
                 entity.Property(e => e.Banner)
                     .IsRequired()
                     .HasMaxLength(50);
 
-                entity.Property(e => e.GameId).HasColumnName("GameID");
-
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(50);
+
+                entity.HasOne(d => d.Game)
+                    .WithMany(p => p.Forums)
+                    .HasForeignKey(d => d.GameId)
+                    .HasConstraintName("FK_Forum_Game");
             });
 
             modelBuilder.Entity<FriendGroup>(entity =>
@@ -503,6 +353,12 @@ namespace SenGame.Data
                     .HasColumnName("FriendLIstId");
 
                 entity.Property(e => e.IsBlockade).HasComment("是否被封鎖");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.FriendLists)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_FriendList_AspNetUsers");
             });
 
             modelBuilder.Entity<Game>(entity =>
@@ -557,6 +413,11 @@ namespace SenGame.Data
                 entity.Property(e => e.EndTime).HasColumnType("datetime");
 
                 entity.Property(e => e.StarTime).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Game)
+                    .WithMany(p => p.GameDiscounts)
+                    .HasForeignKey(d => d.GameId)
+                    .HasConstraintName("FK_GameDiscount_Game");
             });
 
             modelBuilder.Entity<GameMedium>(entity =>
@@ -574,6 +435,12 @@ namespace SenGame.Data
                     .HasMaxLength(255);
 
                 entity.Property(e => e.Sort).HasComment("排序");
+
+                entity.HasOne(d => d.Game)
+                    .WithMany(p => p.GameMedia)
+                    .HasForeignKey(d => d.GameId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_GameMedia_Game");
             });
 
             modelBuilder.Entity<GameType>(entity =>
@@ -581,6 +448,17 @@ namespace SenGame.Data
                 entity.ToTable("GameType");
 
                 entity.Property(e => e.GameTypeId).ValueGeneratedNever();
+
+                entity.HasOne(d => d.Game)
+                    .WithMany(p => p.GameTypes)
+                    .HasForeignKey(d => d.GameId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_GameType_Game");
+
+                entity.HasOne(d => d.Typelist)
+                    .WithMany(p => p.GameTypes)
+                    .HasForeignKey(d => d.TypelistId)
+                    .HasConstraintName("FK_GameType_Typelist");
             });
 
             modelBuilder.Entity<Invite>(entity =>
@@ -596,6 +474,12 @@ namespace SenGame.Data
                 entity.Property(e => e.SenderId).HasComment("邀請者");
 
                 entity.Property(e => e.UserId).HasComment("被邀請者");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Invites)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Invite_AspNetUsers");
             });
 
             modelBuilder.Entity<MyFavouriteId>(entity =>
@@ -613,13 +497,21 @@ namespace SenGame.Data
             {
                 entity.ToTable("MyForum");
 
-                entity.Property(e => e.MyForumId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("MyForumID");
+                entity.Property(e => e.MyForumId).ValueGeneratedNever();
 
-                entity.Property(e => e.ForumId).HasColumnName("ForumID");
+                entity.Property(e => e.Sort).HasComment("看板排序");
 
-                entity.Property(e => e.UserId).HasColumnName("UserID");
+                entity.HasOne(d => d.Forum)
+                    .WithMany(p => p.MyForums)
+                    .HasForeignKey(d => d.ForumId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_MyForum_Forum");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.MyForums)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_MyForum_AspNetUsers");
             });
 
             modelBuilder.Entity<MyGame>(entity =>
@@ -628,6 +520,19 @@ namespace SenGame.Data
 
                 entity.Property(e => e.MyGameId).ValueGeneratedNever();
 
+                entity.Property(e => e.MyFavourite).HasComment("判別是否是我的最愛");
+
+                entity.HasOne(d => d.Game)
+                    .WithMany(p => p.MyGames)
+                    .HasForeignKey(d => d.GameId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_MyGame_Game");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.MyGames)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_MyGame_AspNetUsers");
             });
 
             modelBuilder.Entity<Order>(entity =>
@@ -636,11 +541,17 @@ namespace SenGame.Data
 
                 entity.Property(e => e.OrderId).ValueGeneratedNever();
 
+                entity.Property(e => e.CancelTime)
+                    .HasColumnType("datetime")
+                    .HasComment("訂單取消時間");
+
                 entity.Property(e => e.CreateTime)
                     .HasColumnType("datetime")
                     .HasComment("訂單時間");
 
-                entity.Property(e => e.EcpayId).HasComment("Ecpay訂單編號");
+                entity.Property(e => e.EcpayId)
+                    .IsRequired()
+                    .HasComment("Ecpay訂單編號");
 
                 entity.Property(e => e.Invoice)
                     .IsRequired()
@@ -654,9 +565,13 @@ namespace SenGame.Data
                     .IsFixedLength(true)
                     .HasComment("1.電子發票2.載具3.捐贈");
 
-                entity.Property(e => e.OrderStatus).HasComment("1.購物車 2.待付款  3.付款完成  4.申請退款 5.退款完成");
+                entity.Property(e => e.OrderStatus).HasComment("1.待付款  3.付款完成  4.申請退款 5.退款完成");
 
                 entity.Property(e => e.TotalPrice).HasColumnType("money");
+
+                entity.Property(e => e.TradeTime)
+                    .HasColumnType("datetime")
+                    .HasComment("訂單成立時間");
 
                 entity.Property(e => e.UpdateTime)
                     .HasColumnType("datetime")
@@ -667,24 +582,30 @@ namespace SenGame.Data
             {
                 entity.Property(e => e.OrderdetailId).ValueGeneratedNever();
 
-                entity.Property(e => e.Discount).HasComment("訂單當時折購");
+                entity.Property(e => e.Discount).HasComment("購買後則顯示當時折扣");
 
                 entity.Property(e => e.Price).HasColumnType("money");
+
+                entity.HasOne(d => d.Game)
+                    .WithMany(p => p.Orderdetails)
+                    .HasForeignKey(d => d.GameId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Orderdetails_Game");
+
+                entity.HasOne(d => d.Order)
+                    .WithMany(p => p.Orderdetails)
+                    .HasForeignKey(d => d.OrderId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Orderdetails_Order");
             });
 
             modelBuilder.Entity<Reply>(entity =>
             {
                 entity.ToTable("Reply");
 
-                entity.Property(e => e.ReplyId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ReplyID");
+                entity.Property(e => e.ReplyId).ValueGeneratedNever();
 
-                entity.Property(e => e.ArticleId).HasColumnName("ArticleID");
-
-                entity.Property(e => e.ParentId)
-                    .HasColumnName("ParentID")
-                    .HasComment("回復文章的回覆的回覆");
+                entity.Property(e => e.ParentId).HasComment("回復文章的回覆的回覆");
 
                 entity.Property(e => e.ReplyText).IsRequired();
 
@@ -692,31 +613,55 @@ namespace SenGame.Data
                     .IsRequired()
                     .HasMaxLength(100);
 
-                entity.Property(e => e.UserId).HasColumnName("UserID");
+                entity.HasOne(d => d.Article)
+                    .WithMany(p => p.Replies)
+                    .HasForeignKey(d => d.ArticleId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Reply_Article");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Replies)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Reply_AspNetUsers");
             });
 
             modelBuilder.Entity<ReplyLike>(entity =>
             {
                 entity.ToTable("ReplyLike");
 
-                entity.Property(e => e.ReplyLikeId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ReplyLikeID");
+                entity.Property(e => e.ReplyLikeId).ValueGeneratedNever();
 
-                entity.Property(e => e.ReplyId).HasColumnName("ReplyID");
+                entity.HasOne(d => d.Reply)
+                    .WithMany(p => p.ReplyLikes)
+                    .HasForeignKey(d => d.ReplyId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ReplyLike_Reply");
 
-                entity.Property(e => e.UserId).HasColumnName("UserID");
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.ReplyLikes)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ReplyLike_AspNetUsers");
             });
 
-            modelBuilder.Entity<ServiceReply>(entity =>
+            modelBuilder.Entity<ShoppingCart>(entity =>
             {
-                entity.HasNoKey();
+                entity.ToTable("ShoppingCart");
 
-                entity.ToTable("ServiceReply");
+                entity.Property(e => e.ShoppingCartId).ValueGeneratedNever();
 
-                entity.Property(e => e.ReplyContent)
-                    .IsRequired()
-                    .HasComment("客服回應");
+                entity.Property(e => e.AddTime).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Game)
+                    .WithMany(p => p.ShoppingCarts)
+                    .HasForeignKey(d => d.GameId)
+                    .HasConstraintName("FK_ShoppingCart_Game");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.ShoppingCarts)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("FK_ShoppingCart_AspNetUsers");
             });
 
             modelBuilder.Entity<SystemSpecification>(entity =>
@@ -724,6 +669,8 @@ namespace SenGame.Data
                 entity.ToTable("SystemSpecification");
 
                 entity.Property(e => e.SystemSpecificationId).ValueGeneratedNever();
+
+                entity.Property(e => e.Configure).HasComment("1.最低配備 2.建議配備");
 
                 entity.Property(e => e.Hddspace)
                     .HasMaxLength(50)
@@ -747,6 +694,12 @@ namespace SenGame.Data
                     .HasComment("記憶體");
 
                 entity.Property(e => e.SystemType).HasComment("1:windows 2:Mac");
+
+                entity.HasOne(d => d.Game)
+                    .WithMany(p => p.SystemSpecifications)
+                    .HasForeignKey(d => d.GameId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_SystemSpecification_Game");
             });
 
             modelBuilder.Entity<Typelist>(entity =>
@@ -760,7 +713,6 @@ namespace SenGame.Data
                     .HasMaxLength(50);
             });
 
-            
             modelBuilder.Entity<UserBackground>(entity =>
             {
                 entity.ToTable("UserBackground");
@@ -793,6 +745,30 @@ namespace SenGame.Data
                     .IsRequired()
                     .HasMaxLength(10)
                     .HasComment("隱私狀況");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.UserPrivacies)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("FK_UserPrivacy_AspNetUsers");
+            });
+
+            modelBuilder.Entity<Usergroup>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("Usergroup");
+
+                entity.HasOne(d => d.FriendGroup)
+                    .WithMany()
+                    .HasForeignKey(d => d.FriendGroupId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Usergroup_FriendGroup");
+
+                entity.HasOne(d => d.User)
+                    .WithMany()
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Usergroup_AspNetUsers");
             });
 
             modelBuilder.Entity<Wish>(entity =>
@@ -802,6 +778,12 @@ namespace SenGame.Data
                 entity.Property(e => e.WishId).ValueGeneratedNever();
 
                 entity.Property(e => e.AddTime).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Game)
+                    .WithMany(p => p.Wishes)
+                    .HasForeignKey(d => d.GameId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Wish_Game");
             });
 
             base.OnModelCreating(modelBuilder);

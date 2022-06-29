@@ -7,13 +7,17 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SenGame.Data;
 using SenGame.Hubs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using SqlModels.Models;
+using SqlModels.Data;
+using SqlModels.Repository;
+using SqlModels.Repository.Interface;
+using Services;
+using Services.Interface;
 
 namespace SenGame
 {
@@ -36,6 +40,8 @@ namespace SenGame
             services.AddDefaultIdentity<UserModel>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<SenGameContext>();
             services.AddControllersWithViews();
+            services.AddTransient<IRepository, GenericRepository>();
+            services.AddTransient<IService, GenericService>();
             services.AddSignalR();
         }
 

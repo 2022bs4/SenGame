@@ -2,11 +2,10 @@ let swiperwrapper = document.querySelector(".swiper-wrapper")
 let swiper = document.querySelector(".swiper")
 
 
-window.onload=function(){
-    swiperinitialization();
-    swiperappend();
-}
-
+$(document).ready(function () {
+    swiperinitialization()
+    swiperappend()
+});
 
 function swiperinitialization() {
     var mySwiper = new Swiper('.swiper', {

@@ -12,5 +12,6 @@ namespace SqlModels.Models
         public int FriendGroupId { get; set; }
 
         public virtual FriendGroup FriendGroup { get; set; }
+        public virtual AspNetUser User { get; set; }
     }
 }

@@ -15,8 +15,8 @@ namespace SqlModels.Models
 
         public int ArticleId { get; set; }
         public int UserId { get; set; }
-        public string ArticleContent { get; set; }
-        public DateTime PostDate { get; set; }
+        public string Content { get; set; }
+        public DateTime PostTime { get; set; }
         public string Title { get; set; }
         public int ForumId { get; set; }
         public DateTime LastReplyTime { get; set; }
@@ -24,6 +24,7 @@ namespace SqlModels.Models
 
         public virtual ArticleTag ArticleTag { get; set; }
         public virtual Forum Forum { get; set; }
+        public virtual AspNetUser User { get; set; }
         public virtual ICollection<ArticleLike> ArticleLikes { get; set; }
         public virtual ICollection<Reply> Replies { get; set; }
     }

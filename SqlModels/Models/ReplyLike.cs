@@ -12,5 +12,6 @@ namespace SqlModels.Models
         public int UserId { get; set; }
 
         public virtual Reply Reply { get; set; }
+        public virtual AspNetUser User { get; set; }
     }
 }

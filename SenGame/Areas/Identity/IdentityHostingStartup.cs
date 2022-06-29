@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SenGame.Data;
+using SqlModels.Data;
 
 [assembly: HostingStartup(typeof(SenGame.Areas.Identity.IdentityHostingStartup))]
 namespace SenGame.Areas.Identity

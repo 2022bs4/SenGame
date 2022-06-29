@@ -343,6 +343,11 @@
         content: "\f007";
     }
 
+    .header .header-box-tool-end .logout {
+        background-color: transparent;
+        margin-left: 10px;
+    }
+
 .header .header-box.open .header-box-nav {
     background: rgba(0, 0, 0, 0.5);
 }
@@ -439,7 +444,6 @@
 .header .list-tour-shop:hover .menu, .header .list-tour-forum:hover .menu, .header .list-tour-friend:hover .menu {
     display: block;
 }
-
 main {
     height: 100%;
     background: #edf1f2;
@@ -449,19 +453,8 @@ main {
     margin-right: 0px;
 }
 
-@media (min-width: 576px) {
+@media (min-width: 768px) {
     main {
         width: calc(100% - 60px);
-    }
-}
-.MainScreen {
-    width: 100% !important;
-}
-
-@media (min-width: 576px) {
-    .open-section {
-        width: calc(100% - 220px) !important;
-        -webkit-transition: 0.5s;
-        transition: 0.5s;
     }
 }

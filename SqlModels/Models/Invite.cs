@@ -11,5 +11,7 @@ namespace SqlModels.Models
         public int UserId { get; set; }
         public int SenderId { get; set; }
         public string Message { get; set; }
+
+        public virtual AspNetUser User { get; set; }
     }
 }

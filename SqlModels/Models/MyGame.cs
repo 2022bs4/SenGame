@@ -13,5 +13,6 @@ namespace SqlModels.Models
         public bool MyFavourite { get; set; }
 
         public virtual Game Game { get; set; }
+        public virtual AspNetUser User { get; set; }
     }
 }
