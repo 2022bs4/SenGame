@@ -39,7 +39,7 @@ namespace Services
 
         public TdbModel GetById<TdbModel>(int id) where TdbModel : class
         {
-            throw new NotImplementedException();
+            return _repository.GetById<TdbModel>(id);
         }
 
         public bool IsExists(int id)
