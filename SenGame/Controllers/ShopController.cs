@@ -100,6 +100,28 @@ namespace SenGame.Controllers
         public IActionResult ProductDetails(int id =1)
         {
 
+            var gameMain = Games.Where(x => x.GameId == id).First();
+            var sys = systemSpecifications.Where(x => x.GameId == gameMain.GameId && x.SystemType == 1).First();
+            var introductPicture = gameMedia.Where(x => x.GameId == id && x.InstructionType == 2).First();
+            var productDetail = new ProductDetailsViewModel
+            {
+                GameId = gameMain.GameId,
+                GameName = gameMain.GameName,
+                GamePrice = gameMain.GamePrice,
+                GameIntroduction = gameMain.GameIntroduction,
+                GameDetailsText = gameMain.GameDetailsText,
+                ReleaseTime = gameMain.ReleaseTime,
+                Developer = gameMain.Developer,
+                Marker = gameMain.Marker,
+                SystemType = sys.SystemType,
+                SystemCpu = sys.SystemCpu,
+                SystemGpu = sys.SystemGpu,
+                Hddspace = sys.Hddspace,
+                System = sys.System,
+                SystemRam = sys.SystemRam,
+                MediaUrl = introductPicture.MediaUrl
+            };
+
             //var gameMain = Games.Where(x => x.GameId == id);
             //foreach (var item in gameMain)
             //{
