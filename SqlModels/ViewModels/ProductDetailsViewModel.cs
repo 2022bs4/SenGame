@@ -15,15 +15,19 @@ namespace SqlModels.ViewModels
         public string Marker { get; set; }
 
         //系統規格
+        public int? Configure { get; set; }
         public int SystemType { get; set; }
         public string Hddspace { get; set; }
         public string System { get; set; }
         public string SystemRam { get; set; }
         public string SystemCpu { get; set; }
         public string SystemGpu { get; set; }
-        
-        
+
+
         //媒體
         public string MediaUrl { get; set; }
+
+        //
+
     }
 }

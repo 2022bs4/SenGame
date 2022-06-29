@@ -1,37 +1,32 @@
-﻿@model IEnumerable<ProductDetailsViewModel>
+﻿@model List<ProductDetailsViewModel>
+@using System.Linq;
 
 @section Css{
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <link rel="stylesheet" href="/css/shop/ProductDetails.css" asp-append-version="true"/>
 }
 
-        <!-- 搜尋及導覽列 -->
         
         <!-- 遊戲主要介紹 -->
         <section class="MainGame-Datial col-12 p-0 d-md-flex flex-md-wrap justify-content-md-between">
             
             <!-- 遊戲名稱、開發商、開發人員、發行日期、簡介 動態載入 -->
             <div class="Game-Introduce d-md-flex flex-md-column justify-content-md-between mb-4 mb-md-0 mt-md-2">
-                @foreach(var item in Model)
-                {
-                    <h2 class="Table-title w-100">@item.GameName</h2>
-                    <div>
-                        <img src="@item.MediaUrl" alt="@item.GameName" class="w-100">
-                        <p class="col-12  p-0 text-left">@item.GameIntroduction</p>
-                    </div>
-                    <div>
-                        <h3 class="Developers">開發商 <a href="#">@item.Developer</a></h3>
-                        <h3 class="Developers_Person ">開發人員 <a href="#">@item.Marker</a></h3>
-                        <h3 class="Selling-Date ">發行日期 <a href="#">@item.ReleaseTime</a></h3>
-                    </div>
-                }
-            </div>
-                
-                <!-- 動態標籤 -->
+                <h2 class="Table-title w-100">@Model[0].GameName</h2>
+                <div>
+                    <img src="@Model[0].MediaUrl" alt="@Model[0].GameName" class="w-100">
+                    <p class="col-12  p-0 text-left">@Model[0].GameIntroduction</p>
+                </div>
+                <div>
+                    <h3 class="Developers">開發商 <a href="#">@Model[0].Developer</a></h3>
+                    <h3 class="Developers_Person ">開發人員 <a href="#">@Model[0].Marker</a></h3>
+                    <h3 class="Selling-Date ">發行日期 <a href="#">@Model[0].ReleaseTime</a></h3>
+                </div>
+                </div>
+
+
+    <!-- 動態標籤 -->
                 <!-- <div class="Game-tag"></div> -->
-                <!-- 動態評論 -->
-                <!-- <div class="Game-Comment"></div> -->
-            
             
             <!--影片 動態測入，目前Lol測試版  -->
             <div class="Game-Video-Introduce mt-md-2">
@@ -68,16 +63,14 @@
             <!-- 遊戲文字介紹 要動態載入 -->
             <p class="col-12 p-0 mt-4 About-Game">關於此遊戲</p>
             <div class="Game-Datails col-12 col-md-8  mb-4 m-md-0">
-                @foreach(var item in Model)
-                {
+
                     <div class="pic">
                         <img src="" alt="" class="w-100">
                     </div>
                     <div class="text">
-                        <h4>@item.GameName</h4>
-                        <p>@item.GameDetailsText</p>
+                        <h4>@Model[0].GameName</h4>
+                        <p>@Model[0].GameDetailsText</p>
                     </div>
-                }
             </div>
             <div class="Recommend col-12 col-md-3 p-0 "></div>
         </section>
@@ -85,65 +78,42 @@
             <!-- 性統需求 -->
             <div class="System-Requirement col-12 d-flex flex-wrap p-0 mt-4">
                 <!-- Nav -->
-                <nav class=" col-12 d-flex justify-content-around">
-                    <button class="btn">Windows</button>
-                    <button class="btn">Mac</button>
-                </nav>
+            <nav class=" col-12 d-flex justify-content-around my-4">
+                <button class="btn btn-Woindow">Windows</button>
+                <button class="btn btn-Mac@(Model.Any(x=>x.SystemType==2)?"":" d-none ")">Mac</button>
+            </nav>
+            
+        
                 <div class="col-12 d-md-flex Cnfigure-Box">
-
-                    <!-- 最低配置 -->
-                    <div class="Min-Cnfigure  col-12 col-md-6 ">
-                        <span>最低配備:</span>
-                        @foreach(var item in Model)
-                        {
-                            <div class="System-box">
-                                <span class="mb-3 text-danger"></span>
-                                <p class="bit"></p>
-                                <ul class="p-0 ">
-                                    <li class="mb-3"><span class="mb-0 text-success">作業系統 : </span>@item.System<span class="Stytem mb-0 "> </span></li>
-                                    <li class="mb-3"><span class="mb-0 text-success">處理器 : </span>@item.SystemCpu<span class="Processor mb-0"></span></li>
-                                    <li class="mb-3"><span class="mb-0 text-success">記憶體 : </span>@item.SystemRam<span class="Memory mb-0"></span></li>
-                                    <li class="mb-3"><span class="mb-0 text-success">顯示卡 : </span>@item.SystemGpu<span class="GraphicsCard mb-0"></span></li>
-                                    <li class="mb-3"><span class="mb-0 text-success">儲存空間 : </span>@item.Hddspace<span class="Storage mb-0"></span></li>
-                                </ul>
-                            </div>
-                        }
+                    @foreach(var item in Model )
+                    {
+                    <div class="@(item.SystemType==1?"Window":"Mac d-none") col-12 col-md-6 ">
+                            <span class="mb-3 text-danger">@(item.Configure==1?"最低配備":"建議配備")</span>
+                            <ul class="p-0 ">
+                                <li class="mb-3"><span class="mb-0 text-success">作業系統 : </span><span class="Stytem mb-0 ">@item.System</span></li>
+                                <li class="mb-3"><span class="mb-0 text-success">處理器 : </span><span class="Processor mb-0">@item.SystemCpu</span></li>
+                                <li class="mb-3"><span class="mb-0 text-success">記憶體 : </span><span class="Memory mb-0">@item.SystemRam</span></li>
+                                <li class="mb-3"><span class="mb-0 text-success">顯示卡 : </span><span class="GraphicsCard mb-0">@item.SystemGpu</span></li>
+                                <li class="mb-3"><span class="mb-0 text-success">儲存空間 : </span><span class="Storage mb-0">@item.Hddspace</span></li>
+                            </ul>
                     </div>
-
-                    <!-- 建議配置 -->
-                    <div class="Suggest-Configure  col-12  col-md-6 ">
-                        <span>建議配備:</span>
-                        @foreach(var item in Model)
-                        {
-                            <div class="System-box">
-                                <span class="mb-3 text-danger"></span>
-                                <p class="bit"></p>
-                                <ul class="p-0 ">
-                                    <li class="mb-3"><span class="mb-0 text-success">作業系統 : </span>@item.System<span class="Stytem mb-0 "> </span></li>
-                                    <li class="mb-3"><span class="mb-0 text-success">處理器 : </span>@item.SystemCpu<span class="Processor mb-0"></span></li>
-                                    <li class="mb-3"><span class="mb-0 text-success">記憶體 : </span>@item.SystemRam<span class="Memory mb-0"></span></li>
-                                    <li class="mb-3"><span class="mb-0 text-success">顯示卡 : </span>@item.SystemGpu<span class="GraphicsCard mb-0"></span></li>
-                                    <li class="mb-3"><span class="mb-0 text-success">儲存空間 : </span>@item.Hddspace<span class="Storage mb-0"></span></li>
-                                </ul>
-                            </div>
-                        }
-                    </div>
-                </div>
-                
+                    }
+        </div>
+            </div>
                 <span class="System-text">©2020-2022 and published by Paradox Interactive AB, CRUSADER KINGS and PARADOX INTERACTIVE are trademarks and/or registered trademarks of Paradox Interactive AB in Europe, the U.S., and other countries. All other trademarks, logos, and copyrights are the property of their respective owners.</span>
             </div>
-        <!--遊戲組合包  -->
-        <div></div>
-        <!-- 相似產品 -->
-        <div></div>
-        <!-- 遊戲資訊EX:語言.... -->
-        <div></div>
+            <!--遊戲組合包  -->
+            <div></div>
+            <!-- 相似產品 -->
+            <div></div>
+            <!-- 遊戲資訊EX:語言.... -->
+            <div></div>
         </section>
             
-        <section class="Video-Area">
+@*        <section class="Video-Area">
             <video src="/video/shopper/Pexels Videos 2527932.mp4" poster="/img/shopper/MTH002.jpeg" controls="true"></video>
             <i class="fa-solid fa-xmark Video-Clear"></i>
-        </section>
+        </section>*@
 
     
 
@@ -158,21 +128,8 @@
         </div>
     </template>
 
-    <!--詳細圖文產生  -->
-    <template id="GameSystem">
-        <div class="System-box">
-            <span class="mb-3 text-danger"></span>
-            <p class="bit"></p>
-            <ul class="p-0 ">
-                <li class="mb-3"><span class="mb-0 text-success">作業系統 : </span><span class="Stytem mb-0 "></span></li>
-                <li class="mb-3"><span class="mb-0 text-success">處理器 : </span><span class="Processor mb-0"></span></li>
-                <li class="mb-3"><span class="mb-0" text-success>記憶體 : </span><span class="Memory mb-0"></span></li>
-                <li class="mb-3"><span class="mb-0 text-success">顯示卡 : </span><span class="GraphicsCard mb-0"></span></li>
-                <li class="mb-3"><span class="mb-0 text-success">儲存空間 : </span><span class="Storage mb-0"></span></li>
-            </ul>
-        </div>
-    </template>
-    
+
+
     <!--  -->
     <template id="Shopping_Recommend" class="d-flex flex-wrap">
         <div class="col-6 col-md-12  p-0 ">
@@ -182,7 +139,7 @@
                 </a>
                 <div class="col-12 d-flex justify-content-between">
                     <span>售價為:</span>
-                    <p class="Recommend-Price">NT: $ @Html.DisplayNameFor(model=>model.GamePrice)</p>
+                    <p class="Recommend-Price">NT: $</p>
                 </div>
             </div>
         </div>
