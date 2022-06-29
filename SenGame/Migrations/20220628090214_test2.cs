@@ -2,7 +2,7 @@
 
 namespace SenGame.Migrations
 {
-    public partial class zxc : Migration
+    public partial class test2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

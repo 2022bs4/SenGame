@@ -10,10 +10,7 @@ namespace SqlModels.Models
     {
         public int UserId { get; set; }
         public string Account { get; set; }
-
-
         public DateTime? EmailConfirmDate { get; set; }
-
         public string Address { get; set; }
         public string UserPicture { get; set; }
         public string UsernickName { get; set; }

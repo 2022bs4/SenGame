@@ -1,9 +1,10 @@
-﻿
+﻿@using Microsoft.AspNetCore.Identity
+@model IEnumerable<FriendViewModel>
     <div class="chat-content position-relative">
         <div class="chat-left">
             <div class="user-content position-relative">
                 <img class="pl-2 py-3  user-select-none" src="https://picsum.photos/50/50/?random=10">
-                <p class="pl-2 py-3  user-select-none">好好喔都可以打APEX</p>
+                <p class="pl-2 py-3  user-select-none">@*@User.Identity.Name*@</p>
                 <span class="user-span pl-2 py-3  user-select-none">∨</span>
                 <ul class="state-ul position-fixed p-0 m-0">
                     <li class="state-li  user-select-none">線上</li>
@@ -20,8 +21,7 @@
                 <div class="friend-group w-100">
                     <span class="friends-span w-100 pl-2 py-2 d-block user-select-none">好友名單(<span class="count">0</span>)</span>
                     <div class="friend-ul w-100">
-  @*                      @foreach(var friend in Model)
-                        {
+              @*           @foreach(var friend in Model) {
                             <partial name="_FriendCardPartial" model="friend"/>
                         }*@
                     </div>
@@ -110,5 +110,5 @@
  }
  @section Scripts{
      <script src="~/js/signalr/dist/browser/signalr.js"></script>
-     <script src="~/js/Friend/Chat.js"></script>
+    @* <script src="~/js/Friend/Chat.js"></script>*@
  }
