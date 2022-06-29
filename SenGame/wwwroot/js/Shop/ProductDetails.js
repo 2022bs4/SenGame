@@ -3,31 +3,30 @@
 $(document).ready(function () {
     $('main').addClass("CommodityDetials close-section")
     $('main').removeClass("container-fluid")
+    ProductSystemtoggle()
 
     //CloneGame()
     GameSlideshow()
     RecommendTemplate()
-/*    SysClone("Min-Cnfigure", "最低配備 :")*/
-    //SysClone("Suggest-Configure", "建議配置 :")
 })
 
 
+function ProductSystemtoggle() {
+    $('.btn-Mac').click(function () {
+        $('.Window').addClass('System_Transform')
+        $('.Mac').removeClass('System_Transform')
+    })
+    $('.btn-Window').click(function () {
+        $('.Window').removeClass('System_Transform')
+        $('.Mac').addClass('System_Transform')
+    })
+}
 
-////圖文簡介
-//function GameSmapleIntroduce() {
-//    $('h2').text('Crusader KingIII')
-//    $(".Game-Introduce").find('img').attr("src", "")
-//    $(".Game-Introduce").find('p').text('')
-//}
-////金錢加載
-//function BtnFunction() {
-//    let GamePrice = `<p class="m-0 pl-0">售價: NT $${9527}</p>`;
-//    $('.Game-Price').append(GamePrice)
-//}
+
 
 // 以下為幻燈片動態
 function GameSlideshow() {
-    fetch("/Shop/ProductSwipper", {method:'post'})
+    fetch("/Shop/ProductSwipper/", {method:'post'})
         .then(response => response.json())
         .then(result => {
             setSliders(result)
@@ -84,30 +83,26 @@ function GameSlideshow() {
 //    GameDatails.append(GameClone);
 //}
 
-/* 配置*/
-//function SysClone(configure, configureText) {
-//    let Min_Cnfigure = document.querySelector(`.${configure}`)
-//    let MinClone = GameSystem.content.cloneNode(true)
-//    let System_box = MinClone.querySelector('.System-box')
-//    MinClone.querySelector('span').innerText = configureText
-//    MinClone.querySelector('.bit').innerText = '需要 64 位元的處理器及作業系統'
-//    MinClone.querySelector('.Stytem').innerText = "Windows® 8.1 64 bit / Windows® 10 Home 64 bit"
-//    MinClone.querySelector('.Processor').innerText = "Intel® Core™ i3-2120 / AMD® FX 6350"
-//    MinClone.querySelector('.Memory').innerText = " 6 GB 記憶體"
-//    MinClone.querySelector('.GraphicsCard').innerText = ' Nvidia® GeForce™ GTX 660 (2GB) / AMD® Radeon™ HD 7870 (2GB) / Intel® Iris Pro™ 580 / Intel® Iris® Plus G7 / AMD® Radeon™ Vega 11'
-//    MinClone.querySelector('.Storage').innerText = " 8 GB 可用空間"
-//    Min_Cnfigure.append(MinClone)
-//    System_box.classList.add("Template-box")
-//    return MinClone
-//}
-
 //推薦Template
 function RecommendTemplate() {
+    const ProductRecommend = "/Shop/ProductRecommend"
     let box = document.querySelector('.Recommend')
-    for (let i = 0; i < 2; i++) {
-        let boxClone = Shopping_Recommend.content.cloneNode(true)
-        box.append(boxClone)
-    }
+    fetch(ProductRecommend, { method: 'post' })
+        .then(response => response.json())
+        .then(result => {
+            result.forEach(item => {
+                let boxClone = Shopping_Recommend.content.cloneNode(true)
+                boxClone.querySelector('img').src = `${item.mediaUrl}`
+                boxClone.querySelector('img').alt = `${item.gameName}`
+                boxClone.querySelector('a').href =`/Shop/ProductDetails/${item.gameId}`
+                boxClone.querySelector('.Recommend-Price').innerHTML= `${item.gameName} <br/> 售價: NT$${item.gamePrice}`
+                box.append(boxClone)
+            })
+        })
+
+        
+        
+
 }
 //廣告清除
 function adClear() {

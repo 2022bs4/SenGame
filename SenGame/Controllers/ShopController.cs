@@ -1,17 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Services.Interface;
 using SqlModels.Models;
 using SqlModels.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace SenGame.Controllers
 {
     public class ShopController : Controller
     {
         private readonly IService _service;
-
         public ShopController(IService service)
         {
             _service = service;
@@ -22,9 +23,13 @@ namespace SenGame.Controllers
         }
 
 
-        public IActionResult ProductDetails(int id = 1)
+        public IActionResult ProductDetails(int id =1 )
         {
-           
+            if (id == null || id== 0)
+            {
+                return View("/Views/Home/Index.cshtml");
+            }
+           //標籤
             var typelist = _service.GetAll<Typelist>();
             var gameType = _service.GetAll<GameType>().Where(x => x.GameId == id);
             var productList = gameType.Join(typelist, g => g.TypelistId, s => s.TypelistId, (g, s) => new { g.GameId, s.Name });
@@ -70,6 +75,20 @@ namespace SenGame.Controllers
             var media = _service.GetAll<GameMedium>().Where(x => x.GameId == id && x.InstructionType == 1 && x.Instruction == 1).OrderBy(x => x.Sort).ToList();
             return Json(media);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> ProductRecommend()
+        {
+            var recommend =_service.GetAll<Game>().OrderBy(x => Guid.NewGuid());
+
+            var pic = _service.GetAll<GameMedium>().Where(x=>x.InstructionType == 2 && x.Instruction == 1);
+
+            var result =await recommend.Join(pic, r => r.GameId, p => p.GameId, (r, p) => new { r.GameId,r.GameName, r.GamePrice, p.MediaUrl }).Take(2).ToListAsync();
+            return Json(result);
+
+
+        }
+
         public IActionResult ShoppingCart()
         {
             //var Ecpay = new EcpayService();

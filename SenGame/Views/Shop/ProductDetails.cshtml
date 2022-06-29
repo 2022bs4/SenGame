@@ -72,22 +72,22 @@
                         <p>@Model[0].GameDetailsText</p>
                     </div>
             </div>
-            <div class="Recommend col-12 col-md-3 p-0 "></div>
+            <div class="Recommend col-12 col-md-3 p-0 ">
+               
+            </div>
         </section>
         <section class="col-md-12">
             <!-- 性統需求 -->
             <div class="System-Requirement col-12 d-flex flex-wrap p-0 mt-4">
                 <!-- Nav -->
-            <nav class=" col-12 d-flex justify-content-around my-4">
-                <button class="btn btn-Woindow">Windows</button>
-                <button class="btn btn-Mac@(Model.Any(x=>x.SystemType==2)?"":" d-none ")">Mac</button>
-            </nav>
-            
-        
-                <div class="col-12 d-md-flex Cnfigure-Box">
+                <nav class=" col-12 d-flex justify-content-around my-4">
+                    <button class="btn btn-Window">Windows</button>
+                    <button class="btn btn-Mac@(Model.Any(x=>x.SystemType==2)?"":" d-none ")">Mac</button>
+                </nav>
+                <div class="col-12 d-md-flex Cnfigure-Box position-relative">
                     @foreach(var item in Model )
                     {
-                    <div class="@(item.SystemType==1?"Window":"Mac d-none") col-12 col-md-6 ">
+                    <div class="@(item.SystemType==1?"Window":"Mac System_Transform") col-12 col-md-6 ">
                             <span class="mb-3 text-danger">@(item.Configure==1?"最低配備":"建議配備")</span>
                             <ul class="p-0 ">
                                 <li class="mb-3"><span class="mb-0 text-success">作業系統 : </span><span class="Stytem mb-0 ">@item.System</span></li>
@@ -98,16 +98,9 @@
                             </ul>
                     </div>
                     }
-        </div>
-            </div>
+                </div>
                 <span class="System-text">©2020-2022 and published by Paradox Interactive AB, CRUSADER KINGS and PARADOX INTERACTIVE are trademarks and/or registered trademarks of Paradox Interactive AB in Europe, the U.S., and other countries. All other trademarks, logos, and copyrights are the property of their respective owners.</span>
             </div>
-            <!--遊戲組合包  -->
-            <div></div>
-            <!-- 相似產品 -->
-            <div></div>
-            <!-- 遊戲資訊EX:語言.... -->
-            <div></div>
         </section>
             
 @*        <section class="Video-Area">
@@ -133,13 +126,12 @@
     <!--  -->
     <template id="Shopping_Recommend" class="d-flex flex-wrap">
         <div class="col-6 col-md-12  p-0 ">
-            <div class=" col-11 p-0 d-flex flex-wrap Recommend-item">
+            <div class=" col-11 p-2 d-flex flex-wrap Recommend-item m-auto">
                 <a href="#" class="col-12 p-0">
                     <img src="" alt="" class="w-100">
                 </a>
-                <div class="col-12 d-flex justify-content-between">
-                    <span>售價為:</span>
-                    <p class="Recommend-Price">NT: $</p>
+                <div class="col-12 d-flex justify-content-between mt-1">
+                    <p class="Recommend-Price"></p>
                 </div>
             </div>
         </div>
