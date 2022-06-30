@@ -1,100 +1,100 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Services.Interface;
-using SqlModels.Models;
-using SqlModels.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿//using Microsoft.AspNetCore.Mvc;
+//using Microsoft.EntityFrameworkCore;
+//using Services.Interface;
+//using SqlModels.Models;
+//using SqlModels.ViewModels;
+//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Threading.Tasks;
 
-namespace SenGame.Controllers
-{
-    public class ShopController : Controller
-    {
-        private readonly IService _service;
-        public ShopController(IService service)
-        {
-            _service = service;
-        }
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-
-        public IActionResult ProductDetails(int id =1 )
-        {
-            if (id == null || id== 0)
-            {
-                return View("/Views/Home/Index.cshtml");
-            }
-           //標籤
-            var typelist = _service.GetAll<Typelist>();
-            var gameType = _service.GetAll<GameType>().Where(x => x.GameId == id);
-            var productList = gameType.Join(typelist, g => g.TypelistId, s => s.TypelistId, (g, s) => new { g.GameId, s.Name });
-
-            var games = _service.GetById<Game>(id);
-            var pic = _service.GetAll<GameMedium>().Where(x =>x.GameId == id && x.InstructionType == 2 && x.Instruction == 1).First();
-            var system = _service.GetAll<SystemSpecification>().Where(x => x.GameId == id);
-
-            var productDetailsViewModels = new List<ProductDetailsViewModel>();
-            foreach (var item in system)
-            {
-                productDetailsViewModels.Add(new ProductDetailsViewModel
-                {
-                    GameId = games.GameId,
-                    GameName = games.GameName,
-                    GamePrice = games.GamePrice,
-                    GameIntroduction = games.GameIntroduction,
-                    GameDetailsText = games.GameDetailsText,
-                    ReleaseTime = games.ReleaseTime,
-                    Developer = games.Developer,
-                    Marker = games.Marker,
-                    SystemType = item.SystemType,
-                    Configure = item.Configure,
-                    SystemCpu = item.SystemCpu,
-                    SystemGpu = item.SystemGpu,
-                    Hddspace = item.Hddspace,
-                    System = item.System,
-                    SystemRam = item.SystemRam,
-                    MediaUrl = pic.MediaUrl,
-                });
-            }
+//namespace SenGame.Controllers
+//{
+//    public class ShopController : Controller
+//    {
+//        private readonly IShopServices _service;
+//        public ShopController(IShopServices service)
+//        {
+//            _service = service;
+//        }
+//        public IActionResult Index()
+//        {
+//            return View();
+//        }
 
 
+//        public IActionResult ProductDetails(int id = 1)
+//        {
+//            if (id == null || id == 0)
+//            {
+//                return View("/Views/Home/Index.cshtml");
+//            }
+//            //標籤
+//            var typelist = _service.GetAll();
+//            var gameType = _service.FindBy(x => x.GameId == id);
+//            var productList = gameType.Join(typelist, g => g.TypelistId, s => s.TypelistId, (g, s) => new { g.GameId, s.Name });
 
-            return View(productDetailsViewModels);
-        }
+//            var games = _service.GetById(id);
+//            var pic = _service.GetAll().Where(x => x.GameId == id && x.InstructionType == 2 && x.Instruction == 1).First();
+//            var system = _service.GetAll().Where(x => x.GameId == id);
+
+//            var productDetailsViewModels = new List<ProductDetailsViewModel>();
+//            foreach (var item in system)
+//            {
+//                productDetailsViewModels.Add(new ProductDetailsViewModel
+//                {
+//                    GameId = games.GameId,
+//                    GameName = games.GameName,
+//                    GamePrice = games.GamePrice,
+//                    GameIntroduction = games.GameIntroduction,
+//                    GameDetailsText = games.GameDetailsText,
+//                    ReleaseTime = games.ReleaseTime,
+//                    Developer = games.Developer,
+//                    Marker = games.Marker,
+//                    SystemType = item.SystemType,
+//                    Configure = item.Configure,
+//                    SystemCpu = item.SystemCpu,
+//                    SystemGpu = item.SystemGpu,
+//                    Hddspace = item.Hddspace,
+//                    System = item.System,
+//                    SystemRam = item.SystemRam,
+//                    MediaUrl = pic.MediaUrl,
+//                });
+//            }
 
 
-        //幻燈片
-        [HttpPost]
-        public IActionResult ProductSwipper(int id = 1)
-        {
-            var media = _service.GetAll<GameMedium>().Where(x => x.GameId == id && x.InstructionType == 1 && x.Instruction == 1).OrderBy(x => x.Sort).ToList();
-            return Json(media);
-        }
 
-        [HttpPost]
-        public async Task<IActionResult> ProductRecommend()
-        {
-            var recommend =_service.GetAll<Game>().OrderBy(x => Guid.NewGuid());
-
-            var pic = _service.GetAll<GameMedium>().Where(x=>x.InstructionType == 2 && x.Instruction == 1);
-
-            var result =await recommend.Join(pic, r => r.GameId, p => p.GameId, (r, p) => new { r.GameId,r.GameName, r.GamePrice, p.MediaUrl }).Take(2).ToListAsync();
-            return Json(result);
+//            return View(productDetailsViewModels);
+//        }
 
 
-        }
+//        //幻燈片
+//        [HttpPost]
+//        public IActionResult ProductSwipper(int id = 1)
+//        {
+//            var media = _service.GetAll<GameMedium>().Where(x => x.GameId == id && x.InstructionType == 1 && x.Instruction == 1).OrderBy(x => x.Sort).ToList();
+//            return Json(media);
+//        }
 
-        public IActionResult ShoppingCart()
-        {
-            //var Ecpay = new EcpayService();
-            //var EcpayWeb = Ecpay.CreateOrder();
-            return View();
-            //return View(EcpayWeb);
-        }
-    }
-}
+//        [HttpPost]
+//        public async Task<IActionResult> ProductRecommend()
+//        {
+//            var recommend = _service.GetAll<Game>().OrderBy(x => Guid.NewGuid());
+
+//            var pic = _service.GetAll<GameMedium>().Where(x => x.InstructionType == 2 && x.Instruction == 1);
+
+//            var result = await recommend.Join(pic, r => r.GameId, p => p.GameId, (r, p) => new { r.GameId, r.GameName, r.GamePrice, p.MediaUrl }).Take(2).ToListAsync();
+//            return Json(result);
+
+
+//        }
+
+//        public IActionResult ShoppingCart()
+//        {
+//            //var Ecpay = new EcpayService();
+//            //var EcpayWeb = Ecpay.CreateOrder();
+//            return View();
+//            //return View(EcpayWeb);
+//        }
+//    }
+//}

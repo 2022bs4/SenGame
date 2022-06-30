@@ -18,7 +18,6 @@ using SqlModels.Repository;
 using SqlModels.Repository.Interface;
 using Services;
 using Services.Interface;
-
 namespace SenGame
 {
     public class Startup
@@ -40,8 +39,10 @@ namespace SenGame
             services.AddDefaultIdentity<UserModel>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<SenGameContext>();
             services.AddControllersWithViews();
-            services.AddTransient<IRepository, GenericRepository>();
-            services.AddTransient<IService, GenericService>();
+            services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
+            services.AddScoped(typeof(IBaseService<>), typeof(BaseService<>));
+            services.AddScoped<ICommunityService, CommunityService>();
+            //services.AddScoped<IShopServices, ShopServices>();
             services.AddSignalR();
         }
 
