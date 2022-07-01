@@ -14,18 +14,19 @@ namespace SenGame.Controllers
 {
     public class ForaController : Controller
     {
-        private readonly IService _service;
+        //private readonly IBaseService<Forum> _service;
+        private readonly ICommunityService _service;
 
-        public ForaController(IService service)
+        public ForaController(ICommunityService service)
         {
             _service = service;
         }
 
         // GET: Fora
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var senGameContext = _service.GetAll<Forum>();
-            return View(await senGameContext.ToListAsync());
+            var senGameContext = _service.GetAll();
+            return View(senGameContext);
         }
 
         // GET: Fora/Details/5
