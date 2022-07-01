@@ -1,10 +1,11 @@
-﻿using System;
-using Services.Interface;
-using SqlModels.Repository;
-using SqlModels.Repository.Interface;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using Services.Interface;
+using SqlModels.Repository;
+using SqlModels.Repository.Interface;
 
 namespace Services
 {
@@ -26,12 +27,12 @@ namespace Services
             throw new NotImplementedException();
         }
 
-        public IQueryable FindBy(Expression<Func<TEntity, bool>> predicate)
+        public IQueryable<TEntity> FindBy(Expression<Func<TEntity, bool>> predicate)
         {
             return _repository.FindBy(predicate);
         }
 
-        public IQueryable GetAll()
+        public IQueryable<TEntity> GetAll()
         {
             return _repository.GetAll();
         }

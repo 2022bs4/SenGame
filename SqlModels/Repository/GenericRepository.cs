@@ -1,9 +1,11 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Linq.Expressions;
 using SqlModels.Repository.Interface;
 using SqlModels.Data;
+using System.Collections.Generic;
+
 namespace SqlModels.Repository
 {
     public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : class
@@ -42,6 +44,7 @@ namespace SqlModels.Repository
         public void Create(TEntity TEntity)
         {
             _context.Entry(TEntity).State = EntityState.Added;
+            //_context.Set<TEntity>().Add(TEntity);
         }
 
         public void Update(TEntity TEntity)
