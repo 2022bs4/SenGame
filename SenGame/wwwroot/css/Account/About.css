@@ -30,7 +30,8 @@
             }
 
                 .about-content .about-left .about-text .about-p .about-span {
-                    display: inline-block;
+                    display: in
+                        -block;
                     width: 10px;
                     height: 10px;
                     border-radius: 50%;

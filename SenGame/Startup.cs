@@ -18,6 +18,7 @@ using SqlModels.Repository;
 using SqlModels.Repository.Interface;
 using Services;
 using Services.Interface;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace SenGame
 {
@@ -42,7 +43,25 @@ namespace SenGame
             services.AddControllersWithViews();
             services.AddTransient<IRepository, GenericRepository>();
             services.AddTransient<IService, GenericService>();
+            //µù¥USignalR
             services.AddSignalR();
+            //µù¥UCookies
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+            //µù¥UGoogle¡BFB
+            services.AddAuthentication()
+                .AddGoogle(options =>
+                {
+                    IConfigurationSection googleAuthNSection =
+                        Configuration.GetSection("Authentication:Google");
+
+                    options.ClientId = googleAuthNSection["ClientId"];
+                    options.ClientSecret = googleAuthNSection["ClientSecret"];
+                });
+                AddFacebook(facebookOptions =>
+                {
+                facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
+                facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,7 +80,11 @@ namespace SenGame
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            //app.Use(async (context, next) =>
+            //{
+            //    context.Response.Cookies.Append("CookieKey", "CookieValue");
+            //    await next.Invoke();
+            //});
             app.UseRouting();
 
             app.UseAuthentication();

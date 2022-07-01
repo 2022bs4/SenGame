@@ -35,8 +35,8 @@ namespace SenGame.Controllers
         {
             return View();
         }
-        //[Authorize]
-        public IActionResult Chat(int id = 1)
+        [Authorize]
+        public IActionResult Chat()
         {
             //var User = user.Where(x => x.UserId != id);
             //foreach(var item in User)

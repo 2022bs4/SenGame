@@ -851,7 +851,10 @@ $.validator.addMethod( "phoneNL", function( value, element ) {
  * http://www.aa-asterisk.org.uk/index.php/Regular_Expressions_for_Validating_and_Formatting_GB_Telephone_Numbers
  */
 
-// Matches UK landline + mobile, accepting only 01-3 for landline or 07 for mobile to exclude many premium numbers
+	// Matches UK land
+
+
+	+ mobile, accepting only 01 - 3 for landline or 07 for mobile to exclude many premium numbers
 $.validator.addMethod( "phonesUK", function( phone_number, element ) {
 	phone_number = phone_number.replace( /\(|\)|\s+|-/g, "" );
 	return this.optional( element ) || phone_number.length > 9 &&
