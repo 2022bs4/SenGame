@@ -46,21 +46,17 @@ namespace SenGame
             services.AddScoped<ICommunityService,CommunityService>();
             services.AddSignalR();
 
-            //services.AddAuthentication()
-            //    .AddGoogle(options =>
-            //    {
-            //        IConfigurationSection googleAuthNSection =
-            //            Configuration.GetSection("Authentication:Google");
-
-            //        options.ClientId = googleAuthNSection["ClientId"];
-            //        options.ClientSecret = googleAuthNSection["ClientSecret"];
-            //    });
-            //services.AddAuthentication().AddFacebook(options =>
-            //{
-            //    options.AppId = Configuration["Authentication:Facebook:AppId"];
-            //    options.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
-            //    options.AccessDeniedPath = "/AccessDeniedPathInfo";
-            //});
+            services.AddAuthentication().AddGoogle(googleOptions =>
+            {
+                googleOptions.ClientId = "319105508231-b14a9vlbq3sobjfruc8sd8kp9iplgrkf.apps.googleusercontent.com";
+                googleOptions.ClientSecret = "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";
+            });
+            services.AddAuthentication().AddFacebook(options =>
+            {
+                options.AppId = "363016615774590";
+                options.AppSecret = "f3ccc3f70ef3b114a2d0fce1562be7c1";
+                options.AccessDeniedPath = "/AccessDeniedPathInfo";
+            });
 
         }
 
