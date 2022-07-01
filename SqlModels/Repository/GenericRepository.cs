@@ -44,32 +44,32 @@ namespace SqlModels.Repository
         public void Create(TEntity TEntity)
         {
             _context.Entry(TEntity).State = EntityState.Added;
-            //_context.Set<TEntity>().Add(TEntity);
+            _context.Set<TEntity>().Add(TEntity);
         }
 
-//        public void Update(TEntity TEntity)
-//        {
-//            _context.Entry(TEntity).State = EntityState.Modified;
-//        }
+        public void Update(TEntity TEntity)
+        {
+            _context.Entry(TEntity).State = EntityState.Modified;
+        }
 
-//        public void Delete(TEntity TEntity)
-//        {
-//            _context.Entry(TEntity).State = EntityState.Deleted;
-//        }
+        public void Delete(TEntity TEntity)
+        {
+            _context.Entry(TEntity).State = EntityState.Deleted;
+        }
 
-//        public IQueryable<TEntity> FindBy(Expression<Func<TEntity, bool>> predicate)
-//        {
-//            return _context.Set<TEntity>().Where(predicate); 
-//        }
+        public IQueryable<TEntity> FindBy(Expression<Func<TEntity, bool>> predicate)
+        {
+            return _context.Set<TEntity>().Where(predicate);
+        }
 
-//        public IQueryable<TEntity> GetAll()
-//        {
-//            return _context.Set<TEntity>();
-//        }
+        public IQueryable<TEntity> GetAll()
+        {
+            return _context.Set<TEntity>();
+        }
 
-//        public TEntity GetById(int _Id)
-//        {
-//            return _context.Set<TEntity>().Find(_Id);
-//        }
-//    }
-//}
+        public TEntity GetById(int _Id)
+        {
+            return _context.Set<TEntity>().Find(_Id);
+        }
+    }
+}
