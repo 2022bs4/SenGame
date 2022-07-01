@@ -18,7 +18,7 @@ using SqlModels.Repository;
 using SqlModels.Repository.Interface;
 using Services;
 using Services.Interface;
-using Microsoft.AspNetCore.Authentication.Cookies;
+
 
 namespace SenGame
 {
@@ -42,10 +42,9 @@ namespace SenGame
                 .AddEntityFrameworkStores<SenGameContext>();
             services.AddControllersWithViews();
             services.AddTransient<IRepository, GenericRepository>();
-            services.AddTransient<IService, GenericService>();
+      
             services.AddSignalR();
-            //µù¥UCookies
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+
             //µù¥UGoogle¡BFB
             services.AddAuthentication()
                 .AddGoogle(options =>
@@ -56,11 +55,14 @@ namespace SenGame
                     options.ClientId = googleAuthNSection["ClientId"];
                     options.ClientSecret = googleAuthNSection["ClientSecret"];
                 });
-                AddFacebook(facebookOptions =>
-                {
-                facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
-                facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
-                });
+            services.AddAuthentication().AddFacebook(options =>
+            {
+                options.AppId = Configuration["Authentication:Facebook:AppId"];
+                options.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
+                options.AccessDeniedPath = "/AccessDeniedPathInfo";
+            });
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
