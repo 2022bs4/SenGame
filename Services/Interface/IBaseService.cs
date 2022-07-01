@@ -12,8 +12,8 @@ namespace Services.Interface
         void Delete(TEntity TEntity);
         bool IsExists(int id);
         TEntity GetById(int id);
-        IQueryable FindBy(Expression<Func<TEntity, bool>> predicate);
+        IQueryable<TEntity> FindBy(Expression<Func<TEntity, bool>> predicate);
 
-        IQueryable GetAll();
+        IQueryable<TEntity> GetAll();
     }
 }

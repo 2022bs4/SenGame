@@ -23,9 +23,9 @@ namespace SenGame.Controllers
         }
 
         // GET: Fora
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var senGameContext = _service.GetAll();
+            var senGameContext =await _service.GetAll().ToListAsync();
             return View(senGameContext);
         }
 
