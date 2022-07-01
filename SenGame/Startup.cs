@@ -43,7 +43,6 @@ namespace SenGame
             services.AddControllersWithViews();
             services.AddTransient<IRepository, GenericRepository>();
             services.AddTransient<IService, GenericService>();
-            //µù¥USignalR
             services.AddSignalR();
             //µù¥UCookies
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
