@@ -41,26 +41,27 @@ namespace SenGame
             services.AddDefaultIdentity<UserModel>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<SenGameContext>();
             services.AddControllersWithViews();
-            services.AddTransient<IRepository, GenericRepository>();
-      
+            services.AddScoped(typeof(IRepository<>),typeof(GenericRepository<>));
+            services.AddScoped(typeof(IBaseService<>),typeof(BaseService<>));
+            services.AddScoped<ICommunityService,CommunityService>();
             services.AddSignalR();
 
             //µù¥UGoogle¡BFB
-            services.AddAuthentication()
-                .AddGoogle(options =>
-                {
-                    IConfigurationSection googleAuthNSection =
-                        Configuration.GetSection("Authentication:Google");
+            //services.AddAuthentication()
+            //    .AddGoogle(options =>
+            //    {
+            //        IConfigurationSection googleAuthNSection =
+            //            Configuration.GetSection("Authentication:Google");
 
-                    options.ClientId = googleAuthNSection["ClientId"];
-                    options.ClientSecret = googleAuthNSection["ClientSecret"];
-                });
-            services.AddAuthentication().AddFacebook(options =>
-            {
-                options.AppId = Configuration["Authentication:Facebook:AppId"];
-                options.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
-                options.AccessDeniedPath = "/AccessDeniedPathInfo";
-            });
+            //        options.ClientId = googleAuthNSection["ClientId"];
+            //        options.ClientSecret = googleAuthNSection["ClientSecret"];
+            //    });
+            //services.AddAuthentication().AddFacebook(options =>
+            //{
+            //    options.AppId = Configuration["Authentication:Facebook:AppId"];
+            //    options.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
+            //    options.AccessDeniedPath = "/AccessDeniedPathInfo";
+            //});
 
 
         }
