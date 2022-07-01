@@ -23,7 +23,7 @@ namespace SenGame.Controllers
         }
 
 
-        public IActionResult ProductDetails(int id =1 )
+        public IActionResult ProductDetails(int id)
         {
             if (id == null || id== 0)
             {
@@ -70,9 +70,9 @@ namespace SenGame.Controllers
 
         //幻燈片
         [HttpPost]
-        public IActionResult ProductSwipper(int id = 1)
+        public async Task<IActionResult> ProductSwipper(int id)
         {
-            var media = _service.GetAll<GameMedium>().Where(x => x.GameId == id && x.InstructionType == 1 && x.Instruction == 1).OrderBy(x => x.Sort).ToList();
+            var media =await _service.GetAll<GameMedium>().Where(x => x.GameId == id && x.InstructionType == 1 && x.Instruction == 1).OrderBy(x => x.Sort).ToListAsync();
             return Json(media);
         }
 
@@ -96,5 +96,10 @@ namespace SenGame.Controllers
             return View();
             //return View(EcpayWeb);
         }
+
+        //public async Task<IActionResult> ProductJson()
+        //{ 
+            
+        //}
     }
 }

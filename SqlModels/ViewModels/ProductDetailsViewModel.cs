@@ -25,9 +25,14 @@ namespace SqlModels.ViewModels
 
 
         //媒體
+        //簡介圖
         public string MediaUrl { get; set; }
 
-        //
+        //詳細圖
+        public string HearderDetails { get; set; }
+        public string EndDetails { get; set; }
 
+        //影片
+        public string MediaVideo { get; set; }
     }
 }

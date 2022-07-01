@@ -26,7 +26,8 @@ function ProductSystemtoggle() {
 
 // 以下為幻燈片動態
 function GameSlideshow() {
-    fetch("/Shop/ProductSwipper/", {method:'post'})
+    let id = document.getElementById('SwipperId')
+    fetch(`/Shop/ProductSwipper/${id.value}`, {method:'post'})
         .then(response => response.json())
         .then(result => {
             setSliders(result)
@@ -99,10 +100,6 @@ function RecommendTemplate() {
                 box.append(boxClone)
             })
         })
-
-        
-        
-
 }
 //廣告清除
 function adClear() {
