@@ -6,7 +6,7 @@ using SqlModels.Repository.Interface;
 using SqlModels.Data;
 namespace SqlModels.Repository
 {
-    public class GenericRepository : IRepository
+    public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         private SenGameContext _context;
         public GenericRepository(SenGameContext context)
@@ -39,34 +39,34 @@ namespace SqlModels.Repository
             return result;
         }
 
-        public void Create<TdbModel>(TdbModel data) where TdbModel : class
+        public void Create(TEntity TEntity)
         {
-            _context.Entry<TdbModel>(data).State = EntityState.Added;
+            _context.Entry(TEntity).State = EntityState.Added;
         }
 
-        public void Update<TdbModel>(TdbModel data) where TdbModel : class
+        public void Update(TEntity TEntity)
         {
-            _context.Entry<TdbModel>(data).State = EntityState.Modified;
+            _context.Entry(TEntity).State = EntityState.Modified;
         }
 
-        public void Delete<TdbModel>(TdbModel data) where TdbModel : class
+        public void Delete(TEntity TEntity)
         {
-            _context.Entry<TdbModel>(data).State = EntityState.Deleted;
+            _context.Entry(TEntity).State = EntityState.Deleted;
         }
 
-        public IQueryable<TdbModel> FindBy<TdbModel>(Expression<Func<TdbModel, bool>> predicate) where TdbModel : class
+        public IQueryable<TEntity> FindBy(Expression<Func<TEntity, bool>> predicate)
         {
-            return _context.Set<TdbModel>().Where(predicate); 
+            return _context.Set<TEntity>().Where(predicate); 
         }
 
-        public IQueryable<TdbModel> GetAll<TdbModel>() where TdbModel : class
+        public IQueryable<TEntity> GetAll()
         {
-            return _context.Set<TdbModel>();
+            return _context.Set<TEntity>();
         }
 
-        public TdbModel GetById<TdbModel>(int _Id) where TdbModel : class
+        public TEntity GetById(int _Id)
         {
-            return _context.Set<TdbModel>().Find(_Id);
+            return _context.Set<TEntity>().Find(_Id);
         }
     }
 }
