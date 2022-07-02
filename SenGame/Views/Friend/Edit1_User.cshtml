@@ -131,7 +131,7 @@
 
                         <div class="form-group row">
                             <div class="col-lg-8 ml-auto">
-                                <button class="btn btn-success confirm-btn">確認修改送出</button>
+                                <button type="button" class="btn btn-success" id="confirm-btn" onclick="ChangeDisabled(3)">確認修改送出</button>
                             </div>
                         </div>
                     </form>
@@ -139,31 +139,10 @@
             </div>
 </div>
 
-<script>
-    function ChangeDisabled(value) {
-
-    var EditInput05 = document.getElementById('EditInput01');
-    var EditInput05 = document.getElementById('EditInput02');
-    var EditInput05 = document.getElementById('EditInput03');
-    var EditInput05 = document.getElementById('EditInput04');
-    var EditInput05 = document.getElementById('EditInput05');
-    if (value == '1') {
-        EditInput01.disabled = false;　// 變更欄位為可用
-        EditInput02.disabled = false;
-        EditInput03.disabled = false;
-        EditInput04.disabled = false;
-        EditInput05.disabled = false;
-
-    } else {
-        EditInput01.disabled = true;　// 變更欄位為禁用
-        EditInput02.disabled = true;
-        EditInput03.disabled = true;
-        EditInput04.disabled = true;
-        EditInput05.disabled = true;
-    }
-}
-</script>
+<!-- sweetalert -->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
  @section Scripts{
      <script src="~/js/Friend/Edit_User.js"></script>
+     
  }

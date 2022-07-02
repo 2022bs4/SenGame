@@ -53,9 +53,11 @@
                             </h5>
 
                             <!-- Star 在當前頁面實現預覽效果 -->
+                            <input id="file" type="file" onchange="openFile(event)" style="display: none" accept="image/*"/>
+                            <button type="button" class="btn btn-warning" onclick="file.click()">點我上傳頭相</button>
 
-                            <input class="Edit2-PhotoView" type="file" onchange="openFile(event)" accept="image/*">
-                            <div id="Edit2-PhotoBox">
+                            <!-- <input class="Edit2-PhotoView" type="file" onchange="openFile(event)" accept="image/*"> -->
+                            <div id="Edit2-PhotoBox" class="mt-2">
                                 <img id="output" height="200" style="display:none">
                             </div>
 
@@ -73,6 +75,9 @@
                 </div>
             </div>
         </div>
+
+<!-- sweetalert -->
+ <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- 在當前頁面實現預覽效果 -->
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
     <script>
@@ -84,23 +89,19 @@
                 var dataURL = reader.result; //設定變數dataURL為上傳圖檔的base64字串
                 $('#output').attr('src', dataURL).show(); //將img的src設定為dataURL並顯示
             };
-        }
-        function clean() {
-            alert('取消上傳');
-            // var dataURL = reader.result;
-            // $('#output').attr('src', dataURL);; //清空 Edit2-PhotoBox
-            document.getElementById("output").src = '';
-            document.getElementById("output").multiple = '未選擇任何檔案';
-        }
 
-        function ConfirmRpload() {
-            var yes = confirm('你確定嗎？');
-            if (yes) {
-                alert('上傳成功');
-            } else {
-                alert('取消上傳');
+            var file = e.files[0];
+            if (!file) {
+                return;
             }
+            //檔案上傳
+            //...
+            //檔案上傳
+
+            //上傳後將檔案清除
+            event.value = '';
         }
+        
     </script>
 
  @section Scripts{
