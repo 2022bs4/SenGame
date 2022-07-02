@@ -16,5 +16,10 @@ namespace Services
         {
 
         }
+
+        public void TotalForum()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

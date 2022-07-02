@@ -9,5 +9,6 @@ namespace Services.Interface
 {
     public interface ICommunityService:IBaseService<Forum>
     {
+        public void TotalForum();
     }
 }

@@ -3,6 +3,7 @@ using SqlModels.Models;
 using Services.Interface;
 using System.Collections.Generic;
 using System;
+using Services;
 
 namespace SenGame.Controllers
 {
@@ -21,8 +22,8 @@ namespace SenGame.Controllers
             new Game{GameId=5,GameName="臨淵覺醒",GamePrice=310,GameIntroduction="《臨淵覺醒》是一款融合了第三人稱、動作、中世紀、Roguelite隨機元素和RPG策略選擇的冒險闖關遊戲。 玩家在遊戲裡可以根據不同武器的特點搭配多種詞條組建各種Build玩法，在關卡中選擇適合當前武器玩法的隨機天賦進行冒險挑戰。可以單人暢玩，也可以最多三人組隊挑戰。",GameDetailsText="《臨淵覺醒》是一款融合了第三人稱、動作、中世紀、Roguelite隨機元素和RPG策略選擇的冒險闖關遊戲。玩家在遊戲裡可以根據不同武器的特點搭配多種詞條組建各種Build玩法，在關卡中選擇適合當前武器玩法的隨機天賦進行冒險挑戰。可以單人暢玩，也可以最多三人組隊挑戰。<br>在遊戲中，玩家的每次關卡體驗都是隨機的。每一次重新開始遊戲都是新的體驗。你可以使用不同的武器，在不同的關卡中選擇不同的天賦，體驗不同戰鬥節奏。<br>遊戲包含場外養成元素，玩家的每一次遊戲挑戰都可以提升場外天賦，永久加強自己的能力，使下次可以更輕鬆地擊敗深淵敵人。<br>遊戲目前還處於搶先體驗階段，我們會在接下來較長的一段時間裡逐漸完善遊戲修復bug、新增更多的內容和玩法。感謝你們的支持！我們會努力把遊戲做的更好。<br>如果你有任何問題、反饋，可以加入QQ群：1055013710，將問題的描述、截圖、錄屏等提供給我們，我們會盡快查證並進行修復。<br>遊戲特色：<br>· 中世紀+第三人稱+Roguelite+RPG組合玩法，在不斷的死亡輪迴中組建多種Build獲得不同的通關體驗。",TotalBuyCount=0,ReleaseTime=new DateTime(2022, 6, 19, 0, 0, 0),DownTime=null,Developer="TrinityBJ",Marker="TrinityBJ"},
         };
 
-        private readonly IBaseService<Forum> _service;
-        public CommunityController(IBaseService<Forum> service)
+        private readonly ICommunityService _service;
+        public CommunityController(ICommunityService service)
         {
             //this._service = new GenericService<Forum>(context);
             this._service = service;
