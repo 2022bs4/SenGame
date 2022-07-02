@@ -6,8 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SqlModels.Data;
 
-
-namespace SenGame.Migrations
+namespace SqlModels.Migrations
 {
     [DbContext(typeof(SenGameContext))]
     partial class SenGameContextModelSnapshot : ModelSnapshot
