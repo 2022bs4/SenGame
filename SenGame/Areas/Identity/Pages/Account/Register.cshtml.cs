@@ -69,6 +69,8 @@ namespace SenGame.Areas.Identity.Pages.Account
             [Display(Name = "核對密碼")]
             [Compare("Password", ErrorMessage = "兩次輸入的密碼不一致")]
             public string ConfirmPassword { get; set; }
+            [Required]
+            public string Address { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -86,6 +88,7 @@ namespace SenGame.Areas.Identity.Pages.Account
             {
                 var user = new UserModel 
                 { 
+                    Address = Input.Address,
                     Account = Input.Account,
                     UserName = Input.Account, 
                     Email = Input.Email,
