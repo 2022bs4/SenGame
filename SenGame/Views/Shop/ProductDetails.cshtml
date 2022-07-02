@@ -11,7 +11,7 @@
             <div class="Game-Introduce d-md-flex flex-md-column justify-content-md-between mb-4 mb-md-0 mt-md-2">
                 <h2 class="Table-title w-100">@Html.Raw(Model[0].GameName)</h2>
                 <div>
-                    <img src="@Html.Raw(Model[0].MediaUrl)" alt="@Html.Raw(Model[0].GameName)" class="w-100">
+                    <img src="@Html.Raw(Model[0].ProductMainPicture)" alt="@Html.Raw(Model[0].GameName)" class="w-100">
                     <p class="col-12  p-0 text-left">@Html.Raw(Model[0].GameIntroduction)</p>
                 </div>
                 <div>
@@ -19,10 +19,14 @@
                     <h3 class="Developers_Person ">開發人員 <a href="#">@Html.Raw(Model[0].Marker)</a></h3>
                     <h3 class="Selling-Date ">發行日期 <a href="#">@Html.Raw(Model[0].ReleaseTime)</a></h3>
                 </div>
+                <div class="Game-tag">
+                    @foreach(var tag in Model)
+                    {
+                        <a class="btn" asp-action="#">@Html.Raw(tag.TypleName)</a>
+                    }
                 </div>
-        <!-- 動態標籤 -->
-                <!-- <div class="Game-tag"></div> -->
-            
+            </div>
+
             <div class="Game-Video-Introduce mt-md-2">
                 <input   id="SwipperId" value="@Model[0].GameId" class="d-none"></input>
                 <div  class="swiper mySwiper1 ">
@@ -39,7 +43,7 @@
         <section class="col-12 p-0 mt-md-3">
             <!-- 購買收藏等功能鍵、靜態 -->
             <div class="Game-Function-Btn col-12 p-0 d-lg-flex justify-content-md-between">
-                <div class="Game-Price d-flex align-items-center col-12 col-lg-6">@Model[0].GamePrice</div>
+                <div class="Game-Price d-flex align-items-center col-12 col-lg-6">@Html.Raw(Model[0].GamePrice)</div>
                 <div class="Group-btn col-12 col-lg-6 flex-row-reverse">
                     <button>收藏</button>
                     <button>分享</button>
@@ -49,7 +53,7 @@
                 </div>
             </div>
         </section>
-        <section class="col-12 d-md-flex flex-md-wrap justify-content-md-between p-0 Game-Datails-Area">
+@*        <section class="col-12 d-md-flex flex-md-wrap justify-content-md-between p-0 Game-Datails-Area">
             <!-- 遊戲文字介紹 要動態載入 -->
             <p class="col-12 p-0 mt-4 About-Game">關於此遊戲</p>
             <div class="Game-Datails col-12 col-md-8  mb-4 m-md-0">
@@ -62,8 +66,8 @@
                 </div>
             </div>
             <div class="Recommend col-12 col-md-3 p-0 "></div>
-        </section>
-        <section class="col-md-12">
+        </section>*@
+@*        <section class="col-md-12">
             <!-- 性統需求 -->
             <div class="System-Requirement col-12 d-flex flex-wrap p-0 mt-4">
                 <!-- Nav -->
@@ -88,13 +92,13 @@
                 </div>
                 <span class="System-text">©2020-2022 and published by Paradox Interactive AB, CRUSADER KINGS and PARADOX INTERACTIVE are trademarks and/or registered trademarks of Paradox Interactive AB in Europe, the U.S., and other countries. All other trademarks, logos, and copyrights are the property of their respective owners.</span>
             </div>
-        </section>
-@*        <section class="Video-Area">
+        </section>*@
+        <section class="Video-Area">
             <video src="/video/shopper/Pexels Videos 2527932.mp4" poster="/img/shopper/MTH002.jpeg" controls="true"></video>
             <i class="fa-solid fa-xmark Video-Clear"></i>
-        </section>*@
+        </section>
     <!--  -->
-    <template id="GamePictureText">
+   <template id="GamePictureText">
         <div class="pic">
             <img src="" alt="" class="w-100">
         </div>
@@ -121,5 +125,4 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="~/js/shop/ProductDetails.js"></script>
-    
 }

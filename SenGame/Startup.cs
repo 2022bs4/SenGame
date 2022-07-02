@@ -46,6 +46,7 @@ namespace SenGame
             services.AddScoped(typeof(IBaseService<>),typeof(BaseService<>));
             
             services.AddScoped<ICommunityService,CommunityService>();
+            services.AddScoped<IShopServices, ShopServices>();
             services.AddSignalR();
 
             services.AddAuthentication().AddGoogle(googleOptions =>
