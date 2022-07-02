@@ -1,6 +1,6 @@
 ﻿
 //使用者主頁，加好友
-window.onload = function () {
+function Userinformation() {
     var addbtn = document.getElementById("AddFriendBtn");
     var cancelbtn = document.getElementById("CancelFriendBtn");
     addbtn.onclick = function () {
