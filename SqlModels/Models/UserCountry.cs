@@ -9,12 +9,12 @@ namespace SqlModels.Models
     {
         public UserCountry()
         {
-            AspNetUsers = new HashSet<AspNetUser>();
+            AspNetUsers = new HashSet<UserModel>();
         }
 
         public int UserCountryId { get; set; }
         public string CountryName { get; set; }
 
-        public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
+        public virtual ICollection<UserModel> AspNetUsers { get; set; }
     }
 }

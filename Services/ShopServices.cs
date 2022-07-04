@@ -40,10 +40,10 @@ namespace Services
             var gameType = _gametype.GetAll();
             var productList = gameType.Join(typelist, g => g.TypelistId, s => s.TypelistId, (g, s) => new { g.GameId, s.Name }).Where(x=>x.GameId==id);
 
-            var productView = new List<ProductViewDTO>();
+            var result = new List<ProductViewDTO>();
             foreach (var typle in productList)
             {
-                productView.Add(new ProductViewDTO
+                result.Add(new ProductViewDTO
                 {
                     GameId = game.GameId,
                     GameName = game.GameName,
@@ -58,7 +58,7 @@ namespace Services
                 });   
             };
 
-            return productView;
+            return result;
         }
         public  List<ProductSwipperDTO> ProductSwipper(int id)
         {
@@ -72,24 +72,30 @@ namespace Services
 
             return result;
         }
-        public List<ProdductIntroductDTO> ProductMainIntroduct(int id)
+        public List<ProdductIntroductDTO> ProductMainText(int id)
         {
-            var game = _game.GetById(id);
-
+            var game = _game.GetById(id).GameDetailsText;
+            var gameArray = game.Split("<img>");
             var media = _gameMedium.GetAll().Where(x => x.GameId == id && x.InstructionType == 3 && x.Instruction == 1);
-
             var result = new List<ProdductIntroductDTO>();
-            foreach (var itme in media)
+            int i = 0;
+            result.Add(new ProdductIntroductDTO
             {
-                result.Add(new ProdductIntroductDTO
+                GameDetailsText = gameArray[i],
+            }) ;
+            i++;
+            if (gameArray.Length > 1)
+            {
+                foreach (var pic in media)
                 {
-                    GameId = itme.GameId,
-                    ProductName = game.GameName,
-                    GameDetailsText = game.GameDetailsText,
-                    DetailsPicFirst = itme.MediaUrl,
-                });
+                    var newtext = gameArray[i].Insert(0, $"<img src='{pic.MediaUrl}'' class='w-100''>");
+                    result.Add(new ProdductIntroductDTO
+                    {
+                        GameDetailsText = newtext,
+                    });
+                    i++;
+                }
             }
-
             return result;
         }
 
@@ -103,7 +109,6 @@ namespace Services
                 result.Add(
                     new ProductSystemDTO
                     {
-                        GameId = item.GameId,
                         SystemType = item.SystemType,
                         Configure = item.Configure,
                         Hddspace = item.Hddspace,
@@ -120,11 +125,11 @@ namespace Services
         {
             var recommend = _game.GetAll().OrderBy(x => Guid.NewGuid());
             var pic = _gameMedium.GetAll().Where(x => x.InstructionType == 2 && x.Instruction == 1);
-            var result = recommend.Join(pic, r => r.GameId, p => p.GameId, (r, p) => new { r.GameId, r.GameName, r.GamePrice, p.MediaUrl }).Take(2).ToList();
-            var productRecommend = new List<ProductRecommend>();
-            foreach (var item in result)
+            var newRecommend = recommend.Join(pic, r => r.GameId, p => p.GameId, (r, p) => new { r.GameId, r.GameName, r.GamePrice, p.MediaUrl }).Take(5).ToList();
+            var result = new List<ProductRecommend>();
+            foreach (var item in newRecommend)
             {
-                productRecommend.Add(new ProductRecommend
+                result.Add(new ProductRecommend
                 {
                     GameId = item.GameId,
                     ProductUrl = item.MediaUrl,
@@ -132,7 +137,7 @@ namespace Services
                     ProductPrice = item.GamePrice,
                  });
             }
-            return productRecommend;
+            return result;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace SqlModels.ViewModels
 {
@@ -7,6 +8,8 @@ namespace SqlModels.ViewModels
         //遊戲主要資訊
         public int GameId { get; set; }
         public string GameName { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:00}", ApplyFormatInEditMode = false)]
         public decimal GamePrice { get; set; }
         public string GameIntroduction { get; set; }
         public DateTime ReleaseTime { get; set; }
