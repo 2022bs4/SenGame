@@ -1,49 +1,38 @@
-﻿
+﻿let gameId;
 
 $(document).ready(function () {
-    $('main').addClass("CommodityDetials close-section")
-    $('main').removeClass("container-fluid")
-    ProductSystemtoggle()
-
+    gameId = document.getElementById('GameId');
+    $('main').addClass("CommodityDetials close-section");
+    $('main').removeClass("container-fluid");
+    GameSwipper();
+    MianDetails();
+    ProductSystem();
     //CloneGame()
-    GameSlideshow()
-    RecommendTemplate()
+    
 })
 
 
-function ProductSystemtoggle() {
-    $('.btn-Mac').click(function () {
-        $('.Window').addClass('System_Transform')
-        $('.Mac').removeClass('System_Transform')
-    })
-    $('.btn-Window').click(function () {
-        $('.Window').removeClass('System_Transform')
-        $('.Mac').addClass('System_Transform')
-    })
-}
 
 
 
 // 以下為幻燈片動態
-function GameSlideshow() {
-    let id = document.getElementById('SwipperId')
-    fetch(`/Shop/ProductSwipper/${id.value}`, {method:'post'})
+function GameSwipper() {
+    const swipper = `/Shop/ProductSwipper/${gameId.value}`;
+    fetch( swipper)
         .then(response => response.json())
         .then(result => {
-            setSliders(result)
-            InitializeSwiper()
+            setSliders(result);
+            InitializeSwiper();
         })
     let mainphoto, thumbs
     function setSliders(namesArray) {
-  
         mainphoto = $("#mainphoto");
         thumbs = $("#thumbs")
         namesArray.forEach((item, index) => {
             let slideDiv = $("<div></div>")
             slideDiv.addClass("swiper-slide")
             let img = $("<img>");
-            img.attr("src", `${item.mediaUrl}`)
-
+            img.attr("src", `${item.swipperUrl}`)
             img.attr("class", 'w-100 ')
             slideDiv.append(img);
             let $clon1 = slideDiv.clone();
@@ -75,28 +64,112 @@ function GameSlideshow() {
 }
 
 //詳細圖文介紹區之動態產生
-//function CloneGame() {
-//    let GameDatails = document.querySelector('.Game-Datails')
-//    let GameClone = GamePictureText.content.cloneNode(true)
-//    GameClone.querySelector('img').src = ""
-//    GameClone.querySelector('h4').innerText = ''
-//    GameClone.querySelector('p').innerHTML = ' '
-//    GameDatails.append(GameClone);
-//}
+function MianDetails() {
+    const url = `/Shop/ProductMain/${gameId.value}`
+    fetch(url)
+        .then(response => response.json())
+        .then(result => {
+            result.forEach((item) => {
+                CloneGame(item)
+            })
+        })
+        .then(end => {
+            setTimeout(RecommendTemplate(), 3000);
+        });
+
+    function CloneGame(Array) {
+        let GameDatails = document.querySelector('.Game-Datails')
+        let GameClone = GamePictureText.content.cloneNode(true)
+        GameClone.querySelector('p').innerHTML = Array.gameDetailsText
+        GameDatails.append(GameClone);
+
+    }
+}
+
+//系統區域
+function ProductSystem() {
+    const systemAction = `/Shop/ProductSystem/${gameId.value}`
+    fetch(systemAction,)
+        .then(response => response.json())
+        .then(result => {
+            result.forEach(item => {
+                SystemTemplate(item);
+            })
+            ProductSystemtoggle();
+        })
+    function SystemTemplate(result) {
+        if (result.systemType == 2)
+        {
+            $('.btn-Mac').removeClass('d-none')
+        }
+        else if (result.systemType == 1) {
+            $('.btn-Mac').addClass('d-none')
+        }
+        let cnfigureBox = document.querySelector(".Cnfigure-Box");
+        let systemTemplate = GameSystem.content.cloneNode(true);
+        let systemBox = systemTemplate.querySelector('.System-box')
+        if (result.systemType == 2) {
+            systemBox.setAttribute("class", "System-box Mac System_Transform col-md-6 pl-md-5")
+        }
+        let systemSuggest = systemTemplate.querySelector('span')
+        let li = systemTemplate.querySelectorAll('li');
+        if (result.configue = 1) {
+            systemSuggest.innerHTML = "最低配置";
+        }
+        else {
+            systemSuggest.innerHTML = "建議配置";
+        }
+        li[0].innerHTML = `作業系統 : ${result.system}`
+        li[1].innerHTML = `處理器 : ${result.systemCpu}`
+        li[2].innerHTML = `記憶體 : ${result.systemRam}`
+        li[3].innerHTML = `顯示卡 : ${result.systemGpu}`
+        li[4].innerHTML = `儲存空間 : ${result.hddspace}`
+        cnfigureBox .append(systemTemplate);
+        return systemTemplate
+    }
+    function ProductSystemtoggle() {
+        $('.btn-Mac').click(function () {
+            $('.Windows').addClass('System_Transform')
+            $('.Mac').removeClass('System_Transform')
+        })
+        $('.btn-Window').click(function () {
+            $('.Windows').removeClass('System_Transform')
+            $('.Mac').addClass('System_Transform')
+        })
+    }
+}
+
 
 //推薦Template
 function RecommendTemplate() {
     const ProductRecommend = "/Shop/ProductRecommend"
     let box = document.querySelector('.Recommend')
-    fetch(ProductRecommend, { method: 'post' })
+    var GameDatails = document.querySelector(".Game-Datails")
+    let screenWidth = screen.width;
+    fetch(ProductRecommend,)
         .then(response => response.json())
         .then(result => {
+            if (GameDatails.getBoundingClientRect().height < 500) {
+                result = result.slice(0, 1);
+            }
+            else if (GameDatails.getBoundingClientRect().height < 1200) {
+                result = result.slice(0, 2);
+            }
+            else if (GameDatails.getBoundingClientRect().height < 1400) {
+                result = result.slice(0, 3);
+            }
+            else {
+                result = result;
+            }
+            if (screenWidth < 768) {
+                result = result.slice(0, 2);
+            }
             result.forEach(item => {
                 let boxClone = Shopping_Recommend.content.cloneNode(true)
-                boxClone.querySelector('img').src = `${item.mediaUrl}`
-                boxClone.querySelector('img').alt = `${item.gameName}`
+                boxClone.querySelector('img').src = `${item.productUrl}`
+                boxClone.querySelector('img').alt = `${item.productName}`
                 boxClone.querySelector('a').href =`/Shop/ProductDetails/${item.gameId}`
-                boxClone.querySelector('.Recommend-Price').innerHTML= `${item.gameName} <br/> 售價: NT$${item.gamePrice}`
+                boxClone.querySelector('.Recommend-Price').innerHTML = `${item.productName} <br/> 售價: NT$${item.productPrice}`
                 box.append(boxClone)
             })
         })

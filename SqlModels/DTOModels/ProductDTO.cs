@@ -30,20 +30,13 @@ namespace SqlModels.DTOModels
     //產品詳細Json
     public class ProdductIntroductDTO
     {
-        //產品介紹
-        public int GameId { get; set; }
-        public string ProductName { get; set; }
         public string GameDetailsText { get; set; }
-        //詳細圖
-        public string DetailsPicFirst { get; set; }
-        //public string DetailsPicSecond { get; set; }
     }
 
     //
     public class ProductSwipperDTO
     {
         //swipper
-        public int GameId { get; set; }
         public string SwipperUrl { get; set; }
     }
 
@@ -60,8 +53,6 @@ namespace SqlModels.DTOModels
 
     public class ProductSystemDTO
     {
-        public int GameId { get; set; }
-
         //系統規格
         public int? Configure { get; set; }
         public int SystemType { get; set; }
