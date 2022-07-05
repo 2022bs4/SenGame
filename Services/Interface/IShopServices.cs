@@ -4,12 +4,16 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using SqlModels.DTOModels;
 using SqlModels.Models;
 
 namespace Services.Interface
 {
     public interface IShopServices : IBaseService<Game>
     {
-       
+        List<ProductViewDTO> ProductView(int id);
+        List<ProdductIntroductDTO> ProductMainIntroduct(int id);
+        List<ProductSwipperDTO> ProductSwipper(int id);
+        List<ProductRecommend> ProductRecommend();
     }
 }
