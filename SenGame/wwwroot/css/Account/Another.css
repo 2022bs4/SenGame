@@ -1,0 +1,9 @@
+﻿main {
+    height: 100vh;
+}
+
+h2 {
+    text-align: center;
+    padding-top: 3em;
+    font-size: 5em;
+}

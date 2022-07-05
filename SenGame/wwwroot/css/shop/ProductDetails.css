@@ -217,7 +217,7 @@
         margin-left: 1em;
     }
 
-        .Group-btn button:nth-child(1), .Group-btn button:nth-child(2) {
+        .Group-btn button:nth-child(1), .Group-btn button:nth-child(2),.tag {
             background: -webkit-gradient(linear, left top, left bottom, from(#c2c4c9), color-stop(#3e5379), to(#2664d2));
             background: linear-gradient(to bottom, #c2c4c9, #3e5379, #2664d2);
             -webkit-box-shadow: 5px 5px 2px #00000099, -1px -1px 1px #c4d2e0;
@@ -225,7 +225,7 @@
             color: #fff;
         }
 
-            .Group-btn button:nth-child(1):hover, .Group-btn button:nth-child(2):hover {
+            .Group-btn button:nth-child(1):hover, .Group-btn button:nth-child(2):hover,.tag:hover {
                 -webkit-transition: .5s;
                 transition: .5s;
                 background: #66c0f4;
@@ -305,7 +305,14 @@ ul {
     list-style: none;
 }
 
+
+
+
 /*在MVC後修改*/
+.tag {
+    margin:0.2em;
+}
+
 .System_Transform {
     opacity:0;
     position: absolute;
@@ -318,4 +325,23 @@ ul {
 .Recommend-item {
     background: #10151e;
     border-radius:5px;
+}
+.text p {
+    line-height:1.5;
+}
+
+@media (max-width:767.9px) {
+    .Group-btn {
+        display:flex;
+        flex-wrap:wrap;
+    }
+    .Group-btn button {
+        width:66%;
+        margin:auto;
+        margin-top:0.5em;
+    }
+    .Recommend-Price {
+        font-size:.3em;
+        height:80px;
+    }
 }

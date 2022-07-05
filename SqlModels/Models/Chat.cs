@@ -10,9 +10,9 @@ namespace SqlModels.Models
         public int ChatId { get; set; }
         public string ChatContent { get; set; }
         public DateTime ChatTime { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public string PictureFile { get; set; }
 
-        public virtual AspNetUser User { get; set; }
+        public virtual UserModel User { get; set; }
     }
 }

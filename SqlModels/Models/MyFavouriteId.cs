@@ -9,5 +9,7 @@ namespace SqlModels.Models
     {
         public int MyFavouriteId1 { get; set; }
         public int GameId { get; set; }
+
+        public virtual Game Game { get; set; }
     }
 }
