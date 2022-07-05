@@ -18,7 +18,7 @@ using SqlModels.Repository;
 using SqlModels.Repository.Interface;
 using Services;
 using Services.Interface;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using Services.ShopSevice;
 
 namespace SenGame
 {
@@ -44,7 +44,8 @@ namespace SenGame
             services.AddScoped(typeof(IRepository<>),typeof(GenericRepository<>));
             services.AddScoped(typeof(IBaseService<>),typeof(BaseService<>));
             services.AddScoped<ICommunityService,CommunityService>();
-            services.AddScoped<IShopServices, ShopServices>();
+            services.AddScoped<ShopServices>();
+            services.AddScoped<ShopCartServices>();
             services.AddSignalR();
 
             services.AddAuthentication().AddGoogle(googleOptions =>

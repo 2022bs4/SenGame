@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using SqlModels.FakeDate;
-using SqlModels.Models;
-using SqlModels.ViewModels;
-using System.Collections.Generic;
-using System.Linq;
+﻿//using Microsoft.AspNetCore.Authorization;
+//using Microsoft.AspNetCore.Mvc;
+//using SqlModels.FakeDate;
+//using SqlModels.Models;
+//using SqlModels.ViewModels;
+//using System.Collections.Generic;
+//using System.Linq;
 
 namespace SenGame.Controllers
 {
@@ -93,29 +93,29 @@ namespace SenGame.Controllers
             return View();
         }
 
-        public IActionResult Edit1_User()
-        {
-            return View();
-        }
+//        public IActionResult Edit1_User()
+//        {
+//            return View();
+//        }
 
-        public IActionResult Edit2_UserPhoto()
-        {
-            return View();
-        }
+//        public IActionResult Edit2_UserPhoto()
+//        {
+//            return View();
+//        }
 
-        public IActionResult Edit3_UserTopic()
-        {
-            return View();
-        }
+//        public IActionResult Edit3_UserTopic()
+//        {
+//            return View();
+//        }
 
-        public IActionResult Edit4_UserPrivacy()
-        {
-            return View();
-        }
+//        public IActionResult Edit4_UserPrivacy()
+//        {
+//            return View();
+//        }
 
-        public IActionResult AddFriend()
-        {
-            return View();
-        }
-    }
-}
+//        public IActionResult AddFriend()
+//        {
+//            return View();
+//        }
+//    }
+//}
