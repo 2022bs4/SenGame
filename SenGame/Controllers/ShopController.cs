@@ -48,6 +48,7 @@ namespace SenGame.Controllers
                         DisscountTake = item.DisscountTake,
                 });
             }
+            TempData["actiontype"] = "shop";
             return View(result);
         }
 
@@ -57,6 +58,7 @@ namespace SenGame.Controllers
         public IActionResult ProductDetailsJson(int id = 1)
         {
             var result = _services.ProductSwipper(id);
+            TempData["actiontype"] = "shop";
             return Json(result);
         }
 

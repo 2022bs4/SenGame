@@ -6,6 +6,7 @@ namespace SenGame.Controllers
     {
         public IActionResult Index()
         {
+            TempData["actiontype"] = "home";
             return View();
         }
         public IActionResult Game()

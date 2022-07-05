@@ -42,7 +42,7 @@ namespace Services
 
             var productView = new List<ProductViewDTO>();
             foreach (var typle in productList)
-            {
+            { 
                 productView.Add(new ProductViewDTO
                 {
                     GameId = game.GameId,
