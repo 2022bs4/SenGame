@@ -27,7 +27,7 @@ namespace Services
         public IEnumerable<Forum> GetUserForum(string _name)
         {
             var id = _User.GetAll().First(x => x.UserName == _name).UserId;
-            var ids = _myForum.FindBy(x => x.UserId == id).Select(x=>x.ForumId);
+            var ids = _myForum.FindBy(x => x.UserId == id.ToString()).Select(x=>x.ForumId);
             List<Forum> data=new();
             foreach (var item in ids) { 
                 data.Add(_repository.GetById(item)) ;

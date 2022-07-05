@@ -39,7 +39,7 @@ namespace SenGame.Controllers
         {
             ViewData["ArticleTagId"] = new SelectList(_context.ArticleTags, "ArticleTagId", "TagName");
             ViewData["ForumId"] = new SelectList(_context.Forums, "ForumId", "Banner");
-            ViewData["UserId"] = new SelectList(_context.Set<AspNetUser>(), "UserId", "Id");
+            ViewData["UserId"] = new SelectList(_context.Set<UserModel>(), "UserId", "Id");
             return View();
         }
 
@@ -51,7 +51,7 @@ namespace SenGame.Controllers
         public IActionResult Create([Bind("Content,Title,ForumId,ArticleTagId")] Article article)
         {
             article.ArticleId = _service.GetAll().Last().ArticleId + 1;
-            article.UserId = 0;
+            article.UserId = "0";
             article.PostTime = DateTime.Now;
             article.LastReplyTime = DateTime.Now;
             article.ForumId = 0;
@@ -62,7 +62,7 @@ namespace SenGame.Controllers
             }
             ViewData["ArticleTagId"] = new SelectList(_context.ArticleTags, "ArticleTagId", "TagName", article.ArticleTagId);
             ViewData["ForumId"] = new SelectList(_context.Forums, "ForumId", "Banner", article.ForumId);
-            ViewData["UserId"] = new SelectList(_context.Set<AspNetUser>(), "UserId", "Id", article.UserId);
+            ViewData["UserId"] = new SelectList(_context.Set<UserModel>(), "UserId", "Id", article.UserId);
 
             return View(article);
         }
@@ -82,7 +82,7 @@ namespace SenGame.Controllers
             }
             ViewData["ArticleTagId"] = new SelectList(_context.ArticleTags, "ArticleTagId", "TagName", article.ArticleTagId);
             ViewData["ForumId"] = new SelectList(_context.Forums, "ForumId", "Banner", article.ForumId);
-            ViewData["UserId"] = new SelectList(_context.Set<AspNetUser>(), "UserId", "Id", article.UserId);
+            ViewData["UserId"] = new SelectList(_context.Set<UserModel>(), "UserId", "Id", article.UserId);
             return View(article);
         }
 
@@ -117,7 +117,7 @@ namespace SenGame.Controllers
             }
             ViewData["ArticleTagId"] = new SelectList(_context.ArticleTags, "ArticleTagId", "TagName", article.ArticleTagId);
             ViewData["ForumId"] = new SelectList(_context.Forums, "ForumId", "Banner", article.ForumId);
-            ViewData["UserId"] = new SelectList(_context.Set<AspNetUser>(), "UserId", "Id", article.UserId);
+            ViewData["UserId"] = new SelectList(_context.Set<UserModel>(), "UserId", "Id", article.UserId);
             return View(article);
         }
 

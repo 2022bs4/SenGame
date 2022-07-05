@@ -42,8 +42,9 @@ namespace Services
 
             var result = new List<ProductViewDTO>();
             foreach (var typle in productList)
-            { 
-                productView.Add(new ProductViewDTO
+            {
+                //凱凱修改原本為productView.Add(new ProductViewDTO
+                result.Add(new ProductViewDTO
                 {
                     GameId = game.GameId,
                     GameName = game.GameName,

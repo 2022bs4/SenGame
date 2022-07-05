@@ -44,10 +44,10 @@ namespace SenGame.Controllers
         }
 
         public IActionResult ProductMain(int id)
-        { 
+        {
             var result = _services.ProductMainText(id);
             return Ok(result);
-
+        }
         //Json
         [HttpPost]
         public IActionResult ProductDetailsJson(int id = 1)
