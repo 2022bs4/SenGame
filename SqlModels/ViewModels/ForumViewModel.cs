@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SqlModels.ViewModels
 {
-    internal class ForumViewModel
+    public class ForumViewModel
     {
         /// <summary>看板編號</summary>
         public int Id { get; set; }
