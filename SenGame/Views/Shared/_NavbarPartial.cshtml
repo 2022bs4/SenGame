@@ -1,8 +1,9 @@
 ﻿@{
-    string url = (string)ViewContext.RouteData.Values["controller"];
-    string urlac = (string)ViewContext.RouteData.Values["action"];
-    var a = TempData["action"];
-   
+    //string url = (string)ViewContext.RouteData.Values["controller"];
+    //string urlac = (string)ViewContext.RouteData.Values["action"];
+    var a = TempData["actiontype"];
+    int i = 1;
+
 
 
 }
@@ -118,8 +119,8 @@
                 </div>
             </div>
         </div>
-        <div class="controllertype" style="display:none" controller=@url >測試</div>
-        <div class="actiontype" style="display:none" ac=@urlac >測試</div>
+        <div class="controllertype" style="display:none" controller="@a" >測試</div>
+        @*<div class="actiontype" style="display:none" ac=@urlac >測試</div>*@
     
     
     

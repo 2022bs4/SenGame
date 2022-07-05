@@ -53,13 +53,13 @@ namespace SenGame.Controllers
             //                Name = item.UserName,
             //                Photo = item.UserPicture,
             //            });
-                           
-                        
+
+
             //        }
             //    }
             //}
 
-
+            TempData["actiontype"] = "friend";
             return View();
         }
         public IActionResult User__information()
