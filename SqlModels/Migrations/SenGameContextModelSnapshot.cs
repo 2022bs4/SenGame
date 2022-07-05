@@ -155,7 +155,7 @@ namespace SqlModels.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("SqlModels.Models.Article", b =>
+                modelBuilder.Entity("SqlModels.Models.Article", b =>
                 {
                     b.Property<int>("ArticleId")
                         .HasColumnType("int");

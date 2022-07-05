@@ -18,7 +18,7 @@ using SqlModels.Repository;
 using SqlModels.Repository.Interface;
 using Services;
 using Services.Interface;
-
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace SenGame
 {
@@ -85,6 +85,7 @@ namespace SenGame
 
             app.UseAuthentication();
             app.UseAuthorization();
+     
 
             app.UseEndpoints(endpoints =>
             {

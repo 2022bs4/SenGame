@@ -55,7 +55,7 @@ namespace SenGame.Controllers
         {
             string response_type = "code";
             string client_id = "1657255042";
-            string redirect_uri = HttpUtility.UrlEncode("https://localhost:44316/");
+            string redirect_uri = HttpUtility.UrlEncode("https://localhost:44316/Home/Callback");
             string state = "aaa";
             string LineLoginUrl = string.Format("https://access.line.me/oauth2/v2.1/authorize?response_type={0}&client_id={1}&redirect_uri={2}&state={3}&scope=openid%20profile&nonce=09876xyz",
                 response_type,
@@ -64,8 +64,8 @@ namespace SenGame.Controllers
                 state
                 );
             return Redirect(LineLoginUrl);
-        }
-        public IActionResult callback(string code, string state)
+        }   
+        public IActionResult Callback(string code, string state)
         {
             if (state == "aaa")
             {
@@ -79,12 +79,12 @@ namespace SenGame.Controllers
                 try
                 {
                     //取回Token
-                    string ApiUrl_Token = "https://api.line.me/oauth2/v2.1/token";
+                    string ApiUrl_Token = "https://access.line.me/oauth2/v2.1/authorize";
                     nvc.Add("grant_type", "authorization_code");
                     nvc.Add("code", code);
-                    nvc.Add("redirect_uri", "https://localhost:44316/");
+                    nvc.Add("redirect_uri", "https://localhost:44316/Home/Index");
                     nvc.Add("client_id", "1657255042");
-                    nvc.Add("client_secret", "填入client_secret");
+                    nvc.Add("client_secret", "65e11e6752e012793b85c7a7da8122da");
                     string JsonStr = Encoding.UTF8.GetString(wc.UploadValues(ApiUrl_Token, "POST", nvc));
                     LineLoginToken ToKenObj = JsonConvert.DeserializeObject<LineLoginToken>(JsonStr);
                     wc.Headers.Clear();
@@ -100,7 +100,6 @@ namespace SenGame.Controllers
                 catch (Exception ex)
                 {
                     string msg = ex.Message;
-                    throw;
                 }
             }
             return View();
