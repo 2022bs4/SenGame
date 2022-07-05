@@ -1,15 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SqlModels.Models;
 using Services.Interface;
-using System.Collections.Generic;
+using SqlModels.Models;
 using System;
 using Services;
+using SqlModels.ViewModels;
+using System.Collections.Generic;
 
 namespace SenGame.Controllers
 {
     public class CommunityController : Controller
     {
-        List<Game> Games = new List<Game>()
+
+        private readonly ICommunityService _service;
+        //private readonly IBaseService<Forum> _service;
+        public CommunityController(ICommunityService service)
         {
             new Game{GameId=1,GameName="Crusader Kings III",GamePrice=898,GameIntroduction="愛戀、爭鬥、計謀並成就偉大。在《Crusader Kings III》這款大型戰略遊戲裡決定您的貴族家族的命運。在這個豐富、宏偉的中世紀模擬遊戲中，引領您的王朝血脈，死亡只是開始。",GameDetailsText="您的地位正等著您。選擇您的貴族家族，在跨越世代的中世紀史詩中率領您的王朝茁壯發展。戰爭只是建立統治的眾多工具之一，因為真正的戰略需要專業的外交技巧、對領土的掌握和真正的狡猾心思。《Crusader Kings III》延續 Paradox Development Studio 所推出的熱門遊戲系列，是一款集結廣受好評沈浸式大型戰略與深度、戲劇性中世紀角色扮演的作品。 仔細研究中世紀，掌握您的家族並擴展您的王朝。始於西元 867 或 1066 年，獲得領土、頭銜與附庸國，鞏固配得上您皇室血脈的王國。無論您的離世是否在計劃之內，都不影響大局，您的血統會由新的可遊玩角色所繼承。探索一個龐大的模擬世界，有著農民和騎士、朝臣、間諜、流氓與小丑，也別忘了還有秘密戀情。可以浪漫化、背叛、處決或巧妙地影響大量的歷史人物。探索一幅廣闊的中世紀地圖，從白雪覆蓋的北歐大陸延伸至非洲之角，從西部的不列顛群島延伸到東部富有異國情調的緬甸。佔領、征服並統治數以千計獨特的郡地、公國、王國和帝國。",TotalBuyCount=0,ReleaseTime=new DateTime(2020, 9, 2, 0, 0, 0),DownTime=null,Developer="Paradox Interactive",Marker="Paradox Development Studio"},
 
@@ -28,21 +32,57 @@ namespace SenGame.Controllers
             //this._service = new GenericService<Forum>(context);
             this._service = service;
         }
+        //public CommunityController(IBaseService<Forum> service)
+        //{
+        //    //this._service = new GenericService<Forum>(context);
+        //    this._service = service;
+
+        //}
         public IActionResult Index()
         {
-            TempData["action"] = "forum";
+            var articles = _service.Article();
+            var Articles = new List<CommunityViewModel>();
+            foreach (var item in articles)
+            {
+                Articles.Add(new CommunityViewModel
+                {
+                    GameId = item.GameId,
+                    GameName = item.GameName,
+                    GameIntroduction = item.GameIntroduction,
+                    MediaUrl = item.MediaUrl
 
-            return View();
-        }
-        //顯示討論區
-        public IActionResult Forum() { 
-            
-            var data=_service.GetAll();
-            return View(data);
+                });
+            }
+            TempData["actiontype"] = "forum";
+            return View(Articles);
         }
         public IActionResult ComomunityDynamicwall()
         {
-            return View(); 
+            TempData["actiontype"] = "forum";
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Swipers()
+        {
+            var img = _service.Swipers().ToArray();
+            return Ok(img);
+        }
+        //顯示討論區
+        public IActionResult Forum()
+        {
+            var forums = _service.GetAll();
+            return View(forums);
+        }
+        //顯示使用者的討論區
+        public IActionResult MyForum()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var forums = _service.GetUserForum(User.Identity.Name);
+                return View(forums);
+            }
+            return Content("not login");
         }
     }
 }

@@ -11,45 +11,48 @@ namespace Services
 {
     public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class
     {
-        private readonly IRepository<TEntity> _repository;
+        public readonly IRepository<TEntity> _repository;
         public BaseService(IRepository<TEntity> repository)
         {
             this._repository = repository;
         }
 
-        public void Create(TEntity TEntity)
+        public virtual void Create(TEntity TEntity)
         {
-            throw new NotImplementedException();
+            _repository.Create(TEntity);
+            _repository.SaveChanges();
         }
 
-        public void Delete(TEntity TEntity)
+        public virtual void Delete(TEntity TEntity)
         {
-            throw new NotImplementedException();
+            _repository.Delete(TEntity);
+            _repository.SaveChanges();
         }
 
-        public IQueryable<TEntity> FindBy(Expression<Func<TEntity, bool>> predicate)
+        public virtual IEnumerable<TEntity> FindBy(Expression<Func<TEntity, bool>> predicate)
         {
             return _repository.FindBy(predicate);
         }
 
-        public IQueryable<TEntity> GetAll()
+        public virtual IEnumerable<TEntity> GetAll()
         {
             return _repository.GetAll();
         }
 
-        public TEntity GetById(int id)
+        public virtual TEntity GetById(int id)
         {
             return _repository.GetById(id);
         }
 
-        public bool IsExists(int id)
+        public virtual bool IsExists(int id)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(TEntity TEntity)
+        public virtual void Update(TEntity TEntity)
         {
-            throw new NotImplementedException();
+             _repository.Update(TEntity);
+            _repository.SaveChanges();
         }
     }
 }

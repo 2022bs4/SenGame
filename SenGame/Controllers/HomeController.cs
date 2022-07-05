@@ -29,7 +29,7 @@ namespace SenGame.Controllers
 
         public IActionResult Index()
         {
-
+            TempData["actiontype"] = "home";
             return View();
         }
 
@@ -45,10 +45,12 @@ namespace SenGame.Controllers
         }
         public IActionResult About()
         {
+            TempData["actiontype"] = "about";
             return View();
         }
         public IActionResult CustomerService()
         {
+            TempData["actiontype"] = "customerservice";
             return View();
         }
         public IActionResult LineLoginDirect()
