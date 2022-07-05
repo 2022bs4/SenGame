@@ -4,6 +4,7 @@ using Services.ShopSevice;
 using SqlModels.ViewModels;
 using SqlModels.ViewModels.ShopViewModels;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SenGame.Controllers
 {
@@ -86,22 +87,22 @@ namespace SenGame.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //public IActionResult RemoveShoppingItem(int GameId)
-        //{ 
-            
+        public async Task<IActionResult> RemoveShoppingItem(int GameId)
+        {
 
 
-        //}
+            return RedirectToAction(nameof(ShoppingCart));
+        }
 
         //[HttpPost]
         //[ValidateAntiForgeryToken]
         //public IActionResult AddCartItem()
         //{
-            
+
         //}
 
 
- 
+
         public IActionResult ProductRecommend()
         {
             var result = _services.ProductRecommend();
