@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Services
 {
-    public class ShopServices : BaseService<Game>, IShopServices
+    public class ShopServices : BaseService<Game>
     {
         private readonly IRepository<Game> _game;
         private readonly IRepository<GameMedium> _gameMedium;
@@ -140,4 +140,6 @@ namespace Services
             return result;
         }
     }
+
+   
 }

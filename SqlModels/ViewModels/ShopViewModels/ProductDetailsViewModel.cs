@@ -9,7 +9,8 @@ namespace SqlModels.ViewModels
         public int GameId { get; set; }
         public string GameName { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:00}", ApplyFormatInEditMode = false)]
+        
+        [DisplayFormat(DataFormatString = "{0:0,000}", ApplyFormatInEditMode = true)]
         public decimal GamePrice { get; set; }
         public string GameIntroduction { get; set; }
         public DateTime ReleaseTime { get; set; }

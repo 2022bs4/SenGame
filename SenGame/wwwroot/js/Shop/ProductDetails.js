@@ -74,7 +74,7 @@ function MianDetails() {
             })
         })
         .then(end => {
-            setTimeout(RecommendTemplate(), 2000);
+            setTimeout(RecommendTemplate(), 3000);
         });
 
     function CloneGame(Array) {
@@ -144,7 +144,7 @@ function ProductSystem() {
 function RecommendTemplate() {
     const ProductRecommend = "/Shop/ProductRecommend"
     let box = document.querySelector('.Recommend')
-    let GameDatails = document.querySelector(".Game-Datails")
+    var GameDatails = document.querySelector(".Game-Datails")
     let screenWidth = screen.width;
     fetch(ProductRecommend,)
         .then(response => response.json())
@@ -152,10 +152,10 @@ function RecommendTemplate() {
             if (GameDatails.getBoundingClientRect().height < 500) {
                 result = result.slice(0, 1);
             }
-            else if (GameDatails.getBoundingClientRect().height < 700) {
+            else if (GameDatails.getBoundingClientRect().height < 1200) {
                 result = result.slice(0, 2);
             }
-            else if (GameDatails.getBoundingClientRect().height < 900) {
+            else if (GameDatails.getBoundingClientRect().height < 1400) {
                 result = result.slice(0, 3);
             }
             else {

@@ -1,6 +1,7 @@
 ﻿@model List<ProductDetailsViewModel>
 @using System.Linq;
 
+
 @section Css{
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <link rel="stylesheet" href="/css/shop/ProductDetails.css" asp-append-version="true"/>
@@ -43,7 +44,7 @@
         <section class="col-12 p-0 mt-md-3">
             <!-- 購買收藏等功能鍵、靜態 -->
             <div class="Game-Function-Btn col-12 p-0 d-lg-flex justify-content-md-between">
-                <div class="Game-Price d-flex align-items-center col-12 col-lg-6">售價:NT$ @Html.Raw(Model[0].GamePrice)</div>
+                <div class="Game-Price d-flex align-items-center col-12 col-lg-6">售價: NT$ @Html.Raw(Model[0].GamePrice)</div>
                 <div class="Group-btn col-12 col-lg-6 flex-row-reverse">
                     <button>收藏</button>
                     <button>分享</button>
