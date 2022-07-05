@@ -3,6 +3,8 @@
 
 @{
     ViewData["Title"] = "登入";
+    string[] array = new string[] { "https://freesvg.org/img/1534129544.png", "https://pic.pimg.tw/antayao/1623520287-4165360165-g.png" };
+    int i = 0;
 }
 
 <div class="login-content">
@@ -43,54 +45,22 @@
                 <div class="form-group">
                         <a id="forgot-password" asp-page="./ForgotPassword">忘記密碼?</a>
                 </div>
-                
-             <div class="form-group-google">
-                 <div id="g_id_onload"
-                        data-client_id="319105508231-b14a9vlbq3sobjfruc8sd8kp9iplgrkf.apps.googleusercontent.com"
-                        data-login_uri="https://localhost:44316/Home/ValidGoogleLogin"
-                         data-auto_prompt="false">
+            </form>
+             <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                <div class="w-100 d-flex justify-content-center">
+                    @foreach (var provider in Model.ExternalLogins)
+                        {
+                        <button id="exicon" type="submit" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account"><img src=@array[i]/></button>
+                        i++;
+                    }
+                    <a id="exicon" href="@Url.Action("LineLoginDirect")">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2e/LINE_New_App_Icon_%282020-12%29.png"/>
+                        </a>
                  </div>
-              
-                <div class="g_id_signin"
-                     data-type="standard"
-                     data-size="large"
-                     data-theme="outline"
-                     data-text="sign_in_with"
-                     data-shape="rectangular"
-                     data-logo_alignment="left">
-                </div>
-                  </div>
             </form>
             </div>
-             <div class="col-md-6 col-md-offset-2">
-        <section>
-            <h4>Use another service to log in.</h4>
-            <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
-                            for details on setting up this ASP.NET application to support logging in via external services.
-                        </p>
-                    </div>
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins)
-                                {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
-                            </p>
-                        </div>
-                    </form>
-                }
-            }
-        </section>
+
+ <div class="col-md-6 col-md-offset-2">
     </div>
         </div>
                     <div class="login-right col-12 col-lg-6">
@@ -115,4 +85,5 @@
 }
 @section Css{
     <link rel="stylesheet" href="~/css/Account/Login.css" asp-append-version="true"/>
+    
 }

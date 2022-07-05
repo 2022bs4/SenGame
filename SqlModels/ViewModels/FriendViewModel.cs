@@ -11,5 +11,13 @@ namespace SqlModels.ViewModels
         public string GroupName { get; set; }
         public string Name { get; set; }
         public string Photo { get; set; }
+        
     }
+    public class Test
+    {
+        public string GroupName { get; set; }
+        public string Name { get; set; }
+        public string Photo { get; set; }
+    }
+   
 }

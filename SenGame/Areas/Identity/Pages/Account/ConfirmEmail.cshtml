@@ -4,4 +4,22 @@
     ViewData["Title"] = "Confirm email";
 }
 
-<h1>@ViewData["Title"]</h1>
+<h2>帳號驗證成功!可以開始使用其他功能了!</h2>
+@section Css{
+    <style>
+        main{
+            height:100vh;
+        }
+        h2{
+            text-align:center;
+            padding-top:5em;
+            font-size:3em;
+        }
+    </style>
+
+}
+@section Scripts{
+    <script>
+        setTimeout(( () => window.location.href = "https://localhost:44316/home/index" ), 3000)    
+    </script>
+}
