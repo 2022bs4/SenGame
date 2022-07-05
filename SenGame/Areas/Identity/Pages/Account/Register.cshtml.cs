@@ -24,6 +24,7 @@ namespace SenGame.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
+
         private readonly SignInManager<UserModel> _signInManager;
         private readonly UserManager<UserModel> _userManager;
         private readonly ILogger<RegisterModel> _logger;
@@ -39,6 +40,7 @@ namespace SenGame.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+
         }
 
         [BindProperty]
@@ -96,6 +98,7 @@ namespace SenGame.Areas.Identity.Pages.Account
                 };
                 //CreateAsync(user, password) //要建立的使用者，要雜湊和儲存的使用者密碼。
                 var result = await _userManager.CreateAsync(user, Input.Password);
+                
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("創建一組新的帳密.");
@@ -108,9 +111,10 @@ namespace SenGame.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = user.Id, code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
+
                     //寄出Email認證
                     MailMessage msg = new MailMessage();
-                    msg.From = new MailAddress("SenGame@gmail.com","SenGame");
+                    msg.From = new MailAddress("SenGame@gmail.com", "SenGame");
                     msg.To.Add(Input.Email);
                     msg.Subject = "SenGame會員驗證";
                     msg.Body = $" <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>點擊驗證您的帳戶</a>";
@@ -122,8 +126,8 @@ namespace SenGame.Areas.Identity.Pages.Account
                         smtp.EnableSsl = true;
                         smtp.Send(msg);
                     }
-                  
-                  
+
+
                     //Options:表示您可以用來設定身分識別系統的所有選項。
                     //SignIn:Options內的屬性，取得或設定身分 SignInOptions 識別系統的。
                     //RequireConfirmedAccount:SignIn裡面的屬性，如果使用者必須有已確認的帳戶才能登入，則為 True，否則為 false。
