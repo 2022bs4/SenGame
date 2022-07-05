@@ -33,7 +33,7 @@
                     </div>
                     <!-- 一開始顯示加好友 -->
                     <div class="col-12 col-lg-12 text-center">
-                        <input type="button" class="btn btn-warning px-5" id="AddFriendBtn" value="加好友 NOW" />
+                        <input type="button" class="btn btn-warning px-5" id="AddFriendBtn" value="加好友 NOW" onclick="Userinformation()"/>
                     </div>
                     <div id="CancelFriendBtn" style="display:none"></div>
                     <!-- 加好友按鈕按下後才會出現 [取消加好友Q] -->
@@ -203,6 +203,10 @@
             </div>
             <!-- #/ container -->
         </div>
+
+<!-- sweetalert -->
+ <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
  @section Scripts{
-     <script src="~/js/Friend/Edit_User.js"></script>
+     <script src="~/js/Friend/User.js"></script>
  }
