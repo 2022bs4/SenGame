@@ -1,8 +1,9 @@
 ﻿@{
-    string url = (string)ViewContext.RouteData.Values["controller"];
-    string urlac = (string)ViewContext.RouteData.Values["action"];
-    var a = TempData["action"];
-   
+    //string url = (string)ViewContext.RouteData.Values["controller"];
+    //string urlac = (string)ViewContext.RouteData.Values["action"];
+    var a = TempData["actiontype"];
+    int i = 1;
+
 
 
 }
@@ -54,7 +55,7 @@
                             <ul class="menu" >
                                 <li><a href="~/Community/Index">首頁</a></li>
                                 <li><a href="~/Community/Forum">討論區</a></li>
-                                <li><a href="~/Fora/Index">TEST</a></li>
+                                <li><a href="~/Articles/Index">文章</a></li>
                             </ul>
                         </li>
                         <li class="list-tour-friend " style="--clr:#2196f3">
@@ -118,8 +119,8 @@
                 </div>
             </div>
         </div>
-        <div class="controllertype" style="display:none" controller=@url >測試</div>
-        <div class="actiontype" style="display:none" ac=@urlac >測試</div>
+        <div class="controllertype" style="display:none" controller="@a" >測試</div>
+        @*<div class="actiontype" style="display:none" ac=@urlac >測試</div>*@
     
     
     
