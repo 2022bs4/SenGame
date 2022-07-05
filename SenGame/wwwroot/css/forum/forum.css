@@ -1,245 +1,251 @@
 body {
-  background-color: #edf1f2;
+    background-color: #edf1f2;
 }
 
 .page-nav {
-  margin-top: 10px;
-  background: #1e262c;
-  color: #fff;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0px 15px;
-  position: relative;
+    margin-top: 10px;
+    background: #1e262c;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 15px;
+    position: relative;
 }
 
-.page-nav ul {
-  display: flex;
-  background: #1e262c;
-  padding: 0;
-  margin: 0px;
-  color: #b3b3b3;
-}
+    .page-nav ul {
+        display: flex;
+        background: #1e262c;
+        padding: 0;
+        margin: 0px;
+        color: #b3b3b3;
+    }
 
-.page-nav ul li {
-  cursor: pointer;
-  position: relative;
-  font-size: 1rem;
-  margin: 0px 5px;
-  padding: 10px;
-  border-bottom: 4px solid transparent;
-}
+        .page-nav ul a {
+            color: #fff;
+            text-decoration: none;
+        }
 
-.page-nav ul li.active, .page-nav ul li:hover {
-  border-color: #e19600;
-  color: #fff;
-}
+        .page-nav ul li {
+            cursor: pointer;
+            position: relative;
+            font-size: 1rem;
+            margin: 0px 5px;
+            padding: 10px;
+            border-bottom: 4px solid transparent;
+        }
+
+            .page-nav ul li.active, .page-nav ul li:hover {
+                border-color: #e19600;
+                color: #fff;
+            }
 
 .page-nav-box {
-  color: #fff;
-  display: flex;
+    color: #fff;
+    display: flex;
 }
 
-.page-nav-box .filter {
-  margin-right: 35px;
-  color: #edf1f2;
-  background: #1e262c;
-  border: 0px;
-}
+    .page-nav-box .filter {
+        margin-right: 35px;
+        color: #edf1f2;
+        background: #1e262c;
+        border: 0px;
+    }
 
 .page-nav-box-btns {
-  position: relative;
+    position: relative;
 }
 
-.page-nav-box-btns button {
-  color: #edf1f2;
-  background: #1e262c;
-  border: 0px;
-  position: absolute;
-  right: 0;
-  display: none;
-  z-index: 0;
-}
+    .page-nav-box-btns button {
+        color: #edf1f2;
+        background: #1e262c;
+        border: 0px;
+        position: absolute;
+        right: 0;
+        display: none;
+        z-index: 0;
+    }
 
 .page-nav .row-cells-btn {
-  display: block;
-  z-index: 1;
+    display: block;
+    z-index: 1;
 }
 
 .row-cells .row-list-btn {
-  display: block;
-  z-index: 2;
+    display: block;
+    z-index: 2;
 }
 
 .row-list .row-large-btn {
-  display: block;
-  z-index: 3;
+    display: block;
+    z-index: 3;
 }
 
 #page-content {
-  margin-top: 30px;
-  padding: 0px 10px;
+    margin-top: 30px;
+    padding: 0px 10px;
 }
 
-#page-content a {
-  color: #1e262c;
-  text-decoration: none;
-}
+    #page-content a {
+        color: #1e262c;
+        text-decoration: none;
+    }
 
-#page-content .col {
-  flex: 0 0 50%;
-  max-width: 100%;
-  margin-bottom: 15px;
-}
+    #page-content .col {
+        flex: 0 0 50%;
+        max-width: 100%;
+        margin-bottom: 15px;
+    }
 
 @media (min-width: 576px) {
-  #page-content .col {
-    margin-bottom: 30px;
-  }
+    #page-content .col {
+        margin-bottom: 30px;
+    }
 }
 
 @media (min-width: 768px) {
-  #page-content .col {
-    flex: 0 0 50%;
-    max-width: 50%;
-  }
+    #page-content .col {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
 }
 
 @media (min-width: 1200px) {
-  #page-content .col {
-    flex: 0 0 33.333333%;
-    max-width: 33.333333%;
-  }
+    #page-content .col {
+        flex: 0 0 33.333333%;
+        max-width: 33.333333%;
+    }
 }
 
 #page-content .col .card {
-  color: #1e262c;
+    color: #1e262c;
 }
 
 #page-content .col .card-body {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 0px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0px;
 }
 
-#page-content .col .card-body .card-title {
-  text-align: center;
-}
+    #page-content .col .card-body .card-title {
+        text-align: center;
+    }
 
 @media (min-width: 576px) {
-  #page-content .col .card-body {
-    padding: 20px;
-  }
+    #page-content .col .card-body {
+        padding: 20px;
+    }
 }
 
 #page-content .col .card-body-text {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  font-family: "fontawesome";
-  letter-spacing: 2px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    font-family: "fontawesome";
+    letter-spacing: 2px;
 }
 
-#page-content .col .card-body-text .article-total {
-  margin-top: 10px;
-}
+    #page-content .col .card-body-text .article-total {
+        margin-top: 10px;
+    }
 
-#page-content .col .card-body-text .article-total:before {
-  content: "\f15c";
-  margin-right: 5px;
-}
+        #page-content .col .card-body-text .article-total:before {
+            content: "\f15c";
+            margin-right: 5px;
+        }
 
-#page-content .col .card-body-text .user-total:before {
-  content: "\f0c0";
-  margin-right: 5px;
-}
+    #page-content .col .card-body-text .user-total:before {
+        content: "\f0c0";
+        margin-right: 5px;
+    }
 
 #page-content .col .card-footer {
-  background-color: #fff;
-  display: flex;
-  justify-content: space-around;
+    background-color: #fff;
+    display: flex;
+    justify-content: space-around;
 }
 
 .row-cells #page-content .col {
-  margin-bottom: 15px;
+    margin-bottom: 15px;
 }
 
 @media (min-width: 576px) {
-  .row-cells #page-content .col {
-    flex: 0 0 50%;
-    max-width: 50%;
-    margin-bottom: 30px;
-  }
+    .row-cells #page-content .col {
+        flex: 0 0 50%;
+        max-width: 50%;
+        margin-bottom: 30px;
+    }
 }
 
 @media (min-width: 992px) {
-  .row-cells #page-content .col {
-    flex: 0 0 33.333333%;
-    max-width: 33.333333%;
-  }
+    .row-cells #page-content .col {
+        flex: 0 0 33.333333%;
+        max-width: 33.333333%;
+    }
 }
 
 @media (min-width: 1200px) {
-  .row-cells #page-content .col {
-    flex: 0 0 25%;
-    max-width: 25%;
-  }
+    .row-cells #page-content .col {
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
 }
 
 .row-list #page-content .col {
-  -ms-: 0 0 100%;
-  flex: 0 0 100%;
-  max-width: 100%;
-  margin: 0px;
+    -ms-: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+    margin: 0px;
 }
 
-.row-list #page-content .col .card {
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
+    .row-list #page-content .col .card {
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
 
-.row-list #page-content .col .card .card-body {
-  justify-content: space-between;
-}
+        .row-list #page-content .col .card .card-body {
+            justify-content: space-between;
+        }
 
-.row-list #page-content .col .card .card-body-head {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  flex-direction: row;
-}
+        .row-list #page-content .col .card .card-body-head {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            flex-direction: row;
+        }
 
-.row-list #page-content .col .card .card-body-head h3 {
-  margin: 0;
-}
+            .row-list #page-content .col .card .card-body-head h3 {
+                margin: 0;
+            }
 
-.row-list #page-content .col .card .card-body-text {
-  flex: 2;
-  align-items: center;
-  flex-direction: row;
-}
+        .row-list #page-content .col .card .card-body-text {
+            flex: 2;
+            align-items: center;
+            flex-direction: row;
+        }
 
-.row-list #page-content .col .card .card-body-text p {
-  margin: 0px;
-}
+            .row-list #page-content .col .card .card-body-text p {
+                margin: 0px;
+            }
 
-.row-list #page-content .col .card img {
-  display: none;
-}
+        .row-list #page-content .col .card img {
+            display: none;
+        }
 
 @media (min-width: 576px) {
-  .row-list #page-content .col {
-    -ms-: 0 0 50%;
-    flex: 0 0 50%;
-    max-width: 50%;
-    margin: 0px;
-  }
-  .row-list #page-content .col .card-body-text {
-    flex-direction: row;
-  }
+    .row-list #page-content .col {
+        -ms-: 0 0 50%;
+        flex: 0 0 50%;
+        max-width: 50%;
+        margin: 0px;
+    }
+
+        .row-list #page-content .col .card-body-text {
+            flex-direction: row;
+        }
 }
 /*# sourceMappingURL=forum.css.map */

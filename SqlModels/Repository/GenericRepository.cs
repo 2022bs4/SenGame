@@ -57,12 +57,12 @@ namespace SqlModels.Repository
             _context.Entry(TEntity).State = EntityState.Deleted;
         }
 
-        public IQueryable<TEntity> FindBy(Expression<Func<TEntity, bool>> predicate)
+        public IEnumerable<TEntity> FindBy(Expression<Func<TEntity, bool>> predicate)
         {
             return _context.Set<TEntity>().Where(predicate);
         }
 
-        public IQueryable<TEntity> GetAll()
+        public IEnumerable<TEntity> GetAll()
         {
             return _context.Set<TEntity>();
         }

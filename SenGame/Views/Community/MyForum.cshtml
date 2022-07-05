@@ -1,0 +1,64 @@
+﻿@{
+    ViewData["Title"] = "討論區";
+}
+@model IEnumerable<Forum>
+@section Css{
+<link rel="stylesheet" href="~/css/Forum/Forum.css">
+}
+<div class="page-nav">
+    <ul class="list-unstyled">
+        <a href="~/Community/Forum">
+            <li class="">討論區</li>
+        </a>
+        <a href="~/Community/MyForum">
+            <li class="active">我的看板</li>
+        </a>
+        <li class="">動態牆</li>
+    </ul>
+    <div class="page-nav-box">
+        <button class="filter" type="button" id="filter-list" data-toggle="dropdown" aria-expanded="false"
+                data-offset="-130,0">
+            <i class="fa-solid fa-filter"></i>
+        </button>
+        <div class="dropdown-menu" aria-labelledby="filter-list">
+            <div href="#" class="dropdown-item">依照名稱排序</div>
+            <div href="#" class="dropdown-item">依照類型排序</div>
+        </div>
+        <div class="page-nav-box-btns">
+            <button class="row-large-btn" type="button">
+                <i class="fa-solid fa-table-cells-large"></i>
+            </button>
+            <button class="row-cells-btn" type="button">
+                <i class="fa-solid fa-table-cells"></i>
+            </button>
+            <button class="row-list-btn" type="button">
+                <i class="fa-solid fa-list"></i>
+            </button>
+        </div>
+    </div>
+</div>
+<div id="page-content" class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col">
+            <a href="">
+                <div class="card">
+                    <img src="@item.Banner" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <div class="card-body-head">
+                            <h3 class="card-title">@item.Name</h3>
+                        </div>
+                        <div class="card-body-text">
+                            <p class="article-total">1000</p>
+                            <p class="user-total">1050</p>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
+</div>
+<footer></footer>
+@section Scripts{
+<script src="~/js/Forum/Forum.js"></script>
+}

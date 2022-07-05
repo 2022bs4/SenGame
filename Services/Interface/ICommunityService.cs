@@ -9,5 +9,7 @@ namespace Services.Interface
 {
     public interface ICommunityService:IBaseService<Forum>
     {
+        //查詢使用者的討論區
+        public IEnumerable<Forum> GetUserForum(string name);
     }
 }
