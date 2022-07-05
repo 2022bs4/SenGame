@@ -10,8 +10,8 @@ using SqlModels.Data;
 namespace SqlModels.Migrations
 {
     [DbContext(typeof(SenGameContext))]
-    [Migration("20220702142729_First")]
-    partial class First
+    [Migration("20220702145102_t1")]
+    partial class t1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

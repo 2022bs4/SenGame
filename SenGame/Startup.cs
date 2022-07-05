@@ -18,7 +18,9 @@ using SqlModels.Repository;
 using SqlModels.Repository.Interface;
 using Services;
 using Services.Interface;
-using Services.CommunityService;
+using Services.ShopSevice;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace SenGame
 {
@@ -44,7 +46,8 @@ namespace SenGame
             services.AddScoped(typeof(IRepository<>),typeof(GenericRepository<>));
             services.AddScoped(typeof(IBaseService<>),typeof(BaseService<>));
             services.AddScoped<ICommunityService,CommunityService>();
-            services.AddScoped<IShopServices, ShopServices>();
+            services.AddScoped<ShopServices>();
+            services.AddScoped<ShopCartServices>();
             services.AddSignalR();
 
             services.AddAuthentication().AddGoogle(googleOptions =>
@@ -61,7 +64,7 @@ namespace SenGame
 
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+     
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -77,6 +80,16 @@ namespace SenGame
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            //StaticFileOptions建構函式 預設為所有要求路徑
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                //PhysicalFileProvider實體檔案提供者
+                //取得目錄資訊 (IDirectoryContents)
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "HtmlPages")),
+                //HtmlPage資料夾
+                RequestPath = "/HtmlPages"
+            });
             //app.Use(async (context, next) =>
             //{
             //    context.Response.Cookies.Append("CookieKey", "CookieValue");
@@ -86,6 +99,7 @@ namespace SenGame
 
             app.UseAuthentication();
             app.UseAuthorization();
+     
 
             app.UseEndpoints(endpoints =>
             {

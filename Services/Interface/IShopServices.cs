@@ -11,9 +11,11 @@ namespace Services.Interface
 {
     public interface IShopServices : IBaseService<Game>
     {
-        List<ProductViewDTO> ProductView(int id);
-        List<ProdductIntroductDTO> ProductMainIntroduct(int id);
-        List<ProductSwipperDTO> ProductSwipper(int id);
-        List<ProductRecommend> ProductRecommend();
+        //List<ProductViewDTO> ProductView(int id);
+        //List<ProdductIntroductDTO> ProductMainText(int id);
+        //List<ProductSwipperDTO> ProductSwipper(int id);
+        //List<ProductSystemDTO> ProductSystem(int id);
+        //List<ProductRecommend> ProductRecommend();
     }
+
 }
