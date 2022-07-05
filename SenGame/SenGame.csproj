@@ -73,6 +73,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\js\Game\Game.js" />
+    <None Include="wwwroot\js\Game\Game_Category.js" />
+    <None Include="wwwroot\js\Game\Swiper.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Services\Services.csproj" />
     <ProjectReference Include="..\SqlModels\SqlModels.csproj" />
   </ItemGroup>
