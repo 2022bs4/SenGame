@@ -18,6 +18,8 @@ using SqlModels.Repository;
 using SqlModels.Repository.Interface;
 using Services;
 using Services.Interface;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 
 namespace SenGame
@@ -76,6 +78,16 @@ namespace SenGame
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            //StaticFileOptions建構函式 預設為所有要求路徑
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                //PhysicalFileProvider實體檔案提供者
+                //取得目錄資訊 (IDirectoryContents)
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "HtmlPages")),
+                //HtmlPage資料夾
+                RequestPath = "/HtmlPages"
+            });
             //app.Use(async (context, next) =>
             //{
             //    context.Response.Cookies.Append("CookieKey", "CookieValue");
