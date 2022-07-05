@@ -28,12 +28,13 @@
                     </div>
                     <div class="register-live">
                         <p class="register-text">居住地</p>
-                        <select name="" id="live" value="">
+                        <select name="" id="live" onchange="WhereDoYouLive()">
                             <option value="">請選擇居住地</option>
-                            <option value="">台灣中國</option>
-                            <option value="">台灣中國</option>
-                            <option value="">台灣中國</option>
+                            <option value="台灣">台灣</option>
+                            <option value="美國">美國</option>
+                            <option value="日本">日本</option>
                         </select>
+                        <input id="address" asp-for="Input.Address" hidden/>
                     </div>
                     <div class="agree pt-3">
                         <input type="checkbox" name="" id="check">
@@ -47,39 +48,14 @@
         </div>
 
 
-@*   <div class="col-md-6 col-md-offset-2">
-        <section>
-            <h4>Use another service to register.</h4>
-            <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                        <div>
-                            <p>
-                                There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
-                                for details on setting up this ASP.NET application to support logging in via external services.
-                            </p>
-                        </div>
-                }
-                else
-                {
-                        <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                            <div>
-                                <p>
-                                    @foreach (var provider in Model.ExternalLogins)
-                                {
-                                        <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
-                                </p>
-                            </div>
-                        </form>
-                }
-            }
-        </section>
-    </div>*@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+        <script>
+        function WhereDoYouLive(){
+            address.value = live.value;
+        }
+    </script>
 }
 @section Css{
 <link rel="stylesheet" href="~/css/Account/Register.css" asp-append-version="true"/>

@@ -14,13 +14,13 @@ namespace SqlModels.Models
 
         public int ReplyId { get; set; }
         public int ArticleId { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public string ReplyTitle { get; set; }
         public string ReplyText { get; set; }
         public int? ParentId { get; set; }
 
         public virtual Article Article { get; set; }
-        public virtual AspNetUser User { get; set; }
+        public virtual UserModel User { get; set; }
         public virtual ICollection<ReplyLike> ReplyLikes { get; set; }
     }
 }

@@ -9,8 +9,8 @@ namespace SqlModels.Models
     {
         public int UserPrivacyId { get; set; }
         public string PrivacyState { get; set; }
-        public int? UserId { get; set; }
+        public string UserId { get; set; }
 
-        public virtual AspNetUser User { get; set; }
+        public virtual UserModel User { get; set; }
     }
 }

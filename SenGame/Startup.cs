@@ -18,9 +18,9 @@ using SqlModels.Repository;
 using SqlModels.Repository.Interface;
 using Services;
 using Services.Interface;
+using Services.ShopSevice;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
-
 
 namespace SenGame
 {
@@ -46,6 +46,8 @@ namespace SenGame
             services.AddScoped(typeof(IRepository<>),typeof(GenericRepository<>));
             services.AddScoped(typeof(IBaseService<>),typeof(BaseService<>));
             services.AddScoped<ICommunityService,CommunityService>();
+            services.AddScoped<ShopServices>();
+            services.AddScoped<ShopCartServices>();
             services.AddSignalR();
 
             services.AddAuthentication().AddGoogle(googleOptions =>
@@ -62,7 +64,7 @@ namespace SenGame
 
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+     
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -79,13 +81,13 @@ namespace SenGame
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            //StaticFileOptions«Øºc¨ç¦¡ ¹w³]¬°©Ò¦³­n¨D¸ô®|
+            //StaticFileOptionså»ºæ§‹å‡½å¼ é è¨­ç‚ºæ‰€æœ‰è¦æ±‚è·¯å¾‘
             app.UseStaticFiles(new StaticFileOptions
             {
-                //PhysicalFileProvider¹êÅéÀÉ®×´£¨ÑªÌ
-                //¨ú±o¥Ø¿ý¸ê°T (IDirectoryContents)
+                //PhysicalFileProviderå¯¦é«”æª”æ¡ˆæä¾›è€…
+                //å–å¾—ç›®éŒ„è³‡è¨Š (IDirectoryContents)
                 FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "HtmlPages")),
-                //HtmlPage¸ê®Æ§¨
+                //HtmlPageè³‡æ–™å¤¾
                 RequestPath = "/HtmlPages"
             });
             //app.Use(async (context, next) =>
@@ -97,6 +99,7 @@ namespace SenGame
 
             app.UseAuthentication();
             app.UseAuthorization();
+     
 
             app.UseEndpoints(endpoints =>
             {
