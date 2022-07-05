@@ -9,12 +9,12 @@ namespace SqlModels.Models
     {
         public UserBackground()
         {
-            AspNetUsers = new HashSet<AspNetUser>();
+            UserModel = new HashSet<UserModel>();
         }
-
         public int UserBackgroundId { get; set; }
         public string BackgroundColor { get; set; }
 
-        public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
+        public virtual ICollection<UserModel> UserModel { get; set; }
+
     }
 }
