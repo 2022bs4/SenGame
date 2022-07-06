@@ -24,7 +24,7 @@ namespace Services
 
         public void Delete(TEntity TEntity)
         {
-            throw new NotImplementedException();
+            this._repository.Delete(TEntity);
         }
 
         public IQueryable<TEntity> FindBy(Expression<Func<TEntity, bool>> predicate)

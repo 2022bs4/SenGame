@@ -21,7 +21,7 @@
                                     <p class=" d-inline-block font-weight-bold">遊戲價格:</p>
                                     <p class="Select-Item-Price">@Html.Raw(m.GamePrice)</p>
                                 </div>
-                                <button class="Remove_btn" asp-action="/Shop/RemoveShoppingItem/@m.GameId" >移除</button>
+                                <a class="Remove_btn" href="~/Shop/RemoveShoppingItem/@m.GameId">移除</a>
                             </div>
                         </div>
                     }

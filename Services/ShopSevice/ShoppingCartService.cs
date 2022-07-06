@@ -43,9 +43,15 @@ namespace Services.ShopSevice
                 }
                 
             }
-
-
             return result;
+        }
+        public void RemveShoppingCartItem( int GameId)
+        {
+            var cart =  _shoppingCart.GetById(GameId);
+            _shoppingCart.Delete(cart);
+            _shoppingCart.SaveChanges();
+            
+
         }
 
     }

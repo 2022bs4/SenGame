@@ -8,8 +8,8 @@ using System.Linq;
 
 namespace SenGame.Controllers
 {
-   
-    //[Authorize]
+
+    [Authorize]
     public class FriendController : Controller
     {
         List<UserModel> user = new List<UserModel>()

@@ -85,12 +85,11 @@ namespace SenGame.Controllers
             return View(result);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> RemoveShoppingItem(int GameId)
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        public IActionResult RemoveShoppingItem(int GameId )
         {
-
-
+            _ShopCartServices.RemveShoppingCartItem(GameId);
             return RedirectToAction(nameof(ShoppingCart));
         }
 

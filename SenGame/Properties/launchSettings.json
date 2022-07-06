@@ -11,7 +11,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "Game/game",
+      "launchUrl": "Shop/ShoppingCart",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
