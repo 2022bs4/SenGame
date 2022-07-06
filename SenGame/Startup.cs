@@ -19,8 +19,10 @@ using SqlModels.Repository.Interface;
 using Services;
 using Services.Interface;
 using Services.ShopSevice;
+using Services.CommunityService;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
+
 
 namespace SenGame
 {
@@ -45,7 +47,7 @@ namespace SenGame
             services.AddControllersWithViews();
             services.AddScoped(typeof(IRepository<>),typeof(GenericRepository<>));
             services.AddScoped(typeof(IBaseService<>),typeof(BaseService<>));
-            services.AddScoped<ICommunityService,CommunityService>();
+            services.AddScoped<CommunityService>();
             services.AddScoped<ShopServices>();
             services.AddScoped<ShopCartServices>();
             services.AddSignalR();
@@ -82,14 +84,14 @@ namespace SenGame
             app.UseStaticFiles();
 
             //StaticFileOptions建構函式 預設為所有要求路徑
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                //PhysicalFileProvider實體檔案提供者
-                //取得目錄資訊 (IDirectoryContents)
-                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "HtmlPages")),
-                //HtmlPage資料夾
-                RequestPath = "/HtmlPages"
-            });
+            //app.UseStaticFiles(new StaticFileOptions
+            //{
+            //    //PhysicalFileProvider實體檔案提供者
+            //    //取得目錄資訊 (IDirectoryContents)
+            //    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "HtmlPages")),
+            //    //HtmlPage資料夾
+            //    RequestPath = "/HtmlPages"
+            //});
             //app.Use(async (context, next) =>
             //{
             //    context.Response.Cookies.Append("CookieKey", "CookieValue");
