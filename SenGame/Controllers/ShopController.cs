@@ -44,9 +44,17 @@ namespace SenGame.Controllers
         }
 
         public IActionResult ProductMain(int id)
-        { 
+        {
             var result = _services.ProductMainText(id);
             return Ok(result);
+        }
+        //Json
+        [HttpPost]
+        public IActionResult ProductDetailsJson(int id = 1)
+        {
+            var result = _services.ProductSwipper(id);
+            TempData["actiontype"] = "shop";
+            return Json(result);
         }
 
         public IActionResult ProductSwipper(int id)
@@ -101,8 +109,6 @@ namespace SenGame.Controllers
             
         //}
 
-
- 
         public IActionResult ProductRecommend()
         {
             var result = _services.ProductRecommend();

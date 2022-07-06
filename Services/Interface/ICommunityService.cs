@@ -13,5 +13,8 @@ namespace Services.Interface
     {
         List<Swipers> Swipers();
         List<CommunityDTO> Article();
+        //查詢使用者的討論區
+        public IEnumerable<Forum> GetUserForum(string name);
+
     }
 }
