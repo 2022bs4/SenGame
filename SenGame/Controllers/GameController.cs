@@ -11,7 +11,7 @@ namespace SenGame.Controllers
     {
         public IActionResult Index()
         {
-            TempData["actiontype"] = "home";
+            
             return View();
         }
         public IActionResult Game()
@@ -57,6 +57,7 @@ namespace SenGame.Controllers
                     //.Select(d=>d.DiscountTake)
                 }).ToList();
 
+            TempData["actiontype"] = "home";
 
             return View(vm);
         }

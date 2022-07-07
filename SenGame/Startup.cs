@@ -19,7 +19,7 @@ using SqlModels.Repository.Interface;
 using Services;
 using Services.Interface;
 using Services.ShopSevice;
-using Services.CommunityService;
+
 using Microsoft.Extensions.FileProviders;
 using System.IO;
 
