@@ -25,7 +25,9 @@ namespace Services
 
         public virtual void Delete(TEntity TEntity)
         {
-            this._repository.Delete(TEntity);
+            _repository.Delete(TEntity);
+            _repository.SaveChanges();
+
         }
 
         public virtual IEnumerable<TEntity> FindBy(Expression<Func<TEntity, bool>> predicate)

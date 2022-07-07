@@ -215,6 +215,7 @@
         border: none;
         font-weight: 700;
         margin-left: 1em;
+        color:#fff;
     }
 
         .Group-btn button:nth-child(1), .Group-btn button:nth-child(2),.tag {
@@ -243,21 +244,13 @@
             box-shadow: 5px 5px 2px #00000099, -1px -1px 1px #c4d2e0;
         }
 
-            .Group-btn button:nth-child(3) a {
-                color: #fff;
-            }
-
-            .Group-btn button:nth-child(3):hover {
-                background: #5ec174;
-                -webkit-box-shadow: none;
-                box-shadow: none;
-            }
-
-                .Group-btn button:nth-child(3):hover a {
-                    color: #fff;
-                    text-decoration: none;
-                }
-
+    .Group-btn .AddItem:hover {
+        transition: .5s;
+        color: #fff;
+        background: #5ec174;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
 @media (min-width: 576px) {
     .CommodityDetials {
         width: calc(100% - 60px);

@@ -1,4 +1,5 @@
-﻿let btn_buy = document.querySelector(".Continue-Shopping")
+﻿
+let btn_buy = document.querySelector(".Continue-Shopping")
 
 $(document).ready(function () {
     $('main').addClass("ShoppingCart d-md-flex f-md-flex position-relative")
@@ -7,10 +8,8 @@ $(document).ready(function () {
         $('.Spopping-Select').html(' ')
         $('.Shpopping-Price').text('')
     })
-        //ShoppingTemplate()
     RecommendTemplate();
 })
-
 
 
 
@@ -18,21 +17,6 @@ btn_buy.addEventListener('click', function () {
     document.getElementById("form").submit();
 })
 
-// 之後要動態產生
-function ShoppingTemplate() {
-    let Spopping_Select = document.querySelector('.Spopping-Select')
-    let boxClone1 = Spopping_Select_Template.content.cloneNode(true)
-    let item = boxClone1.querySelector('.Game-Shopping-Item')
-    let boxImg = boxClone1.querySelector('img')
-    let boxText = boxClone1.querySelector('.Game-Price')
-    let btn = boxClone1.querySelector('button');
-    btn.addEventListener('click', function () {
-        Spopping_Select.removeChild(item)
-    })
-    boxText.classList.add('Game-Price')
-    boxImg.classList.add("First_Template_img")
-    Spopping_Select.append(boxClone1)
-}
 //推薦Template
 function RecommendTemplate() {
     const ProductRecommend = "/Shop/ProductRecommend"

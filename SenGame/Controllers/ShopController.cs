@@ -4,7 +4,7 @@ using Services.ShopSevice;
 using SqlModels.ViewModels;
 using SqlModels.ViewModels.ShopViewModels;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
 
 namespace SenGame.Controllers
 {
@@ -72,9 +72,11 @@ namespace SenGame.Controllers
 
 
         //遊戲購物車
-        public IActionResult ShoppingCart(string id = "39f0f114-e6e0-4eb1-b3a0-2df9fd4b413c") 
+        public IActionResult ShoppingCart(string UserId = "39f0f114-e6e0-4eb1-b3a0-2df9fd4b413c") 
         {
-            var shoppingCartInformation = _ShopCartServices.ShoppingCarts(id);
+            // UserId = User.Identity.GetUserId();
+
+            var shoppingCartInformation = _ShopCartServices.ShoppingCarts(UserId);
 
             var result = new List<ShoppingCartViewModel>();
 
@@ -94,21 +96,29 @@ namespace SenGame.Controllers
             return View(result);
         }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        public IActionResult RemoveShoppingItem(int GameId )
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult RemoveShoppingItem(int GameId, string UserId)
         {
-            _ShopCartServices.RemveShoppingCartItem(GameId);
+            _ShopCartServices.RemveShoppingCartItem(GameId, UserId);
             return RedirectToAction(nameof(ShoppingCart));
         }
 
-        //[HttpPost]
+
+        [HttpPost]
+        //fetch防跨網站偽造要求研究中
         //[ValidateAntiForgeryToken]
-        //public IActionResult AddCartItem()
-        //{
+        public IActionResult AddShoppingCart([FromBody] ShoppingCartViewModel model)
+        {
 
-        //}
+            string UserId = "39f0f114-e6e0-4eb1-b3a0-2df9fd4b413c";
+            // UserId = User.Identity.GetUserId();
 
+            //_ShopCartServices.AddShopingCart(GameId,UserId);
+            return Ok();
+        }
 
 
         public IActionResult ProductRecommend()

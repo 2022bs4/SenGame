@@ -34,6 +34,7 @@ namespace Services.ShopSevice
                 {
                     result.Add(new ShoppingCartDTO
                     {
+                        UserId = UserId,
                         GameId = gameInformation.GameId,
                         GameName = gameInformation.GameName,
                         GameUrl = pic.MediaUrl,
@@ -45,13 +46,31 @@ namespace Services.ShopSevice
             }
             return result;
         }
-        public void RemveShoppingCartItem( int GameId)
-        {
-            var cart =  _shoppingCart.GetById(GameId);
-            _shoppingCart.Delete(cart);
-            _shoppingCart.SaveChanges();
-            
 
+        public void AddShopingCart(int gameId, string UserID)
+        {
+            var gmae = _game.GetById(gameId);
+            var result = new ShoppingCart()
+            {
+                GameId = gameId,
+                UserId = UserID,
+                AddTime = DateTime.UtcNow,
+            };
+            _shoppingCart.Create(result);
+        }
+
+
+
+        //Post
+        public void RemveShoppingCartItem(int GameId , string UserId)
+        {
+
+            var cart =_shoppingCart.GetAll().Where(x => x.UserId == UserId && x.GameId == GameId);
+            foreach (var item in cart)
+            {
+                _shoppingCart.Delete(item);
+            }
+            _shoppingCart.SaveChanges();
         }
 
     }

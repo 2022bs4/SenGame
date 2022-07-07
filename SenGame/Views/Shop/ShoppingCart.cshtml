@@ -1,5 +1,4 @@
-﻿@model List<ShoppingCartViewModel>
-
+﻿@model IEnumerable<ShoppingCartViewModel>
 @section Css{
      <link rel="stylesheet" href="/css/shop/ShoppingCart.css" asp-append-version="true"/>
 }
@@ -11,22 +10,9 @@
                 <div class="Spopping-Select col-12  d-flex flex-wrap pb-2">
                     @foreach(var m in Model)
                     {
-                        <div class="col-12 d-md-flex justify-content-md-between  Game-Shopping-Item">
-                            <div class="d-md-flex col-md-6 p-md-0 px-0">
-                                <img src="@Html.Raw(m.GameUrl)" alt="@Html.Raw(m.GameName)" class="Template_img w-100">
-                            </div>
-                            <div class="col-md-6 Game-Price p-0 ">
-                                <h2 class="Select-Game-Title pl-md-3 d-block">@Html.Raw(m.GameName)</h2>
-                                <div class="col-md-12 p-0 pl-md-3  d-flex justify-content-between">
-                                    <p class=" d-inline-block font-weight-bold">遊戲價格:</p>
-                                    <p class="Select-Item-Price">@Html.Raw(m.GamePrice)</p>
-                                </div>
-                                <a class="Remove_btn" href="~/Shop/RemoveShoppingItem/@m.GameId">移除</a>
-                            </div>
-                        </div>
+                        <partial name="_CartItemPartil" model="m"/>
                     }
                 </div>
-
                 <div class="Shopping-Select-Sum-Pric col-12 d-flex flex-wrap px-0 pt-2">
                     <div class="d-flex justify-content-between col-12 Shopping-Checkout">
                         <p class="">估計總額 :</p>
