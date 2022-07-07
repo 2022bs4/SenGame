@@ -21,8 +21,9 @@ namespace Services.ShopSevice
             this._game = game;
             this._gameMedium = gameMedium;
         }
-        public List<ShoppingCartDTO> ShoppingCarts(string UserId = "39f0f114-e6e0-4eb1-b3a0-2df9fd4b413c")
+        public List<ShoppingCartDTO> GetShoppingCarts(string UserId)
         {
+            //string UserId = "39f0f114-e6e0-4eb1-b3a0-2df9fd4b413c";
             var game = _shoppingCart.GetAll().Where(x => x.UserId == UserId);
             var result = new List<ShoppingCartDTO>();
 
@@ -57,11 +58,9 @@ namespace Services.ShopSevice
                 AddTime = DateTime.UtcNow,
             };
             _shoppingCart.Create(result);
+            _shoppingCart.SaveChanges();
         }
 
-
-
-        //Post
         public void RemveShoppingCartItem(int GameId , string UserId)
         {
 
@@ -73,5 +72,14 @@ namespace Services.ShopSevice
             _shoppingCart.SaveChanges();
         }
 
+        public void RemoveAllItem(string UserId)
+        {
+            var result = _shoppingCart.GetAll().Where(x => x.UserId == UserId).ToList();
+            foreach (var item in result)
+            {
+                _shoppingCart.Delete(item);
+            }
+                _shoppingCart.SaveChanges();
+        }
     }
 }

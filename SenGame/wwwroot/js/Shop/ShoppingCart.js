@@ -4,18 +4,17 @@ let btn_buy = document.querySelector(".Continue-Shopping")
 $(document).ready(function () {
     $('main').addClass("ShoppingCart d-md-flex f-md-flex position-relative")
     $('main').removeClass("container-fluid")
-    $('.DelAllItem').click(function () {
-        $('.Spopping-Select').html(' ')
-        $('.Shpopping-Price').text('')
-    })
     RecommendTemplate();
 })
 
-
-
-btn_buy.addEventListener('click', function () {
-    document.getElementById("form").submit();
+let btn_DelAllItem = document.querySelector('.DelAllItem')
+btn_DelAllItem.addEventListener('click', function () {
+    const url = `/Shop/DeleteAll`
+    fetch(url, {
+        method:"POST"
+    })
 })
+
 
 //推薦Template
 function RecommendTemplate() {

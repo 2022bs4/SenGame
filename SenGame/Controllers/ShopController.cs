@@ -43,7 +43,6 @@ namespace SenGame.Controllers
             TempData["actiontype"] = "shop";
             return View(result);
         }
-
         public IActionResult ProductMain(int id)
         {
             var result = _services.ProductMainText(id);
@@ -51,7 +50,7 @@ namespace SenGame.Controllers
         }
         //Json
         [HttpPost]
-        public IActionResult ProductDetailsJson(int id = 1)
+        public IActionResult ProductDetailsJson(int id)
         {
             var result = _services.ProductSwipper(id);
             TempData["actiontype"] = "shop";
@@ -72,11 +71,12 @@ namespace SenGame.Controllers
 
 
         //遊戲購物車
-        public IActionResult ShoppingCart(string UserId = "39f0f114-e6e0-4eb1-b3a0-2df9fd4b413c") 
+        public IActionResult ShoppingCart() 
         {
+            string UserId = "39f0f114-e6e0-4eb1-b3a0-2df9fd4b413c";
             // UserId = User.Identity.GetUserId();
 
-            var shoppingCartInformation = _ShopCartServices.ShoppingCarts(UserId);
+            var shoppingCartInformation = _ShopCartServices.GetShoppingCarts(UserId);
 
             var result = new List<ShoppingCartViewModel>();
 
@@ -112,14 +112,24 @@ namespace SenGame.Controllers
         //[ValidateAntiForgeryToken]
         public IActionResult AddShoppingCart([FromBody] ShoppingCartViewModel model)
         {
-
             string UserId = "39f0f114-e6e0-4eb1-b3a0-2df9fd4b413c";
             // UserId = User.Identity.GetUserId();
-
-            //_ShopCartServices.AddShopingCart(GameId,UserId);
+            var GameId = model.GameId;
+            _ShopCartServices.AddShopingCart(GameId, UserId);
             return Ok();
         }
 
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public IActionResult DeleteAll() 
+        {
+            string UserId = "39f0f114-e6e0-4eb1-b3a0-2df9fd4b413c";
+            // UserId = User.Identity.GetUserId();
+            _ShopCartServices.RemoveAllItem(UserId);
+
+            //return RedirectToAction(nameof(ShoppingCart));
+            return View("ShoppingCart");
+        }
 
         public IActionResult ProductRecommend()
         {
