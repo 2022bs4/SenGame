@@ -2,7 +2,7 @@
     //string url = (string)ViewContext.RouteData.Values["controller"];
     //string urlac = (string)ViewContext.RouteData.Values["action"];
     var a = TempData["actiontype"];
-    int i = 1;
+    
 
 
 
@@ -17,7 +17,7 @@
                     </button>
                     <ul class="list-group header-box-nav-content-tours">
                         <li class="list-tour-home" style="--clr:#f44336">
-                            <a href="#home">
+                            <a asp-controller="Game" asp-action="Game">
                                 <span class="icon">
                                     <ion-icon name="home-outline"></ion-icon>
                                 </span>
@@ -32,7 +32,7 @@
                                 <span>商店</span>
                             </a>
                             <ul class="menu " >
-                                <li><a href="~/Game/Game" style="--clr:#ffa500">首頁</a ></li >
+                                <li><a asp-controller="Shop" asp-action="ShoppingCart" style="--clr:#ffa500">購物車</a ></li >
                                 <li><a href="#">願望清單</a></li>
                             </ul>
                                 
@@ -46,32 +46,32 @@
                             </a>
                         </li>
                         <li class="list-tour-forum " style="--clr:#0fc70f" type="buttom">
-                            <a href="#forum">
+                            <a asp-controller="Community" asp-action="Index">
                                 <span class="icon">
                                     <ion-icon name="chatbubbles-outline"></ion-icon>
                                 </span>
                                 <span>論壇</span>
                             </a>
                             <ul class="menu" >
-                                <li><a href="~/Community/Index">首頁</a></li>
-                                <li><a href="~/Community/Forum">討論區</a></li>
-                                <li><a href="~/Articles/Index">文章</a></li>
+                                <li><a asp-controller="Community" asp-action="Index">首頁</a></li>
+                                <li><a asp-controller="Community" asp-action="Forum">討論區</a></li>
+                                <li><a asp-controller="Articles" asp-action="Index">文章</a></li>
                             </ul>
                         </li>
                         <li class="list-tour-friend " style="--clr:#2196f3">
-                            <a href="/friend/AddFriend">
+                            <a asp-controller="friend" asp-action="AddFriend">
                                 <span class="icon">
                                     <ion-icon name="people-outline"></ion-icon>
                                 </span>
                                 <span>好友</span>
                             </a>
                             <ul class="menu" >
-                                <li><a href="~/Friend/Chat">聊天</a></li>
+                                <li><a asp-controller="Community" asp-action="Chat">聊天</a></li>
                                 
                             </ul>
                         </li>
                         <li class="list-tour-customerservice" style="--clr:#115095" >
-                            <a href="~/Home/CustomerService">
+                            <a asp-controller="Home" asp-action="CustomerService">
                                 <span class="icon">
                                     <ion-icon name="headset-outline"></ion-icon>
                                 </span>
@@ -79,7 +79,7 @@
                             </a>
                         </li>
                         <li class="list-tour-about" style="--clr:#b145e9" >
-                            <a href="~/Home/About">
+                            <a asp-controller="Home" asp-action="About">
                                 <span class="icon">
                                     <ion-icon name="help-circle-outline"></ion-icon>
                                 </span>
@@ -92,7 +92,7 @@
             <div class="header-box-tool">
                 <div class="nav-toggler"></div>
                 <ion-icon class="sidebar-toggler" name="arrow-forward-outline"></ion-icon>
-                <a href="#LOGO" class="navbar-brand logo h1">森 GAME</a>
+                <a asp-controller="Game" asp-action="Game" class="navbar-brand logo h1">森 GAME</a>
                 <form class="form-inline search-form">
                     <input class="form-control " type="search" placeholder="搜尋">
                     <button class="btn search-form-btn" type="button"></button>

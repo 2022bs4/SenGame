@@ -92,7 +92,7 @@ namespace SenGame.Controllers
                     Created = item.Created,
                 });
             }
-
+            TempData["actiontype"] = "shop";
             return View(result);
         }
 
