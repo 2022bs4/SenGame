@@ -40,13 +40,22 @@ namespace SenGame.Controllers
                     DisscountTake = item.DisscountTake,
                 });
             }
+            TempData["actiontype"] = "shop";
             return View(result);
         }
 
         public IActionResult ProductMain(int id)
-        { 
+        {
             var result = _services.ProductMainText(id);
             return Ok(result);
+        }
+        //Json
+        [HttpPost]
+        public IActionResult ProductDetailsJson(int id = 1)
+        {
+            var result = _services.ProductSwipper(id);
+            TempData["actiontype"] = "shop";
+            return Json(result);
         }
 
         public IActionResult ProductSwipper(int id)
