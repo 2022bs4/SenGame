@@ -1,38 +1,29 @@
-﻿let btn_buy = document.querySelector(".Continue-Shopping")
+﻿////const { error } = require("jquery");
+
+let btn_buy = document.querySelector(".Continue-Shopping")
 
 $(document).ready(function () {
     $('main').addClass("ShoppingCart d-md-flex f-md-flex position-relative")
     $('main').removeClass("container-fluid")
-    $('.DelAllItem').click(function () {
-        $('.Spopping-Select').html(' ')
-        $('.Shpopping-Price').text('')
-    })
-        //ShoppingTemplate()
     RecommendTemplate();
 })
 
-
-
-
-btn_buy.addEventListener('click', function () {
-    document.getElementById("form").submit();
+let btn_DelAllItem = document.querySelector('.DelAllItem')
+btn_DelAllItem.addEventListener('click', function () {
+    const url = `/Shop/DeleteAll`
+    fetch(url, {
+        method:"POST"
+    })
+        .then(response => {
+            alert('已移除所有遊戲');
+            window.location.reload();
+        })
+        .catch(error => {
+            alert(`Error : ${error}`)
+        })
 })
 
-// 之後要動態產生
-function ShoppingTemplate() {
-    let Spopping_Select = document.querySelector('.Spopping-Select')
-    let boxClone1 = Spopping_Select_Template.content.cloneNode(true)
-    let item = boxClone1.querySelector('.Game-Shopping-Item')
-    let boxImg = boxClone1.querySelector('img')
-    let boxText = boxClone1.querySelector('.Game-Price')
-    let btn = boxClone1.querySelector('button');
-    btn.addEventListener('click', function () {
-        Spopping_Select.removeChild(item)
-    })
-    boxText.classList.add('Game-Price')
-    boxImg.classList.add("First_Template_img")
-    Spopping_Select.append(boxClone1)
-}
+
 //推薦Template
 function RecommendTemplate() {
     const ProductRecommend = "/Shop/ProductRecommend"

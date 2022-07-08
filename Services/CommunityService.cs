@@ -11,10 +11,7 @@ namespace Services
 {
     public class CommunityService : BaseService<Forum>,ICommunityService
     {
-        private readonly IRepository<MyForum> _myForum;
-        private readonly IRepository<UserModel> _User;
-        private readonly IRepository<Game> _game;
-        private readonly IRepository<GameMedium> _gamemedium;
+ 
 
         public CommunityService(IRepository<Forum> repository, IRepository<MyForum> myForum, IRepository<UserModel> User, IRepository<GameMedium> gamemedium, IRepository<Game> game)
 		: base(repository)

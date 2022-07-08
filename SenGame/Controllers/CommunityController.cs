@@ -5,6 +5,7 @@ using System;
 using Services;
 using SqlModels.ViewModels;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SenGame.Controllers
 {
@@ -22,20 +23,21 @@ namespace SenGame.Controllers
         public IActionResult Index()
         {
             var articles = _service.Article();
-            var Articles = new List<CommunityViewModel>();
-            foreach (var item in articles)
+
+            var result = new CommunityIndexViewModel()
             {
-                Articles.Add(new CommunityViewModel
+                GameList = articles.Select(item => new CommunityIndexViewModel.GameData
                 {
                     GameId = item.GameId,
                     GameName = item.GameName,
                     GameIntroduction = item.GameIntroduction,
                     MediaUrl = item.MediaUrl
+                }).ToList()
+            };
 
-                });
-            }
+      
             TempData["actiontype"] = "forum";
-            return View(Articles);
+            return View(result);
         }
         public IActionResult ComomunityDynamicwall()
         {

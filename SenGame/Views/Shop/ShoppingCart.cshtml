@@ -1,76 +1,43 @@
-﻿@model List<ShoppingCartViewModel>
-
+﻿@*@model IEnumerable<ShoppingCartViewModel>
+@{
+    decimal TotalMoney = 0;
+}
 @section Css{
      <link rel="stylesheet" href="/css/shop/ShoppingCart.css" asp-append-version="true"/>
 }
         <!--  -->
         <section class="Main-Content col-12 col-md-8 p-0">
             <p class="col-12 pt-3 title">您的購物車</p>
-            <div class="Shopping-Area col-12 d-flex flex-wrap p-0">
+            <div class="@(Model.Count()==0?"d-none":"") Shopping-Area col-12 d-flex flex-wrap p-0">
                 <!-- 動態 -->
                 <div class="Spopping-Select col-12  d-flex flex-wrap pb-2">
                     @foreach(var m in Model)
                     {
-                        <div class="col-12 d-md-flex justify-content-md-between  Game-Shopping-Item">
-                            <div class="d-md-flex col-md-6 p-md-0 px-0">
-                                <img src="@Html.Raw(m.GameUrl)" alt="@Html.Raw(m.GameName)" class="Template_img w-100">
-                            </div>
-                            <div class="col-md-6 Game-Price p-0 ">
-                                <h2 class="Select-Game-Title pl-md-3 d-block">@Html.Raw(m.GameName)</h2>
-                                <div class="col-md-12 p-0 pl-md-3  d-flex justify-content-between">
-                                    <p class=" d-inline-block font-weight-bold">遊戲價格:</p>
-                                    <p class="Select-Item-Price">@Html.Raw(m.GamePrice)</p>
-                                </div>
-                                <button class="Remove_btn" asp-action="/Shop/RemoveShoppingItem/@m.GameId" >移除</button>
-                            </div>
-                        </div>
-                    }
+                        <partial name="_CartItemPartil" model="m"/>
+                        TotalMoney += m.GamePrice;
+                    }  
                 </div>
-
                 <div class="Shopping-Select-Sum-Pric col-12 d-flex flex-wrap px-0 pt-2">
                     <div class="d-flex justify-content-between col-12 Shopping-Checkout">
                         <p class="">估計總額 :</p>
-                        <p class="Shpopping-Price">NT$ </p>
+                        <p class="Shpopping-Price">NT$ @TotalMoney</p>
                     </div>
                 </div>
             </div>
             <div class="Shopping-ElseFunction col-12 d-flex flex-row-reverse">
                 <button class="btn DelAllItem">移除所有項目</button>
-                <button class="btn DelAllItem mr-2">繼續購物</button>
-                <button class="Continue-Shopping">結帳</button>
+                <a asp-controller="Game" asp-action="Game" class="btn mr-2 Continue-Shopping">繼續購物</a>
+                <button class="checkout">結帳</button>
             </div>
         </section>
         <!-- 推薦區 -->
         <section class="Recommend col-12 col-md-3  d-flex flex-wrap  align-content-start pt-4 ">
         </section>
 
-@*<section class="d-none">
-    <form id="form" name="form" action="https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5" method="POST">
-		@foreach(var key in @Model.Keys.ToList())
-		{
-			@(key)<input type="text" name="@key" value="@Model[key]" /> <br/>
-		}
-	</form>
-</section>*
+
 
     
 
-    <!-- 購物車單項產品 -->
-@*    <template id="Spopping_Select_Template">
-        <div class="col-12 d-md-flex justify-content-md-between  Game-Shopping-Item">
-            <div class="d-md-flex col-md-6 p-md-0 px-0">
-                <img src="" alt="" class="Template_img w-100">
-            </div>
-            <div class="col-md-6 Game-Price p-0 ">
-                <h2 class="Select-Game-Title pl-md-3 d-block    ">Crusader Kings III</h2>
-                <div class="col-md-12 p-0 pl-md-3  d-flex justify-content-between">
-                    <p class=" d-inline-block font-weight-bold">遊戲價格:</p>
-                    <p class="Select-Item-Price">NT$ 1000</p>
-                </div>
-                <button class="Remove_btn">移除</button>
-            </div>
-        </div>
-    </template>*@
 
     <!-- 遊戲推薦 -->
     <template id="Shopping_Recommend" class="d-flex flex-wrap">
@@ -88,4 +55,4 @@
 
 @section Scripts{
     <script src="~/js/Shop/ShoppingCart.js"></script>
-}
+}*@

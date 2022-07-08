@@ -33,6 +33,7 @@ namespace SqlModels.Models
         public string Developer { get; set; }
         public string Marker { get; set; }
 
+
         public virtual ICollection<CustomerService> CustomerServices { get; set; }
         public virtual ICollection<Forum> Forums { get; set; }
         public virtual ICollection<GameDiscount> GameDiscounts { get; set; }

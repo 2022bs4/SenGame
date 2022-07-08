@@ -607,7 +607,11 @@ namespace SqlModels.Data
 
                 entity.HasIndex(e => e.UserId, "IX_ShoppingCart_UserId");
 
-                entity.Property(e => e.ShoppingCartId).ValueGeneratedNever();
+                //entity.Property(e => e.ShoppingCartId).ValueGeneratedNever();
+                
+                //測試自動識別?
+                entity.Property(e => e.UserId).IsRequired();
+
 
                 entity.Property(e => e.AddTime).HasColumnType("datetime");
 
