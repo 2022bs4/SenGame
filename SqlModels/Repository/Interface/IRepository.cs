@@ -14,9 +14,9 @@ namespace SqlModels.Repository.Interface
         //Remove Delete
         void Delete(TEntity TEntity);
         //use predicate with variable filter TEntity
-        IQueryable<TEntity> FindBy(Expression<Func<TEntity, bool>> predicate);
+        IEnumerable<TEntity> FindBy(Expression<Func<TEntity, bool>> predicate);
         //Get All TEntity return IQueryable's Collections
-        IQueryable<TEntity> GetAll();
+        IEnumerable<TEntity> GetAll();
         //Get TEntity whit ID return IQueryable's Collections
         TEntity GetById(int _Id);
         //Save to TEntitybase

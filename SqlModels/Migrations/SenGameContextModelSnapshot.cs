@@ -753,10 +753,10 @@ namespace SqlModels.Migrations
                     b.Property<int>("ShoppingCartId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("AddTime")
+                    b.Property<DateTime>("AddTime")
                         .HasColumnType("datetime");
 
-                    b.Property<int?>("GameId")
+                    b.Property<int>("GameId")
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
@@ -1333,7 +1333,9 @@ namespace SqlModels.Migrations
                     b.HasOne("SqlModels.Models.Game", "Game")
                         .WithMany("ShoppingCarts")
                         .HasForeignKey("GameId")
-                        .HasConstraintName("FK_ShoppingCart_Game");
+                        .HasConstraintName("FK_ShoppingCart_Game")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SqlModels.Models.UserModel", "User")
                         .WithMany("ShoppingCarts")

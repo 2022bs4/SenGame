@@ -10,15 +10,20 @@ let logo = document.querySelector(".logo");
 let sidenavbaropen = document.querySelector(".sidebar-toggler");
 let main = document.querySelector("main");
 let navbcg = document.querySelector(".header-box-nav");
-let controllertype = document.querySelector(".controllertype");
-let actiontype = document.querySelector(".actiontype");
+//sidebar功能
+let controllertype = document.querySelector(".controllertype").getAttribute("controller");
+
+
+
+/*let actiontype = document.querySelector(".actiontype");*/
 
 //傳入內容區塊做畫面效果
 //傳入內容區塊做畫面效果
 function Setnavbar(content) {
     Addtoggle();//添加選單開關
     AddNavClick();//添加選單的click效果
-    iconlight()
+    iconlight();
+    
 
     function Addtoggle() {
         const toggler = document.querySelector('.nav-toggler');
@@ -44,34 +49,11 @@ function Setnavbar(content) {
         }
     }
     function iconlight() {
-        let controller = controllertype.getAttribute("controller").toLowerCase();
-        let action = actiontype.getAttribute("ac").toLowerCase();
-        if (controller == "home") {
-            if (action == "index") {
-                document.querySelector(".list-tour-home").classList.add("active")
-            }
-            else if (action == "customerservice") {
-                document.querySelector(".list-tour-customerservice").classList.add("active")
-            }
-            else if (action == "about") {
-                document.querySelector(".list-tour-about").classList.add("active")
-            }
-        }
-        else if (controller == "community") {
-            document.querySelector(".list-tour-forum").classList.add("active")
-        }
-        else if (controller == "game") {
-            document.querySelector(".list-tour-game").classList.add("active")
-        }
-        else if (controller == "friend") {
-            if (action == "chat" || "addfriend") {
-                document.querySelector(".list-tour-friend").classList.add("active")
-            }
-        }
-        else if (controller == "shop") {
-            document.querySelector(".list-tour-shop").classList.add("active")
-        }
+        /*let controller = controllertype.getAttribute("controller");*/
+        document.querySelector(".list-tour-" + controllertype).classList.add("active")
+        /*var a = document.querySelector(".list-tour-" + controllertype);*/
         
+
     }
 }
 //input點擊後射出來

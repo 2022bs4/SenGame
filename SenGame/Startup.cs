@@ -19,8 +19,10 @@ using SqlModels.Repository.Interface;
 using Services;
 using Services.Interface;
 using Services.ShopSevice;
+
 using Microsoft.Extensions.FileProviders;
 using System.IO;
+
 
 namespace SenGame
 {
@@ -44,7 +46,9 @@ namespace SenGame
                 .AddEntityFrameworkStores<SenGameContext>();
             services.AddControllersWithViews();
             services.AddScoped(typeof(IRepository<>),typeof(GenericRepository<>));
+            
             services.AddScoped(typeof(IBaseService<>),typeof(BaseService<>));
+            
             services.AddScoped<ICommunityService,CommunityService>();
             services.AddScoped<ShopServices>();
             services.AddScoped<ShopCartServices>();
@@ -61,7 +65,7 @@ namespace SenGame
                 options.AppSecret = "f3ccc3f70ef3b114a2d0fce1562be7c1";
                 options.AccessDeniedPath = "/AccessDeniedPathInfo";
             });
-
+            services.AddSwaggerGen();
         }
 
      
@@ -78,6 +82,13 @@ namespace SenGame
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            //Swagger
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Sen API V1");
+            });
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -99,7 +110,6 @@ namespace SenGame
 
             app.UseAuthentication();
             app.UseAuthorization();
-     
 
             app.UseEndpoints(endpoints =>
             {

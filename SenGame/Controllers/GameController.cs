@@ -11,6 +11,7 @@ namespace SenGame.Controllers
     {
         public IActionResult Index()
         {
+            
             return View();
         }
 
@@ -213,6 +214,7 @@ namespace SenGame.Controllers
 
 
 
+            TempData["actiontype"] = "home";
 
             return View(vm);
         }

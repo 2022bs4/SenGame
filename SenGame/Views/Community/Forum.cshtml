@@ -1,14 +1,14 @@
 ﻿@{
     ViewData["Title"] = "討論區";
 }
-@model IQueryable<Forum>
+@model IEnumerable<Forum>
 @section Css{
     <link rel="stylesheet" href="~/css/Forum/Forum.css">
 }
     <div class="page-nav">
         <ul class="list-unstyled">
-            <li class="active">討論區</li>
-            <li class="">我的看板</li>
+           <a> <li class="active">討論區</li></a>
+            <a href="~/Community/MyForum"><li class="">我的看板</li></a>
             <li class="">動態牆</li>
         </ul>
         <div class="page-nav-box">
@@ -37,7 +37,7 @@
         @foreach (var item in Model)
     {
         <div class="col">
-            <a href="">
+            <a href="~/Articles/Details/@item.ForumId">
                 <div class="card">
                     <img src="@item.Banner" class="card-img-top" alt="...">
                     <div class="card-body">

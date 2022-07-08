@@ -6,9 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\**" />
     <Compile Remove="Views\Shop\NewFolder\**" />
+    <Content Remove="Pages\**" />
     <Content Remove="Views\Shop\NewFolder\**" />
+    <EmbeddedResource Remove="Pages\**" />
     <EmbeddedResource Remove="Views\Shop\NewFolder\**" />
+    <None Remove="Pages\**" />
     <None Remove="Views\Shop\NewFolder\**" />
   </ItemGroup>
 
@@ -29,6 +33,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
     <PackageReference Include="MimeKit" Version="3.3.0" />
     <PackageReference Include="SendGrid" Version="9.28.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.21.0" />
   </ItemGroup>
 
@@ -73,7 +78,6 @@
 
   <ItemGroup>
     <Folder Include="HtmlPages\" />
-    <Folder Include="Pages\" />
     <Folder Include="wwwroot\img\" />
     <Folder Include="wwwroot\UploadFiles\" />
   </ItemGroup>
