@@ -1,12 +1,12 @@
-﻿@model List<ProductDetailsViewModel>
+﻿@*@model List<ProductDetailsViewModel>
 @using System.Linq;
 
 
 @section Css{
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <link rel="stylesheet" href="/css/shop/ProductDetails.css" asp-append-version="true"/>
-}
-        <!-- 遊戲主要介紹 -->
+}*@
+@*        <!-- 遊戲主要介紹 -->
         <section class="MainGame-Datial col-12 p-0 d-md-flex flex-md-wrap justify-content-md-between">
             <!-- 遊戲名稱、開發商、開發人員、發行日期、簡介 動態載入 -->
             <div class="Game-Introduce d-md-flex flex-md-column justify-content-md-between mb-4 mb-md-0 mt-md-2">
@@ -72,7 +72,7 @@
                 </div>
                 <span class="System-text">©2020-2022 and published by Paradox Interactive AB, CRUSADER KINGS and PARADOX INTERACTIVE are trademarks and/or registered trademarks of Paradox Interactive AB in Europe, the U.S., and other countries. All other trademarks, logos, and copyrights are the property of their respective owners.</span>
             </div>
-        </section>
+        </section>*@
 @*        <section class="Video-Area">
             <video src="@Model[0]" poster="" controls="true"></video>
             <i class="fa-solid fa-xmark Video-Clear"></i>
@@ -81,14 +81,14 @@
 
 
     <!--  -->
-   <template id="GamePictureText">
+@*   <template id="GamePictureText">
         <div class="text">
             <p></p>
         </div>
-    </template>
+    </template>*@
     
     @*系統*@
-    <template id="GameSystem">
+@*    <template id="GameSystem">
         <div class="System-box Windows col-md-6 pl-md-5">
             <span class="mb-3 text-danger System-Suggest"></span>
             <ul class="p-0 ">
@@ -113,10 +113,10 @@
                 </div>
             </div>
         </div>
-    </template>
+    </template>*@
 
-@section Scripts{
+@*@section Scripts{
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="~/js/shop/ProductDetails.js"></script>
-}
+}*@
