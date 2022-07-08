@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SqlModels.FakeDate;
 using SqlModels.Models;
@@ -31,8 +32,7 @@ namespace SenGame.Controllers
         {
             new FriendGroup{FriendGoupId=1,GroupName="高中同學"},
         };
-        List<FriendViewModel> _fvm = new List<FriendViewModel>();
-        List<Test> tests = new List<Test>();
+
         
       
         public IActionResult Index()
@@ -43,45 +43,20 @@ namespace SenGame.Controllers
         [HttpGet]
         public IActionResult Chat(string id)
         {
-            var User = from u in user
+            id = User.Identity.GetUserId();
+            var TheUser = from u in user
                        join ug in usergroup on u.Id equals ug.UserId
                        join fg in friendgroup on ug.FriendGroupId equals fg.FriendGoupId
-                       select new { u.Id,u.UserName, u.UserPicture, fg.GroupName };
-            var AllFriends = User.Where(x => x.Id != id).Select(x => new { x.UserName, x.UserPicture, x.GroupName });
+                       where u.Id != id
+                       group u by fg.GroupName into allgroup
+                       select allgroup;
+            
 
        
-            foreach(var friends in AllFriends)
-            {
-               
-                _fvm.Add(new FriendViewModel
-                {
-                    Name=friends.UserName,
-                    Photo=friends.UserPicture,
-                    GroupName=friends.GroupName,
-                  
-                });
-            }
-            
-            var frienlist = _fvm.GroupBy(g => g.GroupName);
-            foreach(var i in frienlist)
-            {
-                tests.Add(new Test
-                {
-                    GroupName = i.Key
-                });
-                foreach(var x in i)
-                {
-                    tests.Add(new Test
-                    {
-                        Name = x.Name,
-                        Photo = x.Photo,
-                    });
-                }
-            }
 
 
 
-            return View(tests);
+            return View();
         }
         [HttpPost]
         public IActionResult Chat()
