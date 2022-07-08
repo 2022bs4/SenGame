@@ -29,19 +29,19 @@ namespace Services.ShopSevice
             foreach (var item in game)
             {
                 var picture = _gameMedium.GetAll().Where(x=>x.GameId==item.GameId && x.InstructionType==2&&x.Instruction==1);
-                var gameInformation = _game.GetById(item.GameId);
-                foreach (var pic in picture)
-                {
-                    result.Add(new ShoppingCartDTO
-                    {
-                        GameId = gameInformation.GameId,
-                        GameName = gameInformation.GameName,
-                        GameUrl = pic.MediaUrl,
-                        GamePrice = gameInformation.GamePrice,
-                        Created = item.AddTime,
-                    });
-                }
-                
+                var gameInformation = _game.GetById((int)item.GameId);
+                //foreach (var pic in picture)
+                //{
+                //    result.Add(new ShoppingCartDTO
+                //    {
+                //        GameId = gameInformation.GameId,
+                //        GameName = gameInformation.GameName,
+                //        GameUrl = pic.MediaUrl,
+                //        GamePrice = gameInformation.GamePrice,
+                //        Created = item.AddTime,
+                //    });
+                //}
+
             }
 
 
