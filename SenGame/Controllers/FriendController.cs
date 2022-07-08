@@ -47,7 +47,9 @@ namespace SenGame.Controllers
             var TheUser = from u in user
                        join ug in usergroup on u.Id equals ug.UserId
                        join fg in friendgroup on ug.FriendGroupId equals fg.FriendGoupId
-                       select new { u.Id,u.UserName, u.UserPicture, fg.GroupName };
+                       where u.Id != id
+                       group u by fg.GroupName into allgroup
+                       select allgroup;
             
 
        
