@@ -48,8 +48,8 @@ namespace SenGame.Controllers
             var result = _services.ProductMainText(id);
             return Ok(result);
         }
+
         //Json
-        [HttpPost]
         public IActionResult ProductDetailsJson(int id)
         {
             var result = _services.ProductSwipper(id);
@@ -96,7 +96,17 @@ namespace SenGame.Controllers
             return View(result);
         }
 
-
+        [HttpPost]
+        //fetch防跨網站偽造要求研究中
+        //[ValidateAntiForgeryToken]
+        public IActionResult AddShoppingCart([FromBody] ShoppingCartViewModel model)
+        {
+            string UserId = "39f0f114-e6e0-4eb1-b3a0-2df9fd4b413c";
+            // UserId = User.Identity.GetUserId();
+            var GameId = model.GameId;
+            var result = _ShopCartServices.AddShopingCart(GameId, UserId);
+            return Content(result);
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -107,17 +117,7 @@ namespace SenGame.Controllers
         }
 
 
-        [HttpPost]
-        //fetch防跨網站偽造要求研究中
-        //[ValidateAntiForgeryToken]
-        public IActionResult AddShoppingCart([FromBody] ShoppingCartViewModel model)
-        {
-            string UserId = "39f0f114-e6e0-4eb1-b3a0-2df9fd4b413c";
-            // UserId = User.Identity.GetUserId();
-            var GameId = model.GameId;
-            _ShopCartServices.AddShopingCart(GameId, UserId);
-            return Ok();
-        }
+
 
         [HttpPost]
         //[ValidateAntiForgeryToken]

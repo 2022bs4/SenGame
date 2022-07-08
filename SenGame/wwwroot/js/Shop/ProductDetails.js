@@ -33,11 +33,13 @@ function BtnFunction() {
         })
 
         fetch(request)
-            .then(response => {
-                alert("購買成功");
+            .then(response => { response.json() })
+            .then(result => {
+                console.log(request)
+                //alert(result)
             })
-            .catch(ex => {
-                alert(`${ex}`)
+            .catch(error => {
+                alert(`Error : ${error}`)
             })
     })
 

@@ -1,4 +1,5 @@
-﻿
+﻿////const { error } = require("jquery");
+
 let btn_buy = document.querySelector(".Continue-Shopping")
 
 $(document).ready(function () {
@@ -13,6 +14,13 @@ btn_DelAllItem.addEventListener('click', function () {
     fetch(url, {
         method:"POST"
     })
+        .then(response => {
+            alert('已移除所有遊戲');
+            window.location.reload();
+        })
+        .catch(error => {
+            alert(`Error : ${error}`)
+        })
 })
 
 

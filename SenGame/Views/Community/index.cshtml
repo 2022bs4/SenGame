@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CommunityViewModel>
+﻿@model CommunityIndexViewModel
 @{
     Layout = "_Layout";
 }
@@ -48,7 +48,7 @@
                 <div class="commuity-body-popularrticles ">
                     <h3>熱門文章</h3>
                     <div class="community-body-forum">
-                        @foreach(var item in Model)
+                        @foreach(var item in Model.GameList)
                         {
                             <div class="forumcard ">
                                 <div class="forumcard-img col-md-5 col-sm-5 ">

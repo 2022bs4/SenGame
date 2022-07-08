@@ -21,6 +21,7 @@ namespace Services.ShopSevice
             this._game = game;
             this._gameMedium = gameMedium;
         }
+        
         public List<ShoppingCartDTO> GetShoppingCarts(string UserId)
         {
             //string UserId = "39f0f114-e6e0-4eb1-b3a0-2df9fd4b413c";
@@ -48,7 +49,7 @@ namespace Services.ShopSevice
             return result;
         }
 
-        public void AddShopingCart(int gameId, string UserID)
+        public string AddShopingCart(int gameId, string UserID)
         {
             var gmae = _game.GetById(gameId);
             var result = new ShoppingCart()
@@ -57,9 +58,27 @@ namespace Services.ShopSevice
                 UserId = UserID,
                 AddTime = DateTime.UtcNow,
             };
-            _shoppingCart.Create(result);
-            _shoppingCart.SaveChanges();
+            var IsNull = _shoppingCart.GetAll().Where(x => x.GameId == result.GameId && x.UserId == result.UserId).FirstOrDefault();
+
+            if (IsNull == null)
+            {
+                _shoppingCart.Create(result);
+                _shoppingCart.SaveChanges();
+                return "已幫您新增至購物車";
+            }
+
+            if (IsNull.GameId == result.GameId)
+            {
+                string answer = "您已加入購物車 !";
+                return answer;
+            }
+            else
+            {
+                _shoppingCart.Create(result);
+                _shoppingCart.SaveChanges();
+                return "已幫您新增至購物車";
         }
+    }
 
         public void RemveShoppingCartItem(int GameId , string UserId)
         {

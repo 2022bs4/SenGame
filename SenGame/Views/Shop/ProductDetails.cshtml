@@ -24,7 +24,7 @@
                 <div class="Game-tag">
                     @foreach(var tag in Model)
                     {
-                        <a class="btn tag" asp-action="#">@Html.Raw(tag.TypleName)</a>
+                        <a class="btn tag" asp-controller="Game" asp-action="Game_Category">@Html.Raw(tag.TypleName)</a>
                     }
                 </div>
             </div>

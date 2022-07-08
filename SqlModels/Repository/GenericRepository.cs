@@ -8,68 +8,49 @@ using System.Collections.Generic;
 
 namespace SqlModels.Repository
 {
-    public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : class
+    public class GenericRepository : IRepository
     {
-        private SenGameContext _context;
+        private SenGameContext _DbContext;
+
         public GenericRepository(SenGameContext context)
         {
-            this._context = context;
+            this._DbContext = context;
         }
+        public SenGameContext DbContext { get { return _DbContext; } }
+
+        public void Create<TEntity>(TEntity entity) where TEntity : class
+        {
+            _DbContext.Entry(entity).State = EntityState.Added;
+        }
+
+        public void Delete<TEntity>(TEntity entity) where TEntity : class
+        {
+            _DbContext.Entry(entity).State = EntityState.Deleted;
+        }
+
         public void Dispose()
         {
-            this.Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-        //連接操作後進行手動的回收
-        public void Dispose(bool disposing)
-        {
-            //如果能被回收釋放
-            if (disposing)
-            {
-                //如果有要回收釋放的資源
-                if (_context != null)
-                {
-                    //調用方法回收
-                    _context.Dispose();
-                    _context = null;
-                }
-            }
-        }
-        public int SaveChanges()
-        {
-            int result = _context.SaveChanges();
-            return result;
+            
         }
 
-        public void Create(TEntity TEntity)
+        public IQueryable<TEntity> FindBy<TEntity>() where TEntity : class
         {
-            _context.Entry(TEntity).State = EntityState.Added;
-            _context.Set<TEntity>().Add(TEntity);
+            throw new NotImplementedException();
         }
 
-        public void Update(TEntity TEntity)
+        public IQueryable<TEntity> GetAll<TEntity>() where TEntity : class
         {
-            _context.Entry(TEntity).State = EntityState.Modified;
+            return _DbContext.Set<TEntity>();
         }
 
-        public void Delete(TEntity TEntity)
+        public void SaveChanges()
         {
-            _context.Entry(TEntity).State = EntityState.Deleted;
+             _DbContext.SaveChanges();
         }
 
-        public IEnumerable<TEntity> FindBy(Expression<Func<TEntity, bool>> predicate)
+        public void Update<TEntity>(TEntity entity) where TEntity : class
         {
-            return _context.Set<TEntity>().Where(predicate);
-        }
-
-        public IEnumerable<TEntity> GetAll()
-        {
-            return _context.Set<TEntity>();
-        }
-
-        public TEntity GetById(int _Id)
-        {
-            return _context.Set<TEntity>().Find(_Id);
+            _DbContext.Entry(entity).State = EntityState.Modified;
         }
     }
 }
