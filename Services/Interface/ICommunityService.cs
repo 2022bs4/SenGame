@@ -11,8 +11,8 @@ namespace Services.Interface
 {
     public interface ICommunityService : IBaseService<Forum>
     {
-        List<Swipers> Swipers();
-        List<CommunityDTO> Article();
+        public List<Swipers> Swipers();
+        public List<CommunityDTO> Article();
         //查詢使用者的討論區
         public IEnumerable<Forum> GetUserForum(string name);
 

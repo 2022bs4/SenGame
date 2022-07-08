@@ -1,36 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Services.Interface;
+﻿using Services.Interface;
 using SqlModels.DTOModels;
 using SqlModels.Models;
 using SqlModels.Repository.Interface;
+using System.Collections.Generic;
+using System.Linq;
 namespace Services
 {
-    public class CommunityService : BaseService<Forum>,ICommunityService
+    public class CommunityService : BaseService<Forum>, ICommunityService
     {
         private readonly IRepository<MyForum> _myForum;
-        private readonly IRepository<UserModel> _User;
+        private readonly IRepository<UserModel> _user;
         private readonly IRepository<Game> _game;
         private readonly IRepository<GameMedium> _gamemedium;
 
-        public CommunityService(IRepository<Forum> repository, IRepository<MyForum> myForum, IRepository<UserModel> User, IRepository<GameMedium> gamemedium, IRepository<Game> game)
-		: base(repository)
+        public CommunityService(
+            IRepository<Forum> repository,
+            IRepository<MyForum> myForum, 
+            IRepository<UserModel> user,
+            IRepository<GameMedium> gamemedium,
+            IRepository<Game> game) : base(repository)
         {
             this._myForum = myForum;
-            this._User = User;
+            this._user = user;
             this._game = game;
             this._gamemedium = gamemedium;
         }
         public IEnumerable<Forum> GetUserForum(string _name)
         {
-            var id = _User.GetAll().First(x => x.UserName == _name).UserId;
-            var ids = _myForum.FindBy(x => x.UserId == id.ToString()).Select(x=>x.ForumId);
-            List<Forum> data=new();
-            foreach (var item in ids) { 
-                data.Add(_repository.GetById(item)) ;
+            var id = _user.GetAll().First(x => x.UserName == _name).UserId;
+            var ids = _myForum.FindBy(x => x.UserId == id.ToString()).Select(x => x.ForumId);
+            List<Forum> data = new();
+            foreach (var item in ids)
+            {
+                data.Add(_repository.GetById(item));
             }
             return data.AsEnumerable();
         }
