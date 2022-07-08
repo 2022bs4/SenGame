@@ -9,12 +9,14 @@ using SqlModels.DTOModels;
 
 namespace Services.Interface
 {
-    public interface ICommunityService : IBaseService<Forum>
+    public interface ICommunityService : IBaseService
     {
+        //請打註解
         public List<Swipers> Swipers();
+        //請打註解
         public List<CommunityDTO> Article();
         //查詢使用者的討論區
-        public IEnumerable<Forum> GetUserForum(string name);
+        public IQueryable<Forum> GetUserForum(string name);
 
     }
 }

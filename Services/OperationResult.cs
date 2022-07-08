@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Services
 {
+    //自定義回傳格式
     public class OperationResult
     {
         public bool IsSuccessful { get; set; }

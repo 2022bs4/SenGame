@@ -6,38 +6,23 @@ using System.Collections.Generic;
 using System.Linq;
 namespace Services
 {
-    public class CommunityService : BaseService<Forum>, ICommunityService
+    public class CommunityService : BaseService, ICommunityService
     {
- 
-
-        public CommunityService(
-            IRepository<Forum> repository,
-            IRepository<MyForum> myForum, 
-            IRepository<UserModel> user,
-            IRepository<GameMedium> gamemedium,
-            IRepository<Game> game) : base(repository)
+        public CommunityService(IRepository repository) : base(repository)
         {
-            this._myForum = myForum;
-            this._user = user;
-            this._game = game;
-            this._gamemedium = gamemedium;
         }
-        public IEnumerable<Forum> GetUserForum(string _name)
+        public IQueryable<Forum> GetUserForum(string _name)
         {
-            var id = _user.GetAll().First(x => x.UserName == _name).UserId;
-            var ids = _myForum.FindBy(x => x.UserId == id.ToString()).Select(x => x.ForumId);
-            List<Forum> data = new();
-            foreach (var item in ids)
-            {
-                data.Add(_repository.GetById(item));
-            }
-            return data.AsEnumerable();
+            var id = Repository.FindBy<UserModel>(x => x.UserName == _name).First().UserId;
+            var ids = Repository.FindBy<MyForum>(x => x.UserId == id.ToString()).Select(x => x.ForumId);
+            var data = Repository.FindBy<Forum>(x => ids.Contains(x.ForumId));
+            return data;
         }
 
         public List<CommunityDTO> Article()
         {
-            var game = _game.GetAll();
-            var gamemedium = _gamemedium.GetAll().Where(i => i.InstructionType == 2 && i.Instruction == 1);
+            var game = Repository.GetAll<Game>();
+            var gamemedium = Repository.GetAll<GameMedium>().Where(i => i.InstructionType == 2 && i.Instruction == 1);
             var article = game.Join(gamemedium, g => g.GameId, i => i.GameId, (g, s) => new { g.GameId, s.MediaUrl, g.GameName, g.GameIntroduction });
 
             var articlelist = new List<CommunityDTO>();
@@ -51,7 +36,6 @@ namespace Services
                     MediaUrl = item.MediaUrl
 
                 });
-
             }
             return articlelist;
         }
@@ -60,7 +44,7 @@ namespace Services
 
         public List<Swipers> Swipers()
         {
-            var img = _gamemedium.GetAll().Where(g => g.Instruction == 1 && g.InstructionType == 1);
+            var img = Repository.GetAll<GameMedium>().Where(g => g.Instruction == 1 && g.InstructionType == 1);
             var swipers = new List<Swipers>();
             foreach (var item in img)
             {

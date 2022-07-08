@@ -12,9 +12,9 @@ namespace SenGame.Controllers
     public class ArticlesController : Controller
     {
         private readonly SenGameContext _context;
-        private readonly IBaseService<Article> _service;
+        private readonly IBaseService _service;
 
-        public ArticlesController(SenGameContext context, IBaseService<Article> service)
+        public ArticlesController(SenGameContext context, IBaseService service)
         {
             _context = context;
             _service = service;
@@ -23,16 +23,16 @@ namespace SenGame.Controllers
         // GET: Articles/{Forum.id}
         public IActionResult Index(int id)
         {
-            var data = _service.FindBy(x => x.ForumId == id);
+            var data = _service.FindBy<Article>(x => x.ForumId == id);
             return View(data);
         }
 
         // GET: Articles/Details/{Articles.Id}
-        public IActionResult Details(int id)
-        {
-            var article = _service.GetById(id);
-            return View(article);
-        }
+        //public IActionResult Details(int id)
+        //{
+        //    var article = _service.GetById<Article>(id);
+        //    return View(article);
+        //}
 
         // GET: Articles/Create
         public IActionResult Create()
@@ -50,7 +50,7 @@ namespace SenGame.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("Content,Title,ForumId,ArticleTagId")] Article article)
         {
-            article.ArticleId = _service.GetAll().Last().ArticleId + 1;
+            article.ArticleId = _service.GetAll<Article>().Last().ArticleId + 1;
             article.UserId = "0";
             article.PostTime = DateTime.Now;
             article.LastReplyTime = DateTime.Now;
@@ -68,23 +68,23 @@ namespace SenGame.Controllers
         }
 
         // GET: Articles/Edit/5
-        public IActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                //return NotFound();
-                return Content("沒有帶ID參數");
-            }
-            var article = _service.GetById((int)id);
-            if (article == null)
-            {
-                return Content("找不到ID為"+id+"的文章");
-            }
-            ViewData["ArticleTagId"] = new SelectList(_context.ArticleTags, "ArticleTagId", "TagName", article.ArticleTagId);
-            ViewData["ForumId"] = new SelectList(_context.Forums, "ForumId", "Banner", article.ForumId);
-            ViewData["UserId"] = new SelectList(_context.Set<UserModel>(), "UserId", "Id", article.UserId);
-            return View(article);
-        }
+        //public IActionResult Edit(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        //return NotFound();
+        //        return Content("沒有帶ID參數");
+        //    }
+        //    var article = _service.GetById<Article>((int)id);
+        //    if (article == null)
+        //    {
+        //        return Content("找不到ID為"+id+"的文章");
+        //    }
+        //    ViewData["ArticleTagId"] = new SelectList(_context.ArticleTags, "ArticleTagId", "TagName", article.ArticleTagId);
+        //    ViewData["ForumId"] = new SelectList(_context.Forums, "ForumId", "Banner", article.ForumId);
+        //    ViewData["UserId"] = new SelectList(_context.Set<UserModel>(), "UserId", "Id", article.UserId);
+        //    return View(article);
+        //}
 
         // POST: Articles/Edit/5
         [HttpPost]
@@ -122,36 +122,36 @@ namespace SenGame.Controllers
         }
 
         // GET: Articles/Delete/5
-        public IActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return Content("not found");
-            }
+        //public IActionResult Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return Content("not found");
+        //    }
 
-            //var article = await _context.Articles
-            //    .Include(a => a.ArticleTag)
-            //    .Include(a => a.Forum)
-            //    .Include(a => a.User)
-            //    .FirstOrDefaultAsync(m => m.ArticleId == id); 
-            var article =  _service.GetById((int)id);
-            if (article == null)
-            {
-                return NotFound();
-            }
+        //    //var article = await _context.Articles
+        //    //    .Include(a => a.ArticleTag)
+        //    //    .Include(a => a.Forum)
+        //    //    .Include(a => a.User)
+        //    //    .FirstOrDefaultAsync(m => m.ArticleId == id); 
+        //    var article =  _service.GetById((int)id);
+        //    if (article == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(article);
-        }
+        //    return View(article);
+        //}
 
         // POST: Articles/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
-        {
-            var article = _service.GetById(id);
-            _service.Delete(article);
-            return RedirectToAction(nameof(Index));
-        }
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult DeleteConfirmed(int id)
+        //{
+        //    var article = _service.GetById(id);
+        //    _service.Delete(article);
+        //    return RedirectToAction(nameof(Index));
+        //}
 
         private bool ArticleExists(int id)
         {

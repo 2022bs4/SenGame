@@ -9,7 +9,7 @@ using SqlModels.Models;
 
 namespace Services.Interface
 {
-    public interface IShopServices : IBaseService<Game>
+    public interface IShopServices : IBaseService
     {
         //List<ProductViewDTO> ProductView(int id);
         //List<ProdductIntroductDTO> ProductMainText(int id);
