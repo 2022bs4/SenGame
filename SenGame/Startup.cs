@@ -18,8 +18,6 @@ using SqlModels.Repository;
 using SqlModels.Repository.Interface;
 using Services;
 using Services.Interface;
-using Services.ShopSevice;
-
 using Microsoft.Extensions.FileProviders;
 using System.IO;
 
@@ -38,34 +36,41 @@ namespace SenGame
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //DB DI
             services.AddDbContext<SenGameContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDatabaseDeveloperPageExceptionFilter();
+            services.AddDatabaseDeveloperPageExceptionFilter();            
             services.AddDefaultIdentity<UserModel>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<SenGameContext>();
+            
             services.AddControllersWithViews();
-            services.AddScoped(typeof(IRepository<>),typeof(GenericRepository<>));
             
-            services.AddScoped(typeof(IBaseService<>),typeof(BaseService<>));
+            //Repositories DI
+            services.AddScoped<IRepository, GenericRepository>();
             
+            //Services DI
+            services.AddScoped<IBaseService,BaseService>();
             services.AddScoped<ICommunityService,CommunityService>();
-            services.AddScoped<ShopServices>();
-            services.AddScoped<ShopCartServices>();
-            services.AddSignalR();
 
+            //Swagger Use
+            services.AddSignalR();
+            services.AddSwaggerGen();
+
+            //Google 第三方登入
             services.AddAuthentication().AddGoogle(googleOptions =>
             {
                 googleOptions.ClientId = "319105508231-b14a9vlbq3sobjfruc8sd8kp9iplgrkf.apps.googleusercontent.com";
                 googleOptions.ClientSecret = "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";
             });
+            //FB 第三方登入
+
             services.AddAuthentication().AddFacebook(options =>
             {
                 options.AppId = "363016615774590";
                 options.AppSecret = "f3ccc3f70ef3b114a2d0fce1562be7c1";
                 options.AccessDeniedPath = "/AccessDeniedPathInfo";
             });
-            services.AddSwaggerGen();
         }
 
      

@@ -54,7 +54,7 @@ namespace SenGame.Controllers
         //顯示討論區
         public IActionResult Forum()
         {
-            var forums = _service.GetAll();
+            var forums = _service.GetAll<Forum>();
             return View(forums);
         }
         //顯示使用者的討論區

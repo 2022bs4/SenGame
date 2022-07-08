@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SqlModels.FakeDate;
 using SqlModels.Models;
@@ -43,19 +42,14 @@ namespace SenGame.Controllers
         [HttpGet]
         public IActionResult Chat(string id)
         {
-            id = User.Identity.GetUserId();
+            //id = User.Identity.GetUserId();
+            id = "1";
             var TheUser = from u in user
                        join ug in usergroup on u.Id equals ug.UserId
                        join fg in friendgroup on ug.FriendGroupId equals fg.FriendGoupId
                        where u.Id != id
                        group u by fg.GroupName into allgroup
                        select allgroup;
-            
-
-       
-
-
-
             return View();
         }
         [HttpPost]
