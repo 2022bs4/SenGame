@@ -8,10 +8,7 @@ namespace Services
 {
     public class CommunityService : BaseService<Forum>, ICommunityService
     {
-        private readonly IRepository<MyForum> _myForum;
-        private readonly IRepository<UserModel> _user;
-        private readonly IRepository<Game> _game;
-        private readonly IRepository<GameMedium> _gamemedium;
+ 
 
         public CommunityService(
             IRepository<Forum> repository,

@@ -1,5 +1,7 @@
 ﻿let gameId;
 
+
+
 $(document).ready(function () {
     gameId = document.getElementById('GameId');
     $('main').addClass("CommodityDetials close-section");
@@ -7,12 +9,44 @@ $(document).ready(function () {
     GameSwipper();
     MianDetails();
     ProductSystem();
+    BtnFunction();
     //CloneGame()
     
 })
 
 
+//添加購物車、願望清單
+function BtnFunction() {
+    let btn_Add = document.querySelector('.AddItem');
+    let btn_Wish = document.querySelector('.Wish');
+    //加入購物車fetch post
+    btn_Add.addEventListener('click', function () {
+        const url = '/Shop/AddShoppingCart';
+        let request = new Request(url, {
+            method: "POST",
+            headers: new Headers({
+                'Content-Type' : 'application/json',
+            }),
+            body: JSON.stringify({
+                GameId: `${gameId.value}`
+            })
+        })
 
+        fetch(request)
+            .then(response => { response.json() })
+            .then(result => {
+                console.log(request)
+                //alert(result)
+            })
+            .catch(error => {
+                alert(`Error : ${error}`)
+            })
+    })
+
+    //btn_Wish.addEventListener('click', function () {
+    //})
+
+}
 
 
 // 以下為幻燈片動態

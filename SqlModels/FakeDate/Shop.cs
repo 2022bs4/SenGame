@@ -23,6 +23,7 @@ namespace SqlModels.FakeDate
             new Game{GameId=7,GameName="臨淵覺醒3",GamePrice=280,GameIntroduction="《臨淵覺醒》是一款融合了第三人稱、動作、中世紀、Roguelite隨機元素和RPG策略選擇的冒險闖關遊戲。 玩家在遊戲裡可以根據不同武器的特點搭配多種詞條組建各種Build玩法，在關卡中選擇適合當前武器玩法的隨機天賦進行冒險挑戰。可以單人暢玩，也可以最多三人組隊挑戰。",GameDetailsText="《臨淵覺醒》是一款融合了第三人稱、動作、中世紀、Roguelite隨機元素和RPG策略選擇的冒險闖關遊戲。玩家在遊戲裡可以根據不同武器的特點搭配多種詞條組建各種Build玩法，在關卡中選擇適合當前武器玩法的隨機天賦進行冒險挑戰。可以單人暢玩，也可以最多三人組隊挑戰。<br>在遊戲中，玩家的每次關卡體驗都是隨機的。每一次重新開始遊戲都是新的體驗。你可以使用不同的武器，在不同的關卡中選擇不同的天賦，體驗不同戰鬥節奏。<br>遊戲包含場外養成元素，玩家的每一次遊戲挑戰都可以提升場外天賦，永久加強自己的能力，使下次可以更輕鬆地擊敗深淵敵人。<br>遊戲目前還處於搶先體驗階段，我們會在接下來較長的一段時間裡逐漸完善遊戲修復bug、新增更多的內容和玩法。感謝你們的支持！我們會努力把遊戲做的更好。<br>如果你有任何問題、反饋，可以加入QQ群：1055013710，將問題的描述、截圖、錄屏等提供給我們，我們會盡快查證並進行修復。<br>遊戲特色：<br>· 中世紀+第三人稱+Roguelite+RPG組合玩法，在不斷的死亡輪迴中組建多種Build獲得不同的通關體驗。",TotalBuyCount=45,ReleaseTime=new DateTime(2022, 6, 19, 0, 0, 0),DownTime=null,Developer="TrinityBJ",Marker="TrinityBJ"},
             new Game{GameId=8,GameName="臨淵覺醒4",GamePrice=270,GameIntroduction="《臨淵覺醒》是一款融合了第三人稱、動作、中世紀、Roguelite隨機元素和RPG策略選擇的冒險闖關遊戲。 玩家在遊戲裡可以根據不同武器的特點搭配多種詞條組建各種Build玩法，在關卡中選擇適合當前武器玩法的隨機天賦進行冒險挑戰。可以單人暢玩，也可以最多三人組隊挑戰。",GameDetailsText="《臨淵覺醒》是一款融合了第三人稱、動作、中世紀、Roguelite隨機元素和RPG策略選擇的冒險闖關遊戲。玩家在遊戲裡可以根據不同武器的特點搭配多種詞條組建各種Build玩法，在關卡中選擇適合當前武器玩法的隨機天賦進行冒險挑戰。可以單人暢玩，也可以最多三人組隊挑戰。<br>在遊戲中，玩家的每次關卡體驗都是隨機的。每一次重新開始遊戲都是新的體驗。你可以使用不同的武器，在不同的關卡中選擇不同的天賦，體驗不同戰鬥節奏。<br>遊戲包含場外養成元素，玩家的每一次遊戲挑戰都可以提升場外天賦，永久加強自己的能力，使下次可以更輕鬆地擊敗深淵敵人。<br>遊戲目前還處於搶先體驗階段，我們會在接下來較長的一段時間裡逐漸完善遊戲修復bug、新增更多的內容和玩法。感謝你們的支持！我們會努力把遊戲做的更好。<br>如果你有任何問題、反饋，可以加入QQ群：1055013710，將問題的描述、截圖、錄屏等提供給我們，我們會盡快查證並進行修復。<br>遊戲特色：<br>· 中世紀+第三人稱+Roguelite+RPG組合玩法，在不斷的死亡輪迴中組建多種Build獲得不同的通關體驗。",TotalBuyCount=31,ReleaseTime=new DateTime(2022, 6, 19, 0, 0, 0),DownTime=null,Developer="TrinityBJ",Marker="TrinityBJ"},
             new Game{GameId=9,GameName="臨淵覺醒5",GamePrice=260,GameIntroduction="《臨淵覺醒》是一款融合了第三人稱、動作、中世紀、Roguelite隨機元素和RPG策略選擇的冒險闖關遊戲。 玩家在遊戲裡可以根據不同武器的特點搭配多種詞條組建各種Build玩法，在關卡中選擇適合當前武器玩法的隨機天賦進行冒險挑戰。可以單人暢玩，也可以最多三人組隊挑戰。",GameDetailsText="《臨淵覺醒》是一款融合了第三人稱、動作、中世紀、Roguelite隨機元素和RPG策略選擇的冒險闖關遊戲。玩家在遊戲裡可以根據不同武器的特點搭配多種詞條組建各種Build玩法，在關卡中選擇適合當前武器玩法的隨機天賦進行冒險挑戰。可以單人暢玩，也可以最多三人組隊挑戰。<br>在遊戲中，玩家的每次關卡體驗都是隨機的。每一次重新開始遊戲都是新的體驗。你可以使用不同的武器，在不同的關卡中選擇不同的天賦，體驗不同戰鬥節奏。<br>遊戲包含場外養成元素，玩家的每一次遊戲挑戰都可以提升場外天賦，永久加強自己的能力，使下次可以更輕鬆地擊敗深淵敵人。<br>遊戲目前還處於搶先體驗階段，我們會在接下來較長的一段時間裡逐漸完善遊戲修復bug、新增更多的內容和玩法。感謝你們的支持！我們會努力把遊戲做的更好。<br>如果你有任何問題、反饋，可以加入QQ群：1055013710，將問題的描述、截圖、錄屏等提供給我們，我們會盡快查證並進行修復。<br>遊戲特色：<br>· 中世紀+第三人稱+Roguelite+RPG組合玩法，在不斷的死亡輪迴中組建多種Build獲得不同的通關體驗。",TotalBuyCount=20,ReleaseTime=new DateTime(2022, 6, 19, 0, 0, 0),DownTime=null,Developer="TrinityBJ",Marker="TrinityBJ"},
+            new Game{GameId=10,GameName="臨淵覺醒6",GamePrice=260,GameIntroduction="《臨淵覺醒》是一款融合了第三人稱、動作、中世紀、Roguelite隨機元素和RPG策略選擇的冒險闖關遊戲。 玩家在遊戲裡可以根據不同武器的特點搭配多種詞條組建各種Build玩法，在關卡中選擇適合當前武器玩法的隨機天賦進行冒險挑戰。可以單人暢玩，也可以最多三人組隊挑戰。",GameDetailsText="《臨淵覺醒》是一款融合了第三人稱、動作、中世紀、Roguelite隨機元素和RPG策略選擇的冒險闖關遊戲。玩家在遊戲裡可以根據不同武器的特點搭配多種詞條組建各種Build玩法，在關卡中選擇適合當前武器玩法的隨機天賦進行冒險挑戰。可以單人暢玩，也可以最多三人組隊挑戰。<br>在遊戲中，玩家的每次關卡體驗都是隨機的。每一次重新開始遊戲都是新的體驗。你可以使用不同的武器，在不同的關卡中選擇不同的天賦，體驗不同戰鬥節奏。<br>遊戲包含場外養成元素，玩家的每一次遊戲挑戰都可以提升場外天賦，永久加強自己的能力，使下次可以更輕鬆地擊敗深淵敵人。<br>遊戲目前還處於搶先體驗階段，我們會在接下來較長的一段時間裡逐漸完善遊戲修復bug、新增更多的內容和玩法。感謝你們的支持！我們會努力把遊戲做的更好。<br>如果你有任何問題、反饋，可以加入QQ群：1055013710，將問題的描述、截圖、錄屏等提供給我們，我們會盡快查證並進行修復。<br>遊戲特色：<br>· 中世紀+第三人稱+Roguelite+RPG組合玩法，在不斷的死亡輪迴中組建多種Build獲得不同的通關體驗。",TotalBuyCount=20,ReleaseTime=new DateTime(2022, 6, 19, 0, 0, 0),DownTime=null,Developer="TrinityBJ",Marker="TrinityBJ"},
 
         };
 
@@ -34,6 +35,11 @@ namespace SqlModels.FakeDate
             new GameType{GameTypeId=4 , GameId=3, TypelistId=3 },
             new GameType{GameTypeId=5 , GameId=4, TypelistId=4 },
             new GameType{GameTypeId=6 , GameId=5, TypelistId=5 },
+            new GameType{GameTypeId=7 , GameId=3, TypelistId=7 },
+            new GameType{GameTypeId=8 , GameId=4, TypelistId=7 },
+            new GameType{GameTypeId=9 , GameId=1, TypelistId=7 },
+            new GameType{GameTypeId=10 , GameId=5, TypelistId=7 },
+
         };
 
         public List<Typelist> Typelists = new List<Typelist>()
@@ -44,11 +50,13 @@ namespace SqlModels.FakeDate
             new Typelist{TypelistId=4 , Name ="角色扮演"},
             new Typelist{TypelistId=5 , Name ="回合制策略遊戲"},
             new Typelist{TypelistId=6 , Name ="角色扮演"},
+            new Typelist{TypelistId=7 , Name ="VR"},
+
         };
 
         public List<GameDiscount> gameDiscounts = new List<GameDiscount>()
         {
-            new GameDiscount{DiscountId= 1, DiscountTake= 1,   StarTime=null , EndTime=null,GameId=1 },
+            new GameDiscount{DiscountId= 1, DiscountTake= 0.4,   StarTime=null , EndTime=null,GameId=1 },
             new GameDiscount{DiscountId= 2, DiscountTake= 0.8, StarTime=null , EndTime=null,GameId=2},
             new GameDiscount{DiscountId= 3, DiscountTake= 0.5, StarTime=null , EndTime=null,GameId=3},
             new GameDiscount{DiscountId= 4, DiscountTake= 0.7, StarTime=null , EndTime=null,GameId=4},
@@ -164,6 +172,16 @@ namespace SqlModels.FakeDate
             new GameMedium{GameId =9, GameMediaId = 79, InstructionType=2 , Instruction =1, Sort= 1, MediaUrl="https://cdn.akamai.steamstatic.com/steam/apps/1641670/header_tchinese.jpg?t=1655638795"  },
             new GameMedium{GameId =9, GameMediaId = 80, InstructionType=3 , Instruction =1, Sort= 1, MediaUrl="https://cdn.akamai.steamstatic.com/steam/apps/1641670/extras/fighting.gif?t=1655638795"  },
             new GameMedium{GameId =9, GameMediaId = 81, InstructionType=3 , Instruction =1, Sort= 2, MediaUrl="https://cdn.akamai.steamstatic.com/steam/apps/1641670/extras/level.gif?t=1655638795"  },
+
+            new GameMedium{GameId =10, GameMediaId = 82, InstructionType=1 , Instruction =1, Sort= 2, MediaUrl="https://cdn.akamai.steamstatic.com/steam/apps/1641670/ss_550c7caf0e3f37e2341a7085b68e8b563a4d6a01.600x338.jpg?t=1655638795"  },
+            new GameMedium{GameId =10, GameMediaId = 83, InstructionType=1 , Instruction =1, Sort= 3, MediaUrl="https://cdn.akamai.steamstatic.com/steam/apps/1641670/ss_6f465e54228063c6163339dfa1f08d2ccdd159b7.600x338.jpg?t=1655638795"  },
+            new GameMedium{GameId =10, GameMediaId = 84, InstructionType=1 , Instruction =1, Sort= 4, MediaUrl="https://cdn.akamai.steamstatic.com/steam/apps/1641670/ss_9cb2195d65bf0b5ed1a4c957d7d1ac3d383bcc52.600x338.jpg?t=1655638795"  },
+            new GameMedium{GameId =10, GameMediaId = 85, InstructionType=1 , Instruction =1, Sort= 5, MediaUrl="https://cdn.akamai.steamstatic.com/steam/apps/1641670/ss_bf86dec5d1b03514f1dcb17b5860849b9784f5bd.600x338.jpg?t=1655638795"  },
+            new GameMedium{GameId =10, GameMediaId = 86, InstructionType=1 , Instruction =1, Sort= 6, MediaUrl="https://cdn.akamai.steamstatic.com/steam/apps/1641670/ss_c9403d0b710dc7d93e200037709483121e88ca0b.600x338.jpg?t=1655638795"  },
+            new GameMedium{GameId =10, GameMediaId = 87, InstructionType=1 , Instruction =2, Sort= 1, MediaUrl="https://cdn.akamai.steamstatic.com/steam/apps/256869414/movie480_vp9.webm?t=1642338226"  },
+            new GameMedium{GameId =10, GameMediaId = 88, InstructionType=2 , Instruction =1, Sort= 1, MediaUrl="https://cdn.akamai.steamstatic.com/steam/apps/1641670/header_tchinese.jpg?t=1655638795"  },
+            new GameMedium{GameId =10, GameMediaId = 89, InstructionType=3 , Instruction =1, Sort= 1, MediaUrl="https://cdn.akamai.steamstatic.com/steam/apps/1641670/extras/fighting.gif?t=1655638795"  },
+            new GameMedium{GameId =10, GameMediaId = 90, InstructionType=3 , Instruction =1, Sort= 2, MediaUrl="https://cdn.akamai.steamstatic.com/steam/apps/1641670/extras/level.gif?t=1655638795"  },
         };
 
         //void X()

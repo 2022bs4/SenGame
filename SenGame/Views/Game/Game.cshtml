@@ -1,4 +1,5 @@
-﻿@model List<GameViewModel>;
+﻿@using Newtonsoft.Json
+@model GameViewModel;
 
 <div class="row no-gutters" style="margin:0px 15px">
     <div class="part-space d-none d-lg-block col-2 ">
@@ -58,18 +59,17 @@
             <div class="swiper featured"
                  style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff">
                 <div id="featured-wrapper" class="swiper-wrapper">
-                    @foreach (var g in Model)
+                    @foreach (var g in Model.RecommendVM)
                     {
-
-                        <div id="featured-item" class="swiper-slide">
+                        
+                        <a href="" id="featured-item" class="swiper-slide">
                             <div class="row no-gutters">
                                 <div class="col-12 col-md-8 ">
-                                    @foreach (var img in g.MainImgUrl)
-                                    {
-                                        <img class="w-100" src="@img">
-                                        @*src="https://cdn.cloudflare.steamstatic.com/steam/apps/1172470/capsule_616x353.jpg?t=1653320846">*@
 
-                                    }
+                                    <img class="w-100" src="@g.MainImgUrl">
+                                    @*src="https://cdn.cloudflare.steamstatic.com/steam/apps/1172470/capsule_616x353.jpg?t=1653320846">*@
+
+
                                 </div>
 
                                 <div class=" d-none d-md-block col-md-4 text-left" style="flex-shrink: 1;">
@@ -96,7 +96,7 @@
                                         <p class="price" style="margin-left: 5px;">
                                             <span class="discount">@g.Discount</span>
                                             <span class="original-price">@g.OriginalPrice</span>
-                                            <span class="discount-price">{折價後價格}</span>
+                                            <span class="discount-price">@g.DiscountPrice</span>
                                         </p>
                                         <div class="d-none d-md-flex" style="margin-right:5px;">
                                             <img src="https://picsum.photos/20/20/?random=10">
@@ -106,7 +106,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
 
                     }
                 </div>
@@ -127,18 +127,22 @@
             <div class="swiper SpecialDiscount"
                  style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff">
                 <div id="SpecialDiscount-wrapper" class="swiper-wrapper ">
-                    <template>
+
+                    @foreach (var g in Model.SpecialDiscountVM)
+                    {
                         <div class="swiper-slide">
                             <div>
-                                <img src="https://picsum.photos/1200/800/?random=10">
+                                <img src="@g.MainImgUrl">
                                 <div class="text-left">
                                     <h3 class=" mb-0" style="margin-left: 10px;">周末特價</h3>
                                     <small style="margin-left: 10px;">特惠將於 6 月 21 日 上午 1:00 截止。</small>
-                                    <h4 style="margin-left: 10px;">最高可省 <span class=" discount">-90%</span></h4>
+                                    <h4 style="margin-left: 10px;">最高可省 <span class=" discount">@g.Discount</span></h4>
                                 </div>
                             </div>
                         </div>
-                    </template>
+
+                    }
+
                 </div>
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
@@ -179,16 +183,21 @@
             <div class="swiper popVRGame"
                  style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff">
                 <div id="popVRGame-wrapper" class="swiper-wrapper">
-                    <template>
+                    @foreach (var g in Model.PopVRVM)
+                    {
                         <div class="swiper-slide">
                             <div>
-                                <img src="https://picsum.photos/300/200/?random=10">
+                                <img src="@g.MainImgUrl">
                                 <div class="d-flex justify-content-end">
-                                    <span>NT$ 186</span>
+                                    <p style="margin-bottom:0px;margin-right:10px;">
+                                        <span class="discount">@g.Discount</span>
+                                        <span class="original-price">@g.OriginalPrice</span>
+                                        <span class="discount-price">@g.DiscountPrice</span>
+                                    </p>
                                 </div>
                             </div>
                         </div>
-                    </template>
+                    }
                 </div>
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
@@ -225,33 +234,39 @@
                                 <p class=" mb-0">查看更多: <a class="btn btn-outline-dark" href="">新推出</a></p>
                             </div>
                         </div>
-                        <template>
-                            <a style="width: 100%;" href="">
-                                <div class="game-body"
-                                     style="width: 100%;padding: 5px 0 5px 5px;margin-bottom: 10px;">
-                                    <div class="d-flex">
-                                        <img src="https://picsum.photos/184/69/?random=10">
-                                        <div class=" d-flex " style="width: 100%;position: relative;">
-                                            <div class=" d-none d-sm-block"
-                                                 style="margin-left: 10px;padding-top: 5px;">
-                                                <h5 class="mb-0">遊戲名</h5>
-                                                <img class=" d-block"
-                                                     src="https://picsum.photos/15/15/?random=10">
-                                                <small class="text-muted">遊戲類型標籤</small>
-                                            </div>
-                                            <div class="tab-game-price">
-                                                <span class=" discount">-25%</span>
-                                                <div style="width: 100%;">
-                                                    <div class=" original-price">NT$ 560</div>
-                                                    <div class=" discount-price">NT$ 426</div>
+                            @{ int i = 0; }
+                            @foreach(var g in Model.TabNewVM)
+                            {
+                                <a style="width: 100%;" href="" onmouseover="hover( @(i++) )">
+                                    <div class="game-body"
+                                         style="width: 100%;padding: 5px 0 5px 5px;margin-bottom: 10px;">
+                                        <div class="d-flex">
+                                            <img style="width:200px;" src="@g.MainImgUrl">
+                                            <div class=" d-flex " style="width: 100%;position: relative;">
+                                                <div class=" d-none d-sm-block"
+                                                     style="margin-left: 10px;padding-top: 5px;">
+                                                    <h5 class="mb-0">@g.Name</h5>
+                                                    <img class=" d-block"
+                                                         src="https://picsum.photos/15/15/?random=10">
+                                                    @foreach(var tp in g.Types)
+                                                    {
+                                                        <small class="category-tag">@tp</small>                                                        
+                                                    }
                                                 </div>
-                                            </div>
+                                                <div class="tab-game-price">
+                                                    <span class=" discount">@g.Discount</span>
+                                                    <div style="width: 100%;">
+                                                        <div class=" original-price">NT$ @g.OriginalPrice</div>
+                                                        <div class=" discount-price">NT$ @g.DiscountPrice</div>
+                                                    </div>
+                                                </div>
 
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </a>
-                        </template>
+                                </a>                                
+                            }
+                        
                     </div>
                     <!-- 2的內容 -->
                     <div class="tab-bestSell tab-pane fade" id="nav-profile" role="tabpanel"
@@ -262,33 +277,37 @@
                                 <p class=" mb-0">查看更多: <a class="btn btn-outline-dark" href="">新推出</a></p>
                             </div>
                         </div>
-                        <template>
-                            <a style="width: 100%;" href="">
-                                <div class="game-body"
-                                     style="width: 100%;padding: 5px 0 5px 5px; margin-bottom: 10px;">
-                                    <div class="d-flex">
-                                        <img src="https://picsum.photos/184/69/?random=10">
-                                        <div class=" d-flex " style="width: 100%;position: relative;">
-                                            <div class=" d-none d-sm-block"
-                                                 style="margin-left: 10px;padding-top: 5px;">
-                                                <h5 class="mb-0">遊戲名</h5>
-                                                <img class=" d-block"
-                                                     src="https://picsum.photos/15/15/?random=10">
-                                                <small class="text-muted">遊戲類型標籤</small>
-                                            </div>
-                                            <div class="tab-game-price">
-                                                <span class=" discount">-25%</span>
-                                                <div style="width: 100%;">
-                                                    <div class=" original-price">NT$ 560</div>
-                                                    <div class=" discount-price">NT$ 426</div>
+                        @*@foreach(var g in Model.TabHotVM)
+                            {
+                                <a style="width: 100%;" href="">
+                                    <div class="game-body"
+                                         style="width: 100%;padding: 5px 0 5px 5px;margin-bottom: 10px;">
+                                        <div class="d-flex">
+                                            <img style="width:200px;" src="@g.MainImgUrl">
+                                            <div class=" d-flex " style="width: 100%;position: relative;">
+                                                <div class=" d-none d-sm-block"
+                                                     style="margin-left: 10px;padding-top: 5px;">
+                                                    <h5 class="mb-0">@g.Name</h5>
+                                                    <img class=" d-block"
+                                                         src="https://picsum.photos/15/15/?random=10">
+                                                    @foreach(var tp in g.Types)
+                                                    {
+                                                        <small class="category-tag">@tp</small>                                                        
+                                                    }
                                                 </div>
-                                            </div>
+                                                <div class="tab-game-price">
+                                                    <span class=" discount">@g.Discount</span>
+                                                    <div style="width: 100%;">
+                                                        <div class=" original-price">NT$ @g.OriginalPrice</div>
+                                                        <div class=" discount-price">NT$ @g.DiscountPrice</div>
+                                                    </div>
+                                                </div>
 
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </a>
-                        </template>
+                                </a>                                
+                            }*@
                     </div>
                     <!-- 3的內容 -->
                     <div class="tab-hotBePost tab-pane fade" id="nav-contact" role="tabpanel"
@@ -299,33 +318,37 @@
                                 <p class=" mb-0">查看更多: <a class="btn btn-outline-dark" href="">新推出</a></p>
                             </div>
                         </div>
-                        <template>
-                            <a style="width: 100%;" href="">
-                                <div class="game-body"
-                                     style="width: 100%;padding: 5px 0 5px 5px; margin-bottom: 10px;">
-                                    <div class="d-flex">
-                                        <img src="https://picsum.photos/184/69/?random=10">
-                                        <div class=" d-flex " style="width: 100%;position: relative;">
-                                            <div class=" d-none d-sm-block"
-                                                 style="margin-left: 10px;padding-top: 5px;">
-                                                <h5 class="mb-0">遊戲名</h5>
-                                                <img class=" d-block"
-                                                     src="https://picsum.photos/15/15/?random=10">
-                                                <small class="text-muted">遊戲類型標籤</small>
-                                            </div>
-                                            <div class="tab-game-price">
-                                                <span class=" discount">-25%</span>
-                                                <div style="width: 100%;">
-                                                    <div class=" original-price">NT$ 560</div>
-                                                    <div class=" discount-price">NT$ 426</div>
+                        @*@foreach(var g in Model.TabBeReleaseVM)
+                            {
+                                <a style="width: 100%;" href="">
+                                    <div class="game-body"
+                                         style="width: 100%;padding: 5px 0 5px 5px;margin-bottom: 10px;">
+                                        <div class="d-flex">
+                                            <img style="width:200px;" src="@g.MainImgUrl">
+                                            <div class=" d-flex " style="width: 100%;position: relative;">
+                                                <div class=" d-none d-sm-block"
+                                                     style="margin-left: 10px;padding-top: 5px;">
+                                                    <h5 class="mb-0">@g.Name</h5>
+                                                    <img class=" d-block"
+                                                         src="https://picsum.photos/15/15/?random=10">
+                                                    @foreach(var tp in g.Types)
+                                                    {
+                                                        <small class="category-tag">@tp</small>                                                        
+                                                    }
                                                 </div>
-                                            </div>
+                                                <div class="tab-game-price">
+                                                    <span class=" discount">@g.Discount</span>
+                                                    <div style="width: 100%;">
+                                                        <div class=" original-price">NT$ @g.OriginalPrice</div>
+                                                        <div class=" discount-price">NT$ @g.DiscountPrice</div>
+                                                    </div>
+                                                </div>
 
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </a>
-                        </template>
+                                </a>                                
+                            }*@
                     </div>
                     <!-- 4的內容 -->
                     <div class="tab-specialDiscount tab-pane fade" id="nav-4" role="tabpanel"
@@ -336,32 +359,37 @@
                                 <p class=" mb-0">查看更多: <a class="btn btn-outline-dark" href="">新推出</a></p>
                             </div>
                         </div>
-                        <template>
-                            <a style="width: 100%;" href="">
-                                <div class="game-body"
-                                     style="width: 100%;padding: 5px 0 5px 5px;margin-bottom: 10px;">
-                                    <div class="d-flex">
-                                        <img src="https://picsum.photos/184/69/?random=10">
-                                        <div class=" d-flex " style="width: 100%;position: relative;">
-                                            <div class=" d-none d-sm-block"
-                                                 style="margin-left: 10px;padding-top: 5px;">
-                                                <h5 class="mb-0">遊戲名</h5>
-                                                <img class=" d-block"
-                                                     src="https://picsum.photos/15/15/?random=10">
-                                                <small class="text-muted">遊戲類型標籤</small>
-                                            </div>
-                                            <div class="tab-game-price">
-                                                <span class=" discount">-25%</span>
-                                                <div style="width: 100%;">
-                                                    <div class=" original-price">NT$ 560</div>
-                                                    <div class=" discount-price">NT$ 426</div>
+                        @*@foreach(var g in Model.TabSpecialDiscountVM)
+                            {
+                                <a style="width: 100%;" href="">
+                                    <div class="game-body"
+                                         style="width: 100%;padding: 5px 0 5px 5px;margin-bottom: 10px;">
+                                        <div class="d-flex">
+                                            <img style="width:200px;" src="@g.MainImgUrl">
+                                            <div class=" d-flex " style="width: 100%;position: relative;">
+                                                <div class=" d-none d-sm-block"
+                                                     style="margin-left: 10px;padding-top: 5px;">
+                                                    <h5 class="mb-0">@g.Name</h5>
+                                                    <img class=" d-block"
+                                                         src="https://picsum.photos/15/15/?random=10">
+                                                    @foreach(var tp in g.Types)
+                                                    {
+                                                        <small class="category-tag">@tp</small>                                                        
+                                                    }
                                                 </div>
+                                                <div class="tab-game-price">
+                                                    <span class=" discount">@g.Discount</span>
+                                                    <div style="width: 100%;">
+                                                        <div class=" original-price">NT$ @g.OriginalPrice</div>
+                                                        <div class=" discount-price">NT$ @g.DiscountPrice</div>
+                                                    </div>
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </a>
-                        </template>
+                                </a>                                
+                            }*@
                     </div>
                 </div>
 
@@ -392,16 +420,21 @@
             <div class="swiper lossThenThreeH"
                  style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff">
                 <div id="lossThenThreeH-wrapper" class="swiper-wrapper">
-                    <template>
+                    @foreach (var g in Model.LossThenPriceVM)
+                    {
                         <div class="swiper-slide">
                             <div>
-                                <img src="https://picsum.photos/300/200/?random=10">
+                                <img src="@g.MainImgUrl">
                                 <div class="d-flex justify-content-end">
-                                    <span style="margin-right: 10px;">NT$ 186</span>
+                                    <p style="margin-bottom:0px;margin-right:10px;">
+                                        <span class="discount">@g.Discount</span>
+                                        <span class="original-price">@g.OriginalPrice</span>
+                                        <span class="discount-price">@g.DiscountPrice</span>
+                                    </p>
                                 </div>
                             </div>
                         </div>
-                    </template>
+                    }
                 </div>
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
@@ -413,105 +446,138 @@
             </div>
         </section>
         <!-- 更新與優惠 -->
-        <section class="reNew part-space">
+        <section class="part-space" style="margin-bottom:20px;">
+            <!-- specxial_discount -->
+
             <h2>更新與優惠</h2>
-            <div class="row">
-                <div class="col-12 col-md-5 small">
-                    <a href="#" class=" d-inline-block">
-                        <img src="https://picsum.photos/1000/800/?random=10" class="w-100 big">
-                        <div class="game-body">
-                            <div class=" d-flex justify-content-end ">
-                                <p class="price">
-                                    <span class="discount">-30%</span><span class="original-price">NT$100</span><span class="discount-price">NT$70</span>
-                                </p>
+
+            <div class="swiper updateDiscount"
+                 style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff">
+                <div id="updateDiscount-wrapper" class="swiper-wrapper ">
+
+                    @foreach (var g in Model.UpdateDiscountVM)
+                    {
+                        <div class="swiper-slide">
+                            <div>
+                                <img src="@g.MainImgUrl">
+                                <div class="d-flex justify-content-end">
+                                    <p style="margin-bottom:0px;margin-right:10px;">
+                                        <span class="discount">@g.Discount</span>
+                                        <span class="original-price">@g.OriginalPrice</span>
+                                        <span class="discount-price">@g.DiscountPrice</span>
+                                    </p>
+                                    
+                                </div>
                             </div>
                         </div>
-                    </a>
-                </div>
-                <div class="col-12 col-md-7 ">
-                    <div class="row">
-                        <div class="col-6 col-md-4 small">
-                            <a href="#" class=" d-inline-block">
-                                <img src="https://picsum.photos/1000/800/?random=10" class="w-100">
-                                <div class="game-body">
-                                    <div class=" d-flex justify-content-end ">
-                                        <p class="price">
-                                            <span class="discount">-30%</span><span class="original-price">NT$100</span><span class="discount-price">NT$70</span>
-                                        </p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
 
-                        <div class="col-6 col-md-4 small">
-                            <a href="#" class=" d-inline-block">
-                                <img src="https://picsum.photos/1000/800/?random=10" class="w-100">
-                                <div class="game-body">
-                                    <div class=" d-flex justify-content-end ">
-                                        <p class="price">
-                                            <span class="discount">-30%</span><span class="original-price">NT$100</span><span class="discount-price">NT$70</span>
-                                        </p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="col-6 col-md-4 small">
-                            <a href="#" class=" d-inline-block">
-                                <img src="https://picsum.photos/1000/800/?random=10" class="w-100">
-                                <div class="game-body">
-                                    <div class=" d-flex justify-content-end ">
-                                        <p class="price">
-                                            <span class="discount">-30%</span><span class="original-price">NT$100</span><span class="discount-price">NT$70</span>
-                                        </p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="col-6 col-md-4 small">
-                            <a href="#" class=" d-inline-block">
-                                <img src="https://picsum.photos/1000/800/?random=10" class="w-100">
-                                <div class="game-body">
-                                    <div class=" d-flex justify-content-end ">
-                                        <p class="price">
-                                            <span class="discount">-30%</span><span class="original-price">NT$100</span><span class="discount-price">NT$70</span>
-                                        </p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="col-6 col-md-4 small">
-                            <a href="#" class=" d-inline-block">
-                                <img src="https://picsum.photos/1000/800/?random=10" class="w-100">
-                                <div class="game-body">
-                                    <div class=" d-flex justify-content-end ">
-                                        <p class="price">
-                                            <span class="discount">-30%</span><span class="original-price">NT$100</span><span class="discount-price">NT$70</span>
-                                        </p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="col-6 col-md-4 small">
-                            <a href="#" class=" d-inline-block">
-                                <img src="https://picsum.photos/1000/800/?random=10" class="w-100">
-                                <div class="game-body">
-                                    <div class=" d-flex justify-content-end ">
-                                        <p class="price">
-                                            <span class="discount">-30%</span><span class="original-price">NT$100</span><span class="discount-price">NT$70</span>
-                                        </p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
+                    }
 
                 </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination "></div>
             </div>
         </section>
+        @*<section class="reNew part-space">
+            <h2>更新與優惠</h2>
+            <div class="row">
+            <div class="col-12 col-md-5 small">
+            <a href="#" class=" d-inline-block">
+            <img src="https://picsum.photos/1000/800/?random=10" class="w-100 big">
+            <div class="game-body">
+            <div class=" d-flex justify-content-end ">
+            <p class="price">
+            <span class="discount">-30%</span><span class="original-price">NT$100</span><span class="discount-price">NT$70</span>
+            </p>
+            </div>
+            </div>
+            </a>
+            </div>
+            <div class="col-12 col-md-7 ">
+            <div class="row">
+            <div class="col-6 col-md-4 small">
+            <a href="#" class=" d-inline-block">
+            <img src="https://picsum.photos/1000/800/?random=10" class="w-100">
+            <div class="game-body">
+            <div class=" d-flex justify-content-end ">
+            <p class="price">
+            <span class="discount">-30%</span><span class="original-price">NT$100</span><span class="discount-price">NT$70</span>
+            </p>
+            </div>
+            </div>
+            </a>
+            </div>
+
+            <div class="col-6 col-md-4 small">
+            <a href="#" class=" d-inline-block">
+            <img src="https://picsum.photos/1000/800/?random=10" class="w-100">
+            <div class="game-body">
+            <div class=" d-flex justify-content-end ">
+            <p class="price">
+            <span class="discount">-30%</span><span class="original-price">NT$100</span><span class="discount-price">NT$70</span>
+            </p>
+            </div>
+            </div>
+            </a>
+            </div>
+
+            <div class="col-6 col-md-4 small">
+            <a href="#" class=" d-inline-block">
+            <img src="https://picsum.photos/1000/800/?random=10" class="w-100">
+            <div class="game-body">
+            <div class=" d-flex justify-content-end ">
+            <p class="price">
+            <span class="discount">-30%</span><span class="original-price">NT$100</span><span class="discount-price">NT$70</span>
+            </p>
+            </div>
+            </div>
+            </a>
+            </div>
+
+            <div class="col-6 col-md-4 small">
+            <a href="#" class=" d-inline-block">
+            <img src="https://picsum.photos/1000/800/?random=10" class="w-100">
+            <div class="game-body">
+            <div class=" d-flex justify-content-end ">
+            <p class="price">
+            <span class="discount">-30%</span><span class="original-price">NT$100</span><span class="discount-price">NT$70</span>
+            </p>
+            </div>
+            </div>
+            </a>
+            </div>
+
+            <div class="col-6 col-md-4 small">
+            <a href="#" class=" d-inline-block">
+            <img src="https://picsum.photos/1000/800/?random=10" class="w-100">
+            <div class="game-body">
+            <div class=" d-flex justify-content-end ">
+            <p class="price">
+            <span class="discount">-30%</span><span class="original-price">NT$100</span><span class="discount-price">NT$70</span>
+            </p>
+            </div>
+            </div>
+            </a>
+            </div>
+
+            <div class="col-6 col-md-4 small">
+            <a href="#" class=" d-inline-block">
+            <img src="https://picsum.photos/1000/800/?random=10" class="w-100">
+            <div class="game-body">
+            <div class=" d-flex justify-content-end ">
+            <p class="price">
+            <span class="discount">-30%</span><span class="original-price">NT$100</span><span class="discount-price">NT$70</span>
+            </p>
+            </div>
+            </div>
+            </a>
+            </div>
+            </div>
+
+            </div>
+            </div>
+            </section>*@
     </div>
 </div>
 @section Css{
@@ -523,4 +589,49 @@
 <script src="~/js/Game/Game.js"></script>
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <script src="~/js/Game/Swiper.js"></script>
+
+<script>
+    let jsonStr = @JsonConvert.SerializeObject(Model.TabNewVM)
+    
+    let obj = JSON.parse(jsonStr)
+    
+
+    let test = 
+    [
+        [ "1-1",  "1-2", "1-3" , "1-4" ],
+        [ "2-1",  "2-2", "2-3" , "2-4" ],
+        {
+            pic1:"3-1",
+            pic2:"3-2",
+            pic3:"3-3",
+            pic4:"3-4",
+        }
+    ];
+
+    function hover(index){
+        console.log(index);
+        let imgUrlArray =  test[index];
+
+        let imgs = document.querySelectorAll('.tab-game-right img');
+
+        imgs.forEach( (img,i) =>{
+            img.src = imgUrlArray[i];
+        } )
+    }
+
+
+                //    <div class="tab-game-right">
+                //    <div>
+                //        <h3>遊戲名</h3>
+                //        <p class="text-muted">遊戲類型標籤</p>
+                //        <div style="font-size: 0.7em;">
+                //            <img class="pic-space" src="https://picsum.photos/300/200/?random=10">
+                //            <img class="pic-space" src="https://picsum.photos/300/200/?random=10">
+                //            <img class="pic-space" src="https://picsum.photos/300/200/?random=10">
+                //            <img class="pic-space" src="https://picsum.photos/300/200/?random=10">
+                //        </div>
+                //    </div>
+                //</div>
+
+</script>
  }

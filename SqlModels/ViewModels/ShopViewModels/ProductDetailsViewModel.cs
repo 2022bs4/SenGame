@@ -22,6 +22,7 @@ namespace SqlModels.ViewModels
 
         //標籤
         public string TypleName { get; set; }
+        //public int TyplyId { get; set; }
 
         //折扣
         public double DisscountTake { get; set; }

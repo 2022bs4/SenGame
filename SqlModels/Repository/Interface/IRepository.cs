@@ -1,25 +1,27 @@
-﻿using System;
+﻿using SqlModels.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
 namespace SqlModels.Repository.Interface
 {
-    public interface IRepository<TEntity> : IDisposable where TEntity : class
+    public interface IRepository : IDisposable 
     {
+        public SenGameContext DbContext { get; }
+
         //Insert New TEntity
-        void Create(TEntity TEntity);
+        void Create<TEntity>(TEntity entity) where TEntity : class;
         //Edit TEntity
-        void Update(TEntity TEntity);
+        void Update<TEntity>(TEntity entity) where TEntity : class;
         //Remove Delete
-        void Delete(TEntity TEntity);
+        void Delete<TEntity>(TEntity entity) where TEntity : class;
         //use predicate with variable filter TEntity
-        IEnumerable<TEntity> FindBy(Expression<Func<TEntity, bool>> predicate);
+        IQueryable<TEntity> FindBy<TEntity>() where TEntity : class;
         //Get All TEntity return IQueryable's Collections
-        IEnumerable<TEntity> GetAll();
-        //Get TEntity whit ID return IQueryable's Collections
-        TEntity GetById(int _Id);
+        IQueryable<TEntity> GetAll<TEntity>() where TEntity : class;
+
         //Save to TEntitybase
-        int SaveChanges();
+        void SaveChanges();
     }
 }
