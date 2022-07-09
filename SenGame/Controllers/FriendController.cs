@@ -1,10 +1,14 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Services.Interface;
 using SqlModels.FakeDate;
 using SqlModels.Models;
 using SqlModels.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace SenGame.Controllers
 {
@@ -12,6 +16,11 @@ namespace SenGame.Controllers
     [Authorize]
     public class FriendController : Controller
     {
+        private readonly UserManager<UserModel> _userManager;
+        public FriendController(UserManager<UserModel> usermodel)
+        {
+            _userManager = usermodel;
+        }
         List<UserModel> user = new List<UserModel>()
         {
             new UserModel{Id="1",UserName="張學友",Account = "test123",PasswordHash="A!a123456",UserPicture="https://memeprod.ap-south-1.linodeobjects.com/user-gif-post/1653456571139.gif"},
@@ -40,10 +49,11 @@ namespace SenGame.Controllers
         }
         //[Authorize]
         [HttpGet]
-        public IActionResult Chat(string id)
+        public async Task<IActionResult> Chat(string id)
         {
-            //id = User.Identity.GetUserId();
-            id = "1";
+            UserModel LoginUser = await _userManager.GetUserAsync(HttpContext.User);
+            string UserId = LoginUser.Id;
+
             var TheUser = from u in user
                        join ug in usergroup on u.Id equals ug.UserId
                        join fg in friendgroup on ug.FriendGroupId equals fg.FriendGoupId

@@ -13,7 +13,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-//using static SqlModels.Models.LineLogin;
+using static SqlModels.Models.LineModel;
 
 namespace SenGame.Controllers
 {
@@ -67,47 +67,47 @@ namespace SenGame.Controllers
                 );
             return Redirect(LineLoginUrl);
         }
-        //public IActionResult Callback(string code, string state)
-        //{
-        //    if (state == "aaa")
-        //    {
-        //        #region Api變數宣告
-        //        WebClient wc = new()
-        //        {
-        //            Encoding = Encoding.UTF8
-        //        };
-        //        wc.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
-        //        string result = string.Empty;
-        //        NameValueCollection nvc = new();
-        //        #endregion
-        //        try
-        //        {
-        //            //取回Token
-        //            string ApiUrl_Token = "https://access.line.me/oauth2/v2.1/authorize";
-        //            nvc.Add("grant_type", "authorization_code");
-        //            nvc.Add("code", code);
-        //            nvc.Add("redirect_uri", "https://localhost:44316/Home/Index");
-        //            nvc.Add("client_id", "1657255042");
-        //            nvc.Add("client_secret", "65e11e6752e012793b85c7a7da8122da");
-        //            string JsonStr = Encoding.UTF8.GetString(wc.UploadValues(ApiUrl_Token, "POST", nvc));
-        //            LineLoginToken ToKenObj = JsonConvert.DeserializeObject<LineLoginToken>(JsonStr);
-        //            wc.Headers.Clear();
+        public IActionResult Callback(string code, string state)
+        {
+            if (state == "aaa")
+            {
+                #region Api變數宣告
+                WebClient wc = new()
+                {
+                    Encoding = Encoding.UTF8
+                };
+                wc.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
+                string result = string.Empty;
+                NameValueCollection nvc = new();
+                #endregion
+                try
+                {
+                    //取回Token
+                    string ApiUrl_Token = "https://access.line.me/oauth2/v2.1/authorize";
+                    nvc.Add("grant_type", "authorization_code");
+                    nvc.Add("code", code);
+                    nvc.Add("redirect_uri", "https://localhost:44316/Home/Index");
+                    nvc.Add("client_id", "1657255042");
+                    nvc.Add("client_secret", "65e11e6752e012793b85c7a7da8122da");
+                    string JsonStr = Encoding.UTF8.GetString(wc.UploadValues(ApiUrl_Token, "POST", nvc));
+                    LineLoginToken ToKenObj = JsonConvert.DeserializeObject<LineLoginToken>(JsonStr);
+                    wc.Headers.Clear();
 
-        //            //取回User Profile
-        //            string ApiUrl_Profile = "https://api.line.me/v2/profile";
-        //            wc.Headers.Add("Authorization", "Bearer " + ToKenObj.access_token);
-        //            string UserProfile = wc.DownloadString(ApiUrl_Profile);
-        //            //LineProfile ProfileObj = JsonConvert.DeserializeObject<LineProfile>(UserProfile);
+                    //取回User Profile
+                    string ApiUrl_Profile = "https://api.line.me/v2/profile";
+                    wc.Headers.Add("Authorization", "Bearer " + ToKenObj.access_token);
+                    string UserProfile = wc.DownloadString(ApiUrl_Profile);
+                    LineProfile ProfileObj = JsonConvert.DeserializeObject<LineProfile>(UserProfile);
 
-        //            return RedirectToAction("UserProfile", "Home", new { displayName = ProfileObj.displayName, pictureUrl = ProfileObj.pictureUrl });
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            return Content(ex.ToString());
-        //            //string msg = ex.Message;
-        //        }
-        //    }
-        //    return View();
-        //}
+                    return RedirectToAction("UserProfile", "Home", new { displayName = ProfileObj.displayName, pictureUrl = ProfileObj.pictureUrl });
+                }
+                catch (Exception ex)
+                {
+                    return Content(ex.ToString());
+                    //string msg = ex.Message;
+                }
+            }
+            return View();
+        }
     }
 }
