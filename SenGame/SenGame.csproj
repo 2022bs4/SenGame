@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AspNetCore.LineLogin" Version="1.0.2" />
     <PackageReference Include="CloudinaryDotNet" Version="1.19.0" />
     <PackageReference Include="Google.Apis.Auth" Version="1.57.0" />
     <PackageReference Include="isrock.toolbox" Version="1.0.6" />
