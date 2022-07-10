@@ -10,20 +10,13 @@ using System.Threading.Tasks;
 
 namespace Services.ChatService
 {
-    public class FriendGroupService : BaseService, IChatService
+    public class FriendGroupService : BaseService
     {
         public FriendGroupService(IRepository repository) : base(repository)
         {
         }
 
-        public List<UserModel> GetFriend()
-        {
-            throw new NotImplementedException();
-        }
 
-        public List<GroupDTO> GetGroup()
-        {
-            throw new NotImplementedException();
-        }
+
     }
 }
