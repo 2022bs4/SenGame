@@ -54,6 +54,9 @@ namespace SenGame
             services.AddScoped<ICommunityService,CommunityService>();
             services.AddScoped<ShopServices>();
             services.AddScoped<ShopCartServices>();
+            services.AddScoped<BuyService>();
+
+
             //Swagger Use
             services.AddSignalR();
             services.AddSwaggerGen();

@@ -1,0 +1,45 @@
+﻿@model List<CheckBuyViewModel>
+@section Css{
+     <link rel="stylesheet" href="/css/shop/CheckBuy.css" asp-append-version="true"/>
+
+}
+
+<section class="col-12 col-md-8 p-0 Main-Content">
+    <div class="col-12 Review">
+        <div class="col-12 d-flex justify-content-between p-0 mb-5 Totoal-Price">
+            @foreach(var item in Model)
+            {
+                <div class="col-12  Game-Item py-3">
+                    <h2>@Html.Raw(item.GameName)</h2>
+                    <div class="d-flex justify-content-around flex-wrap col-12 p-0 ">
+                        <div class="col-7 p-0">
+                            <img src="@Html.Raw(item.GameUrl)" alt="@Html.Raw(item.GameName)" class="w-100">
+                        </div>
+                        <div class="col-4 p-0 ml-1 Game-Price-Box d-flex flex-wrap">
+                            <span>遊戲價格: </span>
+                            <p class="Game-Price">NT$ @Html.Raw(item.GamePrice)</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="col-12 User-Protocol d-flex flex-wrap p-0 mt-5">
+            <input type="checkbox" value="1" class="mt-5" >
+            <p class="col-10 mt-5">我同意 <a herf="sss" alt="">Steam訂戶協議中的條款</a>（最後修改日期：
+                <span>2022 年 2 月 24 日</span>）
+            </p>
+        </div>
+        <button class="Btn_Buy btn" disabled="false">購買</button>
+        <button class="Btn_Cancel btn ">取消購買</button>
+    </div>
+</section>
+        
+<section class="Buy-Hint col-12 col-md-3 p-0">
+    <div>
+        <p>在 STEAM 上購物<br>當您送出付費資訊時，資料均受到通過數位認證的安全通訊端層 (SSL) 技術保護。完成本次交易後，將會從您的付款方式扣除交易金額，且您會收到一封確認您已購買的電子郵件訊息。</p>
+    </div>
+</section>
+
+@section Scripts{
+    <script src="~/js/Shop/CheckBuy.js"></script>
+}

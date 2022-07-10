@@ -114,8 +114,6 @@ namespace Services
         {
             var recommend = Repository.GetAll<Game>().OrderBy(x => Guid.NewGuid());
 
-
-            //var recommend = _game.GetAll().OrderBy(x => Guid.NewGuid());
             var pic = Repository.GetAll<GameMedium>().Where(x => x.InstructionType == 2 && x.Instruction == 1);
             var newRecommend = await recommend.Join(pic, r => r.GameId, p => p.GameId, (r, p) => new { r.GameId, r.GameName, r.GamePrice, p.MediaUrl }).Take(5).ToListAsync();
             var result = new List<ProductRecommend>();
