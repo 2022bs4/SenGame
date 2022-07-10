@@ -24,7 +24,7 @@ namespace Services
         }
         public List<ForumDTO> GetForums(string name)
         {
-            var forumIds = Repository.FindBy<MyForum>(x => x.UserId == this.GetUserId(name).ToString()).Select(i => i.MyForumId);
+            var forumIds = Repository.FindBy<MyForum>(x => x.UserId == this.GetUserId(name)).Select(i => i.MyForumId);
             var data = Repository.FindBy<Forum>(x => forumIds.Contains(x.ForumId)).Select(i => new ForumDTO()
             {
                 Id = i.ForumId,
@@ -69,9 +69,9 @@ namespace Services
             return swipers;
         }
         //把User.Identity.Name轉成id
-        public int GetUserId(string name)
+        public string GetUserId(string name)
         {
-            var id = Repository.GetAll<UserModel>().First(x => x.UserName == name).UserId;
+            var id = Repository.GetAll<UserModel>().First(x => x.UserName == name).Id;
             return id;
         }
 
