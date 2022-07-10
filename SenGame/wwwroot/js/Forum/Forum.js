@@ -14,8 +14,8 @@ btn3.addEventListener('click', function () {
 })
 
 function ChangeRow(css){
-    var main = document.querySelector('main');
-    main.setAttribute("class", "container-fluid");
+    var main = document.querySelector('main>article');
+    main.setAttribute("class", "");
     main.classList.add(css);
 }
 

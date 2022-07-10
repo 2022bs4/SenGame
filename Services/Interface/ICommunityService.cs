@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using SqlModels.Models;
 using SqlModels.DTOModels;
+using SqlModels.DTOModels.Community;
 
 
 namespace Services.Interface
@@ -15,8 +13,10 @@ namespace Services.Interface
         public List<Swipers> Swipers();
         //請打註解
         public List<CommunityDTO> Article();
-        //查詢使用者的討論區
-        public IQueryable<Forum> GetUserForum(string name);
+        //取得所有的看板
+        public List<ForumDTO> GetForums();
+        //取得使用者的看板
+        public List<ForumDTO> GetForums(string name);
 
     }
 }

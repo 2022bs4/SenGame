@@ -1,5 +1,6 @@
 ﻿using Services.Interface;
 using SqlModels.DTOModels;
+using SqlModels.DTOModels.Community;
 using SqlModels.Models;
 using SqlModels.Repository.Interface;
 using System.Collections.Generic;
@@ -11,11 +12,25 @@ namespace Services
         public CommunityService(IRepository repository) : base(repository)
         {
         }
-        public IQueryable<Forum> GetUserForum(string _name)
+        public List<ForumDTO> GetForums()
         {
-            var id = Repository.FindBy<UserModel>(x => x.UserName == _name).First().UserId;
-            var ids = Repository.FindBy<MyForum>(x => x.UserId == id.ToString()).Select(x => x.ForumId);
-            var data = Repository.FindBy<Forum>(x => ids.Contains(x.ForumId));
+            var data = Repository.GetAll<Forum>().Select(i=> new ForumDTO()
+            {
+                Id = i.ForumId,
+                Name =i.Name,
+                Banner = i.Banner
+            }).ToList();
+            return data;
+        }
+        public List<ForumDTO> GetForums(string name)
+        {
+            var forumIds = Repository.FindBy<MyForum>(x => x.UserId == this.GetUserId(name).ToString()).Select(i => i.MyForumId);
+            var data = Repository.FindBy<Forum>(x => forumIds.Contains(x.ForumId)).Select(i => new ForumDTO()
+            {
+                Id = i.ForumId,
+                Name = i.Name,
+                Banner = i.Banner
+            }).ToList(); ;
             return data;
         }
 
@@ -40,8 +55,6 @@ namespace Services
             return articlelist;
         }
 
-
-
         public List<Swipers> Swipers()
         {
             var img = Repository.GetAll<GameMedium>().Where(g => g.Instruction == 1 && g.InstructionType == 1);
@@ -54,6 +67,12 @@ namespace Services
                 });
             }
             return swipers;
+        }
+        //把User.Identity.Name轉成id
+        public int GetUserId(string name)
+        {
+            var id = Repository.GetAll<UserModel>().First(x => x.UserName == name).UserId;
+            return id;
         }
 
     }

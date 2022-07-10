@@ -21,6 +21,7 @@ using Services.Interface;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
 using Services.ShopSevice;
+using Services.Mappings;
 
 namespace SenGame
 {
@@ -54,6 +55,10 @@ namespace SenGame
             services.AddScoped<ICommunityService,CommunityService>();
             services.AddScoped<ShopServices>();
             services.AddScoped<ShopCartServices>();
+
+            //AutoMapper DI
+            services.AddAutoMapper(typeof(ServiceMappings));
+
             //Swagger Use
             services.AddSignalR();
             services.AddSwaggerGen();

@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Services.Interface;
-using SqlModels.Models;
 using System;
 using Services;
-using SqlModels.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
+using Services.Interface;
+using SqlModels.Models;
+using SqlModels.ViewModels;
+using SqlModels.ViewModels.Community;
 
 namespace SenGame.Controllers
 {
@@ -51,19 +53,21 @@ namespace SenGame.Controllers
             var img = _service.Swipers().ToArray();
             return Ok(img);
         }
-        //顯示討論區
+        //顯示所有看板
         public IActionResult Forum()
         {
-            var forums = _service.GetAll<Forum>();
-            return View(forums);
+            ForumViewModel model = new();
+            model.ForumCollection = _service.GetForums();
+            return View(model);
         }
         //顯示使用者的討論區
         public IActionResult MyForum()
         {
             if (User.Identity.IsAuthenticated)
             {
-                var forums = _service.GetUserForum(User.Identity.Name);
-                return View(forums);
+                ForumViewModel model = new();
+                model.ForumCollection = _service.GetForums(User.Identity.Name);
+                return View(model);
             }
             return Content("not login");
         }
