@@ -9,7 +9,7 @@ using System.Linq;
 namespace SenGame.Controllers
 {
 
-    [Authorize]
+    //[Authorize]
     public class FriendController : Controller
     {
         List<UserModel> user = new List<UserModel>()
@@ -32,8 +32,6 @@ namespace SenGame.Controllers
             new FriendGroup{FriendGoupId=1,GroupName="高中同學"},
         };
 
-        
-      
         public IActionResult Index()
         {
             return View();
@@ -77,6 +75,12 @@ namespace SenGame.Controllers
             return View();
         }
 
+        List<UserPrivacy> userprivacie = new List<UserPrivacy>()
+        {
+            new UserPrivacy{UserPrivacyId=1, PrivacyState = "公開"},
+            new UserPrivacy{UserPrivacyId=2, PrivacyState = "只限好友"},
+            new UserPrivacy{UserPrivacyId=3, PrivacyState = "私人"}
+        };
         public IActionResult Edit4_UserPrivacy()
         {
             return View();
