@@ -1,12 +1,12 @@
 ﻿@using Microsoft.AspNetCore.Identity
-
+@model IEnumerable<ForumViewModel>
 
 
     <div class="chat-content position-relative">
         <div class="chat-left">
             <div class="user-content position-relative">
                 <img class="pl-2 py-3  user-select-none" src="">
-                @*<p class="pl-2 py-3  user-select-none">@User.Identity.GetUserId()</p>*@
+                <p class="pl-2 py-3  user-select-none">@User.Identity.Name</p>
                 <span class="user-span pl-2 py-3  user-select-none">∨</span>
                 <ul class="state-ul position-fixed p-0 m-0">
                     <li class="state-li  user-select-none">線上</li>
@@ -24,26 +24,28 @@
                     <span class="friends-span w-100 pl-2 py-2 d-block user-select-none">好友名單(<span class="count">0</span>)</span>
                     <div class="friend-ul w-100">
                  
-                            <partial name="_FriendCardPartial"/>
+                            @*<partial name="_FriendCardPartial"/>*@
                         
 
                     </div>
                 </div>
 @*                @foreach(var group in Model)
-                {
-                
-                    <div class="friend-group w-100">
-                        <span class="friends-span w-100 pl-2 d-block user-select-none">@group.GroupName</span>
+                {              
+                <div class="friend-group w-100">
+                        <span class="friends-span w-100 pl-2 d-block user-select-none">@group.Key</span>
                          <div class="friend-ul w-100">
-                            <div class="friend-li pl-2 py-3 w-100">
-                                <img class="friend-img user-select-none"  src="@group.Photo">
+                            @foreach(var item in Model)
+                            {
+                            <div class="friend-li pl-2 py-3 w-100 @(item.Value.Name==null?"d-none":"")">
+                                <img class="friend-img user-select-none"  src="@item.Value">
                                 <div class="friend-content w-100">
-                                 <span class="friend-name pl-4 mb-0 user-select-none">@group.Name</span>
+                                 <span class="friend-name pl-4 mb-0 user-select-none">@item..ValueName</span>
                                  <p class="friend-line pl-4 mb-0  user-select-none">上線</p>
                             </div>
                         </div>  
-                     </div>
-                     </div>
+                            }
+                        </div>
+                 </div>
                 }*@
             </div>
         </div>
@@ -129,5 +131,5 @@
  }
  @section Scripts{
      <script src="~/js/signalr/dist/browser/signalr.js"></script>
-     <script src="~/js/Friend/Chat.js"></script>
+     @*<script src="~/js/Friend/Chat.js"></script>*@
  }

@@ -73,6 +73,8 @@ namespace SenGame.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
             [Required]
             public string Address { get; set; }
+            [Required(ErrorMessage ="請同意協定")]
+            public string IsCheck { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)

@@ -8,16 +8,25 @@ namespace SqlModels.ViewModels
 {
     public class FriendViewModel
     {
-        public string GroupName { get; set; }
-        public string Name { get; set; }
-        public string Photo { get; set; }
-        
+
+        public List<Group> Groups { get; set; }
+        public class Group
+        {
+            public string GroupName { get; set; }
+            public List<Friend> Friends { get; set; }
+        }
+
+        public class Friend
+        {
+            public string Name { get; set; }
+            public string Photo { get; set; }
+        }
+
     }
-    public class Test
-    {
-        public string GroupName { get; set; }
-        public string Name { get; set; }
-        public string Photo { get; set; }
-    }
-   
+
+
+    
+
+
+
 }

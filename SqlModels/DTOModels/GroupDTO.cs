@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SqlModels.Models
+namespace SqlModels.DTOModels
 {
-    public class FriendGroup
+    public class GroupDTO
     {
-        public int FriendGoupId { get; set; }
-        public string UserId { get; set; }
         public string GroupName { get; set; }
+        public string UserName { get; set; }
+        public string UserPicture { get; set; }
     }
 }
+    

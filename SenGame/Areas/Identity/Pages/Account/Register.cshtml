@@ -5,9 +5,8 @@
 }
 
         <div class="register">
-            <div class="register-content pt-2">
+            <div class="register-content">
                 <div class="register-title">建立您的帳戶</div>
-                 輸入帳號密碼之表單 
                 <form class="register-form" asp-route-returnUrl="@Model.ReturnUrl" method="post" >
                     <div asp-validation-summary="All" class="text-danger text-center"></div>
                      <div class="register-account">
@@ -39,6 +38,7 @@
                     <div class="agree pt-3">
                         <input type="checkbox" name="" id="check">
                         <p class="agree-p pb-0 mb-0">我已年滿 13 歲並同意<a href="#">用戶協議</a>與<a href="#">隱私政策</a>。</p>
+                        <input asp-for="Input.IsCheck" id="IsCheck" hidden="hidden"/>
                     </div>
                     <div class="register-btn-ctrl pt-3">
                         <button type="submit" class="register-btn">繼續</button>
@@ -55,6 +55,9 @@
         function WhereDoYouLive(){
             address.value = live.value;
         }
+        check.addEventListener('click', function() {
+            IsCheck.value = "yes";
+        })
     </script>
 }
 @section Css{

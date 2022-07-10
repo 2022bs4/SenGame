@@ -104,7 +104,6 @@ namespace SenGame.Controllers
                 catch (Exception ex)
                 {
                     return Content(ex.ToString());
-                    //string msg = ex.Message;
                 }
             }
             return View();
