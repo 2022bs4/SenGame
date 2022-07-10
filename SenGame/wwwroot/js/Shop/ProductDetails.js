@@ -19,31 +19,31 @@ $(document).ready(function () {
 function BtnFunction() {
     let btn_Add = document.querySelector('.AddItem');
     let btn_Wish = document.querySelector('.Wish');
+
     //加入購物車fetch post
     btn_Add.addEventListener('click', function () {
+        AddCartFetch()    
+    })
 
+    
+    async function AddCartFetch() {
         const url = '/Shop/AddShoppingCart';
         let request = new Request(url, {
             method: "POST",
             headers: new Headers({
-                'Content-Type' : 'application/json',
+                'Content-Type': 'application/json',
+                "Accept": "application/json",
             }),
             body: JSON.stringify({
-                GameId: `${gameId.value}`
+                GameId: `${gameId.value}`,
+                Success: "",
             })
         })
-
-        fetch(request)
-            .then(response => { response.json() })
-            .then(result => {
-                console.log(request)
-                //alert(result)
-            })
-            .catch(error => {
-                alert(`Error : ${error}`)
-            })
-    })
-
+        let fetchAction = await fetch(request)
+        let data = await fetchAction.json()
+        var response = data.success;
+        alert(response);
+    }
     //btn_Wish.addEventListener('click', function () {
     //})
 

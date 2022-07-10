@@ -4,23 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SqlModels.ViewModels.ShopViewModels
+namespace SqlModels.DTOModels
 {
-    public class ShoppingCartViewModel
+    public class CheckBuyDTO
     {
         public string UserId { get; set; }
         public int GameId { get; set; }
         public string GameName { get; set; }
         public string GameUrl { get; set; }
         public decimal GamePrice { get; set; }
-        public DateTime Created { get; set; }
-
-        public string Success { get; set; }
     }
-    public class OutputShoppingCart 
-    {
-        public int GameId { get; set; }
-
-        public string SelectId { get; set; }
-    }
+    //public class OrderDTO 
+    //{ 
+    //    public 
+    //}
 }

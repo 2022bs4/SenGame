@@ -23,6 +23,41 @@ btn_DelAllItem.addEventListener('click', function () {
         })
 })
 
+let checkBuy = document.querySelector('.checkout')
+
+
+    
+    
+checkBuy.addEventListener('click', function () {
+    let gameId = document.querySelectorAll('.GameID')
+    let gameIdArray = []
+    for (let i = 0; i < gameId.length; i++) {
+        gameIdArray.push(gameId[i].value)
+    }
+    const url = '/Shop/AddOrderDetails'
+    fetch(url, {
+        method: "POST",
+        headers:{
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            SelectId : `${gameIdArray}`,
+        })
+    })
+        .then(response => {
+            alert("OK")
+        })
+        .catch(erro => {
+            alert(erro)
+        })
+    
+});
+
+
+
+
+
+
 
 //推薦Template
 function RecommendTemplate() {

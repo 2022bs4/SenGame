@@ -481,7 +481,9 @@ namespace SqlModels.Data
             {
                 entity.ToTable("Order");
 
-                entity.Property(e => e.OrderId).ValueGeneratedNever();
+                entity.Property(e => e.OrderId).IsRequired();
+
+                //entity.Property(e => e.OrderId).ValueGeneratedNever();
 
                 entity.Property(e => e.CancelTime)
                     .HasColumnType("datetime")
@@ -492,17 +494,17 @@ namespace SqlModels.Data
                     .HasComment("訂單時間");
 
                 entity.Property(e => e.EcpayId)
-                    .IsRequired()
+                    //.IsRequired()
                     .HasComment("Ecpay訂單編號");
 
                 entity.Property(e => e.Invoice)
-                    .IsRequired()
+                    //.IsRequired()
                     .HasMaxLength(255)
                     .IsFixedLength(true)
                     .HasComment("發票編碼");
 
                 entity.Property(e => e.InvoiceWay)
-                    .IsRequired()
+                    //.IsRequired()
                     .HasMaxLength(255)
                     .IsFixedLength(true)
                     .HasComment("1.電子發票2.載具3.捐贈");
@@ -522,6 +524,8 @@ namespace SqlModels.Data
 
             modelBuilder.Entity<Orderdetail>(entity =>
             {
+                entity.Property(e => e.OrderdetailId).IsRequired();
+
                 entity.HasIndex(e => e.GameId, "IX_Orderdetails_GameId");
 
                 entity.HasIndex(e => e.OrderId, "IX_Orderdetails_OrderId");
@@ -609,7 +613,7 @@ namespace SqlModels.Data
 
                 //entity.Property(e => e.ShoppingCartId).ValueGeneratedNever();
                 
-                //測試自動識別?
+                //測試自動識別
                 entity.Property(e => e.UserId).IsRequired();
 
 

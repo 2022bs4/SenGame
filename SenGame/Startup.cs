@@ -55,6 +55,7 @@ namespace SenGame
             services.AddScoped<ICommunityService,CommunityService>();
             services.AddScoped<ShopServices>();
             services.AddScoped<ShopCartServices>();
+            services.AddScoped<BuyService>();
 
             //AutoMapper DI
             services.AddAutoMapper(typeof(ServiceMappings));
