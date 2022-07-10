@@ -20,6 +20,8 @@ namespace SqlModels.ViewModels
         public List<TabViewModel> TabBeReleaseVM { get; set; }
         public List<TabViewModel> TabSpecialDiscountVM { get; set; }
 
+
+        
     }
 
 

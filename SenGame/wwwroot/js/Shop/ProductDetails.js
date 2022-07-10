@@ -21,6 +21,7 @@ function BtnFunction() {
     let btn_Wish = document.querySelector('.Wish');
     //加入購物車fetch post
     btn_Add.addEventListener('click', function () {
+
         const url = '/Shop/AddShoppingCart';
         let request = new Request(url, {
             method: "POST",

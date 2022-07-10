@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace SqlModels.DTOModels
 {
@@ -19,13 +17,20 @@ namespace SqlModels.DTOModels
         public string Marker { get; set; }
 
         //簡介圖
-        public string ProductMainPicture { get; set; }
+        public string GamePicture { get; set; }
 
         //標籤
-        public string TypleName { get; set; }
+        public IQueryable<TypleData> GameTyple {get ; set;}
 
+        public class TypleData
+        {
+            public int GameId { get; set; }
+            public string TypleName { get; set; }
+        }
         //折扣
         public double DisscountTake { get; set; }
+
+        
     }
     //產品詳細Json
     public class ProdductIntroductDTO
@@ -36,7 +41,6 @@ namespace SqlModels.DTOModels
     //
     public class ProductSwipperDTO
     {
-        //swipper
         public string SwipperUrl { get; set; }
     }
 

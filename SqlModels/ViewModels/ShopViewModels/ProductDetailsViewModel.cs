@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace SqlModels.ViewModels
 {
@@ -18,11 +19,15 @@ namespace SqlModels.ViewModels
         public string Marker { get; set; }
 
         //簡介圖
-        public string ProductMainPicture { get; set; }
+        public string GamePicture { get; set; }
 
         //標籤
-        public string TypleName { get; set; }
-        //public int TyplyId { get; set; }
+        public IQueryable<TypleData> GameTyple { get; set; }
+        public class TypleData
+        {
+            public int GameId { get; set; }
+            public string TypleName { get; set; }
+        }
 
         //折扣
         public double DisscountTake { get; set; }

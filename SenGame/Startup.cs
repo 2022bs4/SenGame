@@ -20,7 +20,7 @@ using Services;
 using Services.Interface;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
-
+using Services.ShopSevice;
 
 namespace SenGame
 {
@@ -52,7 +52,8 @@ namespace SenGame
             //Services DI
             services.AddScoped<IBaseService,BaseService>();
             services.AddScoped<ICommunityService,CommunityService>();
-
+            services.AddScoped<ShopServices>();
+            services.AddScoped<ShopCartServices>();
             //Swagger Use
             services.AddSignalR();
             services.AddSwaggerGen();
