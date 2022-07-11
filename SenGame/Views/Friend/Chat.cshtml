@@ -1,11 +1,13 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@model IEnumerable<ForumViewModel>
+@{
+    string pic = (string)TempData["pic"];
+}
 
 
     <div class="chat-content position-relative">
         <div class="chat-left">
             <div class="user-content position-relative">
-                <img class="pl-2 py-3  user-select-none" src="">
+                <img class="pl-2 py-3  user-select-none w-25" src="@pic">
                 <p class="pl-2 py-3  user-select-none">@User.Identity.Name</p>
                 <span class="user-span pl-2 py-3  user-select-none">∨</span>
                 <ul class="state-ul position-fixed p-0 m-0">
@@ -13,40 +15,14 @@
                     <li class="state-li  user-select-none">離開</li>
                     <li class="state-li  user-select-none">隱藏</li>
                 </ul>
-                <p class="position-absolute line  user-select-none">線上</p>
+                <p class="position-absolute line  user-select-none pl-1">線上</p>
                 <div class="user-search position-relative">
                     <p class="pl-2  user-select-none">好友</p>
                         <input class="search  position-absolute" type="search" value="" >
                 </div>
             <div class="resizeR"></div>
             <div class="friends w-100">
-                <div class="friend-group w-100">
-                    <span class="friends-span w-100 pl-2 py-2 d-block user-select-none">好友名單(<span class="count">0</span>)</span>
-                    <div class="friend-ul w-100">
-                 
-                            @*<partial name="_FriendCardPartial"/>*@
-                        
-
-                    </div>
-                </div>
-@*                @foreach(var group in Model)
-                {              
-                <div class="friend-group w-100">
-                        <span class="friends-span w-100 pl-2 d-block user-select-none">@group.Key</span>
-                         <div class="friend-ul w-100">
-                            @foreach(var item in Model)
-                            {
-                            <div class="friend-li pl-2 py-3 w-100 @(item.Value.Name==null?"d-none":"")">
-                                <img class="friend-img user-select-none"  src="@item.Value">
-                                <div class="friend-content w-100">
-                                 <span class="friend-name pl-4 mb-0 user-select-none">@item..ValueName</span>
-                                 <p class="friend-line pl-4 mb-0  user-select-none">上線</p>
-                            </div>
-                        </div>  
-                            }
-                        </div>
-                 </div>
-                }*@
+               <partial name="_FriendCardPartial"/>
             </div>
         </div>
     </div>
@@ -70,8 +46,7 @@
             <input id="groupname" type="text" value="">
             <span class="text d-block pb-2 pt-4">選擇要加入的好友</span>
             <div class="add d-flex mb-3"></div>
-            <div class="choose-friend mb-3">
-                
+            <div class="choose-friend mb-3">   
             </div>
         </div>
         <div class="modal-btn-ctrl d-flex justify-content-center">
@@ -131,5 +106,5 @@
  }
  @section Scripts{
      <script src="~/js/signalr/dist/browser/signalr.js"></script>
-     @*<script src="~/js/Friend/Chat.js"></script>*@
+     <script src="~/js/Friend/Chat.js"></script>
  }

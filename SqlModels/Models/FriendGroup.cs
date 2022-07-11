@@ -8,8 +8,10 @@ namespace SqlModels.Models
 {
     public class FriendGroup
     {
-        public int FriendGoupId { get; set; }
+        public int FriendGroupId { get; set; }
         public string UserId { get; set; }
         public string GroupName { get; set; }
+
+        public virtual UserModel User { get; set; }
     }
 }

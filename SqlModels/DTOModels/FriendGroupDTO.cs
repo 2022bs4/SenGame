@@ -8,5 +8,8 @@ namespace SqlModels.DTOModels
 {
     public class FriendGroupDTO
     {
+        public string GroupName { get; set; }
+        public string UserName { get; set; }
+        public string UserPicture { get; set; }
     }
 }

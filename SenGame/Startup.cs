@@ -20,7 +20,7 @@ using Services;
 using Services.Interface;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
-
+using Services.ChatService;
 
 namespace SenGame
 {
@@ -53,6 +53,7 @@ namespace SenGame
             services.AddScoped<IBaseService,BaseService>();
             services.AddScoped<ICommunityService,CommunityService>();
 
+            services.AddScoped<FriendGroupService>();
             //Swagger Use
             services.AddSignalR();
             services.AddSwaggerGen();

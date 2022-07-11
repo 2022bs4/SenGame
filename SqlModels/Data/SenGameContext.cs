@@ -252,11 +252,11 @@ namespace SqlModels.Data
 
             modelBuilder.Entity<FriendGroup>(entity =>
             {
-                entity.HasKey(e => e.FriendGoupId);
+                entity.HasKey(e => e.FriendGroupId);
 
                 entity.ToTable("FriendGroup");
 
-                entity.Property(e => e.FriendGoupId).ValueGeneratedNever();
+                entity.Property(e => e.FriendGroupId).ValueGeneratedNever();
 
                 entity.Property(e => e.GroupName)
                     .IsRequired()

@@ -4,8 +4,8 @@ var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 connection.start()
     .then(function () { })
     .catch(function (err) {
-    alert('連線錯誤: ' + err.toString());
-});
+        alert('連線錯誤: ' + err.toString());
+    });
 //忍術:全域變數
 let del = document.querySelector(".delete-type")
 let rightmenudel = document.querySelector(".group-delete")
@@ -43,49 +43,7 @@ let addblock = document.querySelector(".add")
 //modal內的確認按鈕
 let check = document.querySelector(".check")
 let friendgroup = document.querySelector(".friends")
-let AllFriends = [
-    {
-        'img': "https://memeprod.ap-south-1.linodeobjects.com/user-gif/fc83a3a705767ab42688e4e858777196.gif",
-        'name': "張添宇",
-        'line': "上線",
-    },
-    {
-        'img': "https://memeprod.ap-south-1.linodeobjects.com/user-gif-post/1654151736656.gif",
-        'name': "大帥哥",
-        'line': "上線",
-    },
-    {
-        'img': "https://memeprod.ap-south-1.linodeobjects.com/user-gif-thumbnail/d4dd77bf2820f1c7c7b43121d4f7477b.gif",
-        'name': "AKA",
-        'line': "上線",
-    },
-    {
-        'img': "https://memeprod.ap-south-1.linodeobjects.com/user-gif/f3712e057175f57539872d740878b3df.gif",
-        'name': "新竹",
-        'line': "上線",
-    },
-    {
-        'img': "https://miro.medium.com/max/676/1*XEgA1TTwXa5AvAdw40GFow.png",
-        'name': "金城武",
-        'line': "上線",
-    },
-    {
-        'img': "https://miro.medium.com/max/676/1*XEgA1TTwXa5AvAdw40GFow.png",
-        'name': "不服來辯",
-        'line': "上線",
-    },
-    {
-        'img': "https://miro.medium.com/max/676/1*XEgA1TTwXa5AvAdw40GFow.png",
-        'name': "帥哥",
-        'line': "上線",
-    },
-    {
-        'img': "https://miro.medium.com/max/676/1*XEgA1TTwXa5AvAdw40GFow.png",
-        'name': "帥哥",
-        'line': "上線",
-    },
-
-]
+let AllFriends = document.querySelectorAll(".friend-li")
 //載入的時候判斷裝置，決定有什麼樣功能
 window.onload = function () {
     Setnavbar(".container-fluid");
@@ -96,6 +54,15 @@ window.onload = function () {
         phone()
     }
 }
+let allgrouop = document.querySelectorAll(".friend-group")
+allgrouop.forEach(item => {
+    item.style.cursor = 'pointer'
+    let span = item.querySelector(".friends-span")
+    let list = item.querySelector(".friend-ul")
+    span.onclick = function () {
+        $(list).toggle()
+    }
+})
 //產出好友清單
 function getfriend(img, name, line) {
     let clone = friendcard.content.cloneNode(true)
@@ -186,11 +153,13 @@ function chooseFriend() {
 //桌機能用的功能
 function computer() {
     AllFriends.forEach((item, index) => {
-        count.innerText = index + 1
+        //count.innerText = index + 1
         let choose = document.querySelector(".choose-friend")
-        ul.append(getfriend(item.img, item.name, item.line))
         //modal加入好友
-        choose.append(getfriend2(item.img, item.name, item.line))
+        var img = item.querySelector(".friend-img").src
+        var name = item.querySelector(".friend-name").innerHTML
+        var line = item.querySelector(".friend-line").innerHTML
+        choose.append(getfriend2(img, name, line))
         chooseFriend()
         check.onclick = function () {
             let k = 0;
@@ -226,15 +195,6 @@ function computer() {
                 AllFriends.forEach(item => {
                     choose.append(getfriend2(item.img, item.name, item.line))
                     chooseFriend()
-                })
-                let allgrouop = document.querySelectorAll(".friend-group")
-                allgrouop.forEach(item => {
-                    item.style.cursor = 'pointer'
-                    let span = item.querySelector(".friends-span")
-                    let list = item.querySelector(".friend-ul")
-                    span.onclick = function () {
-                        $(list).toggle()
-                    }
                 })
 
             }
@@ -289,7 +249,7 @@ function computer() {
                             let p = document.createElement("p")
                             let timep = document.createElement("p")
                             timep.setAttribute("class", "pt-3 mb-0")
-                           
+
                             timep.innerText = `${time.getHours().toString().padStart(2, "0")}:${time.getMinutes().toString().padStart(2, "0")}`
                             let div = document.createElement("div")
                             div.style.display = 'flex'

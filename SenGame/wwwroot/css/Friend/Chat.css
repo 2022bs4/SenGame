@@ -81,7 +81,7 @@ body::-webkit-scrollbar-thumb {
 .friends {
     border-bottom: 1px solid #1e262c;
     overflow: auto;
-    height: 35em;
+    height: 85vh;
 }
 
     .friends::-webkit-scrollbar {
