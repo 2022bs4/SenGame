@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SqlModels.DTOModels
+namespace SqlModels.ViewModels
 {
-    public class UserDTO
-    {   
-        public  List<GameData> gamelist { get;set; }
-        
+    public class GameLibraryViewModel
+    {
+        public List<GameData> GameList { get; set; }
+
         public class GameData
         {
             public string Id { get; set; }
@@ -17,7 +17,5 @@ namespace SqlModels.DTOModels
             public string GameIntroduction { get; set; }
             public string MediaUrl { get; set; }
         }
-
-
     }
 }

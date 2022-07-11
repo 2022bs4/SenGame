@@ -8,7 +8,7 @@ namespace SqlModels.Models
     public partial class MyGame
     {
         public int MyGameId { get; set; }
-        public string UserId { get; set; }
+        public string Id { get; set; }
         public int GameId { get; set; }
         public bool MyFavourite { get; set; }
 

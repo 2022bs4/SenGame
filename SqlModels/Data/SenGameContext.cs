@@ -458,7 +458,7 @@ namespace SqlModels.Data
 
                 entity.HasIndex(e => e.GameId, "IX_MyGame_GameId");
 
-                entity.HasIndex(e => e.UserId, "IX_MyGame_UserId");
+                entity.HasIndex(e => e.Id, "IX_MyGame_UserId");
 
                 entity.Property(e => e.MyGameId).ValueGeneratedNever();
 
@@ -472,7 +472,7 @@ namespace SqlModels.Data
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.MyGames)
-                    .HasForeignKey(d => d.UserId)
+                    .HasForeignKey(d => d.Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_MyGame_AspNetUsers1");
             });
