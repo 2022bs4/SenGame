@@ -1,21 +1,19 @@
 ﻿@{
     ViewData["Title"] = "討論區";
-    Layout = "_Layoutforum";
 }
-@section topCss{
-<link rel="stylesheet" href="~/css/Forum/Forum.css">
+@model IEnumerable<Forum>
+@section Css{
+    <link rel="stylesheet" href="~/css/Forum/Forum.css">
 }
-<article id="forum">
     <div class="page-nav">
         <ul class="list-unstyled">
-            <li class="active">所有看板</li>
-            <li class="">我的看板</li>
-            <li class="">我的遊戲</li>
-            <li class="">動態</li>
+           <a> <li class="active">討論區</li></a>
+            <a href="~/Community/MyForum"><li class="">我的看板</li></a>
+            <li class="">動態牆</li>
         </ul>
         <div class="page-nav-box">
             <button class="filter" type="button" id="filter-list" data-toggle="dropdown" aria-expanded="false"
-                    data-offset="-130,0">
+                data-offset="-130,0">
                 <i class="fa-solid fa-filter"></i>
             </button>
             <div class="dropdown-menu" aria-labelledby="filter-list">
@@ -23,77 +21,40 @@
                 <div href="#" class="dropdown-item">依照類型排序</div>
             </div>
             <div class="page-nav-box-btns">
-                <button class="row-cells" type="button">
+                <button class="row-large-btn" type="button">
                     <i class="fa-solid fa-table-cells-large"></i>
                 </button>
-                <button class="row-cells-dense" type="button">
+                <button class="row-cells-btn" type="button">
                     <i class="fa-solid fa-table-cells"></i>
                 </button>
-                <button class="row-list" type="button">
+                <button class="row-list-btn" type="button">
                     <i class="fa-solid fa-list"></i>
-                </button>
-                <button class="row-table-list" type="button">
-                    <i class="fa-solid fa-table-list"></i>
                 </button>
             </div>
         </div>
     </div>
-    <div class="row page-content">
-        <template>
-            <div class="col">
+    <div id="page-content" class="row">
+        @foreach (var item in Model)
+    {
+        <div class="col">
+            <a href="~/Articles/Details/@item.ForumId">
                 <div class="card">
-                    <img src="~/img/APEX.jpg" class="card-img-top" alt="...">
+                    <img src="@item.Banner" class="card-img-top" alt="...">
                     <div class="card-body">
                         <div class="card-body-head">
-                            <h3 class="card-title">APEXX</h3>
-                            <div>
-                                <a href="#" class="btn btn-primary">進入看板</a>
-
-                            </div>
+                            <h3 class="card-title">@item.Name</h3>
                         </div>
                         <div class="card-body-text">
-                            <p>最新的一篇文章內容</p>
-                            <p>目前成員:1050人</p>
+                            <p class="article-total">1000</p>
+                            <p class="user-total">1050</p>
                         </div>
                     </div>
                 </div>
-            </div>
-        </template>
-    </div>
-</article>
-<script>
-    var row = document.querySelector('#forum');
-var rows = document.querySelector('.page-content');
-
-var btn1 = document.querySelector('.row-cells');
-btn1.addEventListener('click', function () {
-    row.setAttribute("class", "container-fluid")
-})
-
-var btn2 = document.querySelector('.row-cells-dense');
-btn2.addEventListener('click', function () {
-    row.setAttribute("class", "container-fluid")
-
-    row.classList.add("row-dense")
-})
-var btn3 = document.querySelector('.row-list');
-btn3.addEventListener('click', function () {
-    row.setAttribute("class", "container-fluid")
-
-    row.classList.add("row-list")
-})
-var btn4 = document.querySelector('.row-table-list');
-btn4.addEventListener('click', function () {
-    row.setAttribute("class", "container-fluid")
-    row.classList.add("row-table-list")
-})
-var temp = document.getElementsByTagName("template")[0];
-for (var i = 5; i < 20; i++) {
-    var clon = temp.content.cloneNode(true);
-    rows.appendChild(clon);
-}
-
-</script>
-@*@section topScripts{
+            </a>
+        </div>
+    }
+</div>
+<footer></footer>
+@section Scripts{
     <script src="~/js/Forum/Forum.js"></script>
-}*@
+}

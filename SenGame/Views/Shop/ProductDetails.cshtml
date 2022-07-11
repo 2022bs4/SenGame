@@ -1,32 +1,35 @@
-﻿@section Css{
-    <link rel="stylesheet" href="/css/shop/ProductDetails.css" asp-append-version="true"/>
-}
+﻿@*@model List<ProductDetailsViewModel>
+@using System.Linq;
 
-        <!-- 搜尋及導覽列 -->
-        
-        <!-- 遊戲主要介紹 -->
+
+@section Css{
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="/css/shop/ProductDetails.css" asp-append-version="true"/>
+}*@
+@*        <!-- 遊戲主要介紹 -->
         <section class="MainGame-Datial col-12 p-0 d-md-flex flex-md-wrap justify-content-md-between">
-            <h2 class="Table-title w-100"></h2>
             <!-- 遊戲名稱、開發商、開發人員、發行日期、簡介 動態載入 -->
             <div class="Game-Introduce d-md-flex flex-md-column justify-content-md-between mb-4 mb-md-0 mt-md-2">
-                <div>   
-                    <img  alt="" class="w-100">
-                    <p class="col-12  p-0 text-left"></p>
+                <input type="hidden" id="GameId" value="@Model[0].GameId"/>
+                <h2 class="Table-title w-100">@Html.Raw(Model[0].GameName)</h2>
+                <div>
+                    <img src="@Html.Raw(Model[0].ProductMainPicture)" alt="@Html.Raw(Model[0].GameName)" class="w-100">
+                    <p class="col-12  p-0 text-left">@Html.Raw(Model[0].GameIntroduction)</p>
                 </div>
                 <div>
-                    <h3 class="Developers">開發商 <a href="#"></a></h3>
-                    <h3 class="Developers_Person ">開發人員 <a href="#"></a></h3>
-                    <h3 class="Selling-Date ">發行日期 <a href="#"></a></h3>
+                    <h3 class="Developers">開發商   : <a href="#">@Html.Raw(Model[0].Developer)</a></h3>
+                    <h3 class="Developers_Person ">開發人員 : <a href="#">@Html.Raw(Model[0].Marker)</a></h3>
+                    <h3 class="Selling-Date ">發行日期 : <a href="#">@Html.Raw(Model[0].ReleaseTime)</a></h3>
                 </div>
-                <!-- 動態標籤 -->
-                <!-- <div class="Game-tag"></div> -->
-                <!-- 動態評論 -->
-                <!-- <div class="Game-Comment"></div> -->
+                <div class="Game-tag">
+                    @foreach(var tag in Model)
+                    {
+                        <a class="btn tag" asp-controller="Game" asp-action="Game_Category">@Html.Raw(tag.TypleName)</a>
+                    }
+                </div>
             </div>
-            
-            <!--影片 動態測入，目前Lol測試版  -->
+
             <div class="Game-Video-Introduce mt-md-2">
-                <!-- 以下測試 -->
                 <div  class="swiper mySwiper1 ">
                     <div class="swiper-wrapper" id="mainphoto"></div>
                     <div class="swiper-button-next"></div>
@@ -36,113 +39,84 @@
                     <div class="swiper-wrapper" id="thumbs">
                     </div>
                 </div>
-                <!-- 以上測試 -->
             </div>
-
         </section>
-
         <section class="col-12 p-0 mt-md-3">
             <!-- 購買收藏等功能鍵、靜態 -->
             <div class="Game-Function-Btn col-12 p-0 d-lg-flex justify-content-md-between">
-                <div class="Game-Price d-flex align-items-center col-12 col-lg-6"></div>
+                <div class="Game-Price d-flex align-items-center col-12 col-lg-6 p-0">售價: NT$ @Html.Raw(Model[0].GamePrice)</div>
                 <div class="Group-btn col-12 col-lg-6 flex-row-reverse">
-                    <button>收藏</button>
+                    <button class="Wish">收藏</button>
                     <button>分享</button>
-                    <button class="btn ">
-                        <a asp-action="ShoppingCart">加入購物車</a>
-                    </button>
+                    <button class="btn AddItem">加入購物車</button>
                 </div>
             </div>
         </section>
-
         <section class="col-12 d-md-flex flex-md-wrap justify-content-md-between p-0 Game-Datails-Area">
             <!-- 遊戲文字介紹 要動態載入 -->
             <p class="col-12 p-0 mt-4 About-Game">關於此遊戲</p>
             <div class="Game-Datails col-12 col-md-8  mb-4 m-md-0">
+                
             </div>
             <div class="Recommend col-12 col-md-3 p-0 "></div>
         </section>
-        <section class="col-md-12">
+       <section class="col-md-12">
             <!-- 性統需求 -->
             <div class="System-Requirement col-12 d-flex flex-wrap p-0 mt-4">
                 <!-- Nav -->
-                <nav class=" col-12 d-flex justify-content-around">
-                    <button class="btn">Windows</button>
-                    <button class="btn">Mac</button>
-                    <!-- <button class="">SteamOS<br>Linux</button> -->
+                <nav class=" col-12 d-flex justify-content-around my-4">
+                    <button class="btn btn-Window">Windows</button>
+                    <button class="btn btn-Mac">Mac</button>
                 </nav>
-                <div class="col-12 d-md-flex Cnfigure-Box">
-
-                    <!-- 最低配置 -->
-                    <div class="Min-Cnfigure  col-12 col-md-6 ">
-                    </div>
-
-                    <!-- 建議配置 -->
-                    <div class="Suggest-Configure  col-12  col-md-6 ">
-                        <!-- <span>建議配備:</span> -->
-                    </div>
+                <div class="col-12 d-md-flex Cnfigure-Box position-relative">
                 </div>
-                
                 <span class="System-text">©2020-2022 and published by Paradox Interactive AB, CRUSADER KINGS and PARADOX INTERACTIVE are trademarks and/or registered trademarks of Paradox Interactive AB in Europe, the U.S., and other countries. All other trademarks, logos, and copyrights are the property of their respective owners.</span>
             </div>
-        <!--遊戲組合包  -->
-        <div></div>
-        <!-- 相似產品 -->
-        <div></div>
-        <!-- 遊戲資訊EX:語言.... -->
-        <div></div>
-        </section>
-            
-        <section class="Video-Area">
-            <video src="/video/shopper/Pexels Videos 2527932.mp4" poster="/img/shopper/MTH002.jpeg" controls="true"></video>
+        </section>*@
+@*        <section class="Video-Area">
+            <video src="@Model[0]" poster="" controls="true"></video>
             <i class="fa-solid fa-xmark Video-Clear"></i>
-        </section>
+        </section>*@
 
-    
+
 
     <!--  -->
-    <template id="GamePictureText">
-        <div class="pic">
-            <img src="" alt="" class="w-100">
-        </div>
+@*   <template id="GamePictureText">
         <div class="text">
-            <h4></h4>
             <p></p>
         </div>
-    </template>
-
-    <!--詳細圖文產生  -->
-    <template id="GameSystem">
-        <div class="System-box">
-            <span class="mb-3 text-danger"></span>
-            <p class="bit"></p>
+    </template>*@
+    
+    @*系統*@
+@*    <template id="GameSystem">
+        <div class="System-box Windows col-md-6 pl-md-5">
+            <span class="mb-3 text-danger System-Suggest"></span>
             <ul class="p-0 ">
-                <li class="mb-3"><span class="mb-0 text-success">作業系統 : </span><span class="Stytem mb-0 "></span></li>
-                <li class="mb-3"><span class="mb-0 text-success">處理器 : </span><span class="Processor mb-0"></span></li>
-                <li class="mb-3"><span class="mb-0" text-success>記憶體 : </span><span class="Memory mb-0"></span></li>
-                <li class="mb-3"><span class="mb-0 text-success">顯示卡 : </span><span class="GraphicsCard mb-0"></span></li>
-                <li class="mb-3"><span class="mb-0 text-success">儲存空間 : </span><span class="Storage mb-0"></span></li>
+                <li class="mb-3"><span class="mb-0 text-success"> </span><span class="Stytem mb-0 "></span></li>
+                <li class="mb-3"><span class="mb-0 text-success"> </span><span class="Processor mb-0"></span></li>
+                <li class="mb-3"><span class="mb-0 text-success"> </span><span class="Memory mb-0"></span></li>
+                <li class="mb-3"><span class="mb-0 text-success"></span><span class="GraphicsCard mb-0"></span></li>
+                <li class="mb-3"><span class="mb-0 text-success"> </span><span class="Storage mb-0"></span></li>
             </ul>
         </div>
     </template>
-    
-    <!--  -->
+
+    <!-- 推薦區域 -->
     <template id="Shopping_Recommend" class="d-flex flex-wrap">
         <div class="col-6 col-md-12  p-0 ">
-            <div class=" col-11 p-0 d-flex flex-wrap Recommend-item">
+            <div class=" col-11 p-2 d-flex flex-wrap Recommend-item m-auto">
                 <a href="#" class="col-12 p-0">
-                    <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/597180/capsule_184x69_tchinese.jpg?t=1654230486" alt="" class="w-100">
+                    <img src="" alt="" class="w-100">
                 </a>
-                <div class="col-12 d-flex justify-content-between">
-                    <span>售價為:</span>
-                    <p class="Recommend-Price">NT $9527</p>
+                <div class="col-12 d-flex justify-content-between mt-1">
+                    <p class="Recommend-Price"></p>
                 </div>
             </div>
         </div>
-    </template>
+    </template>*@
 
-@section Scripts{
+@*@section Scripts{
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="~/js/shop/ProductDetails.js"></script>
-    
-}
+}*@

@@ -1,39 +1,62 @@
-﻿
+﻿let gameId;
+
+
 
 $(document).ready(function () {
-    $('main').addClass("CommodityDetials close-section")
-    $('main').removeClass("container-fluid")
-
-    CloneGame()
-    GameSlideshow()
-    RecommendTemplate()
-    SysClone("Min-Cnfigure", "最低配備 :")
-    SysClone("Suggest-Configure", "建議配置 :")
+    gameId = document.getElementById('GameId');
+    $('main').addClass("CommodityDetials close-section");
+    $('main').removeClass("container-fluid");
+    GameSwipper();
+    MianDetails();
+    ProductSystem();
+    BtnFunction();
+    //CloneGame()
+    
 })
 
 
-
-//圖文簡介
-function GameSmapleIntroduce() {
-    $('h2').text('Crusader KingIII')
-    $(".Game-Introduce").find('img').attr("src", "https://cdn.cloudflare.steamstatic.com/steam/apps/1158310/header.jpg?t=1653385552")
-    $(".Game-Introduce").find('p').text('愛戀、爭鬥、計謀並成就偉大。在《Crusader Kings III》這款大型戰略遊戲裡決定您的貴族家族的命運。在這個豐富、宏偉的中世紀模擬遊戲中，引領您的王朝血脈，死亡只是開始。')
-}
-//金錢加載
+//添加購物車、願望清單
 function BtnFunction() {
-    let GamePrice = `<p class="m-0 pl-0">售價: NT $${9527}</p>`;
-    $('.Game-Price').append(GamePrice)
+    let btn_Add = document.querySelector('.AddItem');
+    let btn_Wish = document.querySelector('.Wish');
+    //加入購物車fetch post
+    btn_Add.addEventListener('click', function () {
+        const url = '/Shop/AddShoppingCart';
+        let request = new Request(url, {
+            method: "POST",
+            headers: new Headers({
+                'Content-Type' : 'application/json',
+            }),
+            body: JSON.stringify({
+                GameId: `${gameId.value}`
+            })
+        })
+
+        fetch(request)
+            .then(response => { response.json() })
+            .then(result => {
+                console.log(request)
+                //alert(result)
+            })
+            .catch(error => {
+                alert(`Error : ${error}`)
+            })
+    })
+
+    //btn_Wish.addEventListener('click', function () {
+    //})
+
 }
+
 
 // 以下為幻燈片動態
-function GameSlideshow() {
-    const urlGame = "/json/shopper/text.json";
-    fetch(urlGame)
+function GameSwipper() {
+    const swipper = `/Shop/ProductSwipper/${gameId.value}`;
+    fetch( swipper)
         .then(response => response.json())
         .then(result => {
-            GameArray = result
-            setSliders(result)
-            InitializeSwiper()
+            setSliders(result);
+            InitializeSwiper();
         })
     let mainphoto, thumbs
     function setSliders(namesArray) {
@@ -43,7 +66,7 @@ function GameSlideshow() {
             let slideDiv = $("<div></div>")
             slideDiv.addClass("swiper-slide")
             let img = $("<img>");
-            img.attr("src", `${item}`)
+            img.attr("src", `${item.swipperUrl}`)
             img.attr("class", 'w-100 ')
             slideDiv.append(img);
             let $clon1 = slideDiv.clone();
@@ -75,39 +98,115 @@ function GameSlideshow() {
 }
 
 //詳細圖文介紹區之動態產生
-function CloneGame() {
-    let GameDatails = document.querySelector('.Game-Datails')
-    let GameClone = GamePictureText.content.cloneNode(true)
-    GameClone.querySelector('img').src = "https://cdn.cloudflare.steamstatic.com/steam/apps/1158310/extras/2s.gif?t=1653385552"
-    GameClone.querySelector('h4').innerText = '血脈開始'
-    GameClone.querySelector('p').innerHTML = ' 仔細研究中世紀，掌握您的家族並擴展您的王朝。</br>始於西元 867 或 1066 年，獲得領土、頭銜與附庸國，鞏固配得上您皇室血脈的王國。無論您的離世是否在計劃之內，都不影響大局，您的血統會由新的可遊玩角色所繼承。'
-    GameDatails.append(GameClone);
+function MianDetails() {
+    const url = `/Shop/ProductMain/${gameId.value}`
+    fetch(url)
+        .then(response => response.json())
+        .then(result => {
+            result.forEach((item) => {
+                CloneGame(item)
+            })
+        })
+        .then(end => {
+            setTimeout(RecommendTemplate(), 3000);
+        });
+
+    function CloneGame(Array) {
+        let GameDatails = document.querySelector('.Game-Datails')
+        let GameClone = GamePictureText.content.cloneNode(true)
+        GameClone.querySelector('p').innerHTML = Array.gameDetailsText
+        GameDatails.append(GameClone);
+
+    }
 }
 
-// 配置
-function SysClone(configure, configureText) {
-    let Min_Cnfigure = document.querySelector(`.${configure}`)
-    let MinClone = GameSystem.content.cloneNode(true)
-    let System_box = MinClone.querySelector('.System-box')
-    MinClone.querySelector('span').innerText = configureText
-    MinClone.querySelector('.bit').innerText = '需要 64 位元的處理器及作業系統'
-    MinClone.querySelector('.Stytem').innerText = "Windows® 8.1 64 bit / Windows® 10 Home 64 bit"
-    MinClone.querySelector('.Processor').innerText = "Intel® Core™ i3-2120 / AMD® FX 6350"
-    MinClone.querySelector('.Memory').innerText = " 6 GB 記憶體"
-    MinClone.querySelector('.GraphicsCard').innerText = ' Nvidia® GeForce™ GTX 660 (2GB) / AMD® Radeon™ HD 7870 (2GB) / Intel® Iris Pro™ 580 / Intel® Iris® Plus G7 / AMD® Radeon™ Vega 11'
-    MinClone.querySelector('.Storage').innerText = " 8 GB 可用空間"
-    Min_Cnfigure.append(MinClone)
-    System_box.classList.add("Template-box")
-    return MinClone
+//系統區域
+function ProductSystem() {
+    const systemAction = `/Shop/ProductSystem/${gameId.value}`
+    fetch(systemAction,)
+        .then(response => response.json())
+        .then(result => {
+            result.forEach(item => {
+                SystemTemplate(item);
+            })
+            ProductSystemtoggle();
+        })
+    function SystemTemplate(result) {
+        if (result.systemType == 2)
+        {
+            $('.btn-Mac').removeClass('d-none')
+        }
+        else if (result.systemType == 1) {
+            $('.btn-Mac').addClass('d-none')
+        }
+        let cnfigureBox = document.querySelector(".Cnfigure-Box");
+        let systemTemplate = GameSystem.content.cloneNode(true);
+        let systemBox = systemTemplate.querySelector('.System-box')
+        if (result.systemType == 2) {
+            systemBox.setAttribute("class", "System-box Mac System_Transform col-md-6 pl-md-5")
+        }
+        let systemSuggest = systemTemplate.querySelector('span')
+        let li = systemTemplate.querySelectorAll('li');
+        if (result.configue = 1) {
+            systemSuggest.innerHTML = "最低配置";
+        }
+        else {
+            systemSuggest.innerHTML = "建議配置";
+        }
+        li[0].innerHTML = `作業系統 : ${result.system}`
+        li[1].innerHTML = `處理器 : ${result.systemCpu}`
+        li[2].innerHTML = `記憶體 : ${result.systemRam}`
+        li[3].innerHTML = `顯示卡 : ${result.systemGpu}`
+        li[4].innerHTML = `儲存空間 : ${result.hddspace}`
+        cnfigureBox .append(systemTemplate);
+        return systemTemplate
+    }
+    function ProductSystemtoggle() {
+        $('.btn-Mac').click(function () {
+            $('.Windows').addClass('System_Transform')
+            $('.Mac').removeClass('System_Transform')
+        })
+        $('.btn-Window').click(function () {
+            $('.Windows').removeClass('System_Transform')
+            $('.Mac').addClass('System_Transform')
+        })
+    }
 }
+
 
 //推薦Template
 function RecommendTemplate() {
+    const ProductRecommend = "/Shop/ProductRecommend"
     let box = document.querySelector('.Recommend')
-    for (let i = 0; i < 2; i++) {
-        let boxClone = Shopping_Recommend.content.cloneNode(true)
-        box.append(boxClone)
-    }
+    var GameDatails = document.querySelector(".Game-Datails")
+    let screenWidth = screen.width;
+    fetch(ProductRecommend,)
+        .then(response => response.json())
+        .then(result => {
+            if (GameDatails.getBoundingClientRect().height < 500) {
+                result = result.slice(0, 1);
+            }
+            else if (GameDatails.getBoundingClientRect().height < 1200) {
+                result = result.slice(0, 2);
+            }
+            else if (GameDatails.getBoundingClientRect().height < 1400) {
+                result = result.slice(0, 3);
+            }
+            else {
+                result = result;
+            }
+            if (screenWidth < 768) {
+                result = result.slice(0, 2);
+            }
+            result.forEach(item => {
+                let boxClone = Shopping_Recommend.content.cloneNode(true)
+                boxClone.querySelector('img').src = `${item.productUrl}`
+                boxClone.querySelector('img').alt = `${item.productName}`
+                boxClone.querySelector('a').href =`/Shop/ProductDetails/${item.gameId}`
+                boxClone.querySelector('.Recommend-Price').innerHTML = `${item.productName} <br/> 售價: NT$${item.productPrice}`
+                box.append(boxClone)
+            })
+        })
 }
 //廣告清除
 function adClear() {

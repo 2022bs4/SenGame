@@ -1,8 +1,25 @@
 ﻿.login-content {
     text-align: center;
 }
+#exicon {
+    display: block;
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    border-radius: 10px;
+    border: none;
+    margin:10px;
+}
+img{
+    width:100%;
+
+}
 .g-recaptcha{
     margin-left:13em;
+}
+.form-group-google{
+    display:flex;
+    justify-content:center;
 }
 .login-left {
     height: 100vh;

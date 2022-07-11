@@ -3,6 +3,8 @@
 
 @{
     ViewData["Title"] = "登入";
+    string[] array = new string[] { "https://freesvg.org/img/1534129544.png", "https://pic.pimg.tw/antayao/1623520287-4165360165-g.png" };
+    int i = 0;
 }
 
 <div class="login-content">
@@ -30,21 +32,36 @@
                     </div>
                 </div>
                 <div class="form-group">
-                                            <div
-    class="g-recaptcha"
-    data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
-    data-theme="light" data-size="normal"
-    data-callback="verify"
-    data-expired-callback="expired"
-    data-error-callback="error">
-</div>
+                    <div
+                        class="g-recaptcha"
+                        data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+                        data-theme="light" data-size="normal"
+                        data-callback="verify"
+                        data-expired-callback="expired"
+                        data-error-callback="error">
+                     </div>
                     <button type="submit" class="login-btn">登入</button>
                 </div>
                 <div class="form-group">
                         <a id="forgot-password" asp-page="./ForgotPassword">忘記密碼?</a>
                 </div>
             </form>
+             <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                <div class="w-100 d-flex justify-content-center">
+                    @foreach (var provider in Model.ExternalLogins)
+                        {
+                        <button id="exicon" type="submit" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account"><img src=@array[i]/></button>
+                        i++;
+                    }
+                    <a id="exicon" href="@Url.Action("LineLoginDirect")">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2e/LINE_New_App_Icon_%282020-12%29.png"/>
+                        </a>
+                 </div>
+            </form>
             </div>
+
+ <div class="col-md-6 col-md-offset-2">
+    </div>
         </div>
                     <div class="login-right col-12 col-lg-6">
             <p class="login-p">
@@ -61,11 +78,12 @@
         </div>
     </div>
 
-
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
 @section Css{
     <link rel="stylesheet" href="~/css/Account/Login.css" asp-append-version="true"/>
+    
 }

@@ -1,0 +1,31 @@
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+
+namespace SqlModels.ViewModels
+{
+    public class ProductDetailsViewModel
+    {
+        //遊戲主要資訊
+        public int GameId { get; set; }
+        public string GameName { get; set; }
+
+        
+        [DisplayFormat(DataFormatString = "{0:0,000}", ApplyFormatInEditMode = true)]
+        public decimal GamePrice { get; set; }
+        public string GameIntroduction { get; set; }
+        public DateTime ReleaseTime { get; set; }
+        public string Developer { get; set; }
+        public string Marker { get; set; }
+
+        //簡介圖
+        public string ProductMainPicture { get; set; }
+
+        //標籤
+        public string TypleName { get; set; }
+        //public int TyplyId { get; set; }
+
+        //折扣
+        public double DisscountTake { get; set; }
+        
+    }
+}

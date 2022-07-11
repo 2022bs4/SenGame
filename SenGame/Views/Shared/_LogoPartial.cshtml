@@ -1,0 +1,34 @@
+﻿@{
+    string a = User.Identity.Name;
+}
+
+    
+    <div class="dropdown">
+    @if (a!=null)
+    {
+        <button class="text-light" type="button" id="user-list" data-toggle="dropdown"
+            aria-expanded="false" data-offset="-120,0">@a</button>
+        <div class="dropdown-menu" aria-labelledby="user-list">
+            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" >
+                <button type="submit" class=" logout" >Logout</button>
+            </form>
+            <a href="/friend/User__information" class="dropdown-item">個人資料</a>
+        </div>
+    }
+    else
+    {
+        <button class="login" type="button" id="user-list" data-toggle="dropdown"
+            aria-expanded="false" data-offset="-120,0"></button>
+        <div class="dropdown-menu" aria-labelledby="user-list">
+            <a asp-area="Identity" asp-page="/Account/Login" class="dropdown-item">註冊登入</a>
+            <a href="/friend/User__information" class="dropdown-item">個人資料</a>
+        </div>
+        
+    }
+    <div>
+   
+
+
+
+
+

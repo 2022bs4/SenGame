@@ -2,174 +2,201 @@
     <link rel="stylesheet" href="~/css/Friend/Member.css" asp-append-version="true"/>
  }
 
-<div class="content-body ml-auto mt-3">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-4 col-xl-3">
-                        <!-- 會員卡片 -->
-                        <div class="card Member-card">
-                            <div class="card-body">
-                                <!-- 會員名子+大頭照 -->
-                                <div class="media align-items-center mb-4">
-                                    <img class="mr-3 rounded-circle" src="https://picsum.photos/80/80/?random=10" alt="會員的大頭照">
-                                    <div class="media-body">
-                                        <h3 class="mb-0">森 GAME</h3>
-                                        <!-- 關於我 -->
-                                        <span><p class="text-muted">誰能想的到，這名16歲少女，在四年前，只是一名12歲少女.</p></span>
-                                        
+        <div class="content-body ml-auto mt-3 container-fluid row">
+            <!-- 左邊區塊 -->
+            <div class="card Member-card card-body col-lg-4 col-xl-3">
+                <!-- 會員卡片 -->
+                <!-- 會員名子+大頭照 -->
+                <div class="media align-items-center mb-4">
+                    <img class="mr-3 rounded-circle" src="https://picsum.photos/80/80/?random=10" alt="使用者的大頭照">
+                    <div class="media-body mt-3">
+                        <h3 class="mb-0">森 GAME</h3>
+                        <!-- 關於我 -->
+                        <p class="text-muted">誰能想的到，這名16歲少女，在四年前，只是一名12歲少女.</p>
+                    </div>
+                </div>
+
+                <div class="row mb-5">
+                    <div class="col-6 btn">
+                        <div class="card Member-card card-profile text-center">
+                            <span class="mb-1 text-primary"><i class="icon-people"></i></span>
+                            <h3 class="mb-0">4</h3>
+                            <p class="text-muted px-4">留言數</p>
+                        </div>
+                    </div>
+                    <div class="col-6 btn">
+                        <div class="card Member-card card-profile text-center">
+                            <span class="mb-1 text-warning"><i class="icon-user-follow"></i></span>
+                            <h3 class="mb-0">200</h3>
+                            <p class="text-muted">好友人數</p>
+                        </div>
+                    </div>
+                    <!-- 一開始顯示加好友 -->
+                    <div class="col-12 col-lg-12 text-center">
+                        <input type="button" class="btn btn-warning px-5" id="AddFriendBtn" value="加好友 NOW" onclick="Userinformation()"/>
+                    </div>
+                    <div id="CancelFriendBtn" style="display:none"></div>
+                    <!-- 加好友按鈕按下後才會出現 [取消加好友Q] -->
+                    <div class="col-12 col-lg-12 text-center mt-3">
+                        <a href="/friend/Edit1_User" class="btn btn-dark px-5">編輯個人資料</a>
+                    </div>
+                </div>
+
+                <ul class="card-profile__info">
+                    <li class="mb-1"><strong class="text-dark mr-4">Mobile</strong>
+                        <span>0123456789</span>
+                    </li>
+                    <li><strong class="text-dark mr-4">Email</strong> <span>name@gamil.com</span></li>
+                </ul>
+
+                <!-- 是否訂閱留言區 -->
+                <div class="form-check form-check-inline">
+                    <div class="form-check ">
+                        <input class="form-check-input position-static" type="checkbox" id="blankCheckbox"
+                            value="option1" aria-label="...">
+                    </div>
+                    <label class="form-check-label">
+                        <small class="text-muted">訂閱留言區</small>
+                    </label>
+                </div>
+            </div>
+            <!-- 右上區塊 -->
+            <div class="col-lg-8 col-xl-9">
+                <!-- 新增留言卡片 -->
+                <div class="card Member-card">
+                    <div class="card-body">
+                        <form action="#" class="form-profile">
+                            <div class="form-group">
+                                <textarea class="form-control" name="textarea" id="textarea" cols="30" rows="2"
+                                    placeholder="留個言吧~~"></textarea>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <ul class="mb-0 form-profile__icons">
+                                    <li class="d-inline-block">
+                                        <button class="btn btn-transparent p-0 mr-3"><i class="fa fa-user"></i></button>
+                                    </li>
+                                    <li class="d-inline-block">
+                                        <button class="btn btn-transparent p-0 mr-3"><i
+                                                class="fa fa-paper-plane"></i></button>
+                                    </li>
+                                    <li class="d-inline-block">
+                                        <button class="btn btn-transparent p-0 mr-3"><i
+                                                class="fa fa-camera"></i></button>
+                                    </li>
+                                    <li class="d-inline-block">
+                                        <button class="btn btn-transparent p-0 mr-3"><i
+                                                class="fa fa-smile"></i></button>
+                                    </li>
+                                </ul>
+                                <button class="btn btn-primary px-3 ml-4">確認送出</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card Member-card">
+                    <div class="card-body">
+                        <div class="media media-reply">
+                            <img class="mr-3 rounded-circle" src="https://picsum.photos/50/50/?random=1"
+                                alt="向日葵 image">
+                            <div class="media-body">
+                                <div class="d-sm-flex justify-content-between mb-2">
+                                    <h5 class="mb-sm-0">向日葵 <small class="text-muted ml-3">2021/11/13</small>
+                                    </h5>
+                                    <div class="media-reply__link">
+                                        <button class="btn btn-transparent p-0 mr-3"><i
+                                                class="fa fa-thumbs-up"></i></button>
+                                        <button class="btn btn-transparent p-0 mr-3"><i
+                                                class="fa fa-thumbs-down"></i></button>
+                                        <button
+                                            class="btn btn-transparent text-dark font-weight-bold p-0 ml-2">Reply</button>
                                     </div>
                                 </div>
-                                
-                                <div class="row mb-5">
-                                    <div class="col btn">
-                                        <div class="card Member-card card-profile text-center">
-                                            <span class="mb-1 text-primary"><i class="icon-people"></i></span>
-                                            <h3 class="mb-0">4</h3>
-                                            <p class="text-muted px-4">留言數</p>
-                                        </div>
-                                    </div>
-                                    <div class="col btn">
-                                        <div class="card Member-card card-profile text-center">
-                                            <span class="mb-1 text-warning"><i class="icon-user-follow"></i></span>
-                                            <h3 class="mb-0">200</h3>
-                                            <p class="text-muted">好友人數</p>
-                                        </div>
-                                    </div>
-                                    <!-- 一開始顯示加好友 -->
-                                    <div class="col-12 text-center">
-                                        <button class="btn btn-warning px-5" >加好友 NOW</button>
-                                    </div>
-                                    <!-- 加好友按鈕按下後才會出現 -->
-                                    <div class="col-12 text-center">
-                                        <button class="btn btn-warning px-5 d-none" >取消加好友Q</button>
-                                    </div>
-                                    <div class="col-12 text-center mt-3">
-                                        <a href="/friend/Edit1_User" class="btn btn-dark px-5">編輯個人資料</a>
-                                    </div>
 
-                                    
-                                </div>
-
-                                
-
-                                
-                                <ul class="card-profile__info">
-                                    <li class="mb-1"><strong class="text-dark mr-4">Mobile</strong> <span>0123456789</span></li>
-                                    <li><strong class="text-dark mr-4">Email</strong> <span>name@gamil.com</span></li>
+                                <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
+                                    sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra
+                                    turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia
+                                    congue felis in faucibus.</p>
+                                <ul>
+                                    <li class="d-inline-block"><img class="rounded"
+                                            src="https://picsum.photos/60/60/?random=10" alt=""></li>
+                                    <li class="d-inline-block"><img class="rounded"
+                                            src="https://picsum.photos/60/60/?random=11" alt=""></li>
+                                    <li class="d-inline-block"><img class="rounded"
+                                            src="https://picsum.photos/60/60/?random=12" alt=""></li>
+                                    <li class="d-inline-block"><img class="rounded"
+                                            src="https://picsum.photos/60/60/?random=13" alt=""></li>
                                 </ul>
 
-                                <!-- 是否訂閱留言區 -->
-                                <div class="form-check form-check-inline">
-                                    <div class="form-check ">
-                                        <input class="form-check-input position-static" type="checkbox" id="blankCheckbox" value="option1" aria-label="...">
-                                    </div>
-                                    <label class="form-check-label">
-                                        <small class="text-muted">訂閱留言區</small>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>  
-                    </div>
-                    <div class="col-lg-8 col-xl-9">
-                        <!-- 新增留言卡片 -->
-                        <div class="card Member-card">
-                            <div class="card-body">
-                                <form action="#" class="form-profile">
-                                    <div class="form-group">
-                                        <textarea class="form-control" name="textarea" id="textarea" cols="30" rows="2" placeholder="留個言吧~~"></textarea>
-                                    </div>
-                                    <div class="d-flex align-items-center">
-                                        <ul class="mb-0 form-profile__icons">
-                                            <li class="d-inline-block">
-                                                <button class="btn btn-transparent p-0 mr-3"><i class="fa fa-user"></i></button>
-                                            </li>
-                                            <li class="d-inline-block">
-                                                <button class="btn btn-transparent p-0 mr-3"><i class="fa fa-paper-plane"></i></button>
-                                            </li>
-                                            <li class="d-inline-block">
-                                                <button class="btn btn-transparent p-0 mr-3"><i class="fa fa-camera"></i></button>
-                                            </li>
-                                            <li class="d-inline-block">
-                                                <button class="btn btn-transparent p-0 mr-3"><i class="fa fa-smile"></i></button>
-                                            </li>
-                                        </ul>
-                                        <button class="btn btn-primary px-3 ml-4">確認送出</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-
-                        <div class="card Member-card">
-                            <div class="card-body">
-                                <div class="media media-reply">
-                                    <img class="mr-3 rounded-circle" src="https://picsum.photos/50/50/?random=1" alt="向日葵 image">
+                                <div class="media mt-3">
+                                    <img class="mr-3 rounded-circle " src="https://picsum.photos/50/50/?random=2"
+                                        alt="新之助 image">
                                     <div class="media-body">
                                         <div class="d-sm-flex justify-content-between mb-2">
-                                            <h5 class="mb-sm-0">向日葵 <small class="text-muted ml-3">2021/11/13</small></h5>
+                                            <h5 class="mb-sm-0">新之助 <small class="text-muted ml-3">2022/05/13</small>
+                                            </h5>
                                             <div class="media-reply__link">
-                                                <button class="btn btn-transparent p-0 mr-3"><i class="fa fa-thumbs-up"></i></button>
-                                                <button class="btn btn-transparent p-0 mr-3"><i class="fa fa-thumbs-down"></i></button>
-                                                <button class="btn btn-transparent text-dark font-weight-bold p-0 ml-2">Reply</button>
+                                                <button class="btn btn-transparent p-0 mr-3"><i
+                                                        class="fa fa-thumbs-up"></i></button>
+                                                <button class="btn btn-transparent p-0 mr-3"><i
+                                                        class="fa fa-thumbs-down"></i></button>
+                                                <button
+                                                    class="btn btn-transparent p-0 ml-3 font-weight-bold">Reply</button>
                                             </div>
                                         </div>
-                                        
-                                        <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
-                                        <ul>
-                                            <li class="d-inline-block"><img class="rounded" src="https://picsum.photos/60/60/?random=10" alt=""></li>
-                                            <li class="d-inline-block"><img class="rounded" src="https://picsum.photos/60/60/?random=11" alt=""></li>
-                                            <li class="d-inline-block"><img class="rounded" src="https://picsum.photos/60/60/?random=12" alt=""></li>
-                                            <li class="d-inline-block"><img class="rounded" src="https://picsum.photos/60/60/?random=13" alt=""></li>
-                                        </ul>
-
-                                        <div class="media mt-3">
-                                        <img class="mr-3 rounded-circle " src="https://picsum.photos/50/50/?random=2" alt="新之助 image">
-                                        <div class="media-body">
-                                            <div class="d-sm-flex justify-content-between mb-2">
-                                                <h5 class="mb-sm-0">新之助 <small class="text-muted ml-3">2022/05/13</small></h5>
-                                                <div class="media-reply__link">
-                                                    <button class="btn btn-transparent p-0 mr-3"><i class="fa fa-thumbs-up"></i></button>
-                                                    <button class="btn btn-transparent p-0 mr-3"><i class="fa fa-thumbs-down"></i></button>
-                                                    <button class="btn btn-transparent p-0 ml-3 font-weight-bold">Reply</button>
-                                                </div>
-                                            </div>
-                                            <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
-                                        </div>
+                                        <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus
+                                            scelerisque ante sollicitudin. Cras purus odio, vestibulum in
+                                            vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi
+                                            vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
                                     </div>
-                                </div>
-                            </div>
-                            
-                            <div class="media media-reply">
-                                <img class="mr-3 rounded-circle" src="https://picsum.photos/50/50/?random=3" alt="Generic placeholder image">
-                                <div class="media-body">
-                                    <div class="d-sm-flex justify-content-between mb-2">
-                                        <h5 class="mb-sm-0">風間徹 <small class="text-muted ml-3">2022/06/5</small></h5>
-                                        <div class="media-reply__link">
-                                            <button class="btn btn-transparent p-0 mr-3"><i class="fa fa-thumbs-up"></i></button>
-                                            <button class="btn btn-transparent p-0 mr-3"><i class="fa fa-thumbs-down"></i></button>
-                                            <button class="btn btn-transparent p-0 ml-3 font-weight-bold">Reply</button>
-                                        </div>
-                                    </div>
-                                    
-                                    <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
-                                </div>
-                            </div>
-
-                            <div class="media media-reply">
-                                <img class="mr-3 rounded-circle" src="https://picsum.photos/50/50/?random=4" alt="Generic placeholder image">
-                                <div class="media-body">
-                                    <div class="d-sm-flex justify-content-between mb-2">
-                                        <h5 class="mb-sm-0">櫻田妮妮 <small class="text-muted ml-3">2022/6/13</small></h5>
-                                        <div class="media-reply__link">
-                                            <button class="btn btn-transparent p-0 mr-3"><i class="fa fa-thumbs-up"></i></button>
-                                            <button class="btn btn-transparent p-0 mr-3"><i class="fa fa-thumbs-down"></i></button>
-                                            <button class="btn btn-transparent p-0 ml-3 font-weight-bold">Reply</button>
-                                        </div>
-                                    </div>
-                                    
-                                    <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
                                 </div>
                             </div>
                         </div>
+
+                        <div class="media media-reply">
+                            <img class="mr-3 rounded-circle" src="https://picsum.photos/50/50/?random=3"
+                                alt="Generic placeholder image">
+                            <div class="media-body">
+                                <div class="d-sm-flex justify-content-between mb-2">
+                                    <h5 class="mb-sm-0">風間徹 <small class="text-muted ml-3">2022/06/5</small>
+                                    </h5>
+                                    <div class="media-reply__link">
+                                        <button class="btn btn-transparent p-0 mr-3"><i
+                                                class="fa fa-thumbs-up"></i></button>
+                                        <button class="btn btn-transparent p-0 mr-3"><i
+                                                class="fa fa-thumbs-down"></i></button>
+                                        <button class="btn btn-transparent p-0 ml-3 font-weight-bold">Reply</button>
+                                    </div>
+                                </div>
+
+                                <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
+                                    sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra
+                                    turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia
+                                    congue felis in faucibus.</p>
+                            </div>
+                        </div>
+
+                        <div class="media media-reply">
+                            <img class="mr-3 rounded-circle" src="https://picsum.photos/50/50/?random=4"
+                                alt="Generic placeholder image">
+                            <div class="media-body">
+                                <div class="d-sm-flex justify-content-between mb-2">
+                                    <h5 class="mb-sm-0">櫻田妮妮 <small class="text-muted ml-3">2022/6/13</small>
+                                    </h5>
+                                    <div class="media-reply__link">
+                                        <button class="btn btn-transparent p-0 mr-3"><i
+                                                class="fa fa-thumbs-up"></i></button>
+                                        <button class="btn btn-transparent p-0 mr-3"><i
+                                                class="fa fa-thumbs-down"></i></button>
+                                        <button class="btn btn-transparent p-0 ml-3 font-weight-bold">Reply</button>
+                                    </div>
+                                </div>
+
+                                <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
+                                    sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra
+                                    turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia
+                                    congue felis in faucibus.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -177,6 +204,9 @@
             <!-- #/ container -->
         </div>
 
+<!-- sweetalert -->
+ <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
  @section Scripts{
-     <script src="~/js/Friend/Chat.js"></script>
+     <script src="~/js/Friend/User.js"></script>
  }

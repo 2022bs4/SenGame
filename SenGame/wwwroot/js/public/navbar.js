@@ -10,12 +10,20 @@ let logo = document.querySelector(".logo");
 let sidenavbaropen = document.querySelector(".sidebar-toggler");
 let main = document.querySelector("main");
 let navbcg = document.querySelector(".header-box-nav");
+//sidebar功能
+let controllertype = document.querySelector(".controllertype").getAttribute("controller");
+
+
+
+/*let actiontype = document.querySelector(".actiontype");*/
 
 //傳入內容區塊做畫面效果
 //傳入內容區塊做畫面效果
 function Setnavbar(content) {
     Addtoggle();//添加選單開關
     AddNavClick();//添加選單的click效果
+    iconlight();
+    
 
     function Addtoggle() {
         const toggler = document.querySelector('.nav-toggler');
@@ -39,6 +47,13 @@ function Setnavbar(content) {
         for (var item of list) {
             item.addEventListener("click", ActiveLink);
         }
+    }
+    function iconlight() {
+        /*let controller = controllertype.getAttribute("controller");*/
+        document.querySelector(".list-tour-" + controllertype).classList.add("active")
+        /*var a = document.querySelector(".list-tour-" + controllertype);*/
+        
+
     }
 }
 //input點擊後射出來
