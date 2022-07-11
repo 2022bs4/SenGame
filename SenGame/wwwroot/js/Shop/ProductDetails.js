@@ -11,7 +11,6 @@ $(document).ready(function () {
     ProductSystem();
     BtnFunction();
     //CloneGame()
-    
 })
 
 
@@ -32,7 +31,7 @@ function BtnFunction() {
             method: "POST",
             headers: new Headers({
                 'Content-Type': 'application/json',
-                "Accept": "application/json",
+                //"Accept": "application/json",
             }),
             body: JSON.stringify({
                 GameId: `${gameId.value}`,
@@ -174,7 +173,6 @@ function ProductSystem() {
     }
 }
 
-
 //推薦Template
 function RecommendTemplate() {
     const ProductRecommend = "/Shop/ProductRecommend"
@@ -209,6 +207,7 @@ function RecommendTemplate() {
             })
         })
 }
+
 //廣告清除
 function adClear() {
     $('.Video-Clear').click(function () {

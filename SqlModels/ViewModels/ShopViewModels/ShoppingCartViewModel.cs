@@ -12,7 +12,7 @@ namespace SqlModels.ViewModels.ShopViewModels
         public int GameId { get; set; }
         public string GameName { get; set; }
         public string GameUrl { get; set; }
-        public decimal GamePrice { get; set; }
+        public int GamePrice { get; set; }
         public DateTime Created { get; set; }
 
         public string Success { get; set; }

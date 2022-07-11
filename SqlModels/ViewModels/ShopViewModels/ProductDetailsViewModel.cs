@@ -12,7 +12,7 @@ namespace SqlModels.ViewModels
 
         
         [DisplayFormat(DataFormatString = "{0:0,000}", ApplyFormatInEditMode = true)]
-        public decimal GamePrice { get; set; }
+        public int GamePrice { get; set; }
         public string GameIntroduction { get; set; }
         public DateTime ReleaseTime { get; set; }
         public string Developer { get; set; }

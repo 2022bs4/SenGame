@@ -40,7 +40,6 @@ namespace Services.ShopSevice
                     });
                 }
             }
-
             return result;
         }
 
