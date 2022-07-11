@@ -52,6 +52,7 @@ namespace SenGame
             //Services DI
             services.AddScoped<IBaseService,BaseService>();
             services.AddScoped<ICommunityService,CommunityService>();
+            services.AddScoped<IUserService, UserService>();
 
             //Swagger Use
             services.AddSignalR();
