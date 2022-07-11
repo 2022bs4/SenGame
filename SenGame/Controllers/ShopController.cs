@@ -38,7 +38,7 @@ namespace SenGame.Controllers
             {
                 GameId = game.GameId,
                 GameName = game.GameName,
-                GamePrice = game.GamePrice,
+                GamePrice = (int)game.GamePrice,
                 GameIntroduction = game.GameIntroduction,
                 ReleaseTime = game.ReleaseTime,
                 Developer = game.Developer,
@@ -90,7 +90,7 @@ namespace SenGame.Controllers
                     UserId = item.UserId,
                     GameId = item.GameId,
                     GameName = item.GameName,
-                    GamePrice = item.GamePrice,
+                    GamePrice = (int)item.GamePrice,
                     GameUrl = item.GameUrl,
                     Created = item.Created,
                 });

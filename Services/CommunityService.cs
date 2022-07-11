@@ -9,6 +9,7 @@ namespace Services
 {
     public class CommunityService : BaseService, ICommunityService
     {
+
         public CommunityService(IRepository repository) : base(repository)
         {
         }
