@@ -1,0 +1,156 @@
+﻿<div class="container">
+            <div class="main__title col-12 row">
+                <div class="img col-4 col-md-1">
+                    <img src="https://picsum.photos/50/50/?random=10">
+                </div>
+                <div class="title col-8 col-md-11">
+                    <h1>{帳號名稱}的願望清單</h1>
+                </div>
+            </div>
+
+
+            <div class="wishlist-control">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                        aria-describedby="basic-addon1">
+                </div>
+                <div class="btn-group options display-options">
+                    <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown"
+                        aria-expanded="false">
+                        選項
+                    </button>
+                    <div class="dropdown-menu">
+                        <label class="container">
+                            檢視
+                            <label class="container">
+                                詳細
+                                <input type="checkbox" checked="checked">
+                            </label>
+                            <label class="container">
+                                精簡
+                                <input type="checkbox">
+                            </label>
+                        </label>
+                        <label class="container">
+                            作業系統
+                            <label class="container">
+                                Any
+                                <input type="checkbox" checked="checked">
+                            </label>
+                            <label class="container">
+                                macOS
+                                <input type="checkbox">
+                            </label>
+                            <label class="container">
+                                SteamOS + Linux
+                                <input type="checkbox">
+                            </label>
+                        </label>
+                        <label class="container">
+                            類型
+                            <label class="container">
+                                全部類型
+                                <input type="checkbox" checked="checked">
+                            </label>
+                            <label class="container">
+                                遊戲
+                                <input type="checkbox">
+                            </label>
+                            <label class="container">
+                                軟體
+                                <input type="checkbox">
+                            </label>
+                            <label class="container">
+                                DLC
+                                <input type="checkbox" checked="checked">
+                            </label>
+                            <label class="container">
+                                影片
+                                <input type="checkbox">
+                            </label>
+                        </label>
+                        <label class="container">
+                            價格
+                            <label class="container">
+                                低於 NT$ 150
+                                <input type="checkbox">
+                            </label>
+                            <label class="container">
+                                低於 NT$ 300
+                                <input type="checkbox">
+                            </label>
+                        </label>
+                        <label class="container">
+                            折扣
+                            <label class="container">
+                                特價中
+                                <input type="checkbox">
+                            </label>
+                            <label class="container">
+                                50% 或更多
+                                <input type="checkbox">
+                            </label>
+                            <label class="container">
+                                75% 或更多
+                                <input type="checkbox">
+                            </label>
+                        </label>
+                        <label class="container">
+                            排除
+                            <label class="container">
+                                搶先體驗
+                                <input type="checkbox">
+                            </label>
+                            <label class="container">
+                                先行版
+                                <input type="checkbox">
+                            </label>
+                            <label class="container">
+                                僅限 VR
+                                <input type="checkbox">
+                            </label>
+                        </label>
+                        <label class="container">
+                            DECK 相容性
+                            <label class="container">
+                                已驗證
+                                <input type="checkbox">
+                            </label>
+                            <label class="container">
+                                可遊玩
+                                <input type="checkbox">
+                            </label>
+                        </label>
+                    </div>
+                </div>
+                <div class="btn-group sort">
+                    <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown"
+                        aria-expanded="false">
+                        排序依據
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">您的排序</a>
+                        <a class="dropdown-item" href="#">名稱</a>
+                        <a class="dropdown-item" href="#">價格</a>
+                        <a class="dropdown-item" href="#">折扣</a>
+                        <a class="dropdown-item" href="#">新增日期</a>
+                        <a class="dropdown-item" href="#">暢銷產品</a>
+                        <a class="dropdown-item" href="#">發行日期</a>
+                        <a class="dropdown-item" href="#">頻論分數</a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+
+            <!-- 願望清單動態產出 -->
+            <ul class="wishlist" id="sortable">
+
+            </ul>
+</div>
+ @section Css{
+<link rel="stylesheet" href="~/css/Friend/Wish.css" asp-append-version="true"/>
+
+ }
+ @section Scripts{
+     <script src="~/js/Friend/Wish.js"></script>
+ }

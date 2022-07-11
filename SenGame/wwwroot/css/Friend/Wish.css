@@ -1,0 +1,120 @@
+﻿.display-options .dropdown-menu {
+    width: max-content;
+}
+
+    .display-options .dropdown-menu .container {
+        /* display: block; */
+    }
+
+
+
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 10px;
+}
+
+.ui-state-highlight {
+    margin: 5px;
+    padding: 5px;
+    width: 150px;
+}
+
+.wishlist li {
+    background-color: #1e262c;
+    margin: 5px;
+    width: 90%;
+    display: flex;
+    align-items: center;
+}
+
+#movable {
+    background-color: aquamarine;
+    padding: 70px 15px;
+    cursor: all-scroll;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.order_input {
+    height: 20px;
+    width: 30px;
+    text-align: center;
+    font-size: xx-small;
+    border-radius: 3px;
+}
+
+.fa-sort {
+    display: inline;
+    display: inline-flex;
+}
+
+.line {
+    height: 9em;
+    width: 0.05em;
+    background-color: #00000094;
+}
+
+.wishlist__content {
+    padding-left: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.wishlish__text {
+    padding-left: 10px;
+}
+
+    .wishlish__text h2 {
+        color: #fff;
+        font-size: larger;
+    }
+
+    .wishlish__text a {
+        text-decoration: none;
+    }
+
+    .wishlish__text p {
+        color: #fff;
+        font-size: xx-small;
+    }
+
+
+
+
+
+
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Verdana, sans-serif;
+}
+
+.wishlist__content img {
+    width: 292px;
+    height: 136px;
+    animation-name: fade;
+    animation-duration: 1.5s;
+}
+
+/* 漸變動畫 */
+.fade {
+    animation-name: fade;
+    animation-duration: 1.5s;
+}
+
+@keyframes fade {
+    from {
+        opacity: .4
+    }
+
+    to {
+        opacity: 1
+    }
+}
