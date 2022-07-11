@@ -1,4 +1,10 @@
-﻿ @section Css{
+﻿@model SqlModels.ViewModels.UserViewModels.PrivacieViewModel
+@{
+    ViewData["Title"] = "SelectTagHelper";
+
+}
+
+@section Css{
     <link rel="stylesheet" href="~/css/Friend/Member.css" asp-append-version="true"/>
  }
 
@@ -29,7 +35,6 @@
                                 </div>
                                 <!-- 分隔線 -->
                                 <hr class="Edit-divider mt-1 m-b-10">
-                                </hr>
                                 <div class="list-group mail-list">
                                     <a href="/friend/Edit4_UserPrivacy" class="list-group-item border-0"><span
                                             class="fa fa-tags mr-2"></span><b>隱私設定</b></a>
@@ -59,10 +64,8 @@
                                     <div class="row col-lg-12">
                                         <div class="card-body">
                                             <h4 class="card-title">我的個人檔案:</h4>
-                                            <select class="form-control">
-                                                <option value="public">公開</option>
-                                                <option value="Friendsonly">僅限好友</option>
-                                                <option value="personal">私人</option>
+                                            <select asp-for="Privacie" asp-items="Model.Privacies" class="form-control">
+                                                <option value="">==請選擇隱私狀態==</option>
                                             </select>
                                             <p class="text-muted">您的社群個人檔案包括您的個人檔案摘要、好友名單、徽章、Steam 等級、展示欄、留言，以及群組成員資格。
                                             </p>
@@ -78,10 +81,8 @@
                                                     <p>
                                                         此部分包括您的 Steam 帳戶上的完整遊戲清單、您加入願望清單的遊戲、您的成就與遊玩時數。此設定亦會影響您在執行遊戲時，狀態是否會顯示「遊戲中」與遊戲名稱。
                                                     </p>
-                                                    <select class="form-control">
-                                                        <option value="public">公開</option>
-                                                        <option value="Friendsonly">僅限好友</option>
-                                                        <option value="personal">私人</option>
+                                                    <select asp-for="Privacie" asp-items="Model.Privacies" class="form-control">
+                                                        <option value="">==請選擇隱私狀態==</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -94,12 +95,20 @@
                                                     <p>
                                                     此設定會決定誰能在您的 Steam 社群檔案中查看您的好友名單。
                                                     </p>
-                                                    <select class="form-control">
+                                                    @*<select class="form-control">
                                                         <option value="public">公開</option>
                                                         <option value="Friendsonly">僅限好友</option>
                                                         <option value="personal">私人</option>
+                                                    </select>*@
+                                                    <select asp-for="Privacie" asp-items="Model.Privacies" class="form-control">
+                                                        <option value="">==請選擇隱私狀態==</option>
                                                     </select>
                                                 </div>
+                                            </div>
+                                            <!-- 分隔線 -->
+                                            <hr class="Edit-divider mt-1 m-b-10">
+                                            <div class="col-lg-8 ml-auto">
+                                                <button type="button" class="btn btn-success" id="confirm-btn" onclick="ChangePrivacie()">確認修改送出</button>
                                             </div>
                                         </div>
 
@@ -112,6 +121,10 @@
             </div>
         </div>
 
+
   @section Scripts{
-     <script src="~/js/Friend/User.js"></script>
+     <script src="~/js/Friend/Edit_User.js"></script>
+     <script src="~/js/Friend/UserBtn.js"></script>
+     <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
  }

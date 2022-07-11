@@ -106,3 +106,8 @@ function color(str) {
     document.body.style.backgroundImage = str;
     document.getElementById('card-Edit_User').style.backgroundImage = str;
 }
+
+//編輯畫面4 改變隱私狀態
+function ChangePrivacie() {
+    Swal.fire('上傳成功!', '', 'success')
+}
