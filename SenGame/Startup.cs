@@ -57,8 +57,9 @@ namespace SenGame
             services.AddScoped<ShopCartServices>();
             services.AddScoped<BuyService>();
 
-            //AutoMapper DI
-            services.AddAutoMapper(typeof(ServiceMappings));
+            #region -- AutoMapper DI --
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            #endregion
 
             //Swagger Use
             services.AddSignalR();

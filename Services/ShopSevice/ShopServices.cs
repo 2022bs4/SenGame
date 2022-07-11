@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Services.Interface;
 using SqlModels.DTOModels;
 using SqlModels.Models;
@@ -12,7 +13,7 @@ namespace Services
 {
     public class ShopServices : BaseService
     {
-        public ShopServices(IRepository repository) : base(repository)
+        public ShopServices(IRepository repository, IMapper mapper) : base(repository, mapper )
         {
         }
 
