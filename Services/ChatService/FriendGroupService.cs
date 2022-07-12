@@ -68,14 +68,14 @@ namespace Services.ChatService
                 var groupname = Repository.GetAll<FriendGroup>().Where(x => x.FriendGroupId == gid).Select(x=>x.UserId);
                 foreach (var item in groupname)
                 {
-                    var friends = Repository.FindBy<UserModel>(x => x.Id == item).Select(y => new { y.UserName, y.UserPicture });
+                    var friends = Repository.FindBy<UserModel>(x => x.Id == item).Select(y => new { y.UserName, y.UserPicture,y.Id});
                     foreach(var friend in friends)
                     {
                         result.Add(new FriendGroupDTO
                         {
                             UserName = friend.UserName,
                             UserPicture = friend.UserPicture,
-
+                            UserId = friend.Id,
                         });
                     }
                 }

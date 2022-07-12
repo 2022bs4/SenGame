@@ -58,6 +58,7 @@ namespace SenGame.Controllers
                     {
                         Name = y.UserName,
                         Photo = y.UserPicture,
+                        Id = y.UserId,
                     }).ToList()
                
                 }).ToList(),
@@ -72,6 +73,11 @@ namespace SenGame.Controllers
         public IActionResult Chat()
         {
             return View();
+        }
+        [HttpPost]
+        public IActionResult CreateGroup(FriendGroup group,FriendGroup user)
+        {
+            return Ok();
         }
         public IActionResult User__information()
         {

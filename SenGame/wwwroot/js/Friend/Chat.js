@@ -1,4 +1,5 @@
-﻿//在JS中建立集線器
+﻿
+//在JS中建立集線器
 var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 //與Service建立連線
 connection.start()
@@ -7,6 +8,8 @@ connection.start()
         alert('連線錯誤: ' + err.toString());
     });
 //忍術:全域變數
+let useridArray = []
+let groupnameArray = []
 let del = document.querySelector(".delete-type")
 let rightmenudel = document.querySelector(".group-delete")
 let group = document.querySelector(".friend-group")
@@ -135,7 +138,14 @@ function chooseFriend() {
     var li2 = document.querySelectorAll(".friend-li2")
     li2.forEach(item => {
         item.onclick = function () {
+            
             var tagname = item.querySelector(".friend-name2")
+            var userid = item.querySelector("#userid")
+           
+            groupnameArray.push(groupname.value)
+            useridArray.push(userid.value)
+            console.log(groupnameArray)
+            console.log(useridArray)
             addblock.append(tag(tagname))
             item.style.display = 'none'
             var img = item.querySelector(".friend-img2").src
@@ -148,6 +158,18 @@ function chooseFriend() {
             frienddetails = {}
         }
     })
+}
+function SendData(data) {
+    fetch("/Friend/CreateGroup", {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+            'content-type':'application/json'
+        }
+
+    })
+        .then(res => res.json())
+        .then(result => console.log(result))
 }
 
 //桌機能用的功能
@@ -162,6 +184,10 @@ function computer() {
         choose.append(getfriend2(img, name, line))
         chooseFriend()
         check.onclick = function () {
+            var data = {
+                GroupName: groupnameArray,
+                UserId: useridArray,
+            }
             let k = 0;
             if (groupname.value == '') {
                 groupname.style.border = '1px solid #FF0000'
@@ -185,6 +211,7 @@ function computer() {
                     span.innerText = `${groupname.value}(${k})`
                     div.append(getfriend(item.img, item.name, item.line))
                     group.append(div)
+           
                 })
                 friendarray = []
                 friendgroup.append(group)
@@ -192,10 +219,11 @@ function computer() {
                 addblock.innerHTML = ' '
                 choose.innerHTML = ' '
                 groupname.value = ' '
-                AllFriends.forEach(item => {
-                    choose.append(getfriend2(item.img, item.name, item.line))
-                    chooseFriend()
-                })
+                SendData(data)
+                //AllFriends.forEach(item => {
+                //    choose.append(getfriend2(item.img, item.name, item.line))
+                //    chooseFriend()
+                //})
 
             }
         }
@@ -280,7 +308,7 @@ function computer() {
 //手機能用的功能
 function phone() {
     AllFriends.forEach(item => {
-        count.innerText = i + 1
+        //count.innerText = i + 1
         i++
         ul.append(getfriend(item.img, item.name, item.line))
 

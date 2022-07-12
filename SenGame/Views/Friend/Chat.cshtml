@@ -38,22 +38,7 @@
 </div> -->
 <!-- 群組分類的modal -->
 <div id="myModal" class="modal">
-    <div class="modal-content position-relative">
-        <span class="new-type">新增分類</span>
-        <span class="close position-absolute">&times;</span>
-        <div class="modal-title">
-            <span class="text d-block pb-2 pt-2">分類名稱</span>
-            <input id="groupname" type="text" value="">
-            <span class="text d-block pb-2 pt-4">選擇要加入的好友</span>
-            <div class="add d-flex mb-3"></div>
-            <div class="choose-friend mb-3">   
-            </div>
-        </div>
-        <div class="modal-btn-ctrl d-flex justify-content-center">
-            <button class="check d-block col-5">確認</button>
-            <button class="cancel d-block col-5">取消</button>
-        </div>
-    </div>
+    <partial name="_GroupPartial"/>
 </div>
 <template id="friendcard">
     <div class="friend-li pl-2 py-3 w-100">

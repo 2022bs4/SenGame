@@ -1,0 +1,33 @@
+﻿@model FriendViewModel 
+
+
+<div class="modal-content position-relative">
+        <span class="new-type">新增分類</span>
+        <span class="close position-absolute">&times;</span>
+        <div class="modal-title">
+            <span class="text d-block pb-2 pt-2">分類名稱</span>
+            <input id="groupname" type="text" value="">
+            <span class="text d-block pb-2 pt-4">選擇要加入的好友</span>
+            <div class="add d-flex mb-3"></div>
+            <div class="choose-friend mb-3">   
+            @foreach(var friend in Model.Groups)
+            {
+                @foreach(var item in friend.Friends)
+                {
+                 <div class="friend-li2 pl-2 py-3 w-100">
+                    <input id="userid" value="@item.Id"/>
+                    <img class="friend-img2 user-select-none"  src="@item.Photo">
+                    <div class="friend-content w-100">
+                    <span class="friend-name2 pl-4 mb-0 user-select-none">@item.Name</span>
+                    <p class="friend-line2 pl-4 mb-0  user-select-none">上線</p>
+                     </div>
+                </div>
+                }
+            }
+        </div>
+        </div>
+        <div class="modal-btn-ctrl d-flex justify-content-center">
+            <button class="check d-block col-5">確認</button>
+            <button class="cancel d-block col-5">取消</button>
+        </div>
+    </div>
