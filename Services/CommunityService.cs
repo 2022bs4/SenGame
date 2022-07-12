@@ -1,4 +1,5 @@
-﻿using Services.Interface;
+﻿using AutoMapper;
+using Services.Interface;
 using SqlModels.DTOModels;
 using SqlModels.DTOModels.Community;
 using SqlModels.Models;
@@ -9,33 +10,21 @@ namespace Services
 {
     public class CommunityService : BaseService, ICommunityService
     {
-
-        public CommunityService(IRepository repository) : base(repository)
+        public CommunityService(IRepository repository, IMapper mapper) : base(repository, mapper)
         {
         }
         public List<ForumDTO> GetForums()
         {
-            
-            var data = Repository.GetAll<Forum>().Select(i=> new ForumDTO()
-            {
-                Id = i.ForumId,
-                Name =i.Name,
-                Banner = i.Banner
-            }).ToList();
+            var data = Mapper.Map<List<ForumDTO>>(Repository.GetAll<Forum>());
             return data;
         }
         public List<ForumDTO> GetForums(string name)
         {
-            var forumIds = Repository.FindBy<MyForum>(x => x.UserId == this.GetUserId(name)).Select(i => i.MyForumId);
-            var data = Repository.FindBy<Forum>(x => forumIds.Contains(x.ForumId)).Select(i => new ForumDTO()
-            {
-                Id = i.ForumId,
-                Name = i.Name,
-                Banner = i.Banner
-            }).ToList(); ;
+            var forumIds = Repository.FindBy<MyForum>(x => x.UserId == this.GetUserId(name)).Select(i => i.ForumId).ToList();
+            var Forums = Repository.FindBy<Forum>(x => forumIds.Contains(x.ForumId));
+            var data = Mapper.Map<List<ForumDTO>>(Forums);
             return data;
         }
-
         public List<CommunityDTO> Article()
         {
             var game = Repository.GetAll<Game>();

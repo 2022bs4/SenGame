@@ -5,6 +5,7 @@ namespace SqlModels.ViewModels.Community
     public class ForumViewModel
     {
         public List<ForumDTO> ForumCollection { get; set; }
+
         //public List<ForumData> ForumCollection { get; set; }
 
         //public class ForumData
