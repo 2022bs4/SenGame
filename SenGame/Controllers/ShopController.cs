@@ -19,7 +19,7 @@ namespace SenGame.Controllers
         private readonly UserManager<UserModel> _manger;
         private readonly BuyService _BuyService;
 
-        public ShopController(ShopServices shop, ShopCartServices shoppingCart , UserManager<UserModel> manger, BuyService buyService)
+        public ShopController(ShopServices shop, ShopCartServices shoppingCart, UserManager<UserModel> manger, BuyService buyService)
         {
             _Shop = shop;
             _ShoppingCart = shoppingCart;
@@ -30,7 +30,7 @@ namespace SenGame.Controllers
 
 
         //產品詳細
-        public IActionResult ProductDetails(int id )
+        public IActionResult ProductDetails(int id)
         {
             var game = _Shop.ProductView(id);
 
@@ -68,7 +68,7 @@ namespace SenGame.Controllers
 
         public async Task<IActionResult> ProductSystem(int id)
         {
-            var result =await  _Shop.ProductSystem(id);
+            var result = await _Shop.ProductSystem(id);
             return Ok(result);
         }
 
@@ -76,8 +76,7 @@ namespace SenGame.Controllers
         //遊戲購物車
         public async Task<IActionResult> ShoppingCart()
         {
-            UserModel user = await _manger.GetUserAsync(HttpContext.User);
-            var userId = user.Id;
+            var userId = await GetUserId();
 
             var shoppingCart = await _ShoppingCart.GetShoppingCarts(userId);
 
@@ -105,14 +104,13 @@ namespace SenGame.Controllers
         public async Task<IActionResult> AddShoppingCart([FromBody] OutputShoppingCart model)
         {
 
-            UserModel user = await _manger.GetUserAsync(HttpContext.User);
-            var userId = user.Id;
+            var userId = await GetUserId();
 
 
             var GameId = model.GameId;
-            var result =await _ShoppingCart.AddShopingCart(GameId, userId);
+            var result = await _ShoppingCart.AddShopingCart(GameId, userId);
 
-            var answer = new ShoppingCartViewModel(){GameId = model.GameId ,Success =result };
+            var answer = new ShoppingCartViewModel() { GameId = model.GameId, Success = result };
 
             return Json(answer);
         }
@@ -121,8 +119,7 @@ namespace SenGame.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RemoveShoppingItem(int GameId)
         {
-            UserModel user = await _manger.GetUserAsync(HttpContext.User);
-            var userId = user.Id;
+            var userId = await GetUserId();
 
             _ShoppingCart.RemveShoppingCartItem(GameId, userId);
             return RedirectToAction(nameof(ShoppingCart));
@@ -132,8 +129,7 @@ namespace SenGame.Controllers
         //[ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteAll()
         {
-            UserModel user = await _manger.GetUserAsync(HttpContext.User);
-            var userId = user.Id;
+            var userId = await GetUserId();
 
             _ShoppingCart.RemoveAllItem(userId);
 
@@ -147,21 +143,19 @@ namespace SenGame.Controllers
         }
 
 
-        //[HttpPost]
-        //public async Task<IActionResult> AddOrderDetails([FromBody] OutputShoppingCart model)
-        //{
-        //    var gameId = model.SelectId;
-        //    UserModel user = await _manger.GetUserAsync(HttpContext.User);
-        //    var userId = user.Id;
-        //    _BuyService.AddCarts(gameId,userId);
-        //    return Ok();
-        //}
+        [HttpPost]
+        public async Task<IActionResult> AddOrderDetails([FromBody] OutputShoppingCart model)
+        {
+            var gameId = model.SelectId;
+            var userId = await GetUserId();
+            var result = _BuyService.AddCarts(gameId, userId);
+            return Json(result);
+        }
 
 
         public async Task<IActionResult> CheckBuy()
         {
-            UserModel user = await _manger.GetUserAsync(HttpContext.User);
-            var userId = user.Id;
+            var userId = await GetUserId();
             var gameInformation = await _BuyService.GetCheckItem(userId);
             var result = new List<CheckBuyViewModel>();
 
@@ -179,5 +173,31 @@ namespace SenGame.Controllers
             return View(result);
         }
 
+
+
+        //尚未完成
+        [HttpPost]
+        public async Task<IActionResult> RemoveCheckBuy()
+        {
+            var userId = await GetUserId();
+            var result = await _BuyService.RemoveCheckBuy(userId);
+            return Json(result);
+        }
+
+
+        public async Task<IActionResult> Payment()
+        {
+            var userId = await GetUserId();
+
+
+
+        }
+
+        public async Task<string> GetUserId()
+        {
+            UserModel user = await _manger.GetUserAsync(HttpContext.User);
+            var userId = user.Id;
+            return userId;
+        }
     }
 }

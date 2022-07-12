@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SqlModels.Migrations
 {
-    public partial class First : Migration
+    public partial class Test : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -81,26 +81,6 @@ namespace SqlModels.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Game", x => x.GameId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Order",
-                columns: table => new
-                {
-                    OrderId = table.Column<int>(type: "int", nullable: false),
-                    CreateTime = table.Column<DateTime>(type: "datetime", nullable: false, comment: "訂單時間"),
-                    UpdateTime = table.Column<DateTime>(type: "datetime", nullable: false, comment: "訂單更新時間"),
-                    TradeTime = table.Column<DateTime>(type: "datetime", nullable: true, comment: "訂單成立時間"),
-                    CancelTime = table.Column<DateTime>(type: "datetime", nullable: true, comment: "訂單取消時間"),
-                    TotalPrice = table.Column<decimal>(type: "money", nullable: false),
-                    OrderStatus = table.Column<int>(type: "int", nullable: false, comment: "1.待付款  3.付款完成  4.申請退款 5.退款完成"),
-                    EcpayId = table.Column<string>(type: "nvarchar(max)", nullable: false, comment: "Ecpay訂單編號"),
-                    Invoice = table.Column<string>(type: "nchar(255)", fixedLength: true, maxLength: 255, nullable: false, comment: "發票編碼"),
-                    InvoiceWay = table.Column<string>(type: "nchar(255)", fixedLength: true, maxLength: 255, nullable: false, comment: "1.電子發票2.載具3.捐贈")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Order", x => x.OrderId);
                 });
 
             migrationBuilder.CreateTable(
@@ -267,33 +247,6 @@ namespace SqlModels.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Orderdetails",
-                columns: table => new
-                {
-                    OrderdetailId = table.Column<int>(type: "int", nullable: false),
-                    OrderId = table.Column<int>(type: "int", nullable: false),
-                    GameId = table.Column<int>(type: "int", nullable: false),
-                    Price = table.Column<decimal>(type: "money", nullable: false),
-                    Discount = table.Column<double>(type: "float", nullable: true, comment: "購買後則顯示當時折扣")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Orderdetails", x => x.OrderdetailId);
-                    table.ForeignKey(
-                        name: "FK_Orderdetails_Game",
-                        column: x => x.GameId,
-                        principalTable: "Game",
-                        principalColumn: "GameId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Orderdetails_Order",
-                        column: x => x.OrderId,
-                        principalTable: "Order",
-                        principalColumn: "OrderId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "GameType",
                 columns: table => new
                 {
@@ -333,7 +286,6 @@ namespace SqlModels.Migrations
                     CreateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UserAbout = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserBackgroundId = table.Column<int>(type: "int", nullable: true),
-                    OrderId = table.Column<int>(type: "int", nullable: true),
                     PrivacyPersonalFile = table.Column<int>(type: "int", nullable: false),
                     PrivacyGameFile = table.Column<int>(type: "int", nullable: false),
                     PrivacyFriendsList = table.Column<int>(type: "int", nullable: false),
@@ -355,12 +307,6 @@ namespace SqlModels.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AspNetUsers_Order_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "Order",
-                        principalColumn: "OrderId",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_AspNetUsers_UserBackground_UserBackgroundId",
                         column: x => x.UserBackgroundId,
@@ -637,13 +583,42 @@ namespace SqlModels.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Order",
+                columns: table => new
+                {
+                    OrderId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreateTime = table.Column<DateTime>(type: "datetime", nullable: false, comment: "訂單時間"),
+                    UpdateTime = table.Column<DateTime>(type: "datetime", nullable: true, comment: "訂單更新時間"),
+                    TradeTime = table.Column<DateTime>(type: "datetime", nullable: true, comment: "訂單成立時間"),
+                    CancelTime = table.Column<DateTime>(type: "datetime", nullable: true, comment: "訂單取消時間"),
+                    TotalPrice = table.Column<decimal>(type: "money", nullable: false),
+                    OrderStatus = table.Column<int>(type: "int", nullable: false, comment: "1.待付款  3.付款完成  4.申請退款 5.退款完成"),
+                    EcpayId = table.Column<string>(type: "nvarchar(max)", nullable: true, comment: "Ecpay訂單編號"),
+                    Invoice = table.Column<string>(type: "nchar(255)", fixedLength: true, maxLength: 255, nullable: true, comment: "發票編碼"),
+                    InvoiceWay = table.Column<string>(type: "nchar(255)", fixedLength: true, maxLength: 255, nullable: true, comment: "1.電子發票2.載具3.捐贈"),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Order", x => x.OrderId);
+                    table.ForeignKey(
+                        name: "FK_Order_AspNetUsers1",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ShoppingCart",
                 columns: table => new
                 {
-                    ShoppingCartId = table.Column<int>(type: "int", nullable: false),
-                    GameId = table.Column<int>(type: "int", nullable: true),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    AddTime = table.Column<DateTime>(type: "datetime", nullable: true)
+                    ShoppingCartId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    GameId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    AddTime = table.Column<DateTime>(type: "datetime", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -653,13 +628,13 @@ namespace SqlModels.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ShoppingCart_Game",
                         column: x => x.GameId,
                         principalTable: "Game",
                         principalColumn: "GameId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -785,6 +760,33 @@ namespace SqlModels.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Orderdetails",
+                columns: table => new
+                {
+                    OrderdetailId = table.Column<int>(type: "int", nullable: false),
+                    OrderId = table.Column<int>(type: "int", nullable: false),
+                    GameId = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<decimal>(type: "money", nullable: false),
+                    Discount = table.Column<double>(type: "float", nullable: true, comment: "購買後則顯示當時折扣")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orderdetails", x => x.OrderdetailId);
+                    table.ForeignKey(
+                        name: "FK_Orderdetails_Game",
+                        column: x => x.GameId,
+                        principalTable: "Game",
+                        principalColumn: "GameId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Orderdetails_Order",
+                        column: x => x.OrderId,
+                        principalTable: "Order",
+                        principalColumn: "OrderId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ReplyLike",
                 columns: table => new
                 {
@@ -865,11 +867,6 @@ namespace SqlModels.Migrations
                 name: "EmailIndex",
                 table: "AspNetUsers",
                 column: "NormalizedEmail");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_OrderId",
-                table: "AspNetUsers",
-                column: "OrderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_UserBackgroundId",
@@ -964,6 +961,11 @@ namespace SqlModels.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ShoppingCart_UserId",
+                table: "Order",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Orderdetails_GameId",
                 table: "Orderdetails",
                 column: "GameId");
@@ -999,7 +1001,7 @@ namespace SqlModels.Migrations
                 column: "GameId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ShoppingCart_UserId",
+                name: "IX_ShoppingCart_UserId1",
                 table: "ShoppingCart",
                 column: "UserId");
 
@@ -1115,6 +1117,9 @@ namespace SqlModels.Migrations
                 name: "Typelist");
 
             migrationBuilder.DropTable(
+                name: "Order");
+
+            migrationBuilder.DropTable(
                 name: "Reply");
 
             migrationBuilder.DropTable(
@@ -1131,9 +1136,6 @@ namespace SqlModels.Migrations
 
             migrationBuilder.DropTable(
                 name: "Forum");
-
-            migrationBuilder.DropTable(
-                name: "Order");
 
             migrationBuilder.DropTable(
                 name: "UserBackground");

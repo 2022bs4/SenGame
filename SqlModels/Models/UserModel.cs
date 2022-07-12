@@ -24,6 +24,9 @@ namespace SqlModels.Models
             ShoppingCarts = new HashSet<ShoppingCart>();
             UserPrivacies = new HashSet<UserPrivacy>();
             Wishes = new HashSet<Wish>();
+
+            Orders= new HashSet<Order>();
+
         }
 
         public override string Id { get; set; }
@@ -37,7 +40,7 @@ namespace SqlModels.Models
         public DateTime? CreateTime { get; set; }
         public string UserAbout { get; set; }
         public int? UserBackgroundId { get; set; }
-        public int? OrderId { get; set; }
+        //public int? OrderId { get; set; }
         public int PrivacyPersonalFile { get; set; }
         public int PrivacyGameFile { get; set; }
         public int PrivacyFriendsList { get; set; }
@@ -56,7 +59,16 @@ namespace SqlModels.Models
         public override bool LockoutEnabled { get; set; }
         public override int AccessFailedCount { get; set; }
 
-        public virtual Order Order { get; set; }
+
+        //
+        //entity.HasIndex(e => e.UserId, "IX_ShoppingCart_UserId");
+                            
+
+
+        //
+        public virtual ICollection<Order> Orders{ get; set; }
+
+        //public virtual Order Order { get; set; }
         public virtual UserCountry UserCountry { get; set; }
         public virtual ICollection<ArticleLike> ArticleLikes { get; set; }
         public virtual ICollection<Article> Articles { get; set; }

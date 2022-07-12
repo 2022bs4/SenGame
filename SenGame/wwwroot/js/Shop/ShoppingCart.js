@@ -1,62 +1,64 @@
 ﻿////const { error } = require("jquery");
 
-let btn_buy = document.querySelector(".Continue-Shopping")
-
 $(document).ready(function () {
     $('main').addClass("ShoppingCart d-md-flex f-md-flex position-relative")
     $('main').removeClass("container-fluid")
     RecommendTemplate();
+    CheckFucntion();
+    DeleteAllItem()
 })
 
-let btn_DelAllItem = document.querySelector('.DelAllItem')
-btn_DelAllItem.addEventListener('click', function () {
-    const url = `/Shop/DeleteAll`
-    fetch(url, {
-        method:"POST"
+//刪除所有遊戲
+function DeleteAllItem() {
+    let btn_DelAllItem = document.querySelector('.DelAllItem')
+    btn_DelAllItem.addEventListener('click', function () {
+        const url = `/Shop/DeleteAll`
+        fetch(url, {
+            method: "POST"
+        })
+            .then(response => {
+                alert('已移除所有遊戲');
+                window.location.reload();
+            })
+            .catch(error => {
+                alert(`Error : ${error}`)
+            })
     })
-        .then(response => {
-            alert('已移除所有遊戲');
-            window.location.reload();
-        })
-        .catch(error => {
-            alert(`Error : ${error}`)
-        })
-})
-
-let checkBuy = document.querySelector('.checkout')
+}
 
 
-    
-    
-checkBuy.addEventListener('click', function () {
+//鏈結結帳畫面
+function CheckFucntion() {
+    let checkBuy = document.querySelector('.checkout')
     let gameId = document.querySelectorAll('.GameID')
     let gameIdArray = []
     for (let i = 0; i < gameId.length; i++) {
         gameIdArray.push(gameId[i].value)
     }
-    const url = '/Shop/AddOrderDetails'
-    fetch(url, {
-        method: "POST",
-        headers:{
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            SelectId : `${gameIdArray}`,
+    checkBuy.addEventListener('click', function () {
+        CheckBuyFetch()
+    });
+    async function CheckBuyFetch() {
+        const url = '/Shop/AddOrderDetails'
+        let request = new Request(url, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                SelectId: `${gameIdArray}`,
+            })
         })
-    })
-        .then(response => {
-            alert("OK")
-        })
-        .catch(erro => {
-            alert(erro)
-        })
-    
-});
+        let action = await fetch(request);
+        let data = await action.json();
+        alert(data);
+        Return();
+    }
+    async function Return() {
+        window.location.href = '/Shop/CheckBuy';
+    }
 
-
-
-
-
+}
 
 
 //推薦Template

@@ -15,6 +15,7 @@ namespace Services
         }
         public List<ForumDTO> GetForums()
         {
+            
             var data = Repository.GetAll<Forum>().Select(i=> new ForumDTO()
             {
                 Id = i.ForumId,

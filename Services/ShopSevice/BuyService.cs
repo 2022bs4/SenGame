@@ -19,9 +19,8 @@ namespace Services.ShopSevice
         public async Task<List<CheckBuyDTO>> GetCheckItem(string userId)
         {
 
-            var orderId = await Repository.FindBy<UserModel>(x => x.Id == userId).FirstOrDefaultAsync();
-            var order = await Repository.FindBy<Order>(x => x.OrderId == orderId.OrderId).FirstOrDefaultAsync();
-            var orderDetails = await Repository.FindBy<Orderdetail>(x => x.OrderId == order.OrderId).Select(x => x.GameId).ToListAsync();
+            var orderId = await Repository.FindBy<Order>(x => x.UserId == userId).FirstOrDefaultAsync();
+            var orderDetails = await Repository.FindBy<Orderdetail>(x => x.OrderId == orderId.OrderId).Select(x => x.GameId).ToListAsync();
 
             var result = new List<CheckBuyDTO>();
 
@@ -31,7 +30,8 @@ namespace Services.ShopSevice
                 var game = await Repository.FindBy<Game>(x => x.GameId == item).FirstAsync();
                 foreach (var i in pic)
                 {
-                    result.Add(new CheckBuyDTO {
+                    result.Add(new CheckBuyDTO
+                    {
                         UserId = userId,
                         GameId = game.GameId,
                         GameName = game.GameName,
@@ -40,50 +40,76 @@ namespace Services.ShopSevice
                     });
                 }
             }
-
             return result;
-
         }
-        //public async void AddCarts(string gameId, string userId)
-        //{
-        //    CreatCart(userId);
 
-        //    var orderId = Repository.FindBy
-
-
-
-        //    var array = gameId.Split(',');
-        //    int[] newarray = new int[] { };
-        //    foreach (var item in array)
-        //    {
-        //        var gmaeId = Int64.Parse(item);
-        //        var game = await Repository.FindBy<Game>(x => x.GameId == gmaeId).FirstOrDefaultAsync();
-
-        //    };
-
-        //}
-
-        //public void CreatCart(string userId)
-        //{
-        //    var creatOrder = new Order()
-        //    {
-        //        CreateTime = DateTime.Now,
-        //        OrderStatus = 1,
-        //    };
-        //    Create<Order>(creatOrder);
-
-        //    var setUserOrderId = Repository.FindBy<UserModel>(x => x.Id == userId).FirstOrDefault();
-
+        public string AddCarts(string gameId, string userId)
+        {
+            var selectUserId = Repository.FindBy<Order>(x => x.UserId == userId);
             
+            var array = gameId.Split(',');
+            decimal totalPrice = 0;
+            if (selectUserId.Count() == 0)
+            {
+                foreach (var item in array)
+                {
+                    var game = Repository.FindBy<Game>(x => x.GameId == Int64.Parse(item)).FirstOrDefault();
+                    totalPrice += game.GamePrice;
+                };
+                CreatOrder(userId, totalPrice);
+            }
+            else if (selectUserId.Any(x=>x.OrderStatus != 1))
+            {
+                CreatOrder(userId, totalPrice);
+            }
+            else
+            {
+                return "您尚有商品未結帳";
+            }
 
-        //    //var result = new UserModel
-        //    //{
-        //    //    Id = userId,
-        //    //    OrderId = 
-        //    //};
+            var orderId = Repository.FindBy<Order>(x => x.UserId == userId).Select(x => x.OrderId).FirstOrDefault();
+            foreach (var item in array)
+            {
+                var game = Repository.FindBy<Game>(x => x.GameId == Int64.Parse(item)).FirstOrDefault();
+                CreatDetails(orderId, game.GameId, game.GamePrice);
+            };
+            return "請至結帳畫面結帳付款";
+        }
+  
+        public  void CreatOrder(string userId ,decimal totalPrice)
+        {
+            var creatOrder = new Order()
+            {
+                CreateTime = DateTime.Now,
+                OrderStatus = 1,
+                UserId = userId,
+                TotalPrice = totalPrice,
+            };
+            Create<Order>(creatOrder);
+        }
 
-        //    Update<UserModel>(result);
-        //}
+        public  void CreatDetails(int orderId ,int gameId , decimal price)
+        {
+            var details = new Orderdetail()
+            {
+                OrderId = orderId,
+                GameId = gameId,
+                Price = price,
+            };
+             Create<Orderdetail>(details);
+        }
 
+
+        //尚未Updata
+        public async Task<string> RemoveCheckBuy(string userId)
+        {
+            var order = await Repository.FindBy<Order>(x => x.UserId == userId).FirstOrDefaultAsync();
+
+
+
+            return "已取消所有待付款商品";
+        }
+
+        
     }
 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Services;
+using SqlModels.Repository.Interface;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
@@ -7,8 +9,17 @@ using System.Web;
 
 namespace SenGame.Service
 {
-    public class EcpayService
+    public class EcpayService :BaseService
     {
+        public EcpayService(IRepository repository) : base(repository)
+        {
+        }
+
+        public async GetPayInformation()
+        {
+
+        }
+
         public string CreateOrder()
         {
             var orderId = Guid.NewGuid().ToString().Replace("-", "").Substring(0, 20);

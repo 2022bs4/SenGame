@@ -485,6 +485,10 @@ namespace SqlModels.Data
 
                 //entity.Property(e => e.OrderId).ValueGeneratedNever();
 
+
+                entity.HasIndex(e => e.UserId, "IX_ShoppingCart_UserId");
+
+
                 entity.Property(e => e.CancelTime)
                     .HasColumnType("datetime")
                     .HasComment("訂單取消時間");
@@ -520,17 +524,24 @@ namespace SqlModels.Data
                 entity.Property(e => e.UpdateTime)
                     .HasColumnType("datetime")
                     .HasComment("訂單更新時間");
+
+                //
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Orders)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("FK_Order_AspNetUsers1");
             });
 
             modelBuilder.Entity<Orderdetail>(entity =>
             {
+                
                 entity.Property(e => e.OrderdetailId).IsRequired();
 
                 entity.HasIndex(e => e.GameId, "IX_Orderdetails_GameId");
 
                 entity.HasIndex(e => e.OrderId, "IX_Orderdetails_OrderId");
 
-                entity.Property(e => e.OrderdetailId).ValueGeneratedNever();
+                //entity.Property(e => e.OrderdetailId).ValueGeneratedNever();
 
                 entity.Property(e => e.Discount).HasComment("購買後則顯示當時折扣");
 
