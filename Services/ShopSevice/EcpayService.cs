@@ -1,4 +1,5 @@
-﻿using Services;
+﻿using AutoMapper;
+using Services;
 using SqlModels.Repository.Interface;
 using System;
 using System.Collections.Generic;
@@ -11,11 +12,11 @@ namespace SenGame.Service
 {
     public class EcpayService :BaseService
     {
-        public EcpayService(IRepository repository) : base(repository)
+        public EcpayService(IRepository repository,IMapper mapper) : base(repository,mapper)
         {
         }
 
-        public async GetPayInformation()
+        public async void GetPayInformation()
         {
 
         }

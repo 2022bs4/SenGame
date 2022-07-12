@@ -189,8 +189,7 @@ namespace SenGame.Controllers
         {
             var userId = await GetUserId();
 
-
-
+            return Json(userId);
         }
 
         public async Task<string> GetUserId()
