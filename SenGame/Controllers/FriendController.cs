@@ -8,6 +8,7 @@ using SqlModels.DTOModels;
 using SqlModels.FakeDate;
 using SqlModels.Models;
 using SqlModels.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,6 +22,7 @@ namespace SenGame.Controllers
     {
         private readonly UserManager<UserModel> _userManager;
         private readonly FriendGroupService _service;
+        
         public FriendController(UserManager<UserModel> usermodel, FriendGroupService service)
         {
             _userManager = usermodel;
@@ -33,7 +35,7 @@ namespace SenGame.Controllers
         {
             return View();
         }
-        //[Authorize]
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Chat(string id)
         {
@@ -75,10 +77,25 @@ namespace SenGame.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult CreateGroup(FriendGroup group,FriendGroup user)
+        public async Task<IActionResult> CreateGroup([FromBody]FriendViewModel group)
         {
+            UserModel LoginUser = await _userManager.GetUserAsync(HttpContext.User);
+            var userid = LoginUser.Id;
+          
+            for(int i = 0; i < group.GroupNames.Length; i++)
+            {
+                var x = new FriendGroup();
+                x.GroupName = group.GroupNames[i];
+                x.UserId = group.Ids[i];
+
+                _service.Create<FriendGroup>(x);
+
+            }
+      
+            
             return Ok();
         }
+
         public IActionResult User__information()
         {
             return View();

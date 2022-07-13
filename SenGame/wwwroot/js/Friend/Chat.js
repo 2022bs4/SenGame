@@ -146,6 +146,7 @@ function chooseFriend() {
             useridArray.push(userid.value)
             console.log(groupnameArray)
             console.log(useridArray)
+            
             addblock.append(tag(tagname))
             item.style.display = 'none'
             var img = item.querySelector(".friend-img2").src
@@ -168,8 +169,11 @@ function SendData(data) {
         }
 
     })
-        .then(res => res.json())
+        .then(res => { return res.json() })
         .then(result => console.log(result))
+}
+function SendDataAjax(data) {
+    $.post("/Friend/CreateGroup", data, function (res) { console.log(res) }, "json")
 }
 
 //桌機能用的功能
@@ -185,8 +189,9 @@ function computer() {
         chooseFriend()
         check.onclick = function () {
             var data = {
-                GroupName: groupnameArray,
-                UserId: useridArray,
+                GroupNames: groupnameArray,
+                Ids: useridArray,
+                
             }
             let k = 0;
             if (groupname.value == '') {
@@ -220,6 +225,8 @@ function computer() {
                 choose.innerHTML = ' '
                 groupname.value = ' '
                 SendData(data)
+                //SendDataAjax(data)
+                console.log(data)
                 //AllFriends.forEach(item => {
                 //    choose.append(getfriend2(item.img, item.name, item.line))
                 //    chooseFriend()

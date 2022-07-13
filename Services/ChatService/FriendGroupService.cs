@@ -37,20 +37,7 @@ namespace Services.ChatService
                     GroupName = group.GroupName,
                 });
             }
-            //foreach (var gid in groups)
-            //{
-            //    var groupname = Repository.GetAll<FriendGroup>().Where(x=>x.FriendGroupId == gid).Select(x => x.GroupName).Distinct();
 
-            //    foreach(var item in groupname)
-            //    {
-
-            //        result.Add(new FriendGroupDTO
-            //        {
-            //            GroupName = item,
-            //        });
-   
-            //    }
-            //}
             return result;
 
         }
@@ -59,7 +46,7 @@ namespace Services.ChatService
 
             var TheUser = Repository.FindBy<UserModel>(x => x.Id == id).FirstOrDefault();
 
-            var groups = Repository.GetAll<Usergroup>().Where(x => x.UserId == TheUser.Id).Select(x => x.FriendGroupId);
+            var groups = Repository.GetAll<Usergroup>().Where(x => x.UserId == TheUser.Id).Select(x => x.FriendGroupId).Distinct();
             
             
             var result = new List<FriendGroupDTO>();
@@ -68,7 +55,7 @@ namespace Services.ChatService
                 var groupname = Repository.GetAll<FriendGroup>().Where(x => x.FriendGroupId == gid).Select(x=>x.UserId);
                 foreach (var item in groupname)
                 {
-                    var friends = Repository.FindBy<UserModel>(x => x.Id == item).Select(y => new { y.UserName, y.UserPicture,y.Id});
+                    var friends = Repository.FindBy<UserModel>(x => x.Id == item).Select(y => new { y.UserName, y.UserPicture ,y.Id});
                     foreach(var friend in friends)
                     {
                         result.Add(new FriendGroupDTO

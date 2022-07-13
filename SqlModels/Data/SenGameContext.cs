@@ -253,13 +253,14 @@ namespace SqlModels.Data
             modelBuilder.Entity<FriendGroup>(entity =>
             {
                 entity.HasKey(e => e.FriendGroupId);
+                entity.Property(e => e.FriendGroupId).IsRequired();
 
                 entity.ToTable("FriendGroup");
 
-                entity.Property(e => e.FriendGroupId).ValueGeneratedNever();
+                //entity.Property(e => e.FriendGroupId).ValueGeneratedNever();
 
                 entity.Property(e => e.GroupName)
-                    .IsRequired()
+                    //.IsRequired()
                     .HasMaxLength(10)
                     .IsFixedLength(true);
             });
