@@ -20,6 +20,9 @@ namespace SqlModels.Repository.Interface
         void Delete<TEntity>(TEntity entity) where TEntity : class;
 
 
+        //取得第一筆資料   回傳T
+        TEntity Get<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class;
+
         //查詢全部資料    回傳IQueryable<T>
         IQueryable<TEntity> GetAll<TEntity>() where TEntity : class;
 

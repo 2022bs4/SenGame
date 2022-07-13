@@ -38,6 +38,7 @@ namespace SenGame
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            #region -- DataBase --
             //DB DI
             services.AddDbContext<SenGameContext>(options =>
                 options.UseSqlServer(
@@ -45,13 +46,11 @@ namespace SenGame
             services.AddDatabaseDeveloperPageExceptionFilter();            
             services.AddDefaultIdentity<UserModel>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<SenGameContext>();
-            
-            services.AddControllersWithViews();
-            
-            //Repositories DI
+            #endregion
+            #region -- Repository --
             services.AddScoped<IRepository, GenericRepository>();
-            
-            //Services DI
+            #endregion
+            #region -- Service --
             services.AddScoped<IBaseService,BaseService>();
             services.AddScoped<ICommunityService,CommunityService>();
             services.AddScoped<ShopServices>();
@@ -61,19 +60,19 @@ namespace SenGame
             #region -- AutoMapper DI --
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             #endregion
-
-            //Swagger Use
+            #region -- Swagger --
             services.AddSignalR();
             services.AddSwaggerGen();
-
+            #endregion
+            #region -- Google 第三方登入 --
             //Google 第三方登入
             services.AddAuthentication().AddGoogle(googleOptions =>
             {
                 googleOptions.ClientId = "319105508231-b14a9vlbq3sobjfruc8sd8kp9iplgrkf.apps.googleusercontent.com";
                 googleOptions.ClientSecret = "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";
             });
-            //FB 第三方登入
-
+            #endregion
+            #region -- Facebook 第三方登入 --
             services.AddAuthentication().AddFacebook(options =>
             {
                 options.AppId = "363016615774590";

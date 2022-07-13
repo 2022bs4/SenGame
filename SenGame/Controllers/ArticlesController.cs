@@ -20,7 +20,7 @@ namespace SenGame.Controllers
             _service = service;
         }
 
-        // GET: Articles/{Forum.id}
+        // GET: Articles/{Forum.id}預設是0
         public IActionResult Index(int id)
         {
             var data = _service.FindBy<Article>(x => x.ForumId == id);
