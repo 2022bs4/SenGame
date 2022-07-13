@@ -5,7 +5,7 @@ using System.Linq;
 namespace SqlModels.DTOModels
 {
     //產品詳細Razor部分
-    public class ProductViewDTO
+    public class ResponseProductDTO
     {
         //遊戲主要資訊
         public int GameId { get; set; }

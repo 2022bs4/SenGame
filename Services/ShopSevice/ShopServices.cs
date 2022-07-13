@@ -11,13 +11,13 @@ using System.Threading.Tasks;
 
 namespace Services
 {
-    public class ShopServices : BaseService
+    public class ShopServices : BaseService ,IShopServices
     {
         public ShopServices(IRepository repository, IMapper mapper) : base(repository, mapper )
         {
         }
 
-        public ProductViewDTO ProductView(int id)
+        public ResponseProductDTO ProductView(int id)
         {
             var game = Repository.FindBy<Game>(x => x.GameId == id).FirstOrDefault();
 
@@ -29,7 +29,7 @@ namespace Services
             var typlist = Repository.GetAll<Typelist>();
             var gameTyple = typle.Join(typlist, x => x.TypelistId, y => y.TypelistId, (x, y) =>new { x.GameId, y.Name });
 
-            var result = new ProductViewDTO()
+            var result = new ResponseProductDTO()
             { 
                 GameId = game.GameId,
                 GameName = game.GameName,
@@ -39,7 +39,7 @@ namespace Services
                 Developer = game.Developer,
                 Marker = game.Marker,
                 DisscountTake = discount.DiscountTake,
-                GameTyple = gameTyple.Select(item=> new ProductViewDTO.TypleData 
+                GameTyple = gameTyple.Select(item=> new ResponseProductDTO.TypleData 
                 { 
                     GameId=item.GameId,
                     TypleName=item.Name,
@@ -130,6 +130,7 @@ namespace Services
             }
             return result;
         }
+    
     }
 
 }

@@ -24,9 +24,8 @@ function BtnFunction() {
         AddCartFetch()    
     })
 
-    
     async function AddCartFetch() {
-        const url = '/Shop/AddShoppingCart';
+        const url = '/api/Shop/AddShoppingCart';
         let request = new Request(url, {
             method: "POST",
             headers: new Headers({
@@ -51,8 +50,8 @@ function BtnFunction() {
 
 // 以下為幻燈片動態
 function GameSwipper() {
-    const swipper = `/Shop/ProductSwipper/${gameId.value}`;
-    fetch( swipper)
+    const swipper = `/api/Shop/ProductSwipper?id=${gameId.value}`;
+    fetch(swipper, {method:"GET"})
         .then(response => response.json())
         .then(result => {
             setSliders(result);
@@ -99,7 +98,7 @@ function GameSwipper() {
 
 //詳細圖文介紹區之動態產生
 function MianDetails() {
-    const url = `/Shop/ProductMain/${gameId.value}`
+    const url = `/api/Shop/ProductMain?id=${gameId.value}`
     fetch(url)
         .then(response => response.json())
         .then(result => {
@@ -122,7 +121,7 @@ function MianDetails() {
 
 //系統區域
 function ProductSystem() {
-    const systemAction = `/Shop/ProductSystem/${gameId.value}`
+    const systemAction = `/api/Shop/ProductSystem?id=${gameId.value}`
     fetch(systemAction,)
         .then(response => response.json())
         .then(result => {
@@ -175,7 +174,7 @@ function ProductSystem() {
 
 //推薦Template
 function RecommendTemplate() {
-    const ProductRecommend = "/Shop/ProductRecommend"
+    const ProductRecommend = "/api/Shop/ProductRecommend"
     let box = document.querySelector('.Recommend')
     var GameDatails = document.querySelector(".Game-Datails")
     let screenWidth = screen.width;

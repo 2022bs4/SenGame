@@ -7,20 +7,26 @@
 <section class="col-12 col-md-8 p-0 Main-Content">
     <div class="col-12 Review">
         <div class="col-12 d-flex justify-content-between p-0 mb-5 Totoal-Price">
-            @foreach(var item in Model)
+            @if(Model != null)
             {
-                <div class="col-12  Game-Item py-3">
-                    <h2>@Html.Raw(item.GameName)</h2>
-                    <div class="d-flex justify-content-around flex-wrap col-12 p-0 ">
-                        <div class="col-7 p-0">
-                            <img src="@Html.Raw(item.GameUrl)" alt="@Html.Raw(item.GameName)" class="w-100">
-                        </div>
-                        <div class="col-4 p-0 ml-1 Game-Price-Box d-flex flex-wrap">
-                            <span>遊戲價格: </span>
-                            <p class="Game-Price">NT$ @Html.Raw(item.GamePrice)</p>
+                @foreach(var item in Model)
+                {
+                    <div class="col-12  Game-Item py-3">
+                        <h2>@Html.Raw(item.GameName)</h2>
+                        <div class="d-flex justify-content-around flex-wrap col-12 p-0 ">
+                            <div class="col-7 p-0">
+                                <img src="@Html.Raw(item.GameUrl)" alt="@Html.Raw(item.GameName)" class="w-100">
+                            </div>
+                            <div class="col-4 p-0 ml-1 Game-Price-Box d-flex flex-wrap">
+                                <span>遊戲價格: </span>
+                                <p class="Game-Price">NT$ @Html.Raw(item.GamePrice)</p>
+                            </div>
                         </div>
                     </div>
-                </div>
+                }
+            }
+            else{
+                <p>您尚未有結帳之遊戲</p>
             }
         </div>
         <div class="col-12 User-Protocol d-flex flex-wrap p-0 mt-5">
@@ -39,6 +45,11 @@
         <p>在 STEAM 上購物<br>當您送出付費資訊時，資料均受到通過數位認證的安全通訊端層 (SSL) 技術保護。完成本次交易後，將會從您的付款方式扣除交易金額，且您會收到一封確認您已購買的電子郵件訊息。</p>
     </div>
 </section>
+
+<form class=" ecpay_form" action="https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5" method="post">
+    
+</form>
+
 
 @section Scripts{
     <script src="~/js/Shop/CheckBuy.js"></script>

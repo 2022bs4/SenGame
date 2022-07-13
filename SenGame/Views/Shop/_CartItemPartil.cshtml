@@ -9,11 +9,11 @@
             <p class=" d-inline-block font-weight-bold">遊戲價格:</p>
             <p class="Select-Item-Price">@Html.Raw(Model.GamePrice)</p>
         </div>
-        <form  method="post">
+        <form method="post">
             @Html.AntiForgeryToken()
             <input class="GameID" type="hidden" asp-for="GameId"/>
             <input type="hidden" asp-for="UserId"/>
-            <input type="submit" asp-action="RemoveShoppingItem" value="移除" class="Remove_btn"/>
+            <input type="submit" asp-controller="Shop" asp-action="RemoveShoppingItem" value="移除" class="Remove_btn"/>
         </form>
     </div>
 </div>

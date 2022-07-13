@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SqlModels.DTOModels
 {
-    public class CheckBuyDTO
+    public class ResponseCheckBuyDTO
     {
         public string UserId { get; set; }
         public int GameId { get; set; }
@@ -14,8 +14,4 @@ namespace SqlModels.DTOModels
         public string GameUrl { get; set; }
         public decimal GamePrice { get; set; }
     }
-    //public class OrderDTO 
-    //{ 
-    //    public 
-    //}
 }

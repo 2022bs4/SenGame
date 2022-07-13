@@ -22,6 +22,7 @@ using Microsoft.Extensions.FileProviders;
 using System.IO;
 using Services.ShopSevice;
 using Services.Mappings;
+using SenGame.Service;
 
 namespace SenGame
 {
@@ -55,7 +56,7 @@ namespace SenGame
             services.AddScoped<ICommunityService,CommunityService>();
             services.AddScoped<ShopServices>();
             services.AddScoped<ShopCartServices>();
-            services.AddScoped<BuyService>();
+            services.AddScoped<EcpayService>();
 
             #region -- AutoMapper DI --
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -78,6 +79,17 @@ namespace SenGame
                 options.AppId = "363016615774590";
                 options.AppSecret = "f3ccc3f70ef3b114a2d0fce1562be7c1";
                 options.AccessDeniedPath = "/AccessDeniedPathInfo";
+            });
+
+            //API跨域設定(測試中  by 羅 )
+            services.AddCors(options => 
+            {
+                options.AddPolicy("CorsPolicy",
+                builder => builder.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowAnyOrigin()
+                .AllowCredentials());
             });
         }
 

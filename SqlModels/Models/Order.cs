@@ -18,7 +18,7 @@ namespace SqlModels.Models
         public DateTime? UpdateTime { get; set; }
         public DateTime? TradeTime { get; set; }
         public DateTime? CancelTime { get; set; }
-        public decimal? TotalPrice { get; set; }
+        public decimal TotalPrice { get; set; }
         public int OrderStatus { get; set; }
         public string EcpayId { get; set; }
         public string Invoice { get; set; }

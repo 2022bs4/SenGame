@@ -12,7 +12,7 @@ $(document).ready(function () {
 function DeleteAllItem() {
     let btn_DelAllItem = document.querySelector('.DelAllItem')
     btn_DelAllItem.addEventListener('click', function () {
-        const url = `/Shop/DeleteAll`
+        const url = `/api/Shop/DeleteAll`
         fetch(url, {
             method: "POST"
         })
@@ -39,7 +39,7 @@ function CheckFucntion() {
         CheckBuyFetch()
     });
     async function CheckBuyFetch() {
-        const url = '/Shop/AddOrderDetails'
+        const url = '/api/Shop/AddOrderDetails'
         let request = new Request(url, {
             method: "POST",
             headers: {
@@ -50,7 +50,7 @@ function CheckFucntion() {
             })
         })
         let action = await fetch(request);
-        let data = await action.json();
+        let data = await action.text();
         alert(data);
         Return();
     }
@@ -63,7 +63,7 @@ function CheckFucntion() {
 
 //推薦Template
 function RecommendTemplate() {
-    const ProductRecommend = "/Shop/ProductRecommend"
+    const ProductRecommend = "/api/Shop/ProductRecommend"
     let box = document.querySelector('.Recommend')
     var GameDatails = document.querySelector(".Main-Content")
     let screenWidth = screen.width;
