@@ -43,7 +43,7 @@ namespace SenGame
             services.AddDbContext<SenGameContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDatabaseDeveloperPageExceptionFilter();            
+            services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddDefaultIdentity<UserModel>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<SenGameContext>();
             #endregion
@@ -51,12 +51,12 @@ namespace SenGame
             services.AddScoped<IRepository, GenericRepository>();
             #endregion
             #region -- Service --
-            services.AddScoped<IBaseService,BaseService>();
-            services.AddScoped<ICommunityService,CommunityService>();
+            services.AddScoped<IBaseService, BaseService>();
+            services.AddScoped<ICommunityService, CommunityService>();
             services.AddScoped<ShopServices>();
             services.AddScoped<ShopCartServices>();
             services.AddScoped<EcpayService>();
-
+            #endregion
             #region -- AutoMapper DI --
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             #endregion
@@ -79,9 +79,9 @@ namespace SenGame
                 options.AppSecret = "f3ccc3f70ef3b114a2d0fce1562be7c1";
                 options.AccessDeniedPath = "/AccessDeniedPathInfo";
             });
-
+            #endregion
             //API跨域設定(測試中  by 羅 )
-            services.AddCors(options => 
+            services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
                 builder => builder.AllowAnyOrigin()
@@ -92,7 +92,7 @@ namespace SenGame
             });
         }
 
-     
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
