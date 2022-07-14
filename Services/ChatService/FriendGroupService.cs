@@ -48,36 +48,28 @@ namespace Services.ChatService
 
             var groups = Repository.GetAll<Usergroup>().Where(x => x.UserId == TheUser.Id);
             var name = groups.Join(Repository.GetAll<FriendGroup>(), s => s.FriendGroupId, x => x.FriendGroupId, (s, x) => new { s.FriendGroupId, x.GroupName, x.UserId });
-            var mmm = name.Join(Repository.GetAll<UserModel>(), s => s.UserId, x => x.Id, (s, x) => new { s.GroupName, x.Id, x.UserName, x.UserPicture });
-            
+            var mmm = name.Join(Repository.GetAll<UserModel>(), s => s.UserId, x => x.Id, (s, x) => new { s.GroupName}).Distinct();
+            var www = name.Join(Repository.GetAll<UserModel>(), s => s.UserId, x => x.Id, (s, x) => new { s.GroupName,x.Id,x.UserName,x.UserPicture }).Distinct();
+
             var result = new Dictionary<string, List<FriendGroupDTO>>();
-            List<FriendGroupDTO> list = new List<FriendGroupDTO>();
-            foreach(var item in mmm)
+            foreach(var group in mmm)
             {
-                list.Add(new FriendGroupDTO
+                 List<FriendGroupDTO> list = new List<FriendGroupDTO>();
+                foreach(var item in www)
                 {
-                    GroupName = item.GroupName,
-                    UserId = item.Id,
-                    UserName = item.UserName,
-                    UserPicture = item.UserPicture,
-                });
-
-
-            result.Add(item.GroupName, list);
+                    if(item.GroupName == group.GroupName)
+                    {
+                        list.Add(new FriendGroupDTO
+                        {
+                            UserId = item.Id,
+                            UserName = item.UserName,
+                            UserPicture = item.UserPicture,
+                        });
+                    }
+                    
+                }
+                result.Add(group.GroupName,list);
             }
-
-            //foreach (var gid in groups)
-            //{
-            //    var groupname = Repository.GetAll<FriendGroup>().Where(x => x.FriendGroupId == gid).Select(x => x.UserId);
-            //    foreach (var item in groupname)
-            //    {
-            //        var friends = Repository.FindBy<UserModel>(x => x.Id == item).Select(y => new { y.UserName, y.UserPicture, y.Id });
-            //        foreach (var friend in friends)
-            //        {
-
-            //        }
-            //    }
-            //}
             return result;
         }
         //public List<FriendGroupDTO> GetFriend(string id)

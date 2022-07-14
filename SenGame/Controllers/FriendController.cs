@@ -51,21 +51,22 @@ namespace SenGame.Controllers
 
             //var groupname =  _service.GetGroup(id);
             var allfriend = _service.GetFriend(id);
+
             //var result = new FriendViewModel()
             //{
-            //    Groups = groupname.Select(x=>new FriendViewModel.Group
+            //    Groups = allfriend.Select(x => new FriendViewModel.Group
             //    {
-            //        GroupName = x.GroupName,
-            //        Friends = groupname.Select(y=>new FriendViewModel.Friend
+            //        GroupName = x.Key,
+            //        Friends = allfriend.Select(y => new FriendViewModel.Friend
             //        {
             //            Name = y.UserName,
             //            //Photo = y.UserPicture,
             //            //Id = y.UserId,
             //        }).ToList()
-               
+
             //    }).ToList(),
-                
-                
+
+
 
             //};
 
