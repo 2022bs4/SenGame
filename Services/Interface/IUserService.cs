@@ -10,5 +10,6 @@ namespace Services.Interface
     public interface IUserService : IBaseService
     {
         public List<UserDTO> MyGameList(string UserId);
+        public List<UserDTO> PrivacyList(string UserId);
     }
 }

@@ -22,6 +22,8 @@ namespace SqlModels.DTOModels
         public List<PrivacieData> PrivacieList { get; set; }
         public class PrivacieData
         {
+            public string Id { get; set; }
+
             [Display(Name = "我的個人檔案 隱私設定:")]
             public int PrivacyPersonalFile { get; set; } //個人檔案 隱私設定
 

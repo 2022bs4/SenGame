@@ -69,7 +69,7 @@ namespace SenGame.Controllers
             return View();
         }
 
-        public async Task<IActionResult> E4_UserPrivacy()
+        public IActionResult E4_UserPrivacy()
         {
             var privacymodel = new SqlModels.ViewModels.UserViewModels.PrivacieLibraryViewModel();
             return View(privacymodel);
