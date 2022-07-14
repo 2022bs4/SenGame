@@ -87,8 +87,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\js\Game\Game.js" />
-    <None Include="wwwroot\js\Game\Game_Category.js" />
+    <None Include="wwwroot\js\shop\Game.js" />
   </ItemGroup>
 
   <ItemGroup>

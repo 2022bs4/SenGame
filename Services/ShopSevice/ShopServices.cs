@@ -16,8 +16,25 @@ namespace Services
         public ShopServices(IRepository repository, IMapper mapper) : base(repository, mapper )
         {
         }
-
-        public ResponseProductDTO ProductView(int id)
+        public async Task<ResponseProductDTO> ProductIndex()
+        {
+            var game = Repository.GetAll<Game>();
+            var pic = Repository.GetAll<GameMedium>().Where(x=> x.InstructionType == 2 && x.Instruction == 1);
+            var gameMedia = game.Join(pic, x => x.GameId, p => p.GameId, (x, p) => new {x.GameId , x.GameName , p.MediaUrl , x.GamePrice });
+            
+            var result = new ResponseProductDTO()
+            {
+                Product = await gameMedia.Select(
+                    item => new ResponseProductItem {
+                    GameId = item.GameId,
+                    GameName = item.GameName,
+                    GamePrice = item.GamePrice,
+                    GameUrl =item.MediaUrl,
+                }).ToListAsync(),
+            };
+            return result;
+        }
+        public ResponseProducDetailsDTO ProductView(int id)
         {
             var game = Repository.FindBy<Game>(x => x.GameId == id).FirstOrDefault();
 
@@ -29,7 +46,7 @@ namespace Services
             var typlist = Repository.GetAll<Typelist>();
             var gameTyple = typle.Join(typlist, x => x.TypelistId, y => y.TypelistId, (x, y) =>new { x.GameId, y.Name });
 
-            var result = new ResponseProductDTO()
+            var result = new ResponseProducDetailsDTO()
             { 
                 GameId = game.GameId,
                 GameName = game.GameName,
@@ -39,7 +56,7 @@ namespace Services
                 Developer = game.Developer,
                 Marker = game.Marker,
                 DisscountTake = discount.DiscountTake,
-                GameTyple = gameTyple.Select(item=> new ResponseProductDTO.TypleData 
+                GameTyple = gameTyple.Select(item=> new ResponseProducDetailsDTO.TypleData 
                 { 
                     GameId=item.GameId,
                     TypleName=item.Name,
@@ -49,15 +66,20 @@ namespace Services
 
             return result;
         }
-        public async Task<List<ProductSwipperDTO>> ProductSwipper(int id)
+
+
+        public async Task<RequestProducDetailsDTO> ProductSwipper(int id)
         {
             var pic = await Repository.FindBy<GameMedium>(x => x.GameId == id && x.InstructionType == 1 && x.Instruction == 1).OrderByDescending(x => x.Sort).ToListAsync();
 
-            var result = new List<ProductSwipperDTO>();
-            foreach(var item in pic)
+            var result = new RequestProducDetailsDTO()
             {
-                result.Add(new ProductSwipperDTO { SwipperUrl = item.MediaUrl });
-            }
+                SwipperData = pic.Select(
+                    item => new RequestProducDetailsDTO.ResponseProductSwipperDTO 
+                    {
+                    SwipperUrl=item.MediaUrl
+                }).ToList(),
+            };
             return result;
         }
         public  async Task<List<ProdductIntroductDTO>> ProductMainText(int id)
@@ -86,29 +108,27 @@ namespace Services
                     i++;
                 }
             }
+
             return  result  ;
         }
-        public async Task<List<ProductSystemDTO>> ProductSystem(int id)
+        public async Task<RequestProducDetailsDTO> ProductSystem(int id)
         {
             var system = await Repository.FindBy<SystemSpecification>(x => x.GameId == id).ToListAsync();
 
-            var result = new List<ProductSystemDTO>();
-
-            foreach (var item in system)
+            var result = new RequestProducDetailsDTO()
             {
-                result.Add(
-                    new ProductSystemDTO
-                    {
-                        SystemType = item.SystemType,
-                        Configure = item.Configure,
-                        Hddspace = item.Hddspace,
-                        System = item.System,
-                        SystemRam = item.SystemRam,
-                        SystemCpu = item.SystemCpu,
-                        SystemGpu = item.SystemGpu,
-                    });
-            }
-
+                SystemData =  system.Select(item =>
+                new RequestProducDetailsDTO.ProductSystemDTO
+                {
+                    SystemType = item.SystemType,
+                    Configure = item.Configure,
+                    Hddspace = item.Hddspace,
+                    System = item.System,
+                    SystemRam = item.SystemRam,
+                    SystemCpu = item.SystemCpu,
+                    SystemGpu = item.SystemGpu,
+                }).ToList(),
+            };
             return result;
         }
         public async Task<List<ProductRecommend>> ProductRecommend()

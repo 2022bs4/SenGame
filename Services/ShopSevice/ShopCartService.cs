@@ -19,18 +19,20 @@ namespace Services.ShopSevice
             public bool Success { get; set; }
             public int Code { get; set; }
             public object Response { get; set; }
-
             public string Msg { get; set; }
         }
         public ShopCartServices(IRepository repository,IMapper mapper) : base(repository, mapper)
         {
         }
 
-        public async Task<List<ShoppingCartDTO>> GetShoppingCarts(string UserId)
+       
+
+
+        public async Task<List<ResponseProductItem>> GetShoppingCarts(string UserId)
         {
             var shoppingCarts = await Repository.FindBy<ShoppingCart>(x => x.UserId == UserId).ToListAsync();
 
-            var result = new List<ShoppingCartDTO>();
+            var result = new List<ResponseProductItem>();
 
             foreach (var item in shoppingCarts)
             {
@@ -38,7 +40,7 @@ namespace Services.ShopSevice
                 var game = await Repository.FindBy<Game>(x=>x.GameId == item.GameId).FirstOrDefaultAsync();
                 foreach (var picItem in pic)
                 {
-                    result.Add(new ShoppingCartDTO
+                    result.Add(new ResponseProductItem
                     { 
                         UserId = UserId,
                         GameId = item.GameId,
@@ -101,7 +103,7 @@ namespace Services.ShopSevice
         }
 
 
-        public async Task<List<ResponseCheckBuyDTO>> GetCheckItem(string userId)
+        public async Task<List<ResponseProductItem>> GetCheckItem(string userId)
         {
 
             var orderId = await Repository.FindBy<Order>(x => x.UserId == userId  && x.OrderStatus==1).FirstOrDefaultAsync();
@@ -111,7 +113,7 @@ namespace Services.ShopSevice
             }
             var orderDetails = await Repository.FindBy<Orderdetail>(x => x.OrderId == orderId.OrderId).Select(x => x.GameId).ToListAsync();
 
-            var result = new List<ResponseCheckBuyDTO>();
+            var result = new List<ResponseProductItem>();
 
             foreach (var item in orderDetails)
             {
@@ -119,7 +121,7 @@ namespace Services.ShopSevice
                 var game = await Repository.FindBy<Game>(x => x.GameId == item).FirstAsync();
                 foreach (var i in pic)
                 {
-                    result.Add(new ResponseCheckBuyDTO
+                    result.Add(new ResponseProductItem
                     {
                         UserId = userId,
                         GameId = game.GameId,
@@ -188,7 +190,6 @@ namespace Services.ShopSevice
         }
 
 
-        //尚未Updata
         public async Task<string> RemoveCheckBuy(string userId)
         {
             var order = await Repository.FindBy<Order>(x => x.UserId == userId && x.OrderStatus ==1).FirstOrDefaultAsync();
@@ -196,14 +197,8 @@ namespace Services.ShopSevice
             order.UpdateTime = DateTime.Now;
             order.CancelTime = DateTime.Now;
             order.OrderStatus = 6;
-
-            try
-            {
-                Repository.Update<Order>(order);
-                Repository.SaveChanges();
-            }
-            catch (Exception ex)
-            {}
+            Repository.Update<Order>(order);
+            Repository.SaveChanges();
             return "已取消所有待付款商品";
         }
     }

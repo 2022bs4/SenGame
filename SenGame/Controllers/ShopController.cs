@@ -26,7 +26,12 @@ namespace SenGame.Controllers
             _manger = manger;
             _Ecpay = ecpay;
         }
+        public IActionResult Index()
+        {
+            var product = _Shop.ProductIndex();
 
+            return View("Game");
+        }
         //產品詳細
         public IActionResult ProductDetails(int id)
         {

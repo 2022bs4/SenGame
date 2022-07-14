@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 
 namespace SqlModels.DTOModels
 {
     //產品詳細Razor部分
-    public class ResponseProductDTO
+    public class ResponseProducDetailsDTO
     {
         //遊戲主要資訊
         public int GameId { get; set; }
@@ -33,16 +34,43 @@ namespace SqlModels.DTOModels
         
     }
     //產品詳細Json
+
+    public class RequestProducDetailsDTO {
+
+        //public  List<ProdductIntroductDTO> IntroductData { get; set; }
+        //public class ProdductIntroductDTO
+        //{
+        //    public string GameDetailsText { get; set; }
+        //}
+
+        public List<ResponseProductSwipperDTO> SwipperData{ get; set; }
+
+
+        public class ResponseProductSwipperDTO
+        {
+            public string SwipperUrl { get; set; }
+        }
+
+        public List<ProductSystemDTO> SystemData { get; set; }
+
+        public class ProductSystemDTO
+        {
+            //系統規格
+            public int? Configure { get; set; }
+            public int SystemType { get; set; }
+            public string Hddspace { get; set; }
+            public string System { get; set; }
+            public string SystemRam { get; set; }
+            public string SystemCpu { get; set; }
+            public string SystemGpu { get; set; }
+        }
+
+    }
     public class ProdductIntroductDTO
     {
         public string GameDetailsText { get; set; }
     }
 
-    //
-    public class ProductSwipperDTO
-    {
-        public string SwipperUrl { get; set; }
-    }
 
 
     //推薦遊戲區
@@ -55,15 +83,4 @@ namespace SqlModels.DTOModels
 
     }
 
-    public class ProductSystemDTO
-    {
-        //系統規格
-        public int? Configure { get; set; }
-        public int SystemType { get; set; }
-        public string Hddspace { get; set; }
-        public string System { get; set; }
-        public string SystemRam { get; set; }
-        public string SystemCpu { get; set; }
-        public string SystemGpu { get; set; }
-    }
 }

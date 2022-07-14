@@ -38,7 +38,7 @@ namespace SenGame.ApiController
         public async Task<IActionResult> ProductSwipper(int id)
         {
             var result = await _Shop.ProductSwipper(id);
-            return Ok(result);
+            return Ok(result.SwipperData);
         }
 
         [HttpGet]
@@ -52,7 +52,7 @@ namespace SenGame.ApiController
         public async Task<IActionResult> ProductSystem(int id)
         {
             var result = await _Shop.ProductSystem(id);
-            return Ok(result);
+            return Ok(result.SwipperData);
         }
 
         [HttpGet]

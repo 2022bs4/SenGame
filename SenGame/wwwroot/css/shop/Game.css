@@ -427,6 +427,36 @@ body {
     }
 }
 
+.Tag-Filter ul {
+    position: relative;
+    background: -webkit-gradient(linear, left top, right top, from(#0c273c), to(#475e6e));
+    background: linear-gradient(to right, #0c273c, #475e6e);
+}
+
+    .Tag-Filter ul a {
+        background: transparent;
+        border: transparent;
+        color: #fff;
+    }
+
+    .Tag-Filter ul .Game-Type {
+        position: absolute;
+        z-index: 2;
+        left: 0;
+        right: 0;
+        -webkit-transform: scale(0) translateX(100%);
+        transform: scale(0) translateX(100%);
+        -webkit-transition: .5s;
+        transition: .5s;
+    }
+
+    .Tag-Filter ul .Type-List:hover > .Game-Type {
+        -webkit-transform: scale(1) translateX(0);
+        transform: scale(1) translateX(0);
+        -webkit-transition: .5s;
+        transition: .5s;
+    }
+
 .swiper {
     width: 100%;
     padding-top: 50px;
@@ -499,4 +529,7 @@ img {
 ul {
     list-style: none;
 }
-/*# sourceMappingURL=Game.css.map */
+.carousel-control-prev,.carousel-control-next {
+    background:0 0;
+    border:0px;
+}
