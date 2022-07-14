@@ -49,27 +49,27 @@ namespace SenGame.Controllers
 
           TempData["actiontype"] = "friend";
 
-            var groupname =  _service.GetGroup(id);
+            //var groupname =  _service.GetGroup(id);
             var allfriend = _service.GetFriend(id);
-            var result = new FriendViewModel()
-            {
-                Groups = groupname.Select(x=>new FriendViewModel.Group
-                {
-                    GroupName = x.GroupName,
-                    Friends = allfriend.Select(y=>new FriendViewModel.Friend
-                    {
-                        Name = y.UserName,
-                        Photo = y.UserPicture,
-                        Id = y.UserId,
-                    }).ToList()
+            //var result = new FriendViewModel()
+            //{
+            //    Groups = groupname.Select(x=>new FriendViewModel.Group
+            //    {
+            //        GroupName = x.GroupName,
+            //        Friends = groupname.Select(y=>new FriendViewModel.Friend
+            //        {
+            //            Name = y.UserName,
+            //            //Photo = y.UserPicture,
+            //            //Id = y.UserId,
+            //        }).ToList()
                
-                }).ToList(),
+            //    }).ToList(),
                 
                 
 
-            };
+            //};
 
-            return View(result);
+            return View();
         }
         [HttpPost]
         public IActionResult Chat()
