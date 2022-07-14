@@ -1,0 +1,26 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "CloudinaryResult";
+
+    string referer = Context.Request.Headers["referer"].ToString();
+
+}
+
+<h1>Cloudinary檔案上傳結果:</h1>
+
+<p>@ViewData["UploadUrl"]</p>
+<hr />
+<p>@ViewData["UploadPublicId"]</p>
+<hr />
+
+<p>@ViewData["UploadFormat"]</p>
+<hr />
+<p>@ViewData["UploadByte"]</p>
+<hr />
+
+<p>JsonPatchDocument:</p>
+<p>@ViewData["FullInfo"]</p>
+
+<a href="@referer" class="btn btn-danger">回到上一頁</a>

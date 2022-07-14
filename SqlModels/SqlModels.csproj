@@ -9,6 +9,7 @@
     <Compile Remove="Migrations\20220702145102_t1.Designer.cs" />
   </ItemGroup>
 	<ItemGroup>
+		<PackageReference Include="CloudinaryDotNet" Version="1.17.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.16" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.17" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.17" />
