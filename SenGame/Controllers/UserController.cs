@@ -44,36 +44,36 @@ namespace SenGame.Controllers
             //_service.MyGameList(UserId)=>gamelist
             var uncategorizedGame = _service.UncategorizedGame(UserId).gamelist;
             var myfavouritegame = _service.MyFavouritrGame(UserId).myfavourite;
-            
+
             var result = new GameLibraryViewModel()
             {
-              
+
                 GameList = uncategorizedGame.Select(item => new GameLibraryViewModel.GameData
                 {
-                       GameName = item.GameName,
-                       MediaUrl = item.MediaUrl,
+                    GameName = item.GameName,
+                    MediaUrl = item.MediaUrl,
                 }).ToList(),
-                MyFavourite = myfavouritegame.Select(item=>new GameLibraryViewModel.GameData
+                MyFavourite = myfavouritegame.Select(item => new GameLibraryViewModel.GameData
                 {
                     GameName = item.GameName,
                     MediaUrl = item.MediaUrl,
 
                 }).ToList()
-            //UserModel LoginUser = await _userManager.GetUserAsync(HttpContext.User);
-            //string UserId = LoginUser.Id;
-            //var gamelist = _service.MyGameList(UserId);
-            //var result = new GameLibraryViewModel()
-            //{
-            //    GameList = gamelist.Select(item => new GameLibraryViewModel.GameData
-            //    {
-            //        GameName = item.GameName,
-            //        MediaUrl = item.MediaUrl,
-            //    }).ToList()
+                //UserModel LoginUser = await _userManager.GetUserAsync(HttpContext.User);
+                //string UserId = LoginUser.Id;
+                //var gamelist = _service.MyGameList(UserId);
+                //var result = new GameLibraryViewModel()
+                //{
+                //    GameList = gamelist.Select(item => new GameLibraryViewModel.GameData
+                //    {
+                //        GameName = item.GameName,
+                //        MediaUrl = item.MediaUrl,
+                //    }).ToList()
 
-
+            };
             //};
 
-            return View();
+            return View(result);
         }
 
         [HttpGet]
@@ -134,10 +134,6 @@ namespace SenGame.Controllers
                 return Content("必須提供privacy參數!");
             }
 
-            };
-            
-
-            return View(result);
             ViewData["Privacy"] = privacy;
 
             return View();
