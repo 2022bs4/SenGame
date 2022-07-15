@@ -19,14 +19,12 @@ namespace Services.ChatService
 
         }
         public List<FriendGroupDTO> GetGroup(string id)
-        {    //取得當前使用者ID        
-            var TheUser = Repository.FindBy<UserModel>(x => x.Id == id).FirstOrDefault();
-
-            //取得使用者所擁有的群組
-            var groups = Repository.GetAll<Usergroup>().Where(x => x.UserId == TheUser.Id);
+        {      
+            
+            //取得使用者所擁有的群組         
+            var groups = Repository.GetAll<Usergroup>().Where(x => x.UserId == id);
 
             var name = Repository.GetAll<FriendGroup>();
-
             var data = name.Join(groups, s => s.FriendGroupId, x => x.FriendGroupId, (s, x) => new { s.GroupName }).Distinct();
 
             var result = new List<FriendGroupDTO>();

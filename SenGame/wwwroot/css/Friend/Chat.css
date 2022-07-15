@@ -34,7 +34,16 @@ body::-webkit-scrollbar-thumb {
     .chat-content .chat-right {
         display: none;
     }
-
+.message-content{
+    position:relative;
+    height:80vh;
+}
+.send {
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: 0;
+}
 .content {
     background-color: #1e262c;
     color: #fff;

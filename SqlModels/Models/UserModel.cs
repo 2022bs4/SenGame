@@ -11,9 +11,9 @@ namespace SqlModels.Models
     {
         public UserModel()
         {
+
             ArticleLikes = new HashSet<ArticleLike>();
-            Articles = new HashSet<Article>();
-            Chats = new HashSet<Chat>();
+            Articles = new HashSet<Article>();         
             CustomerServices = new HashSet<CustomerService>();
             FriendLists = new HashSet<FriendList>();
             Invites = new HashSet<Invite>();
@@ -60,7 +60,6 @@ namespace SqlModels.Models
         public virtual UserCountry UserCountry { get; set; }
         public virtual ICollection<ArticleLike> ArticleLikes { get; set; }
         public virtual ICollection<Article> Articles { get; set; }
-        public virtual ICollection<Chat> Chats { get; set; }
         public virtual ICollection<CustomerService> CustomerServices { get; set; }
         public virtual ICollection<FriendList> FriendLists { get; set; }
         public virtual ICollection<Invite> Invites { get; set; }

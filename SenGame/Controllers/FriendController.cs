@@ -49,28 +49,28 @@ namespace SenGame.Controllers
 
 
             var groupname =  _service.GetGroup(id);
-            var allfriend = _service.GetFriend(id);
-            var result = new FriendViewModel()
-            {
-                Groups = groupname.Select(x => new FriendViewModel.Group
-                {
-                    GroupName = x.GroupName,
-                    Friends =  allfriend.Select(y => new FriendViewModel.Friend
-                    {
-                        GroupName = y.GroupName,
-                        Name = y.UserName,
-                        Photo = y.UserPicture,
-                        Id = y.UserId,
-                    }).ToList()
+            //var allfriend = _service.GetFriend(id);
+            //var result = new FriendViewModel()
+            //{
+            //    Groups = groupname.Select(x => new FriendViewModel.Group
+            //    {
+            //        GroupName = x.GroupName,
+            //        Friends =  allfriend.Select(y => new FriendViewModel.Friend
+            //        {
+            //            GroupName = y.GroupName,
+            //            Name = y.UserName,
+            //            Photo = y.UserPicture,
+            //            Id = y.UserId,
+            //        }).ToList()
 
-                }).ToList(),
-            };
+            //    }).ToList(),
+            //};
 
 
                 TempData["actiontype"] = "friend";
 
 
-            return View(result);
+            return View();
         }
         [HttpPost]
         public IActionResult Chat()
@@ -97,6 +97,30 @@ namespace SenGame.Controllers
             }
       
             
+            return Ok();
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateChatContext([FromBody]FriendViewModel context)
+        {
+            UserModel LoginUser = await _userManager.GetUserAsync(HttpContext.User);
+            var userid = LoginUser.Id;
+            
+            FriendChat fc = new FriendChat();
+            fc.ChatContent = context.ChatContent;
+            fc.UserId = context.UserId;
+            var chattime = DateTime.Now;
+            fc.ChatTime = chattime;
+            _service.Create<FriendChat>(fc);
+
+            Chat chat = new Chat();
+            chat.UserId = userid;
+            chat.ChatId = fc.ChatId;
+            _service.Create<Chat>(chat);
+            
+            
+
+
+
             return Ok();
         }
 

@@ -28,6 +28,7 @@ namespace SqlModels.ViewModels
         public string[] Ids { get; set; }
         public string[] GroupNames { get; set; }
         public string UserId { get; set; }
+        public string ChatContent { get; set; }
     }
 
 

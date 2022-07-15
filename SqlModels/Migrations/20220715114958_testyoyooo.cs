@@ -2,7 +2,7 @@
 
 namespace SqlModels.Migrations
 {
-    public partial class test : Migration
+    public partial class testyoyooo : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

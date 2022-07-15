@@ -18,8 +18,6 @@ let frienddetails = {}
 //用來限制聊天框一次只能產出一個
 let bool = true;
 
-//代入好友名單(count)
-let count = document.querySelector(".count");
 //好友名單
 let ul = document.querySelector(".friend-ul")
 //用來做拖移改變好友列表寬度
@@ -66,6 +64,9 @@ allgrouop.forEach(item => {
         $(list).toggle()
     }
 })
+
+
+
 //產出好友清單
 function getfriend(img, name, line) {
     let clone = friendcard.content.cloneNode(true)
@@ -99,8 +100,9 @@ li.forEach((item, index) => {
 })
 
 //產出對話框
-function getcard(src, text) {
+function getcard(id,src, text) {
     let clone = message.content.cloneNode(true)
+    clone.querySelector("input").value = id
     clone.querySelector("img").src = src
     clone.querySelector("p").innerText = text
     return clone
@@ -138,29 +140,39 @@ function chooseFriend() {
     var li2 = document.querySelectorAll(".friend-li2")
     li2.forEach(item => {
         item.onclick = function () {
-            
-            var tagname = item.querySelector(".friend-name2")
-            var userid = item.querySelector("#userid")
-           
-            groupnameArray.push(groupname.value)
-            useridArray.push(userid.value)
-            console.log(groupnameArray)
-            console.log(useridArray)
-            
-            addblock.append(tag(tagname))
-            item.style.display = 'none'
-            var img = item.querySelector(".friend-img2").src
-            var name = item.querySelector(".friend-name2").innerHTML
-            var line = item.querySelector(".friend-line2").innerHTML
-            frienddetails["img"] = img
-            frienddetails["name"] = name
-            frienddetails["line"] = line
-            friendarray.push(frienddetails)
-            frienddetails = {}
+            if (groupname.value != '') {
+                var tagname = item.querySelector(".friend-name2")
+                var userid = item.querySelector("#userid")
+
+                groupnameArray.push(groupname.value)
+                useridArray.push(userid.value)
+                console.log(groupnameArray)
+                console.log(useridArray)
+
+                addblock.append(tag(tagname))
+                item.style.display = 'none'
+                var img = item.querySelector(".friend-img2").src
+                var name = item.querySelector(".friend-name2").innerHTML
+                var line = item.querySelector(".friend-line2").innerHTML
+                frienddetails["img"] = img
+                frienddetails["name"] = name
+                frienddetails["line"] = line
+                friendarray.push(frienddetails)
+                frienddetails = {}
+            }
+            else {
+               
+                groupname.style.border = '1px solid #FF0000'
+                groupname.style.color = '#FF0000'
+                groupname.onclick = function () {
+                 groupnameReset()
+                }
+            }
+
         }
     })
 }
-function SendData(data) {
+function SendGroupData(data) {
     fetch("/Friend/CreateGroup", {
         method: 'POST',
         body: JSON.stringify(data),
@@ -172,37 +184,34 @@ function SendData(data) {
         .then(res => { return res.json() })
         .then(result => console.log(result))
 }
-function SendDataAjax(data) {
-    $.post("/Friend/CreateGroup", data, function (res) { console.log(res) }, "json")
+function SendChatData(data) {
+    fetch("/Friend/CreateChatContext", {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+            'content-type': 'application/json'
+        }
+
+    })
+        .then(res => { return res.json() })
+        .then(result => console.log(result))
 }
 
 //桌機能用的功能
 function computer() {
     AllFriends.forEach((item, index) => {
-        //count.innerText = index + 1
         let choose = document.querySelector(".choose-friend")
-        //modal加入好友
-        //var img = item.querySelector(".friend-img").src
-        //var name = item.querySelector(".friend-name").innerHTML
-        //var line = item.querySelector(".friend-line").innerHTML
-        //choose.append(getfriend2(img, name, line))
         chooseFriend()
         check.onclick = function () {
             var data = {
                 GroupNames: groupnameArray,
-                Ids: useridArray,
-                
+                Ids: useridArray,               
             }
-            let k = 0;
-            if (groupname.value == '') {
-                groupname.style.border = '1px solid #FF0000'
-                groupname.value = "請輸入群組名稱"
-                groupname.style.color = '#FF0000'
-                groupname.onclick = function () {
-                    groupnameReset()
-                }
-            }
-            else {
+
+
+
+            
+
                 let span = document.createElement("span")
                 span.setAttribute("class", "friends-span w-100 pl-2 py-2 d-block user-select-none")
                 let group = document.createElement("div")
@@ -211,9 +220,9 @@ function computer() {
                 let div = document.createElement("div")
                 div.setAttribute("class", `friend-ul w-100`)
                 friendarray.forEach(item => {
-                    k++
+ 
                     //自定義群組名稱
-                    span.innerText = `${groupname.value}(${k})`
+                    span.innerText = `${groupname.value}`
                     div.append(getfriend(item.img, item.name, item.line))
                     group.append(div)
            
@@ -224,15 +233,14 @@ function computer() {
                 addblock.innerHTML = ' '
                 choose.innerHTML = ' '
                 groupname.value = ' '
-                SendData(data)
-                //SendDataAjax(data)
+                SendGroupData(data)
                 console.log(data)
                 //AllFriends.forEach(item => {
                 //    choose.append(getfriend2(item.img, item.name, item.line))
                 //    chooseFriend()
                 //})
 
-            }
+            
         }
 
         //關閉modal的話，復原全部好友
@@ -265,9 +273,11 @@ function computer() {
                 //如果將目標拖移至右側，則展開與該目標的對話畫面
                 if (e2.clientX > 250 && bool == true) {
                     bool = false
+ 
+                    let id = item.querySelector("#friendid").value
                     let img = item.querySelector("img").src
                     let name = item.querySelector(".friend-name").innerText
-                    right.append(getcard(img, name))
+                    right.append(getcard(id,img, name))
 
                     let show = document.querySelector(".show")
                     //點擊X後關閉聊天視窗
@@ -279,11 +289,18 @@ function computer() {
                     //按下enter鍵後送出對話
                     $("#text").keydown(function (e) {
                         if (e.which == 13) {
-                            var time = new Date()
                             let text = document.getElementById("text")
+                            var time = new Date()
                             let p = document.createElement("p")
                             let timep = document.createElement("p")
                             timep.setAttribute("class", "pt-3 mb-0")
+
+                            var chatdata = {
+                                ChatContent: text.value,
+                                UserId: fid.value,
+                            }
+                       
+
 
                             timep.innerText = `${time.getHours().toString().padStart(2, "0")}:${time.getMinutes().toString().padStart(2, "0")}`
                             let div = document.createElement("div")
@@ -293,6 +310,7 @@ function computer() {
                             text.value = ' '
                             div.append(p, timep)
                             show.append(div)
+                            SendChatData(chatdata)
                         }
                     })
                     //上傳圖片
@@ -315,7 +333,6 @@ function computer() {
 //手機能用的功能
 function phone() {
     AllFriends.forEach(item => {
-        //count.innerText = i + 1
         i++
         ul.append(getfriend(item.img, item.name, item.line))
 
@@ -326,7 +343,7 @@ function phone() {
             LRctrl()
             var img = item.querySelector("img").src
             var name = item.querySelector(".friend-name").innerText
-            right.append(getcard(img, name))
+            right.append(getcard(id,img, name))
             let title = document.querySelector(".message-title")
             title.style.width = '100%'
             let show = document.querySelector(".show")
