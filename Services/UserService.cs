@@ -82,6 +82,17 @@ namespace Services
             };
             return gamedetail;
         }
+
+        public List<UserDTO> PrivacyList(string UserId)
+        {
+            throw new NotImplementedException();
+        }
+
+        //public List<UserDTO> PrivacyList(string UserId)
+        //{
+        //    var PrivacyPersonalFile = Repository.GetAll<UserPrivacy>().Where(p => p.PrivacyPersonalFile == UserPrivacyId);
+        //    return privacylist;
+        //}
     }
 }
         

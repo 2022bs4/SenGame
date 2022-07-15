@@ -1,5 +1,5 @@
 ﻿ @section Css{
-    <link rel="stylesheet" href="~/css/Friend/Member.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/User/User.css" asp-append-version="true"/>
  }
 
         <div class="mb-3 mt-3 ml-auto mt-3" id="card-Edit_User">
@@ -13,22 +13,22 @@
                             <!-- 整個編輯清單 -->
                             <div class="Edit-left-box">
                                 <!-- 返回個人檔案 -->
-                                <a href="/friend/User__information" class="btn btn-primary btn-block">返回個人檔案</a>
+                                <a href="/User/User_information" class="btn btn-primary btn-block">返回個人檔案</a>
                                 <!-- 編輯清單 -->
                                 <div class="Edit-list mt-4 align-middle">
                                     <!-- 一般 (個人圖示+個人檔案背景+迷你個人檔案+主題 -->
-                                    <a href="/friend/Edit1_User" class="list-group-item border-0"><span
+                                    <a href="/User/E1_User" class="list-group-item border-0"><span
                                             class="fa fa-inbox mr-2"></span><b>一般</b></a>
-                                    <a href="/friend/Edit2_UserPhoto" class="list-group-item border-0"><span
+                                    <a href="/User/E2_UserPhoto" class="list-group-item border-0"><span
                                             class="fa fa-paper-plane mr-2"></span>個人圖示</a>
 
-                                    <a href="/friend/Edit3_UserTopic" class="list-group-item border-0"><span
+                                    <a href="/User/E3_UserTopic" class="list-group-item border-0"><span
                                             class="fa fa-ticket mr-2"></span>主題</a>
                                 </div>
                                 <!-- 分隔線 -->
                                 <hr class="Edit-divider mt-1 m-b-10">
                                 <div class="list-group mail-list">
-                                    <a href="/friend/Edit4_UserPrivacy" class="list-group-item border-0"><span
+                                    <a href="/User/E4_UserPrivacy" class="list-group-item border-0"><span
                                             class="fa fa-tags mr-2"></span>隱私設定</a>
                                     <!-- <a href="#" class="list-group-item border-0"><span class="fa fa-briefcase f-s-14 mr-2"></span>Work</a> 
                                         <a href="#" class="list-group-item border-0"><span class="fa fa-sellsy f-s-14 mr-2"></span>Private</a>
@@ -76,8 +76,6 @@
             </div>
         </div>
 
-<!-- sweetalert -->
- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- 在當前頁面實現預覽效果 -->
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
     <script>
@@ -104,6 +102,8 @@
         
     </script>
 
+<!-- sweetalert -->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
  @section Scripts{
-     <script src="~/js/Friend/UserBtn.js"></script>
+     <script src="~/js/User/UserBtn.js"></script>
  }

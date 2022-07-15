@@ -109,5 +109,11 @@ function color(str) {
 
 //編輯畫面4 改變隱私狀態
 function ChangePrivacie() {
-    Swal.fire('上傳成功!', '', 'success')
+    Swal.fire({
+        position: 'top',
+        icon: 'success',
+        title: '已送出好友請求',
+        showConfirmButton: false,
+        timer: 1500
+    })
 }
