@@ -1,0 +1,44 @@
+﻿@model GameLibraryViewModel
+
+<div>
+    <p>
+        <button class="btn shadow-none" type="button" data-toggle="collapse" data-target="#myfavourite"
+                aria-expanded="false" aria-controls="collapseExample">
+            我的最愛
+        </button>
+    </p>
+    <div class="collapse" id="myfavourite">
+        <div class="mygame-list-detail">
+            @foreach (var item in Model.MyFavourite)
+            {
+                <li class="d-flex">
+                    <img src="@item.MediaUrl"
+                     alt="@item.GameName">
+                    <p>@item.GameName</p>
+                </li>
+
+            }
+        </div>
+    </div>
+</div>
+<div>
+    <p>
+        <button class="btn shadow-none" type="button" data-toggle="collapse" data-target="#collapseExample"
+                aria-expanded="false" aria-controls="collapseExample">
+            未分類
+        </button>
+    </p>
+    <div class="collapse" id="collapseExample">
+        <div class="mygame-list-detail">
+          @foreach (var item in Model.GameList)
+            {
+                <li class="d-flex">
+                    <img src="@item.MediaUrl"
+                     alt="@item.GameName">
+                    <p>@item.GameName</p>
+                </li>
+
+            }
+        </div>
+    </div>
+</div>

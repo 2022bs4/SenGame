@@ -4,89 +4,14 @@
     <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css">
     <link rel="stylesheet" href="~/css/User/GameLibrary.css" asp-append-version="true"/>
 }
-<div class="mygame d-flex">
+    <div class="mygame d-flex">
         <div class="mygame-list col-md-2">
-            <div>
-                <p>
-                    <button class="btn shadow-none" type="button" data-toggle="collapse" data-target="#myfavourite"
-                        aria-expanded="false" aria-controls="collapseExample">
-                        我的最愛
-                    </button>
-                </p>
-                <div class="collapse" id="myfavourite">
-                    <div class="mygame-list-detail">
-                        @foreach(var item in Model.GameList)
-                        {
-                            <li class="d-flex">
-                            <img src="@item.MediaUrl"
-                             alt="@item.GameName">
-                            <p>@item.GameName</p>
-                        </li>
-
-                        }
-                    </div>
-                </div>
-            </div>
-            <div>
-                <p>
-                    <button class="btn shadow-none" type="button" data-toggle="collapse" data-target="#collapseExample"
-                        aria-expanded="false" aria-controls="collapseExample">
-                        未分類
-                    </button>
-                </p>
-                <div class="collapse" id="collapseExample">
-                    <div class="mygame-list-detail">
-                        <li class="d-flex">
-                            <img src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/635260/c549e09a2279896edfdb37c4f7b74766c1612c25.jpg"
-                             alt="">
-                            <p>CarRacing</p>
-                        </li>
-                    </div>
-                </div>
-            </div>
+            <partial name="_GameListPartial" />
 
         </div>
         <div class="game col-md-10 ">
-            <div class="d-flex ">
-                <div class="game-img col-xs-8 col-8 col-md-8 col-xl-8 p-0">
-                    <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/635260/ss_d0f28c80f1e7e98111dbbef0210f3d4219b44fe3.600x338.jpg?t=1656514798"
-                     alt="">
-                </div>
-                <div class="game-details d-flex col-xs-4 col-md-4 col-xl-4">
-                    <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/635260/header.jpg?t=1656514798" alt="">
-                    <p>
-                        CarX Drift Racing Online is your chance to immerse yourself in the real world of drifting. Get
-                        together with friends, tune your car and burn some tires!
-                    </p>
-                    <div class="d-flex game-develpoer">
-                        <div class="col-md-4 p-0">
-                            <p>開發人員:</p>
-                        </div>
-                        <div class="col-md-8">
-                            <p>Technologies, LLC</p>
-                        </div>
-                    </div>
-                    <div class="d-flex  game-develpoer ">
-                        <div class="col-md-4 p-0">
-                            <p>開發商:</p>
-                        </div>
-                        <div class="col-md-8">
-                            <p>CarX Technologies, LLC</p>
-                        </div>
-                    </div>
-                    <div class="d-flex game-releaseTime">
-                        <div class="col-md-4 p-0">
-                            <p>發行日期:</p>
-                        </div>
-                        <div class="col-md-8">
-                            <p>2017 年 11 月 18 日</p>
-                        </div>
-                    </div>
-                    <div class="game-button d-flex">
-                        <button class="button "><p>安裝SenGame<ion-icon name="download-outline"></ion-icon></p></button>
-                        <button class=" zxc"><a href="steam://store">執行遊戲</a></button>
-                    </div>
-                </div>
+            <div class="d-flex gamedetail">
+                <partial name="_GameDetailPartial" />
             </div>
             <div class="col-12 col-md-12 col-xl-12 p-0">
                 <div class="swiper mySwiper">
@@ -101,10 +26,51 @@
                         <div class="swiper-slide"><img src="https://picsum.photos/300/200/?random=10"></div>
                         <div class="swiper-slide"><img src="https://picsum.photos/300/200/?random=10"></div>
                     </div>
-                    <div class="swiper-pagination"></div>
+                    <div class="swiper-pagination">
+                    </div>
                 </div>
-             <div>
+            </div>
+         </div>
+    </div>
+    <template id="getgamecard">
+        <div class="game-img col-xs-8 col-8 col-md-8 col-xl-8 p-0">
+            <img src=""
+             alt="">
         </div>
+        <div class="game-details d-flex col-xs-4 col-md-4 col-xl-4">
+            <img src="" alt="">
+            <p></p>
+                           
+            <div class="d-flex game-develpoer">
+                <div class="col-md-4 p-0">
+                    <p>開發人員:</p>
+                </div>
+                <div class="col-md-8">
+                    <p></p>
+                </div>
+            </div>
+            <div class="d-flex  game-develpoer ">
+                <div class="col-md-4 p-0">
+                    <p>開發商:</p>
+                </div>
+                <div class="col-md-8">
+                    <p></p>
+                </div>
+            </div>
+            <div class="d-flex game-releaseTime">
+                <div class="col-md-4 p-0">
+                    <p>發行日期:</p>
+                </div>
+                <div class="col-md-8">
+                    <p></p>
+                </div>
+            </div>
+            <div class="game-button d-flex">
+                <button class="button "><p>安裝SenGame<ion-icon name="download-outline"></ion-icon></p></button>
+                <button class=" zxc"><a href="steam://store">執行遊戲</a></button>
+            </div>
+        </div>
+    </template>
 
 @section Scripts{
     <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"> </script>

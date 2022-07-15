@@ -1,0 +1,52 @@
+﻿@model GameLibraryViewModel
+
+@if(Model.GetGameDetails!= null)
+{
+    @foreach(var item in Model.GetGameDetails)
+    {
+        <div class="game-img col-xs-8 col-8 col-md-8 col-xl-8 p-0">
+            <img src="@item.MediaUrl"
+             alt="">
+        </div>
+        <div class="game-details d-flex col-xs-4 col-md-4 col-xl-4">
+            <img src="@item.MediaUrl" alt="">
+            <p>@item.GameIntroduction</p>
+                           
+            <div class="d-flex game-develpoer">
+                <div class="col-md-4 p-0">
+                    <p>開發人員:</p>
+                </div>
+                <div class="col-md-8">
+                    <p>@item.Marker</p>
+                </div>
+            </div>
+            <div class="d-flex  game-develpoer ">
+                <div class="col-md-4 p-0">
+                    <p>開發商:</p>
+                </div>
+                <div class="col-md-8">
+                    <p>@item.Developer</p>
+                </div>
+            </div>
+            <div class="d-flex game-releaseTime">
+                <div class="col-md-4 p-0">
+                    <p>發行日期:</p>
+                </div>
+                <div class="col-md-8">
+                    <p>@item.ReleaseTime</p>
+                </div>
+            </div>
+            <div class="game-button d-flex">
+                <button class="button "><p>安裝SenGame<ion-icon name="download-outline"></ion-icon></p></button>
+                <button class=" zxc"><a href="steam://store">執行遊戲</a></button>
+            </div>
+        </div>
+    }
+}
+else{
+    
+    }
+}
+
+    
+

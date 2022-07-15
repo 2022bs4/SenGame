@@ -20,6 +20,9 @@ main .mygame {
 main .mygame-list {
     border-right: 2px solid;
 }
+main .mygame-list li {
+   margin:10px 0;
+}
 
 main .mygame-list-detail li img {
     width: 40%;

@@ -9,6 +9,8 @@ namespace SqlModels.ViewModels
     public class GameLibraryViewModel
     {
         public List<GameData> GameList { get; set; }
+        public List<GameData> MyFavourite { get; set; }
+        public List<GameDetail> GetGameDetails { get; set; }
 
         public class GameData
         {
@@ -16,6 +18,26 @@ namespace SqlModels.ViewModels
             public string GameName { get; set; }
             public string GameIntroduction { get; set; }
             public string MediaUrl { get; set; }
+        }
+        //接收字串
+        public class Game_Name
+        {
+            public string GameName { get; set; }
+        }
+        public class GameDetail
+        {
+            public string GameName { get; set; }
+            public string GameIntroduction { get; set; }
+            public DateTime ReleaseTime { get; set; }
+            public string Developer { get; set; }
+            public string Marker { get; set; }
+            public string MediaUrl { get; set; }
+            public List<GameSwiper> GameSwipers { get; set; }
+
+            public class GameSwiper
+            {
+                public string MediaUrl { get; set; }
+            }
         }
     }
 }
