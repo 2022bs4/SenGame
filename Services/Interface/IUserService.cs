@@ -9,7 +9,7 @@ namespace Services.Interface
 {
     public interface IUserService : IBaseService
     {
-        public List<UserDTO> MyGameList(string UserId);
+        //public List<UserDTO> MyGameList(string UserId);
         public List<UserDTO> PrivacyList(string UserId);
         //未分類遊戲
         public UserDTO UncategorizedGame(string UserId);

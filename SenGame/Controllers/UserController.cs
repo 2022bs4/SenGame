@@ -44,21 +44,22 @@ namespace SenGame.Controllers
             //_service.MyGameList(UserId)=>gamelist
             var uncategorizedGame = _service.UncategorizedGame(UserId).gamelist;
             var myfavouritegame = _service.MyFavouritrGame(UserId).myfavourite;
-            
+
             var result = new GameLibraryViewModel()
             {
-              
+
                 GameList = uncategorizedGame.Select(item => new GameLibraryViewModel.GameData
                 {
-                       GameName = item.GameName,
-                       MediaUrl = item.MediaUrl,
+                    GameName = item.GameName,
+                    MediaUrl = item.MediaUrl,
                 }).ToList(),
-                MyFavourite = myfavouritegame.Select(item=>new GameLibraryViewModel.GameData
+                MyFavourite = myfavouritegame.Select(item => new GameLibraryViewModel.GameData
                 {
                     GameName = item.GameName,
                     MediaUrl = item.MediaUrl,
 
                 }).ToList()
+            };
             //UserModel LoginUser = await _userManager.GetUserAsync(HttpContext.User);
             //string UserId = LoginUser.Id;
             //var gamelist = _service.MyGameList(UserId);
@@ -73,7 +74,7 @@ namespace SenGame.Controllers
 
             //};
 
-            return View();
+            return View(result);
         }
 
         [HttpGet]
@@ -106,9 +107,11 @@ namespace SenGame.Controllers
             var model = await _context.UserPrivacies.ToListAsync();
             return View(model);
         }
+
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-
         public IActionResult E4_UserPrivacy(SqlModels.ViewModels.UserViewModels.PrivacieLibraryViewModel privacyVM)
         {
             TempData["actiontype"] = "privacy";
@@ -134,10 +137,10 @@ namespace SenGame.Controllers
                 return Content("必須提供privacy參數!");
             }
 
-            };
+           
             
 
-            return View(result);
+            
             ViewData["Privacy"] = privacy;
 
             return View();

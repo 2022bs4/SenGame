@@ -7,69 +7,64 @@
     <div class="mygame d-flex">
         <div class="mygame-list col-md-2">
             <partial name="_GameListPartial" />
-
         </div>
+
+
         <div class="game col-md-10 ">
-            <div class="d-flex gamedetail">
-                <partial name="_GameDetailPartial" />
+            
+          
+        </div>
+    </div>
+
+    @*模板*@
+    <template id="getgamecard">
+        <div class="d-flex gamedetail">
+                <div class="game-img col-xs-8 col-8 col-md-8 col-xl-8 p-0">
+                    <img src=""alt=""  >
+                </div>
             </div>
+            <div class="game-details d-flex col-xs-4 col-md-4 col-xl-4">
+                <img src="" alt="">
+                <p class="gameIntroduction"></p>
+                           
+                <div class="d-flex game-maker">
+                    <div class="col-md-4 p-0">
+                        <p>開發人員:</p>
+                    </div>
+                    <div class="col-md-8">
+                        <p></p>
+                    </div>
+                </div>
+                <div class="d-flex  game-develpoer ">
+                    <div class="col-md-4 p-0">
+                        <p>開發商:</p>
+                    </div>
+                    <div class="col-md-8">
+                        <p></p>
+                    </div>
+                </div>
+                <div class="d-flex game-releaseTime">
+                    <div class="col-md-4 p-0">
+                        <p>發行日期:</p>
+                    </div>
+                    <div class="col-md-8">
+                        <p></p>
+                    </div>
+                </div>
+                <div class="game-button d-flex">
+                    <button class="button "><p>安裝SenGame<ion-icon name="download-outline"></ion-icon></p></button>
+                    <button class=" zxc"><a href="steam://store">執行遊戲</a></button>
+                </div>
+            </div>   
             <div class="col-12 col-md-12 col-xl-12 p-0">
                 <div class="swiper mySwiper">
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide"><img src="https://picsum.photos/300/200/?random=10"></div>
-                        <div class="swiper-slide"><img src="https://picsum.photos/300/200/?random=10"></div>
-                        <div class="swiper-slide"><img src="https://picsum.photos/300/200/?random=10"></div>
-                        <div class="swiper-slide"><img src="https://picsum.photos/300/200/?random=10"></div>
-                        <div class="swiper-slide"><img src="https://picsum.photos/300/200/?random=10"></div>
-                        <div class="swiper-slide"><img src="https://picsum.photos/300/200/?random=10"></div>
-                        <div class="swiper-slide"><img src="https://picsum.photos/300/200/?random=10"></div>
-                        <div class="swiper-slide"><img src="https://picsum.photos/300/200/?random=10"></div>
-                        <div class="swiper-slide"><img src="https://picsum.photos/300/200/?random=10"></div>
+                        
                     </div>
                     <div class="swiper-pagination">
                     </div>
                 </div>
-            </div>
-         </div>
-    </div>
-    <template id="getgamecard">
-        <div class="game-img col-xs-8 col-8 col-md-8 col-xl-8 p-0">
-            <img src=""
-             alt="">
-        </div>
-        <div class="game-details d-flex col-xs-4 col-md-4 col-xl-4">
-            <img src="" alt="">
-            <p></p>
-                           
-            <div class="d-flex game-develpoer">
-                <div class="col-md-4 p-0">
-                    <p>開發人員:</p>
-                </div>
-                <div class="col-md-8">
-                    <p></p>
-                </div>
-            </div>
-            <div class="d-flex  game-develpoer ">
-                <div class="col-md-4 p-0">
-                    <p>開發商:</p>
-                </div>
-                <div class="col-md-8">
-                    <p></p>
-                </div>
-            </div>
-            <div class="d-flex game-releaseTime">
-                <div class="col-md-4 p-0">
-                    <p>發行日期:</p>
-                </div>
-                <div class="col-md-8">
-                    <p></p>
-                </div>
-            </div>
-            <div class="game-button d-flex">
-                <button class="button "><p>安裝SenGame<ion-icon name="download-outline"></ion-icon></p></button>
-                <button class=" zxc"><a href="steam://store">執行遊戲</a></button>
-            </div>
-        </div>
+            </div>   
     </template>
 
 @section Scripts{

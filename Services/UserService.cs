@@ -1,4 +1,5 @@
-﻿using Services.Interface;
+﻿using Microsoft.AspNetCore.Mvc;
+using Services.Interface;
 using SqlModels.DTOModels;
 using SqlModels.Models;
 using SqlModels.Repository.Interface;
@@ -64,6 +65,7 @@ namespace Services
             return gamelist;
         }
 
+        [HttpPost]
         public UserDTO MyGameDetail(string GameName)
         {
             var game = Repository.GetAll<Game>().Where(g => g.GameName == GameName);
