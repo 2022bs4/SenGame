@@ -59,19 +59,18 @@ namespace SenGame.Controllers
                     MediaUrl = item.MediaUrl,
 
                 }).ToList()
+                //UserModel LoginUser = await _userManager.GetUserAsync(HttpContext.User);
+                //string UserId = LoginUser.Id;
+                //var gamelist = _service.MyGameList(UserId);
+                //var result = new GameLibraryViewModel()
+                //{
+                //    GameList = gamelist.Select(item => new GameLibraryViewModel.GameData
+                //    {
+                //        GameName = item.GameName,
+                //        MediaUrl = item.MediaUrl,
+                //    }).ToList()
+
             };
-            //UserModel LoginUser = await _userManager.GetUserAsync(HttpContext.User);
-            //string UserId = LoginUser.Id;
-            //var gamelist = _service.MyGameList(UserId);
-            //var result = new GameLibraryViewModel()
-            //{
-            //    GameList = gamelist.Select(item => new GameLibraryViewModel.GameData
-            //    {
-            //        GameName = item.GameName,
-            //        MediaUrl = item.MediaUrl,
-            //    }).ToList()
-
-
             //};
 
             return View(result);
@@ -137,10 +136,6 @@ namespace SenGame.Controllers
                 return Content("必須提供privacy參數!");
             }
 
-           
-            
-
-            
             ViewData["Privacy"] = privacy;
 
             return View();
