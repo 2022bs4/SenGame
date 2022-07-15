@@ -1,4 +1,4 @@
-﻿@*@model FriendViewModel 
+﻿@model FriendViewModel 
 
 
 <div class="modal-content position-relative">
@@ -12,17 +12,19 @@
             <div class="choose-friend mb-3">   
             @foreach(var friend in Model.Groups)
             {
+
                 @foreach(var item in friend.Friends)
                 {
-                 <div class="friend-li2 pl-2 py-3 w-100">
-                    <input id="userid" value="@item.Id" hidden="hidden"/>
-                    <img class="friend-img2 user-select-none"  src="@item.Photo">
-                    <div class="friend-content w-100">
-                    <span class="friend-name2 pl-4 mb-0 user-select-none">@item.Name</span>
-                    <p class="friend-line2 pl-4 mb-0  user-select-none">上線</p>
-                     </div>
-                </div>
-                }
+                    <div class="friend-li2 pl-2 py-3 w-100">
+                        <input id="userid" value="@item.Id" />
+                        <img class="friend-img2 user-select-none"  src="@item.Photo">
+                        <div class="friend-content w-100">
+                         <span class="friend-name2 pl-4 mb-0 user-select-none">@item.Name</span>
+                            <p class="friend-line2 pl-4 mb-0  user-select-none">上線</p>
+                        </div>
+                    </div>
+                    
+                 }
             }
         </div>
         </div>
@@ -30,4 +32,4 @@
             <button class="check d-block col-5">確認</button>
             <button class="cancel d-block col-5">取消</button>
         </div>
-    </div>*@
+    </div>

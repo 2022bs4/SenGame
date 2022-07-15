@@ -9,7 +9,7 @@ namespace SqlModels.ViewModels
 {
     public class FriendViewModel
     {
-
+       
         public List<Group> Groups { get; set; }
         public class Group
         {
@@ -24,7 +24,7 @@ namespace SqlModels.ViewModels
             public string Photo { get; set; }
             public string Id { get; set; }
         }
-        //把資料變成一對一(C)
+        //把資料變成多對多(Create用)
         public string[] Ids { get; set; }
         public string[] GroupNames { get; set; }
 

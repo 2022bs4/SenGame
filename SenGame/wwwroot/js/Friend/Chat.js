@@ -182,10 +182,10 @@ function computer() {
         //count.innerText = index + 1
         let choose = document.querySelector(".choose-friend")
         //modal加入好友
-        var img = item.querySelector(".friend-img").src
-        var name = item.querySelector(".friend-name").innerHTML
-        var line = item.querySelector(".friend-line").innerHTML
-        choose.append(getfriend2(img, name, line))
+        //var img = item.querySelector(".friend-img").src
+        //var name = item.querySelector(".friend-name").innerHTML
+        //var line = item.querySelector(".friend-line").innerHTML
+        //choose.append(getfriend2(img, name, line))
         chooseFriend()
         check.onclick = function () {
             var data = {

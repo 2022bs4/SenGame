@@ -18,7 +18,7 @@ namespace Services.ChatService
         {
 
         }
-       public List<FriendGroupDTO> GetGroup(string id)
+        public List<FriendGroupDTO> GetGroup(string id)
         {    //取得當前使用者ID        
             var TheUser = Repository.FindBy<UserModel>(x => x.Id == id).FirstOrDefault();
 
@@ -30,78 +30,50 @@ namespace Services.ChatService
             var data = name.Join(groups, s => s.FriendGroupId, x => x.FriendGroupId, (s, x) => new { s.GroupName }).Distinct();
 
             var result = new List<FriendGroupDTO>();
-            foreach (var group in data)
+
+            foreach (var friend in data)
             {
                 result.Add(new FriendGroupDTO
                 {
-                    GroupName = group.GroupName,
+                    GroupName = friend.GroupName,
+
                 });
             }
 
-            return result;
 
+            return result;
         }
-        public Dictionary<string,List<FriendGroupDTO>> GetFriend(string id)
+        public List<FriendGroupDTO> GetFriend(string id)
         {
 
             var TheUser = Repository.FindBy<UserModel>(x => x.Id == id).FirstOrDefault();
 
-            var groups = Repository.GetAll<Usergroup>().Where(x => x.UserId == TheUser.Id);
-            var name = groups.Join(Repository.GetAll<FriendGroup>(), s => s.FriendGroupId, x => x.FriendGroupId, (s, x) => new { s.FriendGroupId, x.GroupName, x.UserId });
-            var mmm = name.Join(Repository.GetAll<UserModel>(), s => s.UserId, x => x.Id, (s, x) => new { s.GroupName}).Distinct();
-            var www = name.Join(Repository.GetAll<UserModel>(), s => s.UserId, x => x.Id, (s, x) => new { s.GroupName,x.Id,x.UserName,x.UserPicture }).Distinct();
+            var groups = Repository.GetAll<Usergroup>().Where(x => x.UserId == TheUser.Id).Select(x => x.FriendGroupId);
 
-            var result = new Dictionary<string, List<FriendGroupDTO>>();
-            foreach(var group in mmm)
+
+            var result = new List<FriendGroupDTO>();
+            foreach (var gid in groups)
             {
-                 List<FriendGroupDTO> list = new List<FriendGroupDTO>();
-                foreach(var item in www)
+                var groupname = Repository.GetAll<FriendGroup>().Where(x => x.FriendGroupId == gid);
+                foreach (var item in groupname)
                 {
-                    if(item.GroupName == group.GroupName)
+                    var friends = Repository.GetAll<UserModel>().Where(x => x.Id == item.UserId);
+                    foreach (var friend in friends)
                     {
-                        list.Add(new FriendGroupDTO
+                        result.Add(new FriendGroupDTO
                         {
-                            UserId = item.Id,
-                            UserName = item.UserName,
-                            UserPicture = item.UserPicture,
+                            GroupName = item.GroupName,
+                            UserName = friend.UserName,
+                            UserPicture = friend.UserPicture,
+                            UserId = friend.Id,
                         });
                     }
-                    
                 }
-                result.Add(group.GroupName,list);
             }
             return result;
         }
-        //public List<FriendGroupDTO> GetFriend(string id)
-        //{
-
-        //    var TheUser = Repository.FindBy<UserModel>(x => x.Id == id).FirstOrDefault();
-
-        //    var groups = Repository.GetAll<Usergroup>().Where(x => x.UserId == TheUser.Id).Select(x => x.FriendGroupId);
-
-
-        //    var result = new List<FriendGroupDTO>();
-        //    foreach (var gid in groups)
-        //    {
-        //        var groupname = Repository.GetAll<FriendGroup>().Where(x => x.FriendGroupId == gid).Select(x=>x.UserId);
-        //        foreach (var item in groupname)
-        //        {
-        //            var friends = Repository.FindBy<UserModel>(x => x.Id == item).Select(y => new { y.UserName, y.UserPicture ,y.Id});
-        //            foreach(var friend in friends)
-        //            {
-        //                result.Add(new FriendGroupDTO
-        //                {
-
-        //                    UserName = friend.UserName,
-        //                    UserPicture = friend.UserPicture,
-        //                    UserId = friend.Id,
-        //                });
-        //            }
-        //        }
-        //    }
-        //    return result;
-        //}
 
 
     }
+
 }
