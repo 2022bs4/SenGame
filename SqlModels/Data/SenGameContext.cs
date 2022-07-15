@@ -711,8 +711,8 @@ namespace SqlModels.Data
 
             modelBuilder.Entity<Usergroup>(entity =>
             {
-                entity.HasNoKey();
-
+                entity.HasKey(e => e.UserGroupId);
+                entity.Property(e => e.UserGroupId).IsRequired();
                 entity.ToTable("Usergroup");
 
                 entity.HasIndex(e => e.FriendGroupId, "IX_Usergroup_FriendGroupId");

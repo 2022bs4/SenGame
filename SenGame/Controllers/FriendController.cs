@@ -40,7 +40,7 @@ namespace SenGame.Controllers
         public async Task<IActionResult> Chat(string id)
         {
 
-           
+         
         UserModel LoginUser = await _userManager.GetUserAsync(HttpContext.User);
         id = LoginUser.Id;
 
@@ -85,12 +85,15 @@ namespace SenGame.Controllers
           
             for(int i = 0; i < group.GroupNames.Length; i++)
             {
-                var x = new FriendGroup();
-                x.GroupName = group.GroupNames[i];
-                x.UserId = group.Ids[i];
+                var friendgroup = new FriendGroup();
+                friendgroup.GroupName = group.GroupNames[i];
+                friendgroup.UserId = group.Ids[i];
+                _service.Create<FriendGroup> (friendgroup);
 
-                _service.Create<FriendGroup>(x);
-
+                var usergroup = new Usergroup();
+                usergroup.UserId = userid;
+                usergroup.FriendGroupId = friendgroup.FriendGroupId;
+                _service.Create<Usergroup>(usergroup);
             }
       
             

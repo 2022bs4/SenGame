@@ -27,7 +27,7 @@ namespace SqlModels.ViewModels
         //把資料變成多對多(Create用)
         public string[] Ids { get; set; }
         public string[] GroupNames { get; set; }
-
+        public string UserId { get; set; }
     }
 
 

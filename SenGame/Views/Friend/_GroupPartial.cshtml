@@ -15,14 +15,17 @@
 
                 @foreach(var item in friend.Friends)
                 {
+                    @if(item.GroupName == "好友名單      " && friend.GroupName == item.GroupName)
+                    {
                     <div class="friend-li2 pl-2 py-3 w-100">
-                        <input id="userid" value="@item.Id" />
+                        <input id="userid" value="@item.Id" hidden="hidden"/>
                         <img class="friend-img2 user-select-none"  src="@item.Photo">
                         <div class="friend-content w-100">
                          <span class="friend-name2 pl-4 mb-0 user-select-none">@item.Name</span>
                             <p class="friend-line2 pl-4 mb-0  user-select-none">上線</p>
                         </div>
                     </div>
+                    }
                     
                  }
             }
