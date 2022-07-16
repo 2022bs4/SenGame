@@ -32,7 +32,7 @@ namespace SqlModels.Models
         public DateTime? EmailConfirmDate { get; set; }
         public string Address { get; set; }
         public string UserPicture { get; set; }
-        public string UsernickName { get; set; }
+        public string UserName { get; set; }
         public int? UserCountryId { get; set; }
         public DateTime? CreateTime { get; set; }
         public string UserAbout { get; set; }
@@ -41,7 +41,7 @@ namespace SqlModels.Models
         public int PrivacyPersonalFile { get; set; }
         public int PrivacyGameFile { get; set; }
         public int PrivacyFriendsList { get; set; }
-        public override string UserName { get; set; }
+        //public override string UserName { get; set; }
         public override string NormalizedUserName { get; set; }
         public override string Email { get; set; }
         public override string NormalizedEmail { get; set; }

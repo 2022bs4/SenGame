@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Services.Interface;
 using SqlModels.DTOModels;
 using SqlModels.Models;
@@ -95,6 +96,21 @@ namespace Services
         //    var PrivacyPersonalFile = Repository.GetAll<UserPrivacy>().Where(p => p.PrivacyPersonalFile == UserPrivacyId);
         //    return privacylist;
         //}
+
+        public InputUserDTO test(string userId , int status)
+        {
+            var frindList = Repository.FindBy<UserModel>(x => x.Id == userId).FirstOrDefault();
+
+            frindList.PrivacyFriendsList = status;
+            //試試看下斷點
+            Repository.Update<UserModel>(frindList);
+            Repository.SaveChanges();
+            //var test
+
+            var result = new InputUserDTO();
+
+            return result;
+        }
     }
 }
         

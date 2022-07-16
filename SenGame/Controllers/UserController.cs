@@ -5,12 +5,16 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Services.Interface;
 using SqlModels.Data;
+using SqlModels.DTOModels;
 using SqlModels.Models;
 using SqlModels.ViewModels;
+using SqlModels.ViewModels.UserViewModels;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using static SqlModels.ViewModels.GameLibraryViewModel;
+using Microsoft.AspNetCore.Identity;
+
 
 namespace SenGame.Controllers
 {
@@ -20,13 +24,14 @@ namespace SenGame.Controllers
         private readonly IUserService _service;
         private readonly IConfiguration _config;
         private readonly SenGameContext _context;
-
+        
         public UserController(IConfiguration config, IUserService service,UserManager<UserModel> user, SenGameContext context)
         {
             _userManager = user;
             _service = service;
             _config = config;
             _context = context;
+           
         }
 
         public IActionResult Index()
@@ -130,36 +135,44 @@ namespace SenGame.Controllers
 
         public IActionResult E4_UserPrivacy()
         {
-            var privacymodel = new SqlModels.ViewModels.UserViewModels.PrivacieLibraryViewModel();
+            var privacymodel = new PrivacieLibraryViewModel();
             return View(privacymodel);
         }
 
-        public async Task<IActionResult> E4_UserPrivacyList()
-        {
-            var model = await _context.UserPrivacies.ToListAsync();
-            return View(model);
-        }
+        //public async Task<IActionResult> E4_UserPrivacyList()
+        //{
+        //    var model = await _context.UserPrivacies.ToListAsync();
+        //    return View(model);
+        //}
 
 
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult E4_UserPrivacy(SqlModels.ViewModels.UserViewModels.PrivacieLibraryViewModel privacyVM)
+        //[ValidateAntiForgeryToken]
+        public IActionResult Post_E4_UserPrivacy([FromBody]OutputUserDTO model)
         {
+            //抓登入使用者的id
+            //var userId = GetUserId();
+            string userId = "4c01f614-06bf-4fd6-897a-a62a0af4b64c";
+            var id = model.UserPrivacyId;
+            var result = _service.test(userId , id);
+
+
+
             TempData["actiontype"] = "privacy";
 
-            if (ModelState.IsValid)
-            {
-                //讀隱私代碼
-                string privacyCode = privacyVM.Privacie;
-                //由隱私代碼查詢名稱
-                string privacy = privacyVM.Privacies.Where(c => c.Value == privacyCode)
-                    .Select(x => x.Text).FirstOrDefault();
+            //if (ModelState.IsValid)
+            //{
+            //    //讀隱私代碼
+            //    string privacyCode = privacyVM.Privacie;
+            //    //由隱私代碼查詢名稱
+            //    string privacy = privacyVM.Privacies.Where(c => c.Value == privacyCode)
+            //        .Select(x => x.Text).FirstOrDefault();
 
-                return RedirectToAction("DisplayPrivacy", new { Privacy = privacy });
-            }
-
-            return View(privacyVM);
+            //    return RedirectToAction("DisplayPrivacy", new { Privacy = privacy });
+            //}
+            //下斷點
+            return Ok();
         }
         //顯示privacy資訊
         public IActionResult DisplayPrivacy(string privacy)
@@ -177,7 +190,7 @@ namespace SenGame.Controllers
         [HttpPost]
         public IActionResult _GameDetailPartial([FromBody] Game_Name name)
         {
-
+            
            
             //try
             //{
@@ -239,5 +252,12 @@ namespace SenGame.Controllers
             return View(wishes);
         }
 
+
+        //public async Task<string> GetUserId()
+        //{
+        //    //UserModel user = await _manger.GetUserAsync(HttpContext.User);
+        //    //var userId = user.Id;
+        //    //return userId;
+        //}
     }
 }
