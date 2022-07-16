@@ -5,12 +5,16 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Services.Interface;
 using SqlModels.Data;
+using SqlModels.DTOModels;
 using SqlModels.Models;
 using SqlModels.ViewModels;
+using SqlModels.ViewModels.UserViewModels;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using static SqlModels.ViewModels.GameLibraryViewModel;
+using Microsoft.AspNetCore.Identity;
+
 
 namespace SenGame.Controllers
 {
@@ -20,13 +24,14 @@ namespace SenGame.Controllers
         private readonly IUserService _service;
         private readonly IConfiguration _config;
         private readonly SenGameContext _context;
-
+        
         public UserController(IConfiguration config, IUserService service,UserManager<UserModel> user, SenGameContext context)
         {
             _userManager = user;
             _service = service;
             _config = config;
             _context = context;
+           
         }
 
         public IActionResult Index()
@@ -34,6 +39,7 @@ namespace SenGame.Controllers
             return View();
         }
 
+        //-------------------------從這裡開始是 明翰 的OOOOOOOOOOOOO-----------------------------------
         
         [Authorize]
         public async Task<IActionResult> GameLibrary()
@@ -76,6 +82,70 @@ namespace SenGame.Controllers
             return View(result);
         }
 
+        [HttpPost]
+        public IActionResult _GameDetailPartial([FromBody] Game_Name name)
+        {
+
+            #region
+            //try
+            //{
+            //    var GameName = name.GameName;
+            //    var gamedetail = _service.MyGameDetail(GameName).GetGameDetails;
+            //    var result = new GameLibraryViewModel()
+            //    {
+            //        GetGameDetails = gamedetail.Select(item => new GameLibraryViewModel.GameDetail
+            //        {
+            //            GameIntroduction = item.GameIntroduction,
+            //            MediaUrl = item.MediaUrl,
+            //            ReleaseTime = item.ReleaseTime,
+            //            Developer = item.Developer
+
+            //        }).ToList()
+            //    };
+            //    return PartialView(result);
+            //}
+            //catch(Exception ex)
+            //{
+            //    return Content("null");
+            //}
+            #endregion
+            try
+            {
+                var GameName = name.GameName;
+                var gamedetail = _service.MyGameDetail(GameName).GetGameDetails;
+                var result = new GameLibraryViewModel()
+                {
+                    GetGameDetails = gamedetail.Select(item => new GameLibraryViewModel.GameDetail
+                    {
+                        GameIntroduction = item.GameIntroduction,
+                        MediaUrl = item.MediaUrl,
+                        ReleaseTime = item.ReleaseTime,
+                        Developer = item.Developer,
+                        Marker = item.Marker,
+                        GameSwipers = item.GameSwipers.Select(img => new GameDetail.GameSwiper
+                        {
+                            MediaUrl = img.MediaUrl
+                        }).ToList(),
+
+                    }).ToList()
+                };
+                return Json(result);
+            }
+            catch (Exception ex)
+            {
+                return Content("null");
+            }
+
+
+
+
+
+
+        }
+        //-------------------------從這裡結束是 明翰 的OOOOOOOOOOOOO-----------------------------------
+
+
+        //-------------------------從這裡開始是 璇   的OOOOOOOOOOOOO-----------------------------------
         [HttpGet]
         public IActionResult User_information()
         {
@@ -130,36 +200,44 @@ namespace SenGame.Controllers
 
         public IActionResult E4_UserPrivacy()
         {
-            var privacymodel = new SqlModels.ViewModels.UserViewModels.PrivacieLibraryViewModel();
+            var privacymodel = new PrivacieLibraryViewModel();
             return View(privacymodel);
         }
 
-        public async Task<IActionResult> E4_UserPrivacyList()
-        {
-            var model = await _context.UserPrivacies.ToListAsync();
-            return View(model);
-        }
+        //public async Task<IActionResult> E4_UserPrivacyList()
+        //{
+        //    var model = await _context.UserPrivacies.ToListAsync();
+        //    return View(model);
+        //}
 
 
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult E4_UserPrivacy(SqlModels.ViewModels.UserViewModels.PrivacieLibraryViewModel privacyVM)
+        //[ValidateAntiForgeryToken]
+        public IActionResult Post_E4_UserPrivacy([FromBody]OutputUserDTO model)
         {
+            //抓登入使用者的id
+            //var userId = GetUserId();
+            string userId = "4c01f614-06bf-4fd6-897a-a62a0af4b64c";
+            var id = model.UserPrivacyId;
+            var result = _service.test(userId , id);
+
+
+
             TempData["actiontype"] = "privacy";
 
-            if (ModelState.IsValid)
-            {
-                //讀隱私代碼
-                string privacyCode = privacyVM.Privacie;
-                //由隱私代碼查詢名稱
-                string privacy = privacyVM.Privacies.Where(c => c.Value == privacyCode)
-                    .Select(x => x.Text).FirstOrDefault();
+            //if (ModelState.IsValid)
+            //{
+            //    //讀隱私代碼
+            //    string privacyCode = privacyVM.Privacie;
+            //    //由隱私代碼查詢名稱
+            //    string privacy = privacyVM.Privacies.Where(c => c.Value == privacyCode)
+            //        .Select(x => x.Text).FirstOrDefault();
 
-                return RedirectToAction("DisplayPrivacy", new { Privacy = privacy });
-            }
-
-            return View(privacyVM);
+            //    return RedirectToAction("DisplayPrivacy", new { Privacy = privacy });
+            //}
+            //下斷點
+            return Ok();
         }
         //顯示privacy資訊
         public IActionResult DisplayPrivacy(string privacy)
@@ -174,76 +252,26 @@ namespace SenGame.Controllers
             return View();
         }
 
-        [HttpPost]
-        public IActionResult _GameDetailPartial([FromBody] Game_Name name)
-        {
-
-            #region
-            //try
-            //{
-            //    var GameName = name.GameName;
-            //    var gamedetail = _service.MyGameDetail(GameName).GetGameDetails;
-            //    var result = new GameLibraryViewModel()
-            //    {
-            //        GetGameDetails = gamedetail.Select(item => new GameLibraryViewModel.GameDetail
-            //        {
-            //            GameIntroduction = item.GameIntroduction,
-            //            MediaUrl = item.MediaUrl,
-            //            ReleaseTime = item.ReleaseTime,
-            //            Developer = item.Developer
-
-            //        }).ToList()
-            //    };
-            //    return PartialView(result);
-            //}
-            //catch(Exception ex)
-            //{
-            //    return Content("null");
-            //}
-            #endregion
-            try
-            {
-                var GameName = name.GameName;
-                var gamedetail = _service.MyGameDetail(GameName).GetGameDetails;
-                var result = new GameLibraryViewModel()
-                {
-                    GetGameDetails = gamedetail.Select(item => new GameLibraryViewModel.GameDetail
-                    {
-                        GameIntroduction = item.GameIntroduction,
-                        MediaUrl = item.MediaUrl,
-                        ReleaseTime = item.ReleaseTime,
-                        Developer = item.Developer,
-                        Marker = item.Marker,
-                        GameSwipers = item.GameSwipers.Select(img=>new GameDetail.GameSwiper
-                        {
-                            MediaUrl = img.MediaUrl
-                        }).ToList(),
-
-                    }).ToList()
-                };
-                return Json(result);
-            }
-            catch (Exception ex)
-            {
-                return Content("null");
-            }
+        //public async Task<string> GetUserId()
+        //{
+        //    //UserModel user = await _manger.GetUserAsync(HttpContext.User);
+        //    //var userId = user.Id;
+        //    //return userId;
+        //}
+        //-------------------------從這裡結束是 璇   的OOOOOOOOOOOOO-----------------------------------
 
 
 
 
 
 
-        }
-
-
-
-
-
+        //-------------------------從這裡開始是 君君   的OOOOOOOOOOOOO-----------------------------------
         public IActionResult WishList(int id)
         {
             var wishes = _service.FindBy<Wish>(m => m.WishId == id);
             return View(wishes);
         }
 
+        //-------------------------從這裡結束是 君君   的OOOOOOOOOOOOO-----------------------------------
     }
 }

@@ -17,5 +17,7 @@ namespace Services.Interface
         public UserDTO MyFavouritrGame(string UserId);
         //選到的遊戲加載
         public UserDTO MyGameDetail(string GameName);
+
+        public InputUserDTO test(string userId, int status);
     }
 }

@@ -64,14 +64,25 @@ namespace SqlModels.DTOModels
         {
             public string Id { get; set; }
 
-            [Display(Name = "我的個人檔案 隱私設定:")]
+            //[Display(Name = "我的個人檔案 隱私設定:")]
             public int PrivacyPersonalFile { get; set; } //個人檔案 隱私設定
 
-            [Display(Name = "遊戲資料 隱私設定:")]
+            //[Display(Name = "遊戲資料 隱私設定:")]
             public int PrivacyGameFile { get; set; }     //遊戲資料 隱私設定
 
-            [Display(Name = "好友名單 隱私設定:")]
+            //[Display(Name = "好友名單 隱私設定:")]
             public int PrivacyFriendsList { get; set; }  //好友名單 隱私設定
         }
+    }
+
+    public class OutputUserDTO
+    {
+        public int UserPrivacyId { get; set; }
+        
+
+    }
+    public class InputUserDTO
+    {
+        public string UserPrivacyName{ get; set; }
     }
 }
