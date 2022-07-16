@@ -1,11 +1,13 @@
-﻿<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.10.2/Sortable.min.js"></script>
+﻿@model IEnumerable<SqlModels.Models.Wish>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.10.2/Sortable.min.js"></script>
 <div class="container">
     <div class="main__title col-12 row">
         <div class="img col-4 col-md-1">
             <img src="https://picsum.photos/50/50/?random=10">
         </div>
         <div class="title col-8 col-md-11">
-            <h1>{帳號名稱}的願望清單</h1>
+            <h1>@Html.DisplayFor(model => User)的願望清單</h1>
         </div>
     </div>
 
@@ -14,6 +16,7 @@
             <input type="text" class="form-control" placeholder="依名稱或標籤搜尋" aria-label="Username"
                 aria-describedby="basic-addon1">
         </div>
+        @*顯示畫面選項*@
         <div class="btn-group options display-options col-3">
             <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown"
                 aria-expanded="false">
@@ -123,6 +126,7 @@
                 </label>
             </div>
         </div>
+        @*排序依據選項*@
         <div class="btn-group sort col-2">
             <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown"
                 aria-expanded="false">
@@ -142,14 +146,64 @@
     </div>
     <hr>
 
-    <!-- 願望清單動態產出 -->
-    <ul class="wishlist" id="sortable">
-
-    </ul>
+    <!-- 願望清單 -->
+    @*<ul class="wishlist" id="sortable">*@
+    @*</ul>*@
+    @foreach (var item in Model) {
+        <template>
+            <div id="movable" class="movable">
+                <div>
+                    <i class="fa-solid fa-sort"></i>
+                    <div class="order">
+                        <input class="order_input text-white" type="text" value="@Html.DisplayFor(modelItem => item.Game.GameId)">
+                    </div>
+                </div>
+            </div>
+            <div class="line"></div>
+            <div class="wishlist__content">
+                <a href="#">
+                    <img src="@Html.DisplayFor(modelItem => item.Game.GameName)" class = "wishlist__img">
+                </a>
+                        
+                <div class="wishlish__text row">
+                    <a href="#" class="col-12">
+                        <h2>@Html.DisplayFor(modelItem => item.Game.GameName)</h2>
+                    </a>
+                    <div class="product_details col-8">
+                        <div class="row">
+                            <p class="col-4">整體評論:</p>
+                            <p class="col-8">@Html.DisplayFor(modelItem => item.Game.GameName)</p>
+                        </div>
+                        <div class="row">
+                            <p class="col-4">發行日期:</p>
+                            <p class="col-8">@Html.DisplayFor(modelItem => item.Game.DownTime)</p>
+                        </div>
+                    </div>
+                    <div class="buy_btn col-4 row">
+                        <p class="col-5">NT$ @Html.DisplayFor(modelItem => item.Game.GamePrice)</p>
+                        <button type="button" class="btn btn-success col-6">加入購物車</button>
+                    </div>
+                    <div class="bottom col-12">
+                        <ul>
+                            <button type="button" class="btn btn-outline-secondary">@Html.DisplayFor(modelItem => item.Game.GameTypes)</button>
+                            @*<button type="button" class="btn btn-outline-secondary">${item[6][1]}</button>
+                            <button type="button" class="btn btn-outline-secondary">${item[6][2]}</button>
+                            <button type="button" class="btn btn-outline-secondary">${item[6][3]}</button>*@
+                        </ul>
+                        <p>新增於 @Html.DisplayFor(modelItem => item.AddTime)<a asp-action="Delete" asp-route-id="@item.WishId">(刪除)</a></p>
+                    </div>
+                            
+                </div>
+            </div>
+        </template>
+    }
+    
+    
 </div>
  @section Css{
-    <link rel="stylesheet" href="~/css/Friend/Wish.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/User/Wish.css" asp-append-version="true"/>
  }
  @section Scripts{
-    <script src="~/js/Friend/Wish.js"></script>
+    <script src="~/js/User/Wish.js"></script>
+
  }

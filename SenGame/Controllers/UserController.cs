@@ -192,5 +192,15 @@ namespace SenGame.Controllers
 
         }
 
+
+
+
+
+        public IActionResult WishList(int id)
+        {
+            var wishes = _service.FindBy<Wish>(m => m.WishId == id);
+            return View(wishes);
+        }
+
     }
 }
