@@ -14,7 +14,9 @@ namespace SqlModels.Models
 
         public int TypelistId { get; set; }
         public string Name { get; set; }
+        public int GroupId { get; set; }
 
         public virtual ICollection<GameType> GameTypes { get; set; }
+        public virtual TypeGroup TypeGroup { get; set; }
     }
 }

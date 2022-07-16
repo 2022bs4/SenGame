@@ -38,6 +38,7 @@ namespace SqlModels.Data
         public virtual DbSet<ShoppingCart> ShoppingCarts { get; set; }
         public virtual DbSet<SystemSpecification> SystemSpecifications { get; set; }
         public virtual DbSet<Typelist> Typelists { get; set; }
+        public virtual DbSet<TypeGroup> TypeGroups {get ; set ;}
         public virtual DbSet<UserBackground> UserBackgrounds { get; set; }
         public virtual DbSet<UserCountry> UserCountries { get; set; }
         public virtual DbSet<UserPrivacy> UserPrivacies { get; set; }
@@ -292,6 +293,8 @@ namespace SqlModels.Data
                 entity.Property(e => e.Developer)
                     .IsRequired()
                     .HasComment("開發商家");
+
+                entity.Property(e => e.ReleaseState).HasComment("1.已發佈 2.尚未發佈");
 
                 entity.Property(e => e.DownTime)
                     .HasColumnType("datetime")
@@ -676,7 +679,29 @@ namespace SqlModels.Data
             {
                 entity.ToTable("Typelist");
 
+                entity.HasIndex(e => e.GroupId, "IX_Typelist_GroupId");
+
                 entity.Property(e => e.TypelistId).ValueGeneratedNever();
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(255);
+
+                //entity.Property(e => e.GroupId);
+
+                entity.HasOne(d => d.TypeGroup)
+                    .WithMany(p => p.Typelist)
+                    .HasForeignKey(d => d.GroupId)
+                    .HasConstraintName("FK_Typelisy_TypeGroup");
+            });
+
+            modelBuilder.Entity<TypeGroup>(entity =>
+            {
+                entity.HasKey(e => e.GroupId);
+
+                entity.ToTable("TypeGroup");
+
+                entity.Property(e => e.GroupId).ValueGeneratedNever();
 
                 entity.Property(e => e.Name)
                     .IsRequired()

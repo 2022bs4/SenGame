@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SqlModels.ViewModels.ShopViewModels
 {
-    public class CheckBuyViewModel
+    public class InputCheckBuyVM
     {
             public string UserId { get; set; }
             public int GameId { get; set; }

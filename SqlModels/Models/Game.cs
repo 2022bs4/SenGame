@@ -27,7 +27,8 @@ namespace SqlModels.Models
         public decimal GamePrice { get; set; }
         public string GameIntroduction { get; set; }
         public string GameDetailsText { get; set; }
-        public int? TotalBuyCount { get; set; }
+        public int TotalBuyCount { get; set; }
+        public int ReleaseState { get ; set; }
         public DateTime ReleaseTime { get; set; }
         public DateTime? DownTime { get; set; }
         public string Developer { get; set; }

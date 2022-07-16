@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace SqlModels.DTOModels
 {
-    public class ResponseProductDTO {
-        public List<ResponseProductItem> Product { get; set; } 
+    public class IndexProductDTO {
+        public List<ResponseProductItem> FirstAreaProduct { get; set; }
+        public List<ResponseProductItem> SecondAreaProduct { get; set; }
+
+        public List<ResponseProductItem> CardProduct { get; set; }
     }
     public class ResponseProductItem
     {
@@ -17,5 +20,33 @@ namespace SqlModels.DTOModels
         public string GameUrl { get; set; }
         public decimal GamePrice { get; set; }
         public DateTime Created { get; set; }
+    }
+
+    public class IndexList
+    {
+        public int GameId { get; set; }
+        public string GameName { get; set; }
+        public decimal GamePrice { get; set; }
+        public string  GameIndexPicture { get; set; }
+
+        public DateTime ReleaseTime { get; set; }
+        public int ReleaseState {get; set; }
+
+
+
+        public List<ProductUrl> GameUrl { get; set; }
+
+        public class ProductUrl
+        {
+            public string Url { get; set; }
+        }
+
+        public List<ProductType> TypeData { get; set; }
+
+        public class ProductType
+        {
+            public int GameId { get; set; }
+            public string TypleName { get; set; }
+        }
     }
 }

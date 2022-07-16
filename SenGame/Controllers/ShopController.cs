@@ -26,33 +26,48 @@ namespace SenGame.Controllers
             _manger = manger;
             _Ecpay = ecpay;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var product = _Shop.ProductIndex();
+            //var product = await _Shop.ProductIndex();
 
+            //var result = new ProductDetailsVM()
+            //{
+            //    ProductPlural = product.Product.Select(
+            //        item=> new ProductDetailsVM.ProductInformation {
+            //        GameId = item.GameId,
+            //        GameName = item.GameName,
+            //        GamePrice = item.GamePrice,
+            //        GamePicture =item.GameUrl,
+            //    }).ToList()
+            //};
+
+            //return View("Game",result);
             return View("Game");
         }
         //產品詳細
-        public IActionResult ProductDetails(int id)
+        public async Task<IActionResult> ProductDetails(int id)
         {
-            var game = _Shop.ProductView(id);
+            var game = await _Shop.ProductView(id);
 
-            var result = new ProductDetailsViewModel()
+            var result = new ProductDetailsVM()
             {
-                GameId = game.GameId,
-                GameName = game.GameName,
-                GamePrice = (int)game.GamePrice,
-                GameIntroduction = game.GameIntroduction,
-                ReleaseTime = game.ReleaseTime,
-                Developer = game.Developer,
-                Marker = game.Marker,
+                ProductItem = new ProductDetailsVM.ProductInformation
+                {
+                    GameId = game.GameId,
+                    GameName = game.GameName,
+                    GamePrice = game.GamePrice,
+                    GameIntroduction = game.GameIntroduction,
+                    ReleaseTime = game.ReleaseTime,
+                    Developer = game.Developer,
+                    Marker = game.Marker,
+                    GamePicture = game.GamePicture,
+                },
                 DisscountTake = game.DisscountTake,
-                GamePicture = game.GamePicture,
-                GameTyple = game.GameTyple.Select(item => new ProductDetailsViewModel.TypleData
+                GameTyple = game.GameTyple.Select(item => new ProductDetailsVM.TypleData
                 {
                     GameId = item.GameId,
                     TypleName = item.TypleName
-                }),
+                }).ToList(),
             };
             TempData["Title"] = "Shop";
             return View(result);
@@ -65,11 +80,11 @@ namespace SenGame.Controllers
 
             var shoppingCart = await _ShoppingCart.GetShoppingCarts(userId);
 
-            var result = new List<ShoppingCartViewModel>();
+            var result = new List<InputShoppingCartVM>();
 
             foreach (var item in shoppingCart)
             {
-                result.Add(new ShoppingCartViewModel
+                result.Add(new InputShoppingCartVM
                 {
                     UserId = item.UserId,
                     GameId = item.GameId,
@@ -87,7 +102,7 @@ namespace SenGame.Controllers
         {
             var userId = await GetUserId();
             var gameInformation = await _ShoppingCart.GetCheckItem(userId);
-            var result = new List<CheckBuyViewModel>();
+            var result = new List<InputCheckBuyVM>();
             if (gameInformation == null)
             {
                 //return RedirectToRoute(new { controller = "Game", action = "Game" });
@@ -97,7 +112,7 @@ namespace SenGame.Controllers
             {
                 foreach (var item in gameInformation)
                 {
-                    result.Add(new CheckBuyViewModel
+                    result.Add(new InputCheckBuyVM
                     {
                         UserId = item.UserId,
                         GameId = item.GameId,
@@ -109,8 +124,6 @@ namespace SenGame.Controllers
                 return View(result);
             }
         }
-
-
 
         public async Task<string> GetUserId()
         {

@@ -33,7 +33,20 @@ namespace SenGame.ApiController
             _Ecpay = ecpay;
         }
 
-        //[EnableCors("CorsPolicy")]
+        [HttpGet]
+        public async Task<IActionResult> Index()
+        {
+            var result = await _Shop.GetIndesSwipper();
+            return Ok(result);
+        }
+        [HttpGet]
+        public async Task<IActionResult> IndexList()
+        {
+            var result = await _Shop.GetProductList();
+            return Ok(result);
+        }
+
+
         [HttpGet]
         public async Task<IActionResult> ProductSwipper(int id)
         {
@@ -52,7 +65,7 @@ namespace SenGame.ApiController
         public async Task<IActionResult> ProductSystem(int id)
         {
             var result = await _Shop.ProductSystem(id);
-            return Ok(result.SwipperData);
+            return Ok(result.SystemData);
         }
 
         [HttpGet]
@@ -70,7 +83,7 @@ namespace SenGame.ApiController
             var userId = await GetUserId();
             var GameId = model.GameId;
             var result = await _ShoppingCart.AddShopingCart(GameId, userId);
-            var answer = new ShoppingCartViewModel() { GameId = model.GameId, Success = result };
+            var answer = new InputShoppingCartVM() { GameId = model.GameId, Success = result };
             return Ok(answer);
         }
 

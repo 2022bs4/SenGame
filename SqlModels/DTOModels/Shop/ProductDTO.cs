@@ -8,6 +8,15 @@ namespace SqlModels.DTOModels
     //產品詳細Razor部分
     public class ResponseProducDetailsDTO
     {
+        public List<TypleData> GameTyple { get; set; }
+
+        public class TypleData
+        {
+            public int GameId { get; set; }
+            public string TypleName { get; set; }
+        }
+
+
         //遊戲主要資訊
         public int GameId { get; set; }
         public string GameName { get; set; }
@@ -16,32 +25,26 @@ namespace SqlModels.DTOModels
         public DateTime ReleaseTime { get; set; }
         public string Developer { get; set; }
         public string Marker { get; set; }
-
-        //簡介圖
         public string GamePicture { get; set; }
-
-        //標籤
-        public IQueryable<TypleData> GameTyple {get ; set;}
-
-        public class TypleData
-        {
-            public int GameId { get; set; }
-            public string TypleName { get; set; }
-        }
         //折扣
         public double DisscountTake { get; set; }
 
         
     }
+
+
+
+
+
+
+
+
+
+
+
+
     //產品詳細Json
-
     public class RequestProducDetailsDTO {
-
-        //public  List<ProdductIntroductDTO> IntroductData { get; set; }
-        //public class ProdductIntroductDTO
-        //{
-        //    public string GameDetailsText { get; set; }
-        //}
 
         public List<ResponseProductSwipperDTO> SwipperData{ get; set; }
 
@@ -70,8 +73,6 @@ namespace SqlModels.DTOModels
     {
         public string GameDetailsText { get; set; }
     }
-
-
 
     //推薦遊戲區
     public class ProductRecommend

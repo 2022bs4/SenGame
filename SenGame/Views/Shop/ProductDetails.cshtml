@@ -1,4 +1,4 @@
-﻿@model ProductDetailsViewModel
+﻿@model ProductDetailsVM
 @using System.Linq;
 
 
@@ -10,16 +10,16 @@
         <section class="MainGame-Datial col-12 p-0 d-md-flex flex-md-wrap justify-content-md-between">
             <!-- 遊戲名稱、開發商、開發人員、發行日期、簡介 動態載入 -->
             <div class="Game-Introduce d-md-flex flex-md-column justify-content-md-between mb-4 mb-md-0 mt-md-2">
-                <input type="hidden" id="GameId" value="@Model.GameId"/>
-                <h2 class="Table-title w-100">@Html.Raw(Model.GameName)</h2>
+                <input type="hidden" id="GameId" value="@Model.ProductItem.GameId"/>
+                <h2 class="Table-title w-100">@Html.Raw(Model.ProductItem.GameName)</h2>
                 <div>
-                    <img src="@Html.Raw(Model.GamePicture)" alt="@Html.Raw(Model.GameName)" class="w-100">
-                    <p class="col-12  p-0 text-left">@Html.Raw(Model.GameIntroduction)</p>
+                    <img src="@Html.Raw(Model.ProductItem.GamePicture)" alt="@Html.Raw(Model.ProductItem.GameName)" class="w-100">
+                    <p class="col-12  p-0 text-left">@Html.Raw(Model.ProductItem.GameIntroduction)</p>
                 </div>
               <div>
-                    <h3 class="Developers">開發商   : <a href="#">@Html.Raw(Model.Developer)</a></h3>
-                    <h3 class="Developers_Person ">開發人員 : <a href="#">@Html.Raw(Model.Marker)</a></h3>
-                    <h3 class="Selling-Date ">發行日期 : <a href="#">@Html.Raw(Model.ReleaseTime)</a></h3>
+                    <h3 class="Developers">開發商   : <a href="#">@Html.Raw(Model.ProductItem.Developer)</a></h3>
+                    <h3 class="Developers_Person ">開發人員 : <a href="#">@Html.Raw(Model.ProductItem.Marker)</a></h3>
+                    <h3 class="Selling-Date ">發行日期 : <a href="#">@Html.Raw(Model.ProductItem.ReleaseTime)</a></h3>
                 </div>
                 <div class="Game-tag">
                     @foreach(var tag in Model.GameTyple)
@@ -44,7 +44,7 @@
         <section class="col-12 p-0 mt-md-3">
             <!-- 購買收藏等功能鍵、靜態 -->
             <div class="Game-Function-Btn col-12 p-0 d-lg-flex justify-content-md-between">
-                <div class="Game-Price d-flex align-items-center col-12 col-lg-6 p-0">售價: NT$ @Html.Raw(Model.GamePrice)</div>
+                <div class="Game-Price d-flex align-items-center col-12 col-lg-6 p-0">售價: NT$ @Html.Raw(Model.ProductItem.GamePrice)</div>
                 <div class="Group-btn col-12 col-lg-6 flex-row-reverse">
                     <button class="Wish">收藏</button>
                     <button>分享</button>
