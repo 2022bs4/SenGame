@@ -49,28 +49,28 @@ namespace SenGame.Controllers
 
 
             var groupname =  _service.GetGroup(id);
-            //var allfriend = _service.GetFriend(id);
-            //var result = new FriendViewModel()
-            //{
-            //    Groups = groupname.Select(x => new FriendViewModel.Group
-            //    {
-            //        GroupName = x.GroupName,
-            //        Friends =  allfriend.Select(y => new FriendViewModel.Friend
-            //        {
-            //            GroupName = y.GroupName,
-            //            Name = y.UserName,
-            //            Photo = y.UserPicture,
-            //            Id = y.UserId,
-            //        }).ToList()
+            var allfriend = _service.GetFriend(id);
+            var result = new FriendViewModel()
+            {
+                Groups = groupname.Select(x => new FriendViewModel.Group
+                {
+                    GroupName = x.GroupName,
+                    Friends = allfriend.Select(y => new FriendViewModel.Friend
+                    {
+                        GroupName = y.GroupName,
+                        Name = y.UserName,
+                        Photo = y.UserPicture,
+                        Id = y.UserId,
+                    }).ToList()
 
-            //    }).ToList(),
-            //};
-
-
-                TempData["actiontype"] = "friend";
+                }).ToList(),
+            };
 
 
-            return View();
+            TempData["actiontype"] = "friend";
+
+
+            return View(result);
         }
         [HttpPost]
         public IActionResult Chat()
@@ -92,7 +92,7 @@ namespace SenGame.Controllers
 
                 var usergroup = new Usergroup();
                 usergroup.UserId = userid;
-                usergroup.FriendGroupId = friendgroup.FriendGoupId;
+                usergroup.FriendGroupId = friendgroup.FriendGroupId;
                 _service.Create<Usergroup>(usergroup);
             }
       
@@ -104,7 +104,12 @@ namespace SenGame.Controllers
         {
             UserModel LoginUser = await _userManager.GetUserAsync(HttpContext.User);
             var userid = LoginUser.Id;
+
+
+
             
+
+
             FriendChat fc = new FriendChat();
             fc.ChatContent = context.ChatContent;
             fc.UserId = context.UserId;
@@ -113,11 +118,13 @@ namespace SenGame.Controllers
             _service.Create<FriendChat>(fc);
 
             Chat chat = new Chat();
+            chat.FriendChatId = fc.FriendChatId;
             chat.UserId = userid;
-            chat.ChatId = fc.ChatId;
             _service.Create<Chat>(chat);
-            
-            
+
+
+
+
 
 
 

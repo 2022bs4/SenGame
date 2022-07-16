@@ -140,23 +140,18 @@ namespace SqlModels.Data
 
             modelBuilder.Entity<Chat>(entity =>
             {
+                entity.ToTable("Chat");
                 entity.HasKey(e => e.ChatId);
                 entity.Property(e=>e.ChatId).IsRequired();
-                entity.ToTable("Chat");
 
-                entity.HasIndex(e => e.UserId, "IX_Chat_UserId");
 
                 //entity.Property(e => e.ChatId).ValueGeneratedNever();
-
-             
-
-                entity.HasIndex(e => e.ChatId, "IX_Chat_ChatId");
-
                 entity.HasIndex(e => e.UserId, "IX_Chat_UserId");
+                entity.HasIndex(e => e.ChatId, "IX_Chat_ChatId");
 
                 entity.HasOne(d => d.FriendChat)
                     .WithMany()
-                    .HasForeignKey(d => d.ChatId)
+                    .HasForeignKey(d => d.ChatId)                 
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Chat_FriendChat");
 
@@ -166,7 +161,7 @@ namespace SqlModels.Data
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Chat_AspNetUsers1");
             });
-
+            
             modelBuilder.Entity<CustomerService>(entity =>
             {
                 entity.HasKey(e => e.ServiceId);
@@ -257,15 +252,14 @@ namespace SqlModels.Data
 
             modelBuilder.Entity<FriendGroup>(entity =>
             {
-                entity.HasKey(e => e.FriendGoupId);
-                entity.Property(e => e.FriendGoupId).IsRequired();
+                entity.HasKey(e => e.FriendGroupId);
+                entity.Property(e => e.FriendGroupId).IsRequired();
 
                 entity.ToTable("FriendGroup");
 
                 //entity.Property(e => e.FriendGroupId).ValueGeneratedNever();
 
                 entity.Property(e => e.GroupName)
-                    //.IsRequired()
                     .HasMaxLength(10)
                     .IsFixedLength(true);
             });

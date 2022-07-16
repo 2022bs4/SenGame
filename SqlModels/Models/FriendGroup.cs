@@ -10,7 +10,7 @@ namespace SqlModels.Models
     {
 
 
-        public int FriendGoupId { get; set; }
+        public int FriendGroupId { get; set; }
         public string UserId { get; set; }
         public string GroupName { get; set; }
 

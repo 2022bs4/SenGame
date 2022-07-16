@@ -9,7 +9,6 @@ namespace SqlModels.Models
     public class FriendChat
     {
         public int FriendChatId { get; set; }
-        public int ChatId { get; set; }
         public string UserId { get; set; }
         public string ChatContent { get; set; }
         public DateTime ChatTime { get; set; }
