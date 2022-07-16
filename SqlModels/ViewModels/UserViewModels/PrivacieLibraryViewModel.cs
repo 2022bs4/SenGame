@@ -25,6 +25,7 @@ namespace SqlModels.ViewModels.UserViewModels
 
         //
         public List<PrivacieData> PrivacieList { get; set; }
+        
         public class PrivacieData
         {
             [Display (Name = "我的個人檔案 隱私設定:")]

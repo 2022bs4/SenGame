@@ -81,11 +81,44 @@ namespace SenGame.Controllers
         {
             return View();
         }
-
+        [HttpGet]
         public IActionResult E1_User()
         {
+            var editusermodel = new SqlModels.ViewModels.UserViewModels.EditUserLibraryViewModel();
+            return View(editusermodel);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult E1_User(SqlModels.ViewModels.UserViewModels.EditUserLibraryViewModel edituserVM)
+        {
+            TempData["actiontype"] = "edituser";
+
+            if (ModelState.IsValid)
+            {
+                //讀編輯國家代碼
+                string edituserCode = edituserVM.UserCountry;
+                //由隱私代碼查詢名稱
+                string edituser = edituserVM.UserCountryies.Where(e => e.Value == edituserCode)
+                    .Select(x => x.Text).FirstOrDefault();
+
+                return RedirectToAction("DisplayEditUser", new { EditUser = edituser });
+            }
+
+            return View(edituserVM);
+        }
+        //顯示edituser資訊
+        public IActionResult DisplayEditUser(string edituser)
+        {
+            if (string.IsNullOrEmpty(edituser))
+            {
+                return Content("必須提供privacy參數!");
+            }
+
+            ViewData["EditUser"] = edituser;
+
             return View();
         }
+
         public IActionResult E2_UserPhoto()
         {
             return View();
@@ -196,6 +229,20 @@ namespace SenGame.Controllers
             }
 
 
+
+
+
+
+        }
+
+
+
+
+
+        public IActionResult WishList(int id)
+        {
+            var wishes = _service.FindBy<Wish>(m => m.WishId == id);
+            return View(wishes);
         }
 
     }
