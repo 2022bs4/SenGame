@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static SqlModels.ViewModels.UserViewModels.EditUserLibraryViewModel;
 
 namespace SqlModels.DTOModels
 {
@@ -44,7 +45,20 @@ namespace SqlModels.DTOModels
                 public string MediaUrl { get; set; }
             }
         }
-             
+
+        public List<EditUserData> EditUserList { get; set; }
+        public class EditUserData
+        {
+            [Display(Name = "我的個人檔案名稱 :")]
+            public string UserName { get; set; }
+
+            [Display(Name = "國家 / 地區")]
+            public int UserCountryId { get; set; }
+
+            [Display(Name = "關於我 :")]
+            public string UserAbout { get; set; }
+        }
+
         public List<PrivacieData> PrivacieList { get; set; }
         public class PrivacieData
         {

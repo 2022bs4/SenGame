@@ -1,4 +1,10 @@
-﻿ @section Css{
+﻿@using SqlModels.ViewModels.UserViewModels
+@model EditUserLibraryViewModel
+@{
+    ViewData["Title"] = "SelectTagHelper";
+} 
+
+@section Css{
     <link rel="stylesheet" href="~/css/User/User.css" asp-append-version="true"/>
  }
 
@@ -104,13 +110,9 @@
                                     class="text-danger">*</span>
                             </label>
                             <div class="col-lg-6">
-                                <select class="form-control" name="val-skill"  id="EditInput04" disabled>
-                                    <option value="">不顯示</option>
-                                    <option value="Taiwan">台灣</option>
-                                    <option value="USA">美國</option>
-                                    <option value="Japan">日本</option>
-                                    <option value="Nu">卡嘉布拉島</option>
-                                </select>
+                                <select asp-for="UserCountry" asp-items="Model.UserCountryies" class="form-control" id="EditInput04" disabled>
+                                    <option value="">==請選擇你的國家==</option>
+                                 </select>
                             </div>
                         </div>
                         <!-- 摘要 -->
@@ -142,6 +144,9 @@
 <!-- sweetalert -->
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
- @section Scripts{
-     <script src="~/js/User/UserBtn.js"></script>
- }
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/User/UserBtn.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
