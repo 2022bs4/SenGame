@@ -65,11 +65,13 @@ namespace Services
             return gamelist;
         }
 
-        [HttpPost]
+        
         public UserDTO MyGameDetail(string GameName)
         {
             var game = Repository.GetAll<Game>().Where(g => g.GameName == GameName);
             var img = Repository.GetAll<GameMedium>().Where(i => i.InstructionType == 2 && i.Instruction == 1);
+            var pic= Repository.GetAll<GameMedium>().Where(i => i.InstructionType == 1 && i.Instruction == 1);
+            var swipersimg = game.Join(pic, g => g.GameId, p => p.GameId, (g, s) => new { s.MediaUrl });
             var mygame = game.Join(img, g => g.GameId, i => i.GameId, (g, s) => new { g.GameIntroduction,g.ReleaseTime,g.Developer,g.Marker, s.MediaUrl });
             var gamedetail = new UserDTO()
             {
@@ -78,7 +80,12 @@ namespace Services
                     GameIntroduction = item.GameIntroduction,
                     MediaUrl = item.MediaUrl,
                     ReleaseTime = item.ReleaseTime,
-                    Developer = item.Developer
+                    Developer = item.Developer,
+                    Marker  = item.Marker,
+                    GameSwipers = swipersimg.Select(item => new UserDTO.GameDetail.GameSwiper
+                    {
+                        MediaUrl = item.MediaUrl,
+                    }).ToList()
 
                 }).ToList()
             };

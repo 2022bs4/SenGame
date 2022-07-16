@@ -13,7 +13,7 @@ namespace SqlModels.DTOModels
         public  List<GameData> gamelist { get;set; }
         //我的遊戲庫的所有的遊戲集合(我的最愛)
         public List<GameData> myfavourite { get; set; }
-
+        //選到的遊戲
         public List<GameDetail> GetGameDetails { get; set; }
 
         public class GameData
