@@ -190,7 +190,7 @@ namespace SenGame.Controllers
         [HttpPost]
         public IActionResult _GameDetailPartial([FromBody] Game_Name name)
         {
-            
+
            
             //try
             //{
@@ -213,6 +213,7 @@ namespace SenGame.Controllers
             //{
             //    return Content("null");
             //}
+            #endregion
             try
             {
                 var GameName = name.GameName;
@@ -224,7 +225,12 @@ namespace SenGame.Controllers
                         GameIntroduction = item.GameIntroduction,
                         MediaUrl = item.MediaUrl,
                         ReleaseTime = item.ReleaseTime,
-                        Developer = item.Developer
+                        Developer = item.Developer,
+                        Marker = item.Marker,
+                        GameSwipers = item.GameSwipers.Select(img=>new GameDetail.GameSwiper
+                        {
+                            MediaUrl = img.MediaUrl
+                        }).ToList(),
 
                     }).ToList()
                 };
