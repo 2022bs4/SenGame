@@ -39,6 +39,7 @@ namespace SenGame.Controllers
             return View();
         }
 
+        //-------------------------從這裡開始是 明翰 的OOOOOOOOOOOOO-----------------------------------
         
         [Authorize]
         public async Task<IActionResult> GameLibrary()
@@ -81,6 +82,70 @@ namespace SenGame.Controllers
             return View(result);
         }
 
+        [HttpPost]
+        public IActionResult _GameDetailPartial([FromBody] Game_Name name)
+        {
+
+            #region
+            //try
+            //{
+            //    var GameName = name.GameName;
+            //    var gamedetail = _service.MyGameDetail(GameName).GetGameDetails;
+            //    var result = new GameLibraryViewModel()
+            //    {
+            //        GetGameDetails = gamedetail.Select(item => new GameLibraryViewModel.GameDetail
+            //        {
+            //            GameIntroduction = item.GameIntroduction,
+            //            MediaUrl = item.MediaUrl,
+            //            ReleaseTime = item.ReleaseTime,
+            //            Developer = item.Developer
+
+            //        }).ToList()
+            //    };
+            //    return PartialView(result);
+            //}
+            //catch(Exception ex)
+            //{
+            //    return Content("null");
+            //}
+            #endregion
+            try
+            {
+                var GameName = name.GameName;
+                var gamedetail = _service.MyGameDetail(GameName).GetGameDetails;
+                var result = new GameLibraryViewModel()
+                {
+                    GetGameDetails = gamedetail.Select(item => new GameLibraryViewModel.GameDetail
+                    {
+                        GameIntroduction = item.GameIntroduction,
+                        MediaUrl = item.MediaUrl,
+                        ReleaseTime = item.ReleaseTime,
+                        Developer = item.Developer,
+                        Marker = item.Marker,
+                        GameSwipers = item.GameSwipers.Select(img => new GameDetail.GameSwiper
+                        {
+                            MediaUrl = img.MediaUrl
+                        }).ToList(),
+
+                    }).ToList()
+                };
+                return Json(result);
+            }
+            catch (Exception ex)
+            {
+                return Content("null");
+            }
+
+
+
+
+
+
+        }
+        //-------------------------從這裡結束是 明翰 的OOOOOOOOOOOOO-----------------------------------
+
+
+        //-------------------------從這裡開始是 璇   的OOOOOOOOOOOOO-----------------------------------
         [HttpGet]
         public IActionResult User_information()
         {
@@ -187,83 +252,26 @@ namespace SenGame.Controllers
             return View();
         }
 
-        [HttpPost]
-        public IActionResult _GameDetailPartial([FromBody] Game_Name name)
-        {
-
-           
-            //try
-            //{
-            //    var GameName = name.GameName;
-            //    var gamedetail = _service.MyGameDetail(GameName).GetGameDetails;
-            //    var result = new GameLibraryViewModel()
-            //    {
-            //        GetGameDetails = gamedetail.Select(item => new GameLibraryViewModel.GameDetail
-            //        {
-            //            GameIntroduction = item.GameIntroduction,
-            //            MediaUrl = item.MediaUrl,
-            //            ReleaseTime = item.ReleaseTime,
-            //            Developer = item.Developer
-
-            //        }).ToList()
-            //    };
-            //    return PartialView(result);
-            //}
-            //catch(Exception ex)
-            //{
-            //    return Content("null");
-            //}
-            #endregion
-            try
-            {
-                var GameName = name.GameName;
-                var gamedetail = _service.MyGameDetail(GameName).GetGameDetails;
-                var result = new GameLibraryViewModel()
-                {
-                    GetGameDetails = gamedetail.Select(item => new GameLibraryViewModel.GameDetail
-                    {
-                        GameIntroduction = item.GameIntroduction,
-                        MediaUrl = item.MediaUrl,
-                        ReleaseTime = item.ReleaseTime,
-                        Developer = item.Developer,
-                        Marker = item.Marker,
-                        GameSwipers = item.GameSwipers.Select(img=>new GameDetail.GameSwiper
-                        {
-                            MediaUrl = img.MediaUrl
-                        }).ToList(),
-
-                    }).ToList()
-                };
-                return Json(result);
-            }
-            catch (Exception ex)
-            {
-                return Content("null");
-            }
-
-
-
-
-
-
-        }
-
-
-
-
-
-        public IActionResult WishList(int id)
-        {
-            var wishes = _service.FindBy<Wish>(m => m.WishId == id);
-            return View(wishes);
-        }
-
-
         //public async Task<string> GetUserId()
         //{
         //    //UserModel user = await _manger.GetUserAsync(HttpContext.User);
         //    //var userId = user.Id;
         //    //return userId;
         //}
+        //-------------------------從這裡結束是 璇   的OOOOOOOOOOOOO-----------------------------------
+
+
+
+
+
+
+        //-------------------------從這裡開始是 君君   的OOOOOOOOOOOOO-----------------------------------
+        public IActionResult WishList(int id)
+        {
+            var wishes = _service.FindBy<Wish>(m => m.WishId == id);
+            return View(wishes);
+        }
+
+        //-------------------------從這裡結束是 君君   的OOOOOOOOOOOOO-----------------------------------
     }
 }
