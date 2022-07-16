@@ -257,8 +257,8 @@ namespace SqlModels.Data
 
             modelBuilder.Entity<FriendGroup>(entity =>
             {
-                entity.HasKey(e => e.FriendGroupId);
-                entity.Property(e => e.FriendGroupId).IsRequired();
+                entity.HasKey(e => e.FriendGoupId);
+                entity.Property(e => e.FriendGoupId).IsRequired();
 
                 entity.ToTable("FriendGroup");
 

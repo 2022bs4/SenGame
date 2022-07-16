@@ -25,7 +25,7 @@ namespace Services.ChatService
             var groups = Repository.GetAll<Usergroup>().Where(x => x.UserId == id);
 
             var name = Repository.GetAll<FriendGroup>();
-            var data = name.Join(groups, s => s.FriendGroupId, x => x.FriendGroupId, (s, x) => new { s.GroupName }).Distinct();
+            var data = name.Join(groups, s => s.FriendGoupId, x => x.FriendGroupId, (s, x) => new { s.GroupName }).Distinct();
 
             var result = new List<FriendGroupDTO>();
 
@@ -52,7 +52,7 @@ namespace Services.ChatService
             var result = new List<FriendGroupDTO>();
             foreach (var gid in groups)
             {
-                var groupname = Repository.GetAll<FriendGroup>().Where(x => x.FriendGroupId == gid);
+                var groupname = Repository.GetAll<FriendGroup>().Where(x => x.FriendGoupId == gid);
                 foreach (var item in groupname)
                 {
                     var friends = Repository.GetAll<UserModel>().Where(x => x.Id == item.UserId);

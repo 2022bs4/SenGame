@@ -92,7 +92,7 @@ namespace SenGame.Controllers
 
                 var usergroup = new Usergroup();
                 usergroup.UserId = userid;
-                usergroup.FriendGroupId = friendgroup.FriendGroupId;
+                usergroup.FriendGroupId = friendgroup.FriendGoupId;
                 _service.Create<Usergroup>(usergroup);
             }
       
