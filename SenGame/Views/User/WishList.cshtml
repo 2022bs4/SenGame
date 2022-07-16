@@ -1,4 +1,5 @@
-﻿@model IEnumerable<SqlModels.Models.Wish>
+﻿@using SqlModels.ViewModels.UserViewModels
+@model IEnumerable<WishViewModels>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.10.2/Sortable.min.js"></script>
 <div class="container">
@@ -155,40 +156,33 @@
                 <div>
                     <i class="fa-solid fa-sort"></i>
                     <div class="order">
-                        <input class="order_input text-white" type="text" value="@Html.DisplayFor(modelItem => item.Game.GameId)">
+                        <input class="order_input text-white" type="text" value="@Html.DisplayFor(modelItem => item.WishId)">
                     </div>
                 </div>
             </div>
             <div class="line"></div>
             <div class="wishlist__content">
                 <a href="#">
-                    <img src="@Html.DisplayFor(modelItem => item.Game.GameName)" class = "wishlist__img">
+                    <img src="@Html.DisplayFor(modelItem => item.GamePrice)" class = "wishlist__img">
                 </a>
                         
                 <div class="wishlish__text row">
-                    <a href="#" class="col-12">
-                        <h2>@Html.DisplayFor(modelItem => item.Game.GameName)</h2>
+                    <a href="@Html.DisplayFor(modelItem => item.GameUrl)" class="col-12">
+                        <h2>@Html.DisplayFor(modelItem => item.GameName)</h2>
                     </a>
                     <div class="product_details col-8">
                         <div class="row">
-                            <p class="col-4">整體評論:</p>
-                            <p class="col-8">@Html.DisplayFor(modelItem => item.Game.GameName)</p>
-                        </div>
-                        <div class="row">
                             <p class="col-4">發行日期:</p>
-                            <p class="col-8">@Html.DisplayFor(modelItem => item.Game.DownTime)</p>
+                            <p class="col-8">@Html.DisplayFor(modelItem => item.ReleaseTime)</p>
                         </div>
                     </div>
                     <div class="buy_btn col-4 row">
-                        <p class="col-5">NT$ @Html.DisplayFor(modelItem => item.Game.GamePrice)</p>
+                        <p class="col-5">NT$ @Html.DisplayFor(modelItem => item.GamePrice)</p>
                         <button type="button" class="btn btn-success col-6">加入購物車</button>
                     </div>
                     <div class="bottom col-12">
                         <ul>
-                            <button type="button" class="btn btn-outline-secondary">@Html.DisplayFor(modelItem => item.Game.GameTypes)</button>
-                            @*<button type="button" class="btn btn-outline-secondary">${item[6][1]}</button>
-                            <button type="button" class="btn btn-outline-secondary">${item[6][2]}</button>
-                            <button type="button" class="btn btn-outline-secondary">${item[6][3]}</button>*@
+                            <button type="button" class="btn btn-outline-secondary">@Html.DisplayFor(modelItem => item.GameSlides)</button>
                         </ul>
                         <p>新增於 @Html.DisplayFor(modelItem => item.AddTime)<a asp-action="Delete" asp-route-id="@item.WishId">(刪除)</a></p>
                     </div>
