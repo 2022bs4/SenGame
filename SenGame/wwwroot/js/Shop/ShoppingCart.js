@@ -3,7 +3,7 @@
 $(document).ready(function () {
     $('main').addClass("ShoppingCart d-md-flex f-md-flex position-relative")
     $('main').removeClass("container-fluid")
-    RecommendTemplate();
+    setTimeout(function () { RecommendTemplate() }, 1500);
     CheckFucntion();
     DeleteAllItem()
 })

@@ -33,20 +33,38 @@ namespace SenGame.ApiController
             _Ecpay = ecpay;
         }
 
+        //首頁Tag
+        [HttpGet]
+        public async Task<IActionResult> IndexTag()
+        {
+            var result = await _Shop.GetIndexTag();
+            return Ok(result);
+
+        }
+        //首頁Swipper
         [HttpGet]
         public async Task<IActionResult> Index()
         {
             var result = await _Shop.GetIndesSwipper();
             return Ok(result);
         }
+        //首頁清單
         [HttpGet]
         public async Task<IActionResult> IndexList()
         {
             var result = await _Shop.GetProductList();
             return Ok(result);
         }
+        //首頁清單多圖板
+        public async Task<IActionResult> IndexListDetails([FromBody] OutputShoppingCart model)
+        {
+            var gameId = model.GameId;
+            var result = await _Shop.GetDetailsList(gameId);
+            return Ok(result);
+        }
 
 
+        //商品詳細之Swipper
         [HttpGet]
         public async Task<IActionResult> ProductSwipper(int id)
         {
@@ -68,6 +86,7 @@ namespace SenGame.ApiController
             return Ok(result.SystemData);
         }
 
+        //遊戲推薦
         [HttpGet]
         public async Task<IActionResult> ProductRecommend()
         {
@@ -75,6 +94,8 @@ namespace SenGame.ApiController
             return Ok(result);
         }
 
+
+        //添加至購物車，防呆已做，CROS未做
         [HttpPost]
         //fetch防跨網站偽造要求研究中
         //[ValidateAntiForgeryToken]
@@ -88,7 +109,7 @@ namespace SenGame.ApiController
         }
 
 
-
+        //購物車全部刪除，之後打算重新命名
         [HttpPost]
         //[ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteAll()
@@ -98,6 +119,7 @@ namespace SenGame.ApiController
             return Ok();
         }
 
+        //將購物車資訊添加至訂單，添加完後刪除購物車已做，若有待結帳項目直接轉至結帳已做
         [HttpPost]
         public async Task<IActionResult> AddOrderDetails([FromBody] OutputShoppingCart model)
         {
@@ -107,23 +129,7 @@ namespace SenGame.ApiController
             return Ok(result);
         }
 
-
-
-
-        [HttpGet]
-        public async Task<IActionResult> Payment()
-        {
-            var userId = await GetUserId();
-            var result = await _Ecpay.GetPayInformation(userId);
-            return Ok(result);
-        }
-
-
-
-
-
-
-        //尚未完成
+        //取消結帳，訂單狀態更改完取消
         [HttpPost]
         public async Task<IActionResult> RemoveCheckBuy()
         {
@@ -133,15 +139,20 @@ namespace SenGame.ApiController
         }
 
 
+        //將訂單資訊post至ECPA
+        [HttpGet]
+        public async Task<IActionResult> Payment()
+        {
+            var userId = await GetUserId();
+            var result = await _Ecpay.GetPayInformation(userId);
+            return Ok(result);
+        }
 
 
-
-
-        //跨域問題尚未解決
+        //跨域問題尚未解決，目的:接收綠借回傳值且驗證購買結果
         [HttpPost]
         public HttpResponseMessage ReturnResult([FromBody] Dictionary<string, string> data)
         {
-
             return ResponseOK();
         }
 
@@ -153,10 +164,7 @@ namespace SenGame.ApiController
             return response;
         }
 
-
-
-
-        
+        //或許會員ID之後會請會員模組負責人封裝
         public async Task<string> GetUserId()
         {
             UserModel user = await _manger.GetUserAsync(HttpContext.User);

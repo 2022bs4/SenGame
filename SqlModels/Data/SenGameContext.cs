@@ -703,7 +703,7 @@ namespace SqlModels.Data
 
                 entity.Property(e => e.GroupId).ValueGeneratedNever();
 
-                entity.Property(e => e.Name)
+                entity.Property(e => e.GroupName)
                     .IsRequired()
                     .HasMaxLength(255);
             });

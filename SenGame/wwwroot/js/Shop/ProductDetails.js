@@ -11,6 +11,9 @@ $(document).ready(function () {
     ProductSystem();
     BtnFunction();
     //CloneGame()
+
+    setTimeout(function () { RecommendTemplate()}, 1500);
+
 })
 
 
@@ -106,10 +109,6 @@ function MianDetails() {
                 CloneGame(item)
             })
         })
-        .then(end => {
-            setTimeout(RecommendTemplate(), 3000);
-        });
-
     function CloneGame(Array) {
         let GameDatails = document.querySelector('.Game-Datails')
         let GameClone = GamePictureText.content.cloneNode(true)

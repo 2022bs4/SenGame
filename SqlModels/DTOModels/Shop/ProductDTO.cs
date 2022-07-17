@@ -5,17 +5,16 @@ using System.Linq;
 
 namespace SqlModels.DTOModels
 {
-    //產品詳細Razor部分
+    //輸出單項產品詳細內容
     public class ResponseProducDetailsDTO
     {
+        //標籤
         public List<TypleData> GameTyple { get; set; }
-
         public class TypleData
         {
             public int GameId { get; set; }
             public string TypleName { get; set; }
         }
-
 
         //遊戲主要資訊
         public int GameId { get; set; }
@@ -27,21 +26,8 @@ namespace SqlModels.DTOModels
         public string Marker { get; set; }
         public string GamePicture { get; set; }
         //折扣
-        public double DisscountTake { get; set; }
-
-        
+        public double DisscountTake { get; set; } 
     }
-
-
-
-
-
-
-
-
-
-
-
 
     //產品詳細Json
     public class RequestProducDetailsDTO {
@@ -84,4 +70,14 @@ namespace SqlModels.DTOModels
 
     }
 
+
+    public class ResponseTypeGroupDTO
+    {
+        public string ParentCategory { get; set; }
+        public List<Data> GameTyple { get; set; }
+        public class Data
+        {
+            public string TypleName { get; set; }
+        }
+    }
 }

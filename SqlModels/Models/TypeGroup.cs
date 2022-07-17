@@ -14,7 +14,7 @@ namespace SqlModels.Models
         }
 
         public int GroupId { get; set; }
-        public string Name { get; set; }
+        public string GroupName { get; set; }
 
         public virtual ICollection<Typelist> Typelist { get; set; }
     }

@@ -50,7 +50,7 @@ function Setnavbar(content) {
     }
     function iconlight() {
         /*let controller = controllertype.getAttribute("controller");*/
-        document.querySelector(".list-tour-" + controllertype).classList.add("active")
+        //document.querySelector(".list-tour-" + controllertype).classList.add("active")
         /*var a = document.querySelector(".list-tour-" + controllertype);*/
         
 

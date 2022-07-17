@@ -13,13 +13,35 @@ namespace Services
 {
     public class ShopServices : BaseService, IShopServices
     {
-
+        
         public ShopServices(IRepository repository, IMapper mapper) : base(repository, mapper)
         {
         }
 
+        //Index標籤讀取
+        public async Task<IEnumerable<ResponseTypeGroupDTO>> GetIndexTag() {
+            
+            var typeGroup =  Repository.GetAll<TypeGroup>();
+            var typelist = Repository.GetAll<Typelist>();
+            var type = await typeGroup.Join(typelist, x => x.GroupId, y => y.GroupId,
+                (x, y) => new { x.GroupName, y.Name }).OrderByDescending(x => x.GroupName).ToListAsync();
+
+                var result = type.GroupBy(x => x.GroupName).Select(r => 
+                new ResponseTypeGroupDTO
+                {
+                    ParentCategory = r.Key,
+                    GameTyple = r.ToList().Select(item=> 
+                    new ResponseTypeGroupDTO.Data 
+                    { TypleName = item.Name }).ToList(),
+                });
+
+            return  result;
+        } 
+
+
+
         //獲取指定數量及是否上架之遊戲Method
-        public async Task<List<IndexList>> GetSingleProducts(int IsShop, int i, int j)
+        public async Task<List<IndexList>> GetSingleProducts(int IsShop)
         {
             var game = Repository.GetAll<Game>().Where(x => x.ReleaseState == IsShop);
             var pic = Repository.GetAll<GameMedium>().Where(x => x.InstructionType == 2 && x.Instruction == 1);
@@ -29,15 +51,18 @@ namespace Services
                 GameName = x.GameName,
                 GameIndexPicture = p.MediaUrl,
                 GamePrice = x.GamePrice
-            }).Skip(i).Take(j).ToListAsync();
+            }).ToListAsync();
             return gameMedia;
         }
 
         //首頁Method
         public async Task<IndexProductDTO> GetIndesSwipper()
         {
-            var firstArea = await GetProductItem(1, 0, 7);
-            var secondArea = await GetProductItem(1, 0, 3);
+            var firstArea = await GetProductItem(1);
+            firstArea.Take(7);
+            var secondArea = await GetProductItem(1);
+            //之後要skip()
+            secondArea.Take(3);
             var result = new IndexProductDTO
             {
                 FirstAreaProduct = firstArea,
@@ -47,9 +72,9 @@ namespace Services
         }
 
         //基於首頁Swipper衍生之Method
-        public async Task<List<ResponseProductItem>> GetProductItem(int IsShop, int i, int j)
+        public async Task<List<ResponseProductItem>> GetProductItem(int IsShop)
         {
-            var gameMedium = await GetSingleProducts(IsShop, i, j);
+            var gameMedium = await GetSingleProducts(IsShop);
             var result = new List<ResponseProductItem>();
             foreach (var item in gameMedium)
             {
@@ -67,7 +92,7 @@ namespace Services
         //抓取全圖片版銷售最好(之後會將其他需求擴充至此)
         public async Task<List<IndexList>> GetProductList()
         {
-            var game = await GetSingleProducts(1, 0, 0);
+            var game = await GetSingleProducts(1);
 
             //之後會添加判斷是來篩選各類需求產品排序
             var newGame = game.OrderBy(x => x.ReleaseTime).Take(5);
@@ -94,7 +119,8 @@ namespace Services
         //GetProductList  多徒多標籤介紹
         public async Task<IndexList> GetDetailsList(int id)
         {
-            var game = await test(id);
+            var game = await GetProductItemDateals(id);
+           
             var pic = await Repository.FindBy<GameMedium>(x => x.GameId == id && x.InstructionType == 1 && x.Instruction == 1).OrderByDescending(x => x.Sort).ToListAsync();
             var result = new IndexList()
             {
@@ -103,7 +129,7 @@ namespace Services
                 GamePrice = game.GamePrice,
                 TypeData = game.GameTyple.Select(item => new IndexList.ProductType
                 { 
-                    GameId = item.GameId, TypleName = item.TypleName 
+                    TypleName = item.TypleName 
                 }).ToList(),
                 GameUrl = pic.Select(item=> new IndexList.ProductUrl {
                     Url = item.MediaUrl 
@@ -113,18 +139,13 @@ namespace Services
             return result;
         }
 
-        //商品詳細頁面，之後或許會與考慮引用ProductList來重構
+        //商品詳細頁面
         public async Task<ResponseProducDetailsDTO> ProductView(int id)
         {
-            //var game = await Repository.FindBy<Game>(x => x.GameId == id).FirstOrDefaultAsync();
-            var getGame = await test(id);
+            var getGame = await GetProductItemDateals(id);
             var pic = await Repository.FindBy<GameMedium>(x => x.GameId == id && x.InstructionType == 2 && x.Instruction == 1).FirstOrDefaultAsync();
             
             var discount = await Repository.FindBy<GameDiscount>(x => x.GameId == id ).FirstOrDefaultAsync();
-
-            //var typle = Repository.FindBy<GameType>(x => x.GameId == id);
-            //var typlist = Repository.GetAll<Typelist>();
-            //var gameTyple = await typle.Join(typlist, x => x.TypelistId, y => y.TypelistId, (x, y) =>new { x.GameId, y.Name }).ToListAsync();
 
             var result = new ResponseProducDetailsDTO()
             { 
@@ -137,18 +158,12 @@ namespace Services
                 Marker = getGame.Marker,
                 DisscountTake = discount.DiscountTake,
                 GameTyple = getGame.GameTyple,
-                //GameTyple = gameTyple.Select(item=> new ResponseProducDetailsDTO.TypleData 
-                //{ 
-                //    GameId=item.GameId,
-                //    TypleName=item.Name,
-                //}).ToList(),
                 GamePicture = pic.MediaUrl,
             };
-
             return result;
         }
 
-        public async Task<ResponseProducDetailsDTO> test(int id) 
+        public async Task<ResponseProducDetailsDTO> GetProductItemDateals(int id) 
         {
             var game = await Repository.FindBy<Game>(x => x.GameId == id).FirstOrDefaultAsync();
             var typle = Repository.FindBy<GameType>(x => x.GameId == id);
@@ -170,11 +185,8 @@ namespace Services
                     TypleName = item.Name,
                 }).ToList(),
             };
-
             return result;
         }
-
-
 
         //以下為商品詳細之GET API 考慮整合
         public async Task<RequestProducDetailsDTO> ProductSwipper(int id)
