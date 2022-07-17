@@ -1,4 +1,5 @@
 ﻿
+
 //在JS中建立集線器
 var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 //與Service建立連線
@@ -11,8 +12,8 @@ connection.start()
 let useridArray = []
 let groupnameArray = []
 let del = document.querySelector(".delete-type")
-let rightmenudel = document.querySelector(".group-delete")
-let group = document.querySelector(".friend-group")
+let rightmenudel = document.querySelector("#groupdelete")
+let group = document.querySelectorAll(".friend-group")
 let friendarray = []
 let frienddetails = {}
 //用來限制聊天框一次只能產出一個
@@ -45,6 +46,7 @@ let addblock = document.querySelector(".add")
 let check = document.querySelector(".check")
 let friendgroup = document.querySelector(".friends")
 let AllFriends = document.querySelectorAll(".friend-li")
+let delmodal = document.getElementById("delModal")
 //載入的時候判斷裝置，決定有什麼樣功能
 window.onload = function () {
     Setnavbar(".container-fluid");
@@ -60,11 +62,34 @@ allgrouop.forEach(item => {
     item.style.cursor = 'pointer'
     let span = item.querySelector(".friends-span")
     let list = item.querySelector(".friend-ul")
-    span.onclick = function () {
-        $(list).toggle()
+    span.onmousedown = function (e) {
+        if (e.which == 3) {
+
+            delmenuCTRL(item)
+            let delcheck = document.querySelector(".del-check")
+            delcheck.onclick = function () {
+                var data = {
+                    Groupname: span.innerHTML,
+                }
+                var url = "/Friend/DeleteGroup"
+                Post(url,data)
+            }
+        }
+        else {
+            $(list).toggle()
+        }
+       
+        
     }
 })
-
+let delcancel = document.querySelector(".del-cancel")
+delcancel.onclick = function () {
+    delModal.style.display = 'none'
+}
+let delclose = document.querySelector(".del-close")
+delclose.onclick = function () {
+    delModal.style.display = 'none'
+}
 
 
 //產出好友清單
@@ -131,10 +156,47 @@ R.onmousedown = function (e) {
 // 滑鼠點擊其他位置時隱藏自定義選單
 document.onclick = function () {
     rightmenu.style.display = 'none';
+    groupdelete.style.display = 'none'
 }
 addtype.onclick = function () {
     modal.style.display = "block";
 }
+del.onclick = function () {
+    delmodal.style.display = "block"
+}
+function Post(url,data) {
+    fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+            'content-type': 'application/json'
+        }
+
+    })
+        .then(res => { return res.json() })
+        .then(result => console.log(result))
+}
+async function Get(url) {
+    await fetch(url)
+        .then(res => res.json())
+        .then(res => res.forEach((index => {
+            
+            if (index.userId == fid.value) {
+                let div = document.createElement("div")
+                let p = document.createElement("p")
+                let timep = document.createElement("p")
+                let show = document.querySelector(".show")
+                p.setAttribute("class", "content px-2 py-2 my-1")
+                p.innerHTML = index.chatContent
+                div.append(p)
+                show.append(div)
+            }
+
+        })))
+
+       
+}
+
 //產出群組分類
 function chooseFriend() {
     var li2 = document.querySelectorAll(".friend-li2")
@@ -146,8 +208,6 @@ function chooseFriend() {
 
                 groupnameArray.push(groupname.value)
                 useridArray.push(userid.value)
-                console.log(groupnameArray)
-                console.log(useridArray)
 
                 addblock.append(tag(tagname))
                 item.style.display = 'none'
@@ -172,30 +232,8 @@ function chooseFriend() {
         }
     })
 }
-function SendGroupData(data) {
-    fetch("/Friend/CreateGroup", {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-            'content-type':'application/json'
-        }
 
-    })
-        .then(res => { return res.json() })
-        .then(result => console.log(result))
-}
-function SendChatData(data) {
-    fetch("/Friend/CreateChatContext", {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-            'content-type': 'application/json'
-        }
 
-    })
-        .then(res => { return res.json() })
-        .then(result => console.log(result))
-}
 
 //桌機能用的功能
 function computer() {
@@ -232,9 +270,9 @@ function computer() {
                 modal.style.display = 'none'
                 addblock.innerHTML = ' '
                 choose.innerHTML = ' '
-                groupname.value = ' '
-                SendGroupData(data)
-                console.log(data)
+            groupname.value = ' '
+            var url = "/Friend/Chat"
+                Post(url,data)
                 //AllFriends.forEach(item => {
                 //    choose.append(getfriend2(item.img, item.name, item.line))
                 //    chooseFriend()
@@ -259,6 +297,7 @@ function computer() {
             groupnameReset()
         }
     })
+
     let friend = document.querySelectorAll(".friend-li")
     friend.forEach((item => {
         item.setAttribute("draggable", true)
@@ -273,7 +312,9 @@ function computer() {
                 //如果將目標拖移至右側，則展開與該目標的對話畫面
                 if (e2.clientX > 250 && bool == true) {
                     bool = false
- 
+                    var url = "/Friend/ReadChatContent"
+                    Get(url)
+                   
                     let id = item.querySelector("#friendid").value
                     let img = item.querySelector("img").src
                     let name = item.querySelector(".friend-name").innerText
@@ -299,7 +340,7 @@ function computer() {
                                 ChatContent: text.value,
                                 UserId: fid.value,
                             }
-                       
+                            var url = "/Friend/CreateChatContext"
 
 
                             timep.innerText = `${time.getHours().toString().padStart(2, "0")}:${time.getMinutes().toString().padStart(2, "0")}`
@@ -310,7 +351,7 @@ function computer() {
                             text.value = ' '
                             div.append(p, timep)
                             show.append(div)
-                            SendChatData(chatdata)
+                            Post(url,chatdata)
                         }
                     })
                     //上傳圖片
@@ -333,7 +374,7 @@ function computer() {
 //手機能用的功能
 function phone() {
     AllFriends.forEach(item => {
-        i++
+
         ul.append(getfriend(item.img, item.name, item.line))
 
     })
@@ -404,6 +445,19 @@ function rightmenuCTRL(e) {
         rightmenu.style.display = 'block';
         rightmenu.style.left = e1.clientX + scrollLeft + 'px';
         rightmenu.style.top = e1.clientY + scrollTop + 'px';
+    }
+}
+
+function delmenuCTRL(e) {
+    e.oncontextmenu = function (e1) {
+        var e1 = e1 || window.event;
+        e1.preventDefault();  //阻止系統右鍵選單
+        // 顯示自定義的選單調整位置
+        let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;// 獲取垂直滾動條位置
+        let scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft;// 獲取水平滾動條位置
+        groupdelete.style.display = 'block';
+        groupdelete.style.left = e1.clientX + scrollLeft + 'px';
+        groupdelete.style.top = e1.clientY + scrollTop + 'px';
     }
 }
 

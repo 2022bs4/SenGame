@@ -151,7 +151,7 @@ namespace SqlModels.Data
 
                 entity.HasOne(d => d.FriendChat)
                     .WithMany()
-                    .HasForeignKey(d => d.ChatId)                 
+                    .HasForeignKey(d => d.FriendChatId)                 
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Chat_FriendChat");
 
@@ -761,8 +761,8 @@ namespace SqlModels.Data
                 entity.ToTable("FriendChat");
 
 
-                entity.HasIndex(e => e.ChatId, "IX_FriendChat_ChatId");
-                entity.HasIndex(e => e.UserId, "IX_FriendChat_UserId");
+                //entity.HasIndex(e => e.FriendChatId, "IX_FriendChat_ChatId");
+                //entity.HasIndex(e => e.UserId, "IX_FriendChat_UserId");
 
   
                 entity.Property(e => e.ChatTime).HasColumnType("datetime");

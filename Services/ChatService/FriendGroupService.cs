@@ -31,8 +31,10 @@ namespace Services.ChatService
 
             foreach (var friend in data)
             {
+           
                 result.Add(new FriendGroupDTO
                 {
+                   
                     GroupName = friend.GroupName,
 
                 });
@@ -41,12 +43,13 @@ namespace Services.ChatService
 
             return result;
         }
+
         public List<FriendGroupDTO> GetFriend(string id)
         {
 
-            var TheUser = Repository.FindBy<UserModel>(x => x.Id == id).FirstOrDefault();
+           
 
-            var groups = Repository.GetAll<Usergroup>().Where(x => x.UserId == TheUser.Id).Select(x => x.FriendGroupId);
+            var groups = Repository.GetAll<Usergroup>().Where(x => x.UserId == id).Select(x => x.FriendGroupId);
 
 
             var result = new List<FriendGroupDTO>();
@@ -70,8 +73,48 @@ namespace Services.ChatService
             }
             return result;
         }
+        public List<FriendGroupDTO> GetChatContent(string id)
+        {
+            var chats = Repository.GetAll<Chat>().Where(x => x.UserId == id).Select(x=>x.FriendChatId);
+            var result = new List<FriendGroupDTO>();
+            foreach(var chat in chats)
+            {
+                var contents = Repository.GetAll<FriendChat>().Where(x => x.FriendChatId == chat).Select(x => new { x.UserId, x.ChatContent, x.ChatTime, x.PictureFile });
+                foreach(var content in contents) 
+                {
+                    
+                    result.Add(new FriendGroupDTO
+                    {
+                        UserId = content.UserId,
+                        ChatContent = content.ChatContent,
+                        PictureFile = content.PictureFile,
+                        ChatTime = content.ChatTime,
+                        
+                    }); 
+                }
+            }
+            return result;
+        }
+        public List<FriendGroupDTO> DeleteGroup(string groupname)
+        {
+            var group = Repository.GetAll<FriendGroup>().Where(x => x.GroupName == groupname).Select(x => new { x.FriendGroupId, x.UserId, x.GroupName });
+            var friend = group.Join(Repository.GetAll<Usergroup>(), s => s.FriendGroupId, x => x.FriendGroupId, (s, x) => new { s.FriendGroupId, s.GroupName, x.UserGroupId, s.UserId });
+            var result = new List<FriendGroupDTO>();
+            foreach(var item in friend)
+            {
+                result.Add(new FriendGroupDTO
+                {
+                    FriendGroupId = item.FriendGroupId,
+                    UserGroupId = item.UserGroupId,
+                    UserId = item.UserId,
+                    GroupName = item.GroupName,
+                });
+            }
+            return result;
+        }
 
 
     }
+
 
 }

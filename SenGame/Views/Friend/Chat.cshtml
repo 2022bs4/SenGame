@@ -31,15 +31,30 @@
     </div>
 </div>
 <div id="rightmenu">
-            <span class="add-type">建立群組</span>
+     <span class="add-type">建立群組</span>
 </div>
-<!-- <div class="group-delete">
+<div id="groupdelete">
     <span class="delete-type">刪除群組</span>
-</div> -->
+</div> 
 <!-- 群組分類的modal -->
 <div id="myModal" class="modal">
     <partial name="_GroupPartial"/>
 </div>
+<div id="delModal" class="modal">
+    <div class="modal-content-del  position-relative">
+      <div class="modal-header">
+        <span class="del-type">刪除群組</span>
+          <span aria-hidden="true" class="del-close position-absolute">&times;</span>
+      </div>
+      <div class="modal-body">
+        <p class="del-text">確定要刪除此群組嗎?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn del-cancel" data-dismiss="modal">取消</button>
+        <button type="button" class="btn del-check">狠心刪除</button>
+      </div>
+    </div>
+  </div>
 <template id="friendcard">
     <div class="friend-li pl-2 py-3 w-100">
         <img class="friend-img user-select-none"  src="https://picsum.photos/50/50/?random=150">

@@ -14,6 +14,7 @@ namespace SqlModels.ViewModels
         public class Group
         {
             public string GroupName { get; set; }
+           
             public List<Friend> Friends { get; set; }
         }
 
@@ -29,6 +30,8 @@ namespace SqlModels.ViewModels
         public string[] GroupNames { get; set; }
         public string UserId { get; set; }
         public string ChatContent { get; set; }
+        public string Groupname { get; set; }
+        
     }
 
 

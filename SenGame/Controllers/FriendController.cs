@@ -50,6 +50,7 @@ namespace SenGame.Controllers
 
             var groupname =  _service.GetGroup(id);
             var allfriend = _service.GetFriend(id);
+          
             var result = new FriendViewModel()
             {
                 Groups = groupname.Select(x => new FriendViewModel.Group
@@ -73,42 +74,50 @@ namespace SenGame.Controllers
             return View(result);
         }
         [HttpPost]
-        public IActionResult Chat()
-        {
-            return View();
-        }
-        [HttpPost]
-        public async Task<IActionResult> CreateGroup([FromBody]FriendViewModel group)
+        public async Task<IActionResult> Chat([FromBody] FriendViewModel group)
         {
             UserModel LoginUser = await _userManager.GetUserAsync(HttpContext.User);
             var userid = LoginUser.Id;
-          
-            for(int i = 0; i < group.GroupNames.Length; i++)
+
+            for (int i = 0; i < group.GroupNames.Length; i++)
             {
                 var friendgroup = new FriendGroup();
                 friendgroup.GroupName = group.GroupNames[i];
                 friendgroup.UserId = group.Ids[i];
-                _service.Create<FriendGroup> (friendgroup);
+                _service.Create<FriendGroup>(friendgroup);
 
                 var usergroup = new Usergroup();
                 usergroup.UserId = userid;
                 usergroup.FriendGroupId = friendgroup.FriendGroupId;
                 _service.Create<Usergroup>(usergroup);
             }
-      
-            
+
+
             return Ok();
         }
+        [HttpPost]
+        public async Task<IActionResult> PostFriendId([FromBody]ForumViewModel friendid)
+        {
+            UserModel LoginUser = await _userManager.GetUserAsync(HttpContext.User);
+            var  id = LoginUser.Id;
+            var result = _service.GetChatContent(id);
+           
+            return RedirectToAction("ReadChatContent", result);
+        }
+        [HttpGet]
+        public async Task<IActionResult> ReadChatContent(string id)
+        {
+            UserModel LoginUser = await _userManager.GetUserAsync(HttpContext.User);
+             id = LoginUser.Id;
+            var result = _service.GetChatContent(id);
+            return Ok(result);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateChatContext([FromBody]FriendViewModel context)
         {
             UserModel LoginUser = await _userManager.GetUserAsync(HttpContext.User);
             var userid = LoginUser.Id;
-
-
-
-            
-
 
             FriendChat fc = new FriendChat();
             fc.ChatContent = context.ChatContent;
@@ -122,10 +131,29 @@ namespace SenGame.Controllers
             chat.UserId = userid;
             _service.Create<Chat>(chat);
 
+            return Ok();
+        }
+        public async Task<IActionResult> DeleteGroup([FromBody] FriendViewModel context)
+        {
+            UserModel LoginUser = await _userManager.GetUserAsync(HttpContext.User);
+            var userid = LoginUser.Id;
+            var friend = _service.DeleteGroup(context.Groupname);
+           foreach(var item in friend)
+            {
+             var fg = new FriendGroup();
+                fg.FriendGroupId = item.FriendGroupId;
+                fg.GroupName = item.GroupName;
+                fg.UserId = item.UserId;
 
+                var ug = new Usergroup();
+                ug.UserGroupId = item.UserGroupId;
+                ug.UserId = userid;
+                ug.FriendGroupId = fg.FriendGroupId;
 
+                 _service.Delete<Usergroup>(ug);
+                 _service.Delete<FriendGroup>(fg);                   
 
-
+            }
 
 
             return Ok();

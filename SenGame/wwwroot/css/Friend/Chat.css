@@ -31,9 +31,9 @@ body::-webkit-scrollbar-thumb {
         width: 100%;
     }
 
-    .chat-content .chat-right {
-        display: none;
-    }
+.chat-content .chat-right {
+    display: none;
+}
 .message-content{
     position:relative;
     height:80vh;
@@ -275,32 +275,41 @@ div[class^="friend-li"] {
     margin: auto;
     margin-top: 5em;
 }
+.modal-content-del {
+    background-color: #1e262c;
+    color: #fff;
+    text-align: center;
+    max-width: 500px;
+    margin: auto;
+    margin-top: 20em;
+}
 
-    .modal-content .close {
-        right: 0;
-        top: 0;
-        width: 30px;
-        color: #fff;
-        cursor: pointer;
-    }
+.modal-content .close, .del-close {
+    right: 0;
+    top: 0;
+    width: 30px;
+    color: #fff;
+    cursor: pointer;
+}
 
-    .modal-content .new-type {
-        font-size: 2em;
-        padding-top: 0.5em;
-        text-align: start;
-        padding-left: 1.4em;
-    }
+
+.modal-content .new-type, .modal-content-del .del-type {
+    font-size: 2em;
+    padding-top: 0.5em;
+    text-align: start;
+    padding-left: 1.4em;
+}
 
     .modal-content .text {
         text-align: start;
         margin-left: 3em;
     }
 
-    .modal-content .modal-title #groupname {
-        background-color: #edf1f2;
-        width: 83%;
-        margin-left: 1em;
-    }
+.modal-content .modal-title #groupname {
+    background-color: #edf1f2;
+    width: 83%;
+    margin-left: 1em;
+}
 
     .modal-content .modal-title .add {
         display: -webkit-box;
@@ -368,14 +377,23 @@ div[class^="friend-li"] {
             color: #eee;
             border: none;
         }
+.del-check {
+    background-color: #f56c2d;
+    color: #eee;
+    border: none;
+}
+.del-cancel {
+    background-color: #3d4450;
+    color: #fff;
+    border: 1px solid #fff;
+}
+.modal-content .modal-btn-ctrl .cancel {
+    background-color: #3d4450;
+    color: #fff;
+    border: 1px solid #fff;
+}
 
-        .modal-content .modal-btn-ctrl .cancel {
-            background-color: #3d4450;
-            color: #fff;
-            border: 1px solid #fff;
-        }
-
-#rightmenu {
+#rightmenu,#groupdelete {
     border: 1px solid #ccc;
     background: #eee;
     position: absolute;
@@ -385,14 +403,14 @@ div[class^="friend-li"] {
     cursor: pointer;
 }
 
-    #rightmenu:hover {
+    #rightmenu:hover ,#groupdelete:hover{
         background-color: #1e262c;
         color: #fff;
         -webkit-transition: 1s;
         transition: 1s;
     }
 
-    #rightmenu .add-type {
+    #rightmenu .add-type ,#groupdelete .delete-type{
         padding-left: 1em;
     }
 
