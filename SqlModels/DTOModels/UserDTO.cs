@@ -80,11 +80,34 @@ namespace SqlModels.DTOModels
 
 
     //-------------------------從這裡開始是 璇   的OOOOOOOOOOOOO-----------------------------------
-
-    public class OutputUserDTO
+    
+    //我的個人檔案隱私
+    public class prypersonalOutputUserDTO
     {
         public int UserPrivacyId { get; set; }
-        
+    }
+    public class prypersonalInputUserDTO
+    {
+        public string UserPrivacyName { get; set; }
+    }
+
+    //遊戲資料隱私
+    public class prygameOutputUserDTO
+    {
+        public int UserPrivacyId { get; set; }
+    }
+    public class prygameInputUserDTO
+    {
+        public string UserPrivacyName { get; set; }
+    }
+
+    //好友隱私設定
+    public class OutputUserDTO
+    {
+        public int UserPriPersonal{ get; set; }
+        public int Userprygame { get; set; }
+        public int UserFriendList { get; set; }
+        public string message { get; set; }
     }
     public class InputUserDTO
     {

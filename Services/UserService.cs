@@ -68,7 +68,6 @@ namespace Services
             return gamelist;
         }
 
-        
         public UserDTO MyGameDetail(string GameName)
         {
             var game = Repository.GetAll<Game>().Where(g => g.GameName == GameName);
@@ -101,31 +100,65 @@ namespace Services
         //-------------------------從這裡開始是 璇   的OOOOOOOOOOOOO-----------------------------------
 
 
-        public List<UserDTO> PrivacyList(string UserId)
-        {
-            throw new NotImplementedException();
-        }
+        public OutputUserDTO PrivacyList(string userId, int personId, int friendId, int gameId)
+        { 
+            var updata = Repository.FindBy<UserModel>(x => x.Id == userId).First();
+            OutputUserDTO result = new OutputUserDTO();
+            try
+            {
+                updata.PrivacyPersonalFile = personId;
+                updata.PrivacyGameFile = gameId;
+                updata.PrivacyFriendsList = friendId;
 
-        //public List<UserDTO> PrivacyList(string UserId)
-        //{
-        //    var PrivacyPersonalFile = Repository.GetAll<UserPrivacy>().Where(p => p.PrivacyPersonalFile == UserPrivacyId);
-        //    return privacylist;
-        //}
+                Update<UserModel>(updata);
+                result.message = "您的隱私設定已更改成功";
+            }
+            catch
+            { 
+                result.message = "您的設定更改失敗";
+            }
 
-        public InputUserDTO test(string userId , int status)
-        {
-            var frindList = Repository.FindBy<UserModel>(x => x.Id == userId).FirstOrDefault();
 
-            frindList.PrivacyFriendsList = status;
-            //試試看下斷點
-            Repository.Update<UserModel>(frindList);
-            Repository.SaveChanges();
-            //var test
-
-            var result = new InputUserDTO();
 
             return result;
         }
+
+        //我的個人檔案隱私
+        //public prypersonalInputUserDTO prypersonalFile(string userId, int status)
+        //{
+        //    var personalList = Repository.FindBy<UserModel>(x => x.Id == userId).FirstOrDefault();
+        //    personalList.PrivacyPersonalFile = status;
+
+        //    Repository.Update<UserModel>(personalList);
+
+        //    var result1 = new prypersonalInputUserDTO();
+        //    return result1;
+        //}
+        ////遊戲資料隱私
+        //public prygameInputUserDTO prygameFile(string userId, int status)
+        //{
+        //    var gameList = Repository.FindBy<UserModel>(x => x.Id == userId).FirstOrDefault();
+        //    gameList.PrivacyGameFile = status;
+
+        //    Repository.Update<UserModel>(gameList);
+
+        //    var result2 = new prygameInputUserDTO();
+        //    return result2;
+        //}
+
+        ////好友隱私設定
+        //public InputUserDTO test(string userId , int status)
+        //{
+        //    var frindList = Repository.FindBy<UserModel>(x => x.Id == userId).FirstOrDefault();
+
+        //    frindList.PrivacyFriendsList = status;
+        //    //試試看下斷點
+        //    Repository.Update<UserModel>(frindList);
+        //    Repository.SaveChanges();
+        //    //var test
+        //    var result = new InputUserDTO();
+        //    return result;
+        //}
 
         //-------------------------從這裡結束是 璇   的OOOOOOOOOOOOO-----------------------------------
 
