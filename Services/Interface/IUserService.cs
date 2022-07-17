@@ -1,4 +1,5 @@
 ﻿using SqlModels.DTOModels;
+using SqlModels.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,9 +23,14 @@ namespace Services.Interface
 
         //-------------------------從這裡開始是 璇   的OOOOOOOOOOOOO-----------------------------------
 
-        public List<UserDTO> PrivacyList(string UserId);
-        //璇的隱私狀態
-        public InputUserDTO test(string userId, int status);
+        public OutputUserDTO PrivacyList(string userId,int personId, int friendId, int gameId);
+
+        //我的個人檔案隱私
+        //public prypersonalInputUserDTO prypersonalFile(string userId, int status);
+        ////遊戲資料隱私
+        //public prygameInputUserDTO prygameFile(string userId, int status);
+        ////好友隱私設定
+        //public InputUserDTO test(string userId, int status);
 
         //-------------------------從這裡結束是 璇   的OOOOOOOOOOOOO-----------------------------------
 

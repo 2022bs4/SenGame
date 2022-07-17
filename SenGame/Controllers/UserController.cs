@@ -216,10 +216,32 @@ namespace SenGame.Controllers
             //抓登入使用者的id
             //var userId = GetUserId();
             string userId = "4c01f614-06bf-4fd6-897a-a62a0af4b64c";
-            var id = model.UserPrivacyId;
-            var result = _service.test(userId , id);
-
             TempData["actiontype"] = "privacy";
+            //model.UserPriPersonal == null || model.UserFriendList == null || model.Userprygame == null
+            if (model == null)
+            {
+                var def = new OutputUserDTO();
+                def.message = "隱私設定失敗，請選擇隱私選項";
+                return Json(def);
+            }
+            else
+            {
+                var person = model.UserPriPersonal;
+                var game = model.Userprygame;
+                var list = model.UserFriendList;
+
+                var result = _service.PrivacyList(userId, person, game, list);
+                return Ok(result);
+
+            }
+            
+            ////遊戲資料隱私
+            //var result1 = _service.prypersonalFile(userId, id);
+            ////遊戲資料隱私
+            //var result2 = _service.prygameFile(userId, id);
+            ////好友隱私設定
+            //var result = _service.test(userId , id);
+
 
             #region
             //if (ModelState.IsValid)
@@ -234,7 +256,6 @@ namespace SenGame.Controllers
             //}
             #endregion
             //下斷點
-            return Ok();
         }
         //顯示privacy資訊
         public IActionResult DisplayPrivacy(string privacy)
@@ -248,13 +269,15 @@ namespace SenGame.Controllers
 
             return View();
         }
-
+        #region 
         //public async Task<string> GetUserId()
         //{
         //    //UserModel user = await _manger.GetUserAsync(HttpContext.User);
         //    //var userId = user.Id;
         //    //return userId;
         //}
+        #endregion
+
         //-------------------------從這裡結束是 璇   的OOOOOOOOOOOOO-----------------------------------
 
 
