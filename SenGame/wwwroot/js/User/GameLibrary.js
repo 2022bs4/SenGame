@@ -17,6 +17,8 @@ $(document).ready(function () {
 $(function () {
     $(".mygame-list-detail>li").click((e) => {
         //先清空節點裡的子元素
+        var main = document.querySelector("main");
+        main.style.height = "100%";
         game.innerHTML = "";
         swiperwrapper.innerHTML = "";
         console.log(e.target.innerHTML);
@@ -113,6 +115,7 @@ var swiper = new Swiper(".mySwiper", {
         el: ".swiper-pagination",
         clickable: true,
     },
+    autoplay: { delay: 3000 },
     observer: true,
 });
 
