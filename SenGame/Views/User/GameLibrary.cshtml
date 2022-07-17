@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="~/css/User/GameLibrary.css" asp-append-version="true"/>
 }
     <div class="mygame d-flex ">
-        <div class="mygame-list col-md-3">
+        <div class="mygame-list col-md-3" oncontextmenu="myFunction()">
             <partial name="_GameListPartial" />
         </div>
         <div class="game col-md-9">
@@ -22,6 +22,10 @@
                 </div>
              </div> 
         </div>
+    </div>
+    <div id="ul">
+        <li>加到我的最愛</li>
+        <li>移除我的最愛</li>
     </div>
 
 

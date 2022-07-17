@@ -150,3 +150,23 @@ main .mygame .swiper-slide {
         transition: 0.5s;
     }
 }
+#ul {
+    width: 120px;
+    height: 150px;
+    background-color: #cccccc;
+    border-radius: 10px;
+    font-size: 1rem;
+    list-style: none;
+    line-height: 50px;
+    position: fixed;
+    display: none;
+}
+
+#ul li {
+    padding-left: 15px;
+}
+
+#ul li:hover {
+    color: azure;
+    cursor: pointer;
+}

@@ -82,7 +82,7 @@ namespace SenGame.Controllers
         }
 
         [HttpPost]
-        public IActionResult _GameDetailPartial([FromBody] Game_Name name)
+        public IActionResult GameLibrary([FromBody] Game_Name name)
         {
 
             #region

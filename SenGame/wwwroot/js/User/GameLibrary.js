@@ -7,11 +7,48 @@ var game = document.querySelector(".game-list-detail");
 var getgamecard = document.getElementById("gamedetail");
 var swiperwrapper = document.querySelector(".swiper-wrapper");
 var swiper = document.getElementById("swiper");
+//自定義右鍵菜單
+var ul = document.getElementById("ul");
 
 
 $(document).ready(function () {
-    
+    custommenu()
 });
+function custommenu() {
+    document.querySelector(".mygame-list-detail").onmousedown = function (e) {
+
+        document.getElementById("ul").onmousedown = function (h) {
+            console.log(e.target.innerHTML);
+            console.log(h.target.innerHTML)
+            if (h.target.innerHTML == "加到我的最愛") {
+                console.log("zxc");
+            }
+            else {
+                console.log("asd")
+            }
+
+        }
+    }
+}
+
+function myFunction(e) {
+    e = e || window.event;
+    e.preventDefault ? e.preventDefault() : (e.returnValue = false);
+    var x = e.clientX;
+    var y = e.clientY;
+
+    ul.style.display = 'block';
+    ul.style.top = y + 'px';
+    ul.style.left = x + 'px';
+
+
+}
+document.onmousedown = function (e) {
+    ul.style.display = "none"
+}
+
+
+
 
 //獲取當前點擊到的遊戲資料
 $(function () {
@@ -27,7 +64,7 @@ $(function () {
         //    console.log(res)
         //}, 'json') 
 
-        fetch('/User/_GameDetailPartial', {
+        fetch('/User/GameLibrary', {
             method: 'Post',
             headers: new Headers({
                 'Content-Type': 'application/json :charset=UTF-8'
