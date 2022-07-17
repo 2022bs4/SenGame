@@ -1,5 +1,5 @@
 main {
-    height: 100%;
+    height: 100vh;
     background: #edf1f2;
     -webkit-transition: all 0.5s;
     transition: all 0.5s;
@@ -20,13 +20,12 @@ main .mygame {
 main .mygame-list {
     border-right: 2px solid;
 }
-main .mygame-list li {
-   margin:10px 0;
+main .mygame-list-detail li  {
+    margin:10px 0;
 }
-
 main .mygame-list-detail li img {
-    width: 40%;
-    border-radius: 30px;
+    width:60%;
+    border-radius: 10px;
 }
 
 main .mygame-list-detail li p {
@@ -125,7 +124,7 @@ main .mygame .game-button {
 
 main .mygame .swiper {
     margin: 10px 0;
-    height: 200px;
+    height: 100%;
 }
 
 main .mygame .swiper-slide {

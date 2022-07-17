@@ -49,7 +49,6 @@ namespace SenGame.Controllers
             //_service.MyGameList(UserId)=>gamelist
             var uncategorizedGame = _service.UncategorizedGame(UserId).gamelist;
             var myfavouritegame = _service.MyFavouritrGame(UserId).myfavourite;
-
             var result = new GameLibraryViewModel()
             {
 
@@ -74,9 +73,10 @@ namespace SenGame.Controllers
                 //        GameName = item.GameName,
                 //        MediaUrl = item.MediaUrl,
                 //    }).ToList()
+                //};
 
             };
-            //};
+
 
             return View(result);
         }
