@@ -8,6 +8,8 @@ using static SqlModels.ViewModels.UserViewModels.EditUserLibraryViewModel;
 
 namespace SqlModels.DTOModels
 {
+    //-------------------------從這裡開始是 明翰 的OOOOOOOOOOOOO-----------------------------------
+
     public class UserDTO
     {   
         //我的遊戲庫的所有的遊戲集合(未分類)
@@ -74,15 +76,24 @@ namespace SqlModels.DTOModels
             public int PrivacyFriendsList { get; set; }  //好友名單 隱私設定
         }
     }
+    //-------------------------從這裡結束是 明翰 的OOOOOOOOOOOOO-----------------------------------
+
+
+    //-------------------------從這裡開始是 璇   的OOOOOOOOOOOOO-----------------------------------
 
     public class OutputUserDTO
     {
         public int UserPrivacyId { get; set; }
         
-
     }
     public class InputUserDTO
     {
         public string UserPrivacyName{ get; set; }
     }
+
+    //-------------------------從這裡結束是 璇   的OOOOOOOOOOOOO-----------------------------------
+
+
+    //-------------------------從這裡開始是 君君   的OOOOOOOOOOOOO-----------------------------------
+
 }

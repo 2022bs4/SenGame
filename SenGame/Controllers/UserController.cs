@@ -13,7 +13,6 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using static SqlModels.ViewModels.GameLibraryViewModel;
-using Microsoft.AspNetCore.Identity;
 
 
 namespace SenGame.Controllers
@@ -203,15 +202,13 @@ namespace SenGame.Controllers
             var privacymodel = new PrivacieLibraryViewModel();
             return View(privacymodel);
         }
-
+        #region
         //public async Task<IActionResult> E4_UserPrivacyList()
         //{
         //    var model = await _context.UserPrivacies.ToListAsync();
         //    return View(model);
         //}
-
-
-
+        #endregion
         [HttpPost]
         //[ValidateAntiForgeryToken]
         public IActionResult Post_E4_UserPrivacy([FromBody]OutputUserDTO model)
@@ -222,10 +219,9 @@ namespace SenGame.Controllers
             var id = model.UserPrivacyId;
             var result = _service.test(userId , id);
 
-
-
             TempData["actiontype"] = "privacy";
 
+            #region
             //if (ModelState.IsValid)
             //{
             //    //讀隱私代碼
@@ -236,6 +232,7 @@ namespace SenGame.Controllers
 
             //    return RedirectToAction("DisplayPrivacy", new { Privacy = privacy });
             //}
+            #endregion
             //下斷點
             return Ok();
         }

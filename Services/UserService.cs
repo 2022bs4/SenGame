@@ -20,6 +20,8 @@ namespace Services
 
         }
 
+        //-------------------------從這裡開始是 明翰 的OOOOOOOOOOOOO-----------------------------------
+
         public UserDTO UncategorizedGame(string UserId)
         {
             //uncategorized 未分類
@@ -93,6 +95,12 @@ namespace Services
             return gamedetail;
         }
 
+        //-------------------------從這裡結束是 明翰 的OOOOOOOOOOOOO-----------------------------------
+
+
+        //-------------------------從這裡開始是 璇   的OOOOOOOOOOOOO-----------------------------------
+
+
         public List<UserDTO> PrivacyList(string UserId)
         {
             throw new NotImplementedException();
@@ -118,6 +126,13 @@ namespace Services
 
             return result;
         }
+
+        //-------------------------從這裡結束是 璇   的OOOOOOOOOOOOO-----------------------------------
+
+
+
+        //-------------------------從這裡開始是 君君   的OOOOOOOOOOOOO-----------------------------------
+
     }
 }
         

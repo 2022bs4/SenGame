@@ -15,16 +15,18 @@ function ChangePrivacie() {
 }
 let sumbit = document.querySelector('.post_btn')
 let list = document.querySelector('.list')
+let list = document.querySelector('.list1')
+let list = document.querySelector('.list2')
 
 function submitValue() {
  
     //可以抓到選公開的時候可以是1，僅限好友是2
     list.addEventListener('change', function () {
         var option = this.options[this.selectedIndex];
+        $(`.list1`).attr("value", `${option.value}`) 
+        $(`.list2`).attr("value", `${option.value}`) 
         $(`.list`).attr("value", `${option.value}`) 
     })
-
-    
 }
 
 sumbit.addEventListener("click", function () {
