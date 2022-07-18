@@ -51,36 +51,36 @@ document.onmousedown = function (e) {
 
 
 //獲取當前點擊到的遊戲資料
-$(function () {
-    $(".mygame-list-detail>li").click((e) => {
-        //先清空節點裡的子元素
-        var main = document.querySelector("main");
-        main.style.height = "100%";
-        game.innerHTML = "";
-        swiperwrapper.innerHTML = "";
-        console.log(e.target.innerHTML);
-        var name = { GameName: e.target.innerHTML };
-        //$.post('/User/GameDeatial', name, function (res) {
-        //    console.log(res)
-        //}, 'json') 
+//$(function () {
+//    $(".mygame-list-detail>li").click((e) => {
+//        //先清空節點裡的子元素
+//        var main = document.querySelector("main");
+//        main.style.height = "100%";
+//        game.innerHTML = "";
+//        swiperwrapper.innerHTML = "";
+//        console.log(e.target.innerHTML);
+//        var name = { GameName: e.target.innerHTML };
+//        //$.post('/User/GameDeatial', name, function (res) {
+//        //    console.log(res)
+//        //}, 'json') 
 
-        fetch('/User/GameLibrary', {
-            method: 'Post',
-            headers: new Headers({
-                'Content-Type': 'application/json :charset=UTF-8'
-            }),
-            body: JSON.stringify(name)
-        })
-            .then((res) => res.json())
-            .then((res) => {
-                console.log(res)
-                getgamedetail(res)
-                //抓到集合帶進去參數
-                //用template方式append進去節點
+//        fetch('/User/GameLibrary', {
+//            method: 'Post',
+//            headers: new Headers({
+//                'Content-Type': 'application/json :charset=UTF-8'
+//            }),
+//            body: JSON.stringify(name)
+//        })
+//            .then((res) => res.json())
+//            .then((res) => {
+//                console.log(res)
+//                getgamedetail(res)
+//                //抓到集合帶進去參數
+//                //用template方式append進去節點
 
-            });
-    })
-})
+//            });
+//    })
+//})
 
 
 function getcard(mediaUrl, gameIntroduction, developer,marker, releaseTime) {
