@@ -1,0 +1,18 @@
+﻿<div class="main__friendslist row">
+    <partial name="_FriendListNavPartial"/>
+    <div class="main__content col-12 col-md-8">
+        <partial name="_ProfilePhotoPartial"/>
+        <div class="main__text col-12">
+            <div class="content row">
+                <h1 class="col-md-4">搜尋群組</h1>
+                <input class="form-control col-md-8" type="search" placeholder="輸入群組的名稱" aria-label="Search">
+            </div>
+        </div>
+    </div>
+</div>
+@section Css{
+    <link rel="stylesheet" href="~/css/Friend/Friend.css" asp-append-version="true"/>
+}
+@section Scripts{
+    <script src="~/js/Friend/Chat.js"></script>
+}

@@ -1,0 +1,30 @@
+﻿<div class="main__friendslist row">
+    <partial name="_FriendListNavPartial"/>
+    <div class="main__content col-12 col-md-8 row">
+        <partial name="_ProfilePhotoPartial"/>
+        <div class="main__text col-12">
+            <div class="search row" >
+                <h1 class="col-md-12">收到的邀請</h1>
+                <input class="form-control col-md-8" type="search" placeholder="以名稱搜尋收到的邀請" aria-label="Search">
+                <button type="button" class="btn btn-secondary col-md-4">全部忽略</button>
+            </div>
+            <div class="list">
+                抱歉，沒有可顯示的待處理好友邀請。
+            </div>
+            <div class="search row" >
+                <p class="col-md-12">送出的邀請</p>
+                <input class="form-control" type="search" placeholder="以名稱搜尋送出的邀請" aria-label="Search">
+            </div>
+            <div class="list">
+                抱歉，沒有可顯示的待處理已傳送邀請。
+            </div>
+        </div>
+    </div>
+</div>
+@section Css{
+    <link rel="stylesheet" href="~/css/Friend/Friend.css" asp-append-version="true"/>
+}
+@section Scripts{
+    <script src="~/js/Friend/Chat.js"></script>
+}
+

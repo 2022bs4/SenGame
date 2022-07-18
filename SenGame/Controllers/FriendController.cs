@@ -55,15 +55,34 @@ namespace SenGame.Controllers
         {
             return View();
         }
-        
 
-        
 
+
+        public IActionResult FriendList()
+        {
+            return View();
+        }
         public IActionResult AddFriend()
         {
             return View();
         }
-        public IActionResult WishList()
+        public IActionResult PendingInvites()
+        {
+            return View();
+        }
+        public IActionResult Groups()
+        {
+            return View();
+        }
+        public IActionResult PendingInvitesGroups()
+        {
+            return View();
+        }
+        public IActionResult FindGroup()
+        {
+            return View();
+        }        
+        public IActionResult GroupCreate()
         {
             return View();
         }
