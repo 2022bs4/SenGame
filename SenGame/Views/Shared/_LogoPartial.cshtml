@@ -7,25 +7,25 @@
     @if (a!=null)
     {
         <button class="text-light" type="button" id="user-list" data-toggle="dropdown"
-            aria-expanded="false" data-offset="-120,0">@a</button>
-        <div class="dropdown-menu" aria-labelledby="user-list">
+            aria-expanded="false" >@a</button>
+        <div class="dropdown-menu" aria-labelledby="user-list" id="dropdown" >
             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" >
-                <button type="submit" class=" logout" >Logout</button>
+                <button type="submit" class=" logout" >登出</button>
             </form>
-            <a href="/friend/User__information" class="dropdown-item">個人資料</a>
+            <a href="/User/User_information" class="dropdown-item">個人資料</a>
         </div>
     }
     else
     {
         <button class="login" type="button" id="user-list" data-toggle="dropdown"
             aria-expanded="false" data-offset="-120,0"></button>
-        <div class="dropdown-menu" aria-labelledby="user-list">
+        <div class="dropdown-menu dropright" aria-labelledby="user-list" id="dropdown" >
             <a asp-area="Identity" asp-page="/Account/Login" class="dropdown-item">註冊登入</a>
-            <a href="/friend/User__information" class="dropdown-item">個人資料</a>
+            <a href="/User/User_information" class="dropdown-item">個人資料</a>
         </div>
         
     }
-    <div>
+    </div>
    
 
 

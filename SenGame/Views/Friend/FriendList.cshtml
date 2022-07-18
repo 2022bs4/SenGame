@@ -1,0 +1,39 @@
+﻿<div class="main__friendslist row">
+    <partial name="_FriendListNavPartial"/>
+    <div class="main__content col-12 col-md-8 row">
+        <partial name="_ProfilePhotoPartial"/>
+        <div class="main__text col-12">
+            <div class="statistics row" >
+                <h1 class="col-md-4">您的好友 0 / 250</h1>
+                <button type="button" class="btn btn-info col-6 col-md-4">管理好友名單</button>
+                <button type="button" class="btn btn-secondary col-6 col-md-4">新增好友</button>
+            </div>
+            <form class="form-inline">
+                <input class="form-control col-md-9" type="search" placeholder="以名稱或遊戲搜尋好友" aria-label="Search">
+                <button class="btn btn-outline-success col-md-3" type="submit">Search</button>
+            </form>
+            <div class="list row card__friend">
+                <!-- 抱歉，沒有可顯示的好友。 -->
+                <div class="card col-12 col-md-4">
+                    <div class="row no-gutters">
+                        <div class="col-md-4 col-3">
+                            <img src="https://picsum.photos/50/50/?random=1">
+                        </div>
+                        <div class="col-md-8 col-9">
+                            <div class="card-body">
+                                <h5 class="card-title">好友1</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Css{
+    <link rel="stylesheet" href="~/css/Friend/Friend.css" asp-append-version="true"/>
+}
+@section Scripts{
+    <script src="~/js/Friend/Chat.js"></script>
+}

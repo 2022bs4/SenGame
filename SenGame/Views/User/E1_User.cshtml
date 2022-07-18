@@ -1,34 +1,19 @@
-﻿ @section Css{
-    <link rel="stylesheet" href="~/css/Friend/Member.css" asp-append-version="true"/>
+﻿@using SqlModels.ViewModels.UserViewModels
+@model EditUserLibraryViewModel
+@{
+    ViewData["Title"] = "SelectTagHelper";
+} 
+
+@section Css{
+    <link rel="stylesheet" href="~/css/User/User.css" asp-append-version="true"/>
  }
 
-<div class=" ml-auto row card-Member-Comment mb-3 mt-3 p-3 mr-3 ml-3" id="card-Edit_User">
-            <!-- 右邊那塊 -->
-            <div class="col-md-4 ml-0">
-                <div class="Edit-left-box card-body card Member-card ml-5">
-                    <!-- 顯示離線/上線狀態 -->
-                    <!-- 整個編輯清單 -->
-                    <!-- 返回個人檔案 -->
-                    <a href="/friend/User__information" class="btn btn-primary btn-block">返回個人檔案</a>
-                    <!-- 編輯清單 -->
-                    <div class="Edit-list mt-4 align-middle">
-                        <!-- 一般 (個人圖示+個人檔案背景+迷你個人檔案+主題 -->
-                        <a href="/friend/Edit1_User" class="list-group-item border-0"><span
-                                class="fa fa-inbox mr-2"></span><b>一般</b></a>
-                        <a href="/friend/Edit2_UserPhoto" class="list-group-item border-0"><span
-                                class="fa fa-paper-plane mr-2"></span>個人圖示</a>
-
-                        <a href="/friend/Edit3_UserTopic" class="list-group-item border-0"><span
-                                class="fa fa-ticket mr-2"></span>主題</a>
-                    </div>
-                    <!-- 分隔線 -->
-                    <hr class="Edit-divider mt-1 m-b-10">
-                    <div class="list-group mail-list">
-                        <a href="/friend/Edit4_UserPrivacy" class="list-group-item border-0"><span
-                                class="fa fa-tags mr-2"></span>隱私設定</a>
-                    </div>
-                </div>
-            </div>
+<!-- 下方區塊 (動態留言+個人狀態)  -->       
+<div class="mb-3 mt-3 ml-auto" id="card-Edit_User">
+    <!-- 留言 + 新增留言 -->
+    <div class="card-Member-Comment mb-3 mt-3 p-3 mr-3 ml-3">
+        <div class="row g-0">
+            <partial name="_UserEditPartial"/>
             <!-- 編輯畫面 1-->
             <div class="card-Edit1 col-md-8 card Member-card card-body">
                 <!-- 編輯畫面群組 -->
@@ -104,13 +89,9 @@
                                     class="text-danger">*</span>
                             </label>
                             <div class="col-lg-6">
-                                <select class="form-control" name="val-skill"  id="EditInput04" disabled>
-                                    <option value="">不顯示</option>
-                                    <option value="Taiwan">台灣</option>
-                                    <option value="USA">美國</option>
-                                    <option value="Japan">日本</option>
-                                    <option value="Nu">卡嘉布拉島</option>
-                                </select>
+                                <select asp-for="UserCountry" asp-items="Model.UserCountryies" class="form-control" id="EditInput04" disabled>
+                                    <option value="">==請選擇你的國家==</option>
+                                 </select>
                             </div>
                         </div>
                         <!-- 摘要 -->
@@ -137,11 +118,17 @@
                     </form>
                 </div>
             </div>
+
+        </div>
+    </div>
 </div>
 
 <!-- sweetalert -->
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
- @section Scripts{
-     <script src="~/js/Friend/User.js"></script>
- }
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/User/UserBtn01.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}

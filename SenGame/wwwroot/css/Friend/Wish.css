@@ -1,0 +1,208 @@
+﻿.display-options {
+    position: static;
+}
+
+    .display-options .dropdown-menu {
+        padding: 0px;
+        margin: 0px;
+        margin-top: 0px;
+        margin-left: -665px; /* 待修正 */
+        width: 1107px; /* 待修正 */
+    }
+
+.dropdown-menu label {
+    display: flex;
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+
+
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 10px;
+}
+
+.ui-state-highlight {
+    margin: 5px;
+    padding: 5px;
+    width: 150px;
+}
+
+.wishlist li {
+    background-color: #1e262c;
+    margin: 5px;
+    display: flex;
+    align-items: center;
+}
+
+#movable {
+    background-color: #1e262c;
+    padding: 10px 10px;
+    cursor: all-scroll;
+    color: #6C757D;
+}
+
+    #movable > div {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        margin-top: 60px
+    }
+
+.order {
+    height: 20px;
+    width: 30px;
+    margin-top: 50px;
+}
+
+#movable:hover .order_input {
+    background-color: #6C757D;
+}
+
+.order_input {
+    border: 0px;
+    text-align: center;
+    font-size: xx-small;
+    border-radius: 3px;
+    background-color: #1e262c;
+    height: 20px;
+    width: 30px;
+    animation-name: fade;
+    animation-duration: 0.5s;
+}
+
+.fa-sort {
+    display: inline;
+    display: inline-flex;
+}
+
+.line {
+    height: 166px;
+    width: 0.3em;
+    background-color: #edf1f2;
+}
+
+.wishlist__content {
+    display: flex;
+    align-items: center;
+}
+
+    .wishlist__content .row {
+        margin-right: 0px;
+        margin-left: 0px
+    }
+
+.wishlist__img {
+    padding-left: 25px;
+}
+
+.wishlish__text {
+    padding-left: 10px;
+}
+
+    .wishlish__text h2 {
+        color: #edf1f2;
+        font-size: larger;
+    }
+
+    .wishlish__text a {
+        text-decoration: none;
+    }
+
+    .wishlish__text p {
+        color: #edf1f2;
+    }
+
+.product_details {
+    margin: 10px 0px;
+    /* padding: 10px; */
+    display: flex;
+    flex-direction: column;
+}
+
+    .product_details p {
+        margin: auto;
+        font-size: xx-small;
+        margin-left: -15px;
+    }
+
+
+
+.buy_btn {
+    display: flex;
+    margin: 10px;
+    padding: 0px;
+    width: 100%;
+    background-color: #000;
+    border-right: 20px solid;
+}
+
+    .buy_btn p {
+        margin: auto;
+        color: #edf1f2;
+        font-size: initial;
+        padding: 0;
+        text-align: center;
+    }
+
+    .buy_btn button {
+        padding: 1px;
+        margin: 5px;
+    }
+
+.bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    .bottom button {
+        padding: 1px 10px;
+        margin: 5px;
+    }
+
+    .bottom p {
+        display: contents;
+        border-right: 10px solid;
+    }
+
+
+
+
+
+
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Verdana, sans-serif;
+}
+
+.wishlist__content img {
+    width: 292px;
+    height: 136px;
+    animation-name: fade;
+    animation-duration: 1.5s;
+}
+
+/* 漸變動畫 */
+.fade {
+    animation-name: fade;
+    animation-duration: 1.5s;
+}
+
+@keyframes fade {
+    from {
+        opacity: .4
+    }
+
+    to {
+        opacity: 1
+    }
+}

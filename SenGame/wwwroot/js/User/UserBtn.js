@@ -1,33 +1,37 @@
 ﻿
-//使用者主頁，加好友
-function Userinformation() {
-    var addbtn = document.getElementById("AddFriendBtn");
-    var cancelbtn = document.getElementById("CancelFriendBtn");
-    addbtn.onclick = function () {
-        if (cancelbtn.style.display == "none") {
-            cancelbtn.style.display = "block";
-            addbtn.value = "取消加好友Q";
-            Swal.fire({
-                position: 'top',
-                icon: 'success',
-                title: '已送出好友請求',
-                showConfirmButton: false,
-                timer: 1500
-            })
-        }
-        else {
-            cancelbtn.style.display = "none";
-            addbtn.value = "加好友 NOW";
-            Swal.fire({
-                position: 'top',
-                icon: 'error',
-                title: '取消加好友Q',
-                showConfirmButton: false,
-                timer: 1500
-            })
-        }
+let test001 = document.querySelector('.test')
+
+test001.addEventListener("click", test())
+
+
+//使用者主SUserinformation() {
+var addbtn = document.getElementById("AddFriendBtn");
+var cancelbtn = document.getElementById("CancelFriendBtn");
+addbtn.onclick = function () {
+    if (cancelbtn.style.display == "none") {
+        cancelbtn.style.display = "block";
+        addbtn.value = "取消加好友Q";
+        Swal.fire({
+            position: 'top',
+            icon: 'success',
+            title: '已送出好友請求',
+            showConfirmButton: false,
+            timer: 1500
+        })
+    }
+    else {
+        cancelbtn.style.display = "none";
+        addbtn.value = "加好友 NOW";
+        Swal.fire({
+            position: 'top',
+            icon: 'error',
+            title: '取消加好友Q',
+            showConfirmButton: false,
+            timer: 1500
+        })
     }
 }
+
 
 //編輯畫面1 關閉編輯以及取消編輯以及儲存編輯
 function ChangeDisabled(value) {
@@ -105,4 +109,31 @@ function clean() {
 function color(str) {
     document.body.style.backgroundImage = str;
     document.getElementById('card-Edit_User').style.backgroundImage = str;
+}
+
+//編輯畫面4 改變隱私狀態
+function ChangePrivacie() {
+    Swal.fire({
+        position: 'top',
+        icon: 'success',
+        title: '已送出好友請求',
+        showConfirmButton: false,
+        timer: 1500
+    })
+}
+
+
+
+
+async function test() {
+    const url = '/User/E4_UserPrivacy'
+    let request = new Request(url, {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            UserPrivacyId: `${test001.value}`
+        })
+    })
+    let action = await fetch(request)
+    let data = await action.json()
 }

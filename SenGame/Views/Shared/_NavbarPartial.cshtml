@@ -33,12 +33,12 @@
                             </a>
                             <ul class="menu " >
                                 <li><a asp-controller="Shop" asp-action="ShoppingCart" style="--clr:#ffa500">購物車</a ></li >
-                                <li><a href="#">願望清單</a></li>
+                                <li><a asp-controller="User" asp-action="WishList">願望清單</a></li>
                             </ul>
                                 
                         </li>
                         <li class="list-tour-game" style="--clr:#FFD700">
-                            <a href="#game">
+                            <a asp-controller="User" asp-action="GameLibrary">
                                 <span class="icon">
                                     <ion-icon name="game-controller-outline"></ion-icon>
                                 </span>
@@ -59,14 +59,14 @@
                             </ul>
                         </li>
                         <li class="list-tour-friend " style="--clr:#2196f3">
-                            <a asp-controller="friend" asp-action="AddFriend">
+                            <a asp-controller="friend" asp-action="FriendList">
                                 <span class="icon">
                                     <ion-icon name="people-outline"></ion-icon>
                                 </span>
                                 <span>好友</span>
                             </a>
                             <ul class="menu" >
-                                <li><a asp-controller="Community" asp-action="Chat">聊天</a></li>
+                                <li><a asp-controller="Friend" asp-action="Chat">聊天</a></li>
                                 
                             </ul>
                         </li>
@@ -113,7 +113,7 @@
                             aria-expanded="false" data-offset="-120,0"></button>
                         <div class="dropdown-menu" aria-labelledby="user-list">
                             <a  asp-area="Identity" asp-page="/Account/Login" class="dropdown-item">註冊登入</a>
-                            <a href="/friend/User__information" class="dropdown-item">個人資料</a>
+                            <a href="/User/User_information" class="dropdown-item">個人資料</a>
                         </div>
                     </div>*@
                 </div>

@@ -594,8 +594,8 @@ namespace SqlModels.Migrations
 
             modelBuilder.Entity("SqlModels.Models.MyGame", b =>
                 {
-                    b.Property<int>("MyGameId")
-                        .HasColumnType("int");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("GameId")
                         .HasColumnType("int");
@@ -604,14 +604,14 @@ namespace SqlModels.Migrations
                         .HasColumnType("bit")
                         .HasComment("判別是否是我的最愛");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("MyGameId")
+                        .HasColumnType("int");
 
-                    b.HasKey("MyGameId");
+                    b.HasKey("Id");
 
                     b.HasIndex(new[] { "GameId" }, "IX_MyGame_GameId");
 
-                    b.HasIndex(new[] { "UserId" }, "IX_MyGame_UserId");
+                    b.HasIndex(new[] { "Id" }, "IX_MyGame_UserId");
 
                     b.ToTable("MyGame");
                 });
@@ -751,15 +751,18 @@ namespace SqlModels.Migrations
             modelBuilder.Entity("SqlModels.Models.ShoppingCart", b =>
                 {
                     b.Property<int>("ShoppingCartId")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("AddTime")
+                    b.Property<DateTime?>("AddTime")
                         .HasColumnType("datetime");
 
-                    b.Property<int>("GameId")
+                    b.Property<int?>("GameId")
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("ShoppingCartId");
@@ -1265,8 +1268,9 @@ namespace SqlModels.Migrations
 
                     b.HasOne("SqlModels.Models.UserModel", "User")
                         .WithMany("MyGames")
-                        .HasForeignKey("UserId")
-                        .HasConstraintName("FK_MyGame_AspNetUsers1");
+                        .HasForeignKey("Id")
+                        .HasConstraintName("FK_MyGame_AspNetUsers1")
+                        .IsRequired();
 
                     b.Navigation("Game");
 
@@ -1333,14 +1337,14 @@ namespace SqlModels.Migrations
                     b.HasOne("SqlModels.Models.Game", "Game")
                         .WithMany("ShoppingCarts")
                         .HasForeignKey("GameId")
-                        .HasConstraintName("FK_ShoppingCart_Game")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasConstraintName("FK_ShoppingCart_Game");
 
                     b.HasOne("SqlModels.Models.UserModel", "User")
                         .WithMany("ShoppingCarts")
                         .HasForeignKey("UserId")
-                        .HasConstraintName("FK_ShoppingCart_AspNetUsers1");
+                        .HasConstraintName("FK_ShoppingCart_AspNetUsers1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Game");
 

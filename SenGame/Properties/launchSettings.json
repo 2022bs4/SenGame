@@ -11,6 +11,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
+      "launchUrl": "User/E4_UserPrivacy",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
