@@ -33,6 +33,7 @@ namespace SqlModels.Models
         public DateTime? EmailConfirmDate { get; set; }
         public string Address { get; set; }
         public string UserPicture { get; set; }
+        public override string UserName { get; set; }
         public int? UserCountryId { get; set; }
         public DateTime? CreateTime { get; set; }
         public string UserAbout { get; set; }
@@ -60,7 +61,6 @@ namespace SqlModels.Models
         //
         public virtual ICollection<Order> Orders{ get; set; }
 
-        //public virtual Order Order { get; set; }
         public virtual UserCountry UserCountry { get; set; }
         public virtual ICollection<ArticleLike> ArticleLikes { get; set; }
         public virtual ICollection<Article> Articles { get; set; }
