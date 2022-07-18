@@ -173,7 +173,7 @@ namespace Services
         {
             var game = await GetProductItemDateals(id);
            
-            var pic = await Repository.FindBy<GameMedium>(x => x.GameId == id && x.InstructionType == 1 && x.Instruction == 1).OrderByDescending(x => x.Sort).ToListAsync();
+            var pic = await Repository.FindBy<GameMedium>(x => x.GameId == id && x.InstructionType == 1 && x.Instruction == 1).OrderByDescending(x => x.Sort).Take(3).ToListAsync();
             var result = new IndexList()
             {
                 GameId = game.GameId,

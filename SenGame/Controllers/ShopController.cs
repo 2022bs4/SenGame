@@ -28,20 +28,6 @@ namespace SenGame.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            //var product = await _Shop.ProductIndex();
-
-            //var result = new ProductDetailsVM()
-            //{
-            //    ProductPlural = product.Product.Select(
-            //        item=> new ProductDetailsVM.ProductInformation {
-            //        GameId = item.GameId,
-            //        GameName = item.GameName,
-            //        GamePrice = item.GamePrice,
-            //        GamePicture =item.GameUrl,
-            //    }).ToList()
-            //};
-
-            //return View("Game",result);
             return View("Game");
         }
         //產品詳細
@@ -131,7 +117,6 @@ namespace SenGame.Controllers
             var userId = user.Id;
             return userId;
         }
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]

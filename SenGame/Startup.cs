@@ -53,6 +53,7 @@ namespace SenGame
             #region -- Service --
             services.AddScoped<IBaseService, BaseService>();
             services.AddScoped<ICommunityService, CommunityService>();
+            services.AddScoped<IUserService, UserService>();
             services.AddScoped<ShopServices>();
             services.AddScoped<ShopCartServices>();
             services.AddScoped<EcpayService>();

@@ -42,6 +42,7 @@ namespace SenGame.ApiController
             return Ok(result);
 
         }
+
         //首頁預設Swipper
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -51,6 +52,7 @@ namespace SenGame.ApiController
             var result = await _Shop.GetIndesSwipper(request);
             return Ok(result);
         }
+
         //首頁上排觸發回傳
         [HttpPost]
         public async Task<IActionResult> PostIndex([FromBody] IndexProductDTO model)
@@ -59,6 +61,7 @@ namespace SenGame.ApiController
             var result = await _Shop.GetIndesSwipper(request);
             return Ok(result);
         }
+
         //首頁預設清單
         [HttpGet]
         public async Task<IActionResult> IndexList()

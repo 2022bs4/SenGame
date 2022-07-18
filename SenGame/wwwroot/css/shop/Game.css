@@ -97,7 +97,7 @@ body {
 
 
 .Game-List-Area {
-    position: relative;
+    /*position: relative;*/
 }
 
     .Game-List-Area nav ul {
@@ -145,4 +145,21 @@ ul {
 .carousel-control-prev, .carousel-control-next {
     background: 0 0;
     border: 0px;
+}
+
+
+
+.Game-List {
+    height: 1000px;
+    position:relative;
+}
+.List-hight{
+    height:200px;
+}
+
+.Template-Data {
+    position: absolute;
+    right: 0;
+    background: #a2c7dc;
+    height: 1000px;
 }
