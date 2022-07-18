@@ -22,15 +22,12 @@ namespace SenGame.Controllers
         private readonly UserManager<UserModel> _userManager;
         private readonly IUserService _service;
         private readonly IConfiguration _config;
-        private readonly SenGameContext _context;
         
-        public UserController(IConfiguration config, IUserService service,UserManager<UserModel> user, SenGameContext context)
+        public UserController(IConfiguration config, IUserService service,UserManager<UserModel> user )
         {
             _userManager = user;
             _service = service;
             _config = config;
-            _context = context;
-           
         }
 
         public IActionResult Index()
