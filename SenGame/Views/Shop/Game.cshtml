@@ -10,12 +10,12 @@
 <section class="Tag-Filter py-3">
             <nav aria-label="Page navigation example" class="col-12 d-flex justify-content-center">
                 <ul class="pagination">
-                    <li class="page-item"><a class="page-link" href="#">人氣最高</a></li>
-                    <li class="page-item"><a class="page-link" href="#">即將發行</a></li>
-                    <li class="page-item"><a class="page-link" href="#">最新發行日期</a></li>
-                    <li class="page-item"><a class="page-link" href="#">較早發行日期</a></li>
-                    <li class="page-item"><a class="page-link" href="#">價格由低至高</a></li>
-                    <li class="page-item"><a class="page-link" href="#">價格由高至低</a></li>
+                    <li class="page-item popular"><a class="page-link" href="#">人氣最高</a></li>
+                    <li class="page-item ComingSoon"><a class="page-link" href="#">即將發行</a></li>
+                    <li class="page-item New-Releaese"><a class="page-link" href="#">最新發行日期</a></li>
+                    <li class="page-item Earlier-Release"><a class="page-link" href="#">較早發行日期</a></li>
+                    <li class="page-item Expensive-Product"><a class="page-link" href="#">價格由低至高</a></li>
+                    <li class="page-item Cheap-Product"><a class="page-link" href="#">價格由高至低</a></li>
                     <li class="page-item Type-List">
                         <a class="page-link " href="#">類別</a>
                         <div class="Game-Type">
@@ -70,12 +70,11 @@
 </section>
 
 <template id="Tag_Template">
-    <ul class="d-flex flex-wrap p-0"
+    <ul class="d-flex flex-wrap py-2 px-0"
         <div class="col-4 Parent-Category">
-            <a class="text-left pl-3 "></a>
+            <a class="text-left pl-3 Parent-Category-Name"></a>
         </div>
         <div class="col-8 d-flex flex-wrap Subcategory">
-            <a class="px-2">動作</a>
         </div>
     </ul>
 </template>

@@ -33,11 +33,10 @@ function BtnFunction() {
             method: "POST",
             headers: new Headers({
                 'Content-Type': 'application/json',
-                //"Accept": "application/json",
             }),
             body: JSON.stringify({
                 GameId: `${gameId.value}`,
-                Success: "",
+                //Success: "",
             })
         })
         let fetchAction = await fetch(request)

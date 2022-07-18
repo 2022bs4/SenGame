@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using SenGame.Service;
 using Services;
 using Services.ShopSevice;
+using SqlModels.DTOModels;
 using SqlModels.Models;
 using SqlModels.ViewModels.ShopViewModels;
 using System.Collections.Generic;
@@ -41,27 +42,39 @@ namespace SenGame.ApiController
             return Ok(result);
 
         }
-        //首頁Swipper
+        //首頁預設Swipper
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var result = await _Shop.GetIndesSwipper();
+            string request = "預設";
+            var result = await _Shop.GetIndesSwipper(request);
             return Ok(result);
         }
-        //首頁清單
+        //首頁上排觸發回傳
+        [HttpPost]
+        public async Task<IActionResult> PostIndex([FromBody] IndexProductDTO model)
+        {
+            var request = model.UserRequest;
+            var result = await _Shop.GetIndesSwipper(request);
+            return Ok(result);
+        }
+        //首頁預設清單
         [HttpGet]
         public async Task<IActionResult> IndexList()
         {
             var result = await _Shop.GetProductList();
             return Ok(result);
         }
-        //首頁清單多圖板
+        [HttpPost]
+        //首頁預設清單多圖板
         public async Task<IActionResult> IndexListDetails([FromBody] OutputShoppingCart model)
         {
             var gameId = model.GameId;
             var result = await _Shop.GetDetailsList(gameId);
             return Ok(result);
         }
+
+
 
 
         //商品詳細之Swipper

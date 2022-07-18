@@ -10,6 +10,8 @@ namespace SqlModels.DTOModels
         public List<ResponseProductItem> FirstAreaProduct { get; set; }
         public List<ResponseProductItem> SecondAreaProduct { get; set; }
 
+        public string UserRequest { get; set; }
+
         public List<ResponseProductItem> CardProduct { get; set; }
     }
     public class ResponseProductItem
@@ -19,7 +21,7 @@ namespace SqlModels.DTOModels
         public string GameName { get; set; }
         public string GameUrl { get; set; }
         public decimal GamePrice { get; set; }
-        public DateTime Created { get; set; }
+        public DateTime Date { get; set; }
     }
 
     public class IndexList

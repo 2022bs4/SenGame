@@ -20,12 +20,10 @@ namespace Services
 
         //Index標籤讀取
         public async Task<IEnumerable<ResponseTypeGroupDTO>> GetIndexTag() {
-            
             var typeGroup =  Repository.GetAll<TypeGroup>();
             var typelist = Repository.GetAll<Typelist>();
             var type = await typeGroup.Join(typelist, x => x.GroupId, y => y.GroupId,
                 (x, y) => new { x.GroupName, y.Name }).OrderByDescending(x => x.GroupName).ToListAsync();
-
                 var result = type.GroupBy(x => x.GroupName).Select(r => 
                 new ResponseTypeGroupDTO
                 {
@@ -34,7 +32,6 @@ namespace Services
                     new ResponseTypeGroupDTO.Data 
                     { TypleName = item.Name }).ToList(),
                 });
-
             return  result;
         } 
 
@@ -56,19 +53,73 @@ namespace Services
         }
 
         //首頁Method
-        public async Task<IndexProductDTO> GetIndesSwipper()
+        public async Task<IndexProductDTO> GetIndesSwipper(string request)
         {
-            var firstArea = await GetProductItem(1);
-            firstArea.Take(7);
-            var secondArea = await GetProductItem(1);
-            //之後要skip()
-            secondArea.Take(3);
+            var firstArea = new List<ResponseProductItem>();
+            var secondArea = new List<ResponseProductItem>();
+            if (request == "預設")
+            {
+                firstArea = await GetProductItem(1);
+                firstArea.Take(7);
+                secondArea = await GetProductItem(1);
+                //之後要skip()
+                secondArea.Take(3);
+            }
+
+            //日期
+            else if (request == "最新發行日期")
+            {
+                firstArea = await GetProductItem(1);
+                firstArea.OrderBy(x => x.Date).Take(7);
+                secondArea = await GetProductItem(1);
+                //之後要skip()
+                secondArea.OrderBy(x => x.Date).Take(3);
+            }
+            else if (request == "較早發行日期")
+            {
+                firstArea = await GetProductItem(1);
+                firstArea.OrderByDescending(x => x.Date).Take(7);
+                secondArea = await GetProductItem(1);
+                //之後要skip()
+                secondArea.OrderByDescending(x => x.Date).Take(3);
+            }
+            else if (request == "即將發行")
+            {
+                firstArea = await GetProductItem(2);
+                firstArea.OrderByDescending(x => x.Date).Take(7);
+                secondArea = await GetProductItem(1);
+                //之後要skip()
+                secondArea.OrderByDescending(x => x.Date).Take(3);
+            }
+
+
+            //價錢
+            else if (request == "價格由低至高")
+            {
+                firstArea = await GetProductItem(1);
+                firstArea.OrderByDescending(x => x.GamePrice).Take(7);
+                secondArea = await GetProductItem(1);
+                //之後要skip()
+                secondArea.OrderByDescending(x => x.GamePrice).Take(3);
+            }
+            else if (request == "價格由高至低")
+            {
+                firstArea = await GetProductItem(1);
+                firstArea.OrderBy(x => x.GamePrice).Take(7);
+                secondArea = await GetProductItem(1);
+                //之後要skip()
+                secondArea.OrderBy(x => x.GamePrice).Take(3);
+            }
+
             var result = new IndexProductDTO
             {
                 FirstAreaProduct = firstArea,
                 SecondAreaProduct = secondArea
             };
             return result;
+
+             
+
         }
 
         //基於首頁Swipper衍生之Method
@@ -84,6 +135,7 @@ namespace Services
                     GameName = item.GameName,
                     GamePrice = item.GamePrice,
                     GameUrl = item.GameIndexPicture,
+                    Date = item.ReleaseTime,
                 });
             }
             return result;
@@ -134,7 +186,6 @@ namespace Services
                 GameUrl = pic.Select(item=> new IndexList.ProductUrl {
                     Url = item.MediaUrl 
                 }).ToList()
-
             };
             return result;
         }
@@ -212,8 +263,6 @@ namespace Services
 
             var result = new List<ProdductIntroductDTO>();
             int i = 0;
-
-
             result.Add(new ProdductIntroductDTO
             {
                 GameDetailsText = gameArray[i],
@@ -231,7 +280,6 @@ namespace Services
                     i++;
                 }
             }
-
             return  result  ;
         }
         public async Task<RequestProducDetailsDTO> ProductSystem(int id)

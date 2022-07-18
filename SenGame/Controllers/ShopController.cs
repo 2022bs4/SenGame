@@ -91,7 +91,7 @@ namespace SenGame.Controllers
                     GameName = item.GameName,
                     GamePrice = (int)item.GamePrice,
                     GameUrl = item.GameUrl,
-                    Created = item.Created,
+                    Created = item.Date,
                 });
             }
             TempData["actiontype"] = "shop";

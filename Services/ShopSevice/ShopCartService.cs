@@ -46,7 +46,7 @@ namespace Services.ShopSevice
                         GameId = item.GameId,
                         GameName = game.GameName,
                         GamePrice = game.GamePrice,
-                        Created = item.AddTime,
+                        Date = item.AddTime,
                         GameUrl = picItem.MediaUrl,
                     });
                 }

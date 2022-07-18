@@ -1,14 +1,13 @@
 ﻿$(document).ready(function () {
-    Tag()
-
-
-    $('main').addClass("Game")
-
-    TopSwipper()
     ProductList()
 
+    $('main').addClass("Game")
+    Tag()
+    TopSwipper()
 
+    NewReleaese()
 })
+
 let i = 0
 let j = 0;
 let newIdArray = []
@@ -18,18 +17,23 @@ async function Tag() {
     const url = '/api/Shop/IndexTag'
     let request = await fetch(url)
     let response = await request.json()
-    console.log(response)
-    debugger
+    
     response.forEach(item => {
         TagList(item)
-    }
+    })
 
-    async function TagList(item)
+    function TagList(item) {
         let cloneBox = Tag_Template.content.cloneNode(true)
-        let ul = c
+        cloneBox.querySelector('.Parent-Category-Name').innerText = item.parentCategory
+        let Subcategory = cloneBox.querySelector('.Subcategory')
+        for (let i = 0; i < item.gameTyple.length; i++)
+        {
+            let a = document.createElement('a')
+            a.innerHTML = `<a class="px-2" href="#">${item.gameTyple[i].typleName}</a>`
+            Subcategory.append(a)
+        }
+        box.append(cloneBox)
     }
-
-
 }
 
 
@@ -50,24 +54,75 @@ var swiper = new Swiper(".mySwiper", {
         el: ".swiper-pagination",
     },
 });
-//Index Swipper
+//預設Index Swipper 
 async function TopSwipper(){
     const url = '/api/Shop/Index'
     let request = await fetch(url)
     let response = await request.json()
+    IndexTemplate(response) 
+}
+
+function NewReleaese() {
+    let popular = document.querySelector('.popular')
+    let ComingSoon = document.querySelector('.ComingSoon')
+    let New_Releaese = document.querySelector('.New-Releaese')
+    let Ealier_Release = document.querySelector('.Ealier-Release')
+    let Expensive = document.querySelector('.Expensive-Product')
+    let Cheap = document.querySelector('.Cheap-Product')
+
+    popular.addEventListener('click', function () {
+        SwipperFetch(popular.innerText)
+    })
+    ComingSoon.addEventListener('click', function () {
+        SwipperFetch(ComingSoon.innerText)
+    })
+    New_Releaese.addEventListener('click', function () {
+        SwipperFetch(New_Releaese.innerText)
+        debugger
+    })
+    Ealier_Release.addEventListener('click', function () {
+        SwipperFetch(Ealier_Release.innerText)
+    })
+    Expensive.addEventListener('click', function () {
+        SwipperFetch(Expensive.innerText)
+    })
+    Cheap.addEventListener('click', function () {
+        SwipperFetch(Cheap.innerText)
+    })
+    async function SwipperFetch(UserRequest) {
+        const url = `/api/Shop/PostIndex`
+        let request = new Request(url, {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                UserRequest : `${UserRequest}`
+            })
+        })
+        let action = await fetch(request);
+        let response = await action.json();
+        clearSwipper()
+        IndexTemplate(response)
+    }
+
+}
+function clearSwipper() {
+    let first = document.querySelector('.swiper-wrapper')
+    let second = document.querySelector('.carousel-inner')
+    first.innerHTML= ''
+    second.innerHTML=''
+}
+function IndexTemplate(response) {
     let first = response.firstAreaProduct
     let second = response.secondAreaProduct
-
     first.forEach(item => {
-        Template('.swiper-wrapper',"First_Swipper", `.swiper-slide`, item.gameUrl, item.gameName, item.gamePrice, item.gameId)
+        Template('.swiper-wrapper', "First_Swipper", `.swiper-slide`, item.gameUrl, item.gameName, item.gamePrice, item.gameId)
     })
     second.forEach(item => {
-        Template('.carousel-inner',"Second_Swipper", `.carousel-item`, item.gameUrl, item.gameName, item.gamePrice, item.gameId)
+        Template('.carousel-inner', "Second_Swipper", `.carousel-item`, item.gameUrl, item.gameName, item.gamePrice, item.gameId)
     })
     let box = document.querySelectorAll('.carousel-item')
     box[0].classList.add('active')
-    //swipper template封裝方法
-    function Template(swipperBox,templateId, boxName, gameUrl, gameName, gamePrice, gameId,) {
+    function Template(swipperBox, templateId, boxName, gameUrl, gameName, gamePrice, gameId,) {
         let SwipperBox = document.querySelector(`${swipperBox}`)
         let id = document.getElementById(`${templateId}`)
         let cloneBox = id.content.cloneNode(true)
@@ -75,13 +130,15 @@ async function TopSwipper(){
         cloneBox.querySelector('img').src = `${gameUrl}`
         cloneBox.querySelector('img').alt = `${gameName}`
         cloneBox.querySelector('h2').innerText = `${gameName}`
-        cloneBox.querySelector('p').innerText = `售價: NT$ ${gamePrice }`
+        cloneBox.querySelector('p').innerText = `售價: NT$ ${gamePrice}`
         SwipperBox.append(cloneBox);
         box.addEventListener('click', function () {
             window.location.href = `/Shop/ProductDetails/${gameId}`
         })
     }
 }
+
+//swipper template封裝方法
 
 //Product List
 async function ProductList() {
@@ -121,20 +178,22 @@ async function ProductList() {
     }
 
     ItemDetails()
+    //setInterval(function () { ItemDetails()},1000)
     async function ItemDetails() {
         let newItemDetailsSort = []
         let GameData = document.querySelector('.Game-Data')
-        const url = '/api/Shop/IndexListDetails'
 
         for (let k = 0; k < newIdArray.length; k++)
         {
+            const url = '/api/Shop/IndexListDetails'
             let request = new Request(url, {
                 method: "Post",
-                headers: { 'Content-Type': 'application/json', },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    GameId: `${newIdArray[k]}`,
+                    GameId: `${newIdArray[k]}`
                 })
             });
+            //debugger
             let action = await fetch(request);
             let response = await action.json();
             newItemDetailsSort.push(response)
