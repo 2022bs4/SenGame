@@ -69,7 +69,7 @@ namespace SenGame.Controllers
         }
         public IActionResult Callback(string code, string state)
         {
-            if (state == "aaa")
+            if (state == "aaa") 
             {
                 #region Api變數宣告
                 WebClient wc = new()
