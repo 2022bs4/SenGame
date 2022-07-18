@@ -170,14 +170,30 @@ namespace SenGame.Controllers
 
             return Ok();
         }
-        public async Task<IActionResult> DeleteFriend([FromBody]FriendViewModel friendid)
+        public async Task<IActionResult> DeleteFriend([FromBody]FriendViewModel friend)
         {
             UserModel LoginUser = await _userManager.GetUserAsync(HttpContext.User);
             var userid = LoginUser.Id;
-            var allfriend = _service.GetFriend(userid);
+            var allfriend = _service.GetAllGroup(friend.Groupname);
             foreach(var item in allfriend)
             {
-                FriendGroup fg = new FriendGroup();
+                if (item.UserId == friend.UserId && item.GroupName.Trim() == friend.Groupname.Trim())
+                {
+                    FriendGroup fg = new FriendGroup();
+                    fg.FriendGroupId=item.FriendGroupId;
+                    fg.UserId = friend.UserId;
+                    fg.GroupName = friend.Groupname;
+                   
+                    Usergroup ug = new Usergroup();
+                    ug.UserId = userid;
+                    ug.FriendGroupId = fg.FriendGroupId;
+                    ug.UserGroupId = item.UserGroupId;
+
+
+                    _service.Delete<Usergroup>(ug);
+                    _service.Delete<FriendGroup>(fg);
+                } ;
+    
             }
             return Ok();
         }

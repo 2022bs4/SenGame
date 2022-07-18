@@ -120,8 +120,10 @@ function computer(){
                     delfriendcheck.onclick = function () {
                         var data = {
                             UserId: friendId.value,
-                            Groupname: span.innerHTML,
+                            Groupname:fspan.innerHTML,
                         }
+                      
+                        
                         console.log(data)
                         var url = "/Friend/DeleteFriend"
                         Post(url, data)

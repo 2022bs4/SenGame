@@ -63,6 +63,7 @@ namespace Services.ChatService
                     {
                         result.Add(new FriendGroupDTO
                         {
+                            
                             GroupName = item.GroupName,
                             UserName = friend.UserName,
                             UserPicture = friend.UserPicture,
