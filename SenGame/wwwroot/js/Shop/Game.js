@@ -1,6 +1,5 @@
 ﻿$(document).ready(function () {
-    ProductList()
-
+    PresetList()
     $('main').addClass("Game")
     Tag()
     TopSwipper()
@@ -67,6 +66,7 @@ function NewReleaese() {
     Filter_Prodeuct.forEach(item => {
         item.addEventListener('click', function () {
             SwipperFetch(item.innerText)
+            ListFetch(UserRequest)
         })
     })
    
@@ -83,6 +83,22 @@ function NewReleaese() {
         let response = await action.json();
         clearSwipper()
         setTimeout(function () { IndexTemplate(response) }, 500)
+        //ProductList(url)
+    }
+
+    async function ListFetch(UserRequest) {
+        const url = `/api/Shop/`
+        let request = new Request(url, {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                UserRequest: `${UserRequest}`
+            })
+        })
+        let action = await fetch(request);
+        let response = await action.json();
+     /*   clearSwipper()*/
+        setTimeout(function () { IndexTemplate(response) }, 500)
     }
 
 }
@@ -92,6 +108,7 @@ function clearSwipper() {
     first.innerHTML= ''
     second.innerHTML = ''
 }
+//swipper template封裝方法
 function IndexTemplate(response) {
     let first = response.firstAreaProduct
     let second = response.secondAreaProduct
@@ -119,12 +136,17 @@ function IndexTemplate(response) {
     }
 }
 
-//swipper template封裝方法
+
+
+function PresetList() {
+    const url = '/api/Shop/IndexList'
+    ProductList(url)
+}
+
 
 //Product List
-async function ProductList() {
+async function ProductList(url) {
     let GameList = document.querySelector('.Game-List')
-    const url = '/api/Shop/IndexList'
     let request = await fetch(url)
     let response = await request.json(); 
     response.forEach((item) => {
@@ -159,11 +181,9 @@ async function ProductList() {
     }
 
     ItemDetails()
-    //setInterval(function () { ItemDetails()},1000)
     async function ItemDetails() {
         let newItemDetailsSort = []
-        let GameData = document.querySelector('.Game-Data')
-
+        let a = 0;
         for (let k = 0; k < newIdArray.length; k++)
         {
             const url = '/api/Shop/IndexListDetails'
@@ -174,7 +194,6 @@ async function ProductList() {
                     GameId: `${newIdArray[k]}`
                 })
             });
-            //debugger
             let action = await fetch(request);
             let response = await action.json();
             newItemDetailsSort.push(response)
@@ -184,8 +203,9 @@ async function ProductList() {
         function Details(e) {
             let cloneBox = Template_Data.content.cloneNode(true)
             let box = cloneBox.querySelector('.Template-Data');
+            let Listbox = document.querySelectorAll('.Template-List')
             box.setAttribute('id', `b${i}`)
-            i++
+            box.style.top=`-${i*200}px`
             cloneBox.querySelector('h2').innerText = e.gameName
             let ul = cloneBox.querySelector('ul')
             let tag = e.typeData
@@ -200,13 +220,12 @@ async function ProductList() {
                 div.innerHTML = `<img src="${item.url}"alt="${e.gameName}" class="w-100 py-3">`
                 box.append(div)
             })
-            GameData.append(cloneBox)
+            Listbox[i].append(cloneBox)
+            i++
         }
     }
 
-    setTimeout(function () {
-        Hover()
-    }, 3000)
+    setTimeout(function () { Hover() }, 3000)
 
     function Hover() {
         for (let i = 0; i < 5; i++) {
