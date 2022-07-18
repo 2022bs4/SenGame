@@ -32,7 +32,7 @@ namespace SqlModels.ViewModels
             public string TypleName { get; set; }
         }
         //折扣
-        public double DisscountTake { get; set; }
+        public double? DisscountTake { get; set; }
         
     }
 }

@@ -238,7 +238,9 @@ namespace SqlModels.Migrations
             modelBuilder.Entity("SqlModels.Models.Chat", b =>
                 {
                     b.Property<int>("ChatId")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("FriendChatId")
                         .HasColumnType("int");
@@ -247,6 +249,8 @@ namespace SqlModels.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("ChatId");
+
+                    b.HasIndex("FriendChatId");
 
                     b.HasIndex(new[] { "ChatId" }, "IX_Chat_ChatId");
 
@@ -463,11 +467,15 @@ namespace SqlModels.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasComment("開發者");
 
+                    b.Property<int>("ReleaseState")
+                        .HasColumnType("int")
+                        .HasComment("1.已發佈 2.尚未發佈");
+
                     b.Property<DateTime>("ReleaseTime")
                         .HasColumnType("datetime")
                         .HasComment("發布日期");
 
-                    b.Property<int?>("TotalBuyCount")
+                    b.Property<int>("TotalBuyCount")
                         .HasColumnType("int")
                         .HasComment("此遊戲被購買次數");
 
@@ -539,7 +547,7 @@ namespace SqlModels.Migrations
                     b.Property<int>("GameId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TypelistId")
+                    b.Property<int>("TypelistId")
                         .HasColumnType("int");
 
                     b.HasKey("GameTypeId");
@@ -618,24 +626,26 @@ namespace SqlModels.Migrations
 
             modelBuilder.Entity("SqlModels.Models.MyGame", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("MyGameId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("GameId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("MyFavourite")
                         .HasColumnType("bit")
                         .HasComment("判別是否是我的最愛");
 
-                    b.Property<int>("MyGameId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
+                    b.HasKey("MyGameId");
 
                     b.HasIndex(new[] { "GameId" }, "IX_MyGame_GameId");
 
-                    b.HasIndex(new[] { "Id" }, "IX_MyGame_UserId");
+                    b.HasIndex(new[] { "Id" }, "IX_MyGame_Id");
 
                     b.ToTable("MyGame");
                 });
@@ -785,10 +795,10 @@ namespace SqlModels.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime?>("AddTime")
+                    b.Property<DateTime>("AddTime")
                         .HasColumnType("datetime");
 
-                    b.Property<int?>("GameId")
+                    b.Property<int>("GameId")
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
@@ -854,7 +864,7 @@ namespace SqlModels.Migrations
                     b.Property<int>("GroupId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("GroupName")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
@@ -992,17 +1002,11 @@ namespace SqlModels.Migrations
                     b.Property<int?>("UserCountryId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("UserPicture")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UsernickName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -1020,26 +1024,6 @@ namespace SqlModels.Migrations
                     b.HasIndex("UserCountryId");
 
                     b.ToTable("AspNetUsers");
-                });
-
-            modelBuilder.Entity("SqlModels.Models.UserPrivacy", b =>
-                {
-                    b.Property<int>("UserPrivacyId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PrivacyState")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasComment("隱私狀況");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("UserPrivacyId");
-
-                    b.HasIndex(new[] { "UserId" }, "IX_UserPrivacy_UserId");
-
-                    b.ToTable("UserPrivacy");
                 });
 
             modelBuilder.Entity("SqlModels.Models.Usergroup", b =>
@@ -1186,7 +1170,7 @@ namespace SqlModels.Migrations
                 {
                     b.HasOne("SqlModels.Models.FriendChat", "FriendChat")
                         .WithMany()
-                        .HasForeignKey("ChatId")
+                        .HasForeignKey("FriendChatId")
                         .HasConstraintName("FK_Chat_FriendChat")
                         .IsRequired();
 
@@ -1288,7 +1272,9 @@ namespace SqlModels.Migrations
                     b.HasOne("SqlModels.Models.Typelist", "Typelist")
                         .WithMany("GameTypes")
                         .HasForeignKey("TypelistId")
-                        .HasConstraintName("FK_GameType_Typelist");
+                        .HasConstraintName("FK_GameType_Typelist")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Game");
 
@@ -1345,8 +1331,7 @@ namespace SqlModels.Migrations
                     b.HasOne("SqlModels.Models.UserModel", "User")
                         .WithMany("MyGames")
                         .HasForeignKey("Id")
-                        .HasConstraintName("FK_MyGame_AspNetUsers1")
-                        .IsRequired();
+                        .HasConstraintName("FK_MyGame_AspNetUsers1");
 
                     b.Navigation("Game");
 
@@ -1423,7 +1408,9 @@ namespace SqlModels.Migrations
                     b.HasOne("SqlModels.Models.Game", "Game")
                         .WithMany("ShoppingCarts")
                         .HasForeignKey("GameId")
-                        .HasConstraintName("FK_ShoppingCart_Game");
+                        .HasConstraintName("FK_ShoppingCart_Game")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SqlModels.Models.UserModel", "User")
                         .WithMany("ShoppingCarts")
@@ -1473,16 +1460,6 @@ namespace SqlModels.Migrations
                     b.Navigation("UserBackground");
 
                     b.Navigation("UserCountry");
-                });
-
-            modelBuilder.Entity("SqlModels.Models.UserPrivacy", b =>
-                {
-                    b.HasOne("SqlModels.Models.UserModel", "User")
-                        .WithMany("UserPrivacies")
-                        .HasForeignKey("UserId")
-                        .HasConstraintName("FK_UserPrivacy_AspNetUsers1");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SqlModels.Models.Usergroup", b =>
@@ -1618,8 +1595,6 @@ namespace SqlModels.Migrations
                     b.Navigation("ReplyLikes");
 
                     b.Navigation("ShoppingCarts");
-
-                    b.Navigation("UserPrivacies");
 
                     b.Navigation("Wishes");
                 });

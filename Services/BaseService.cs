@@ -22,6 +22,11 @@ namespace Services
             this._Repository = repository;
             this._Mapper = mapper;
         }
+
+        public BaseService(IRepository repository)
+        {
+        }
+
         //提供外部調用DbContext
         public virtual void Create<TEntity>(TEntity entity) where TEntity : class
         {

@@ -26,7 +26,7 @@ namespace SqlModels.DTOModels
         public string Marker { get; set; }
         public string GamePicture { get; set; }
         //折扣
-        public double DisscountTake { get; set; } 
+        public double? DisscountTake { get; set; } 
     }
 
     //產品詳細Json

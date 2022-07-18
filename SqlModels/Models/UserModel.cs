@@ -22,7 +22,6 @@ namespace SqlModels.Models
             Replies = new HashSet<Reply>();
             ReplyLikes = new HashSet<ReplyLike>();
             ShoppingCarts = new HashSet<ShoppingCart>();
-            UserPrivacies = new HashSet<UserPrivacy>();
             Wishes = new HashSet<Wish>();
 
             Orders= new HashSet<Order>();
@@ -30,21 +29,19 @@ namespace SqlModels.Models
         }
 
         public override string Id { get; set; }
-        public int UserId { get; set; }
         public string Account { get; set; }
         public DateTime? EmailConfirmDate { get; set; }
         public string Address { get; set; }
         public string UserPicture { get; set; }
-        public string UserName { get; set; }
+        public new string UserName { get; set; }
         public int? UserCountryId { get; set; }
         public DateTime? CreateTime { get; set; }
         public string UserAbout { get; set; }
         public int? UserBackgroundId { get; set; }
-        //public int? OrderId { get; set; }
         public int PrivacyPersonalFile { get; set; }
         public int PrivacyGameFile { get; set; }
         public int PrivacyFriendsList { get; set; }
-        //public override string UserName { get; set; }
+
         public override string NormalizedUserName { get; set; }
         public override string Email { get; set; }
         public override string NormalizedEmail { get; set; }
@@ -59,10 +56,6 @@ namespace SqlModels.Models
         public override bool LockoutEnabled { get; set; }
         public override int AccessFailedCount { get; set; }
 
-
-        //
-        //entity.HasIndex(e => e.UserId, "IX_ShoppingCart_UserId");
-                            
 
 
         //
@@ -80,7 +73,6 @@ namespace SqlModels.Models
         public virtual ICollection<Reply> Replies { get; set; }
         public virtual ICollection<ReplyLike> ReplyLikes { get; set; }
         public virtual ICollection<ShoppingCart> ShoppingCarts { get; set; }
-        public virtual ICollection<UserPrivacy> UserPrivacies { get; set; }
         public virtual ICollection<Wish> Wishes { get; set; }
         public virtual UserBackground UserBackground { get; set; }
         

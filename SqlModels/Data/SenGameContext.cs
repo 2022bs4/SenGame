@@ -42,7 +42,6 @@ namespace SqlModels.Data
         public virtual DbSet<TypeGroup> TypeGroups {get ; set ;}
         public virtual DbSet<UserBackground> UserBackgrounds { get; set; }
         public virtual DbSet<UserCountry> UserCountries { get; set; }
-        public virtual DbSet<UserPrivacy> UserPrivacies { get; set; }
         public virtual DbSet<Usergroup> Usergroups { get; set; }
         public virtual DbSet<Wish> Wishes { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -461,9 +460,10 @@ namespace SqlModels.Data
 
                 entity.HasIndex(e => e.GameId, "IX_MyGame_GameId");
 
-                entity.HasIndex(e => e.Id, "IX_MyGame_UserId");
+                entity.HasIndex(e => e.Id, "IX_MyGame_Id");
 
-                entity.Property(e => e.MyGameId).ValueGeneratedNever();
+                entity.HasKey(e => e.MyGameId);
+                //entity.Property(e => e.MyGameId).ValueGeneratedNever();
 
                 entity.Property(e => e.MyFavourite).HasComment("判別是否是我的最愛");
 
@@ -728,24 +728,6 @@ namespace SqlModels.Data
                 entity.Property(e => e.CountryName)
                     .IsRequired()
                     .HasMaxLength(20);
-            });
-
-            modelBuilder.Entity<UserPrivacy>(entity =>
-            {
-                entity.ToTable("UserPrivacy");
-
-                entity.HasIndex(e => e.UserId, "IX_UserPrivacy_UserId");
-
-                entity.Property(e => e.UserPrivacyId).ValueGeneratedNever();
-
-                entity.Property(e => e.PrivacyState)
-                    .IsRequired()
-                    .HasComment("隱私狀況");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.UserPrivacies)
-                    .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK_UserPrivacy_AspNetUsers1");
             });
 
             modelBuilder.Entity<Usergroup>(entity =>
