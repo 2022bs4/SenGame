@@ -96,7 +96,7 @@ namespace SenGame.Controllers
             return Ok();
         }
         [HttpPost]
-        public async Task<IActionResult> PostFriendId([FromBody]ForumViewModel friendid)
+        public async Task<IActionResult> PostFriendId([FromBody]FriendViewModel friendid)
         {
             UserModel LoginUser = await _userManager.GetUserAsync(HttpContext.User);
             var  id = LoginUser.Id;
