@@ -1,50 +1,28 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@*@using Microsoft.AspNet.Identity;*@
-@model IEnumerable<Test>
+@{
+    string pic = (string)TempData["pic"];
+}
+
 
     <div class="chat-content position-relative">
         <div class="chat-left">
             <div class="user-content position-relative">
-                <img class="pl-2 py-3  user-select-none" src="">
-                @*<p class="pl-2 py-3  user-select-none">@User.Identity.GetUserId()</p>*@
+                <img class="pl-2 py-3  user-select-none w-25" src="@pic">
+                <p class="pl-2 py-3  user-select-none">@User.Identity.Name</p>
                 <span class="user-span pl-2 py-3  user-select-none">∨</span>
                 <ul class="state-ul position-fixed p-0 m-0">
                     <li class="state-li  user-select-none">線上</li>
                     <li class="state-li  user-select-none">離開</li>
                     <li class="state-li  user-select-none">隱藏</li>
                 </ul>
-                <p class="position-absolute line  user-select-none">線上</p>
+                <p class="position-absolute line  user-select-none pl-1">線上</p>
                 <div class="user-search position-relative">
                     <p class="pl-2  user-select-none">好友</p>
                         <input class="search  position-absolute" type="search" value="" >
                 </div>
             <div class="resizeR"></div>
             <div class="friends w-100">
-                <div class="friend-group w-100">
-                    <span class="friends-span w-100 pl-2 py-2 d-block user-select-none">好友名單(<span class="count">0</span>)</span>
-                    <div class="friend-ul w-100">
-                 
-                            <partial name="_FriendCardPartial"/>
-                        
-
-                    </div>
-                </div>
-                @foreach(var group in Model)
-                {
-                
-                    <div class="friend-group w-100">
-                        <span class="friends-span w-100 pl-2 d-block user-select-none">@group.GroupName</span>
-                         <div class="friend-ul w-100">
-                            <div class="friend-li pl-2 py-3 w-100">
-                                <img class="friend-img user-select-none"  src="@group.Photo">
-                                <div class="friend-content w-100">
-                                 <span class="friend-name pl-4 mb-0 user-select-none">@group.Name</span>
-                                 <p class="friend-line pl-4 mb-0  user-select-none">上線</p>
-                            </div>
-                        </div>  
-                     </div>
-                     </div>
-                }
+               <partial name="_FriendCardPartial"/>
             </div>
         </div>
     </div>
@@ -53,31 +31,30 @@
     </div>
 </div>
 <div id="rightmenu">
-            <span class="add-type">建立群組</span>
+     <span class="add-type">建立群組</span>
 </div>
-<!-- <div class="group-delete">
+<div id="groupdelete">
     <span class="delete-type">刪除群組</span>
-</div> -->
+</div> 
 <!-- 群組分類的modal -->
 <div id="myModal" class="modal">
-    <div class="modal-content position-relative">
-        <span class="new-type">新增分類</span>
-        <span class="close position-absolute">&times;</span>
-        <div class="modal-title">
-            <span class="text d-block pb-2 pt-2">分類名稱</span>
-            <input id="groupname" type="text" value="">
-            <span class="text d-block pb-2 pt-4">選擇要加入的好友</span>
-            <div class="add d-flex mb-3"></div>
-            <div class="choose-friend mb-3">
-                
-            </div>
-        </div>
-        <div class="modal-btn-ctrl d-flex justify-content-center">
-            <button class="check d-block col-5">確認</button>
-            <button class="cancel d-block col-5">取消</button>
-        </div>
-    </div>
+    <partial name="_GroupPartial"/>
 </div>
+<div id="delModal" class="modal">
+    <div class="modal-content-del  position-relative">
+      <div class="modal-header">
+        <span class="del-type">刪除群組</span>
+          <span aria-hidden="true" class="del-close position-absolute">&times;</span>
+      </div>
+      <div class="modal-body">
+        <p class="del-text">確定要刪除此群組嗎?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn del-cancel" data-dismiss="modal">取消</button>
+        <button type="button" class="btn del-check">狠心刪除</button>
+      </div>
+    </div>
+  </div>
 <template id="friendcard">
     <div class="friend-li pl-2 py-3 w-100">
         <img class="friend-img user-select-none"  src="https://picsum.photos/50/50/?random=150">
@@ -99,6 +76,7 @@
 
 <template id="message">
     <div class="message-window d-flex flex-wrap">
+        <input type="text" id="fid" hidden="hidden"/>
         <div class="message-title position-relative d-flex pl-3 ms-2">
             <img class="py-3 message-img user-select-none" src="https://picsum.photos/30/30/?random=10">
             <p class="pl-3 py-3 mb-0 text-light user-select-none">名稱</p>

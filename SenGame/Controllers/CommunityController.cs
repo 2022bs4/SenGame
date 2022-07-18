@@ -26,7 +26,8 @@ namespace SenGame.Controllers
 
             var result = new CommunityIndexViewModel()
             {
-                GameList = articles.Select(item => new CommunityIndexViewModel.GameData
+                GameList = articles.Select(item => 
+                new CommunityIndexViewModel.GameData
                 {
                     GameId = item.GameId,
                     GameName = item.GameName,

@@ -240,23 +240,15 @@ namespace SqlModels.Migrations
                     b.Property<int>("ChatId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ChatContent")
-                        .HasColumnType("nvarchar(max)")
-                        .HasComment("聊天紀錄");
-
-                    b.Property<DateTime>("ChatTime")
-                        .HasColumnType("datetime")
-                        .HasComment("現在聊天時間");
-
-                    b.Property<string>("PictureFile")
-                        .HasColumnType("nvarchar(max)")
-                        .HasComment("暫定");
+                    b.Property<int>("FriendChatId")
+                        .HasColumnType("int");
 
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)")
-                        .HasComment("使用者自身");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("ChatId");
+
+                    b.HasIndex(new[] { "ChatId" }, "IX_Chat_ChatId");
 
                     b.HasIndex(new[] { "UserId" }, "IX_Chat_UserId");
 
@@ -363,18 +355,50 @@ namespace SqlModels.Migrations
                     b.ToTable("Forum");
                 });
 
+            modelBuilder.Entity("SqlModels.Models.FriendChat", b =>
+                {
+                    b.Property<int>("FriendChatId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ChatContent")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ChatTime")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("PictureFile")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("FriendChatId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("FriendChat");
+                });
+
             modelBuilder.Entity("SqlModels.Models.FriendGroup", b =>
                 {
-                    b.Property<int>("FriendGoupId")
-                        .HasColumnType("int");
+                    b.Property<int>("FriendGroupId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("GroupName")
-                        .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nchar(10)")
                         .IsFixedLength(true);
 
-                    b.HasKey("FriendGoupId");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("FriendGroupId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("FriendGroup");
                 });
@@ -998,14 +1022,18 @@ namespace SqlModels.Migrations
 
             modelBuilder.Entity("SqlModels.Models.Usergroup", b =>
                 {
-                    b.Property<int>("FriendGroupId")
-                        .HasColumnType("int");
-
                     b.Property<int>("UserGroupId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("FriendGroupId")
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UserGroupId");
 
                     b.HasIndex(new[] { "FriendGroupId" }, "IX_Usergroup_FriendGroupId");
 
@@ -1134,10 +1162,18 @@ namespace SqlModels.Migrations
 
             modelBuilder.Entity("SqlModels.Models.Chat", b =>
                 {
+                    b.HasOne("SqlModels.Models.FriendChat", "FriendChat")
+                        .WithMany()
+                        .HasForeignKey("ChatId")
+                        .HasConstraintName("FK_Chat_FriendChat")
+                        .IsRequired();
+
                     b.HasOne("SqlModels.Models.UserModel", "User")
-                        .WithMany("Chats")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .HasConstraintName("FK_Chat_AspNetUsers1");
+
+                    b.Navigation("FriendChat");
 
                     b.Navigation("User");
                 });
@@ -1168,6 +1204,24 @@ namespace SqlModels.Migrations
                         .HasConstraintName("FK_Forum_Game");
 
                     b.Navigation("Game");
+                });
+
+            modelBuilder.Entity("SqlModels.Models.FriendChat", b =>
+                {
+                    b.HasOne("SqlModels.Models.UserModel", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SqlModels.Models.FriendGroup", b =>
+                {
+                    b.HasOne("SqlModels.Models.UserModel", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SqlModels.Models.FriendList", b =>
@@ -1505,8 +1559,6 @@ namespace SqlModels.Migrations
                     b.Navigation("ArticleLikes");
 
                     b.Navigation("Articles");
-
-                    b.Navigation("Chats");
 
                     b.Navigation("CustomerServices");
 

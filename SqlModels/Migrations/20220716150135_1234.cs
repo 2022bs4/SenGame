@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SqlModels.Migrations
 {
-    public partial class First : Migration
+    public partial class _1234 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -49,18 +49,6 @@ namespace SqlModels.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Ecpay", x => x.MerchantID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "FriendGroup",
-                columns: table => new
-                {
-                    FriendGoupId = table.Column<int>(type: "int", nullable: false),
-                    GroupName = table.Column<string>(type: "nchar(10)", fixedLength: true, maxLength: 10, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_FriendGroup", x => x.FriendGoupId);
                 });
 
             migrationBuilder.CreateTable(
@@ -497,27 +485,6 @@ namespace SqlModels.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Chat",
-                columns: table => new
-                {
-                    ChatId = table.Column<int>(type: "int", nullable: false),
-                    ChatContent = table.Column<string>(type: "nvarchar(max)", nullable: true, comment: "聊天紀錄"),
-                    ChatTime = table.Column<DateTime>(type: "datetime", nullable: false, comment: "現在聊天時間"),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true, comment: "使用者自身"),
-                    PictureFile = table.Column<string>(type: "nvarchar(max)", nullable: true, comment: "暫定")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Chat", x => x.ChatId);
-                    table.ForeignKey(
-                        name: "FK_Chat_AspNetUsers1",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "CustomerService",
                 columns: table => new
                 {
@@ -541,6 +508,48 @@ namespace SqlModels.Migrations
                         column: x => x.GameId,
                         principalTable: "Game",
                         principalColumn: "GameId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FriendChat",
+                columns: table => new
+                {
+                    FriendChatId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    ChatContent = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ChatTime = table.Column<DateTime>(type: "datetime", nullable: false),
+                    PictureFile = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FriendChat", x => x.FriendChatId);
+                    table.ForeignKey(
+                        name: "FK_FriendChat_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FriendGroup",
+                columns: table => new
+                {
+                    FriendGroupId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    GroupName = table.Column<string>(type: "nchar(10)", fixedLength: true, maxLength: 10, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FriendGroup", x => x.FriendGroupId);
+                    table.ForeignKey(
+                        name: "FK_FriendGroup_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -640,9 +649,10 @@ namespace SqlModels.Migrations
                 name: "ShoppingCart",
                 columns: table => new
                 {
-                    ShoppingCartId = table.Column<int>(type: "int", nullable: false),
+                    ShoppingCartId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     GameId = table.Column<int>(type: "int", nullable: true),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     AddTime = table.Column<DateTime>(type: "datetime", nullable: true)
                 },
                 constraints: table =>
@@ -653,36 +663,12 @@ namespace SqlModels.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ShoppingCart_Game",
                         column: x => x.GameId,
                         principalTable: "Game",
                         principalColumn: "GameId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Usergroup",
-                columns: table => new
-                {
-                    UserGroupId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    FriendGroupId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.ForeignKey(
-                        name: "FK_Usergroup_AspNetUsers1",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Usergroup_FriendGroup",
-                        column: x => x.FriendGroupId,
-                        principalTable: "FriendGroup",
-                        principalColumn: "FriendGoupId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -781,6 +767,57 @@ namespace SqlModels.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Chat",
+                columns: table => new
+                {
+                    ChatId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    FriendChatId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Chat", x => x.ChatId);
+                    table.ForeignKey(
+                        name: "FK_Chat_AspNetUsers1",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Chat_FriendChat",
+                        column: x => x.ChatId,
+                        principalTable: "FriendChat",
+                        principalColumn: "FriendChatId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Usergroup",
+                columns: table => new
+                {
+                    UserGroupId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    FriendGroupId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Usergroup", x => x.UserGroupId);
+                    table.ForeignKey(
+                        name: "FK_Usergroup_AspNetUsers1",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Usergroup_FriendGroup",
+                        column: x => x.FriendGroupId,
+                        principalTable: "FriendGroup",
+                        principalColumn: "FriendGroupId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -889,6 +926,11 @@ namespace SqlModels.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Chat_ChatId",
+                table: "Chat",
+                column: "ChatId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Chat_UserId",
                 table: "Chat",
                 column: "UserId");
@@ -907,6 +949,16 @@ namespace SqlModels.Migrations
                 name: "IX_Forum_GameId",
                 table: "Forum",
                 column: "GameId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FriendChat_UserId",
+                table: "FriendChat",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FriendGroup_UserId",
+                table: "FriendGroup",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_FriendList_UserId",
@@ -1110,6 +1162,9 @@ namespace SqlModels.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "FriendChat");
 
             migrationBuilder.DropTable(
                 name: "Typelist");

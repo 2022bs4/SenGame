@@ -8,11 +8,9 @@ namespace SqlModels.Models
     public partial class Chat
     {
         public int ChatId { get; set; }
-        public string ChatContent { get; set; }
-        public DateTime ChatTime { get; set; }
         public string UserId { get; set; }
-        public string PictureFile { get; set; }
-
+        public int FriendChatId { get; set; }
+        public virtual FriendChat FriendChat { get; set; }
         public virtual UserModel User { get; set; }
     }
 }

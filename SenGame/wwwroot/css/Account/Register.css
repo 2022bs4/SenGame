@@ -1,7 +1,9 @@
 ﻿label {
     display: block;
 }
-
+main{
+    height:100vh;
+}
 .register-content {
     text-align: center;
     padding-top: 10em;
@@ -20,7 +22,7 @@
 }
 
     .agree .agree-p {
-        padding-top: 0.3em;
+        padding-top: 1.3em;
         padding-left: 0.3em;
     }
 

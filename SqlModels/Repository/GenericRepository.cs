@@ -27,6 +27,7 @@ namespace SqlModels.Repository
             _DbContext.Entry(entity).State = EntityState.Added;
         }
         
+
         //實作
         public void Update<TEntity>(TEntity entity) where TEntity : class
         {
@@ -52,7 +53,7 @@ namespace SqlModels.Repository
         }
 
         //儲存對於_DbContext的變動到資料庫
-        public void SaveChanges()
+        public void SaveChanges()   
         {
              _DbContext.SaveChanges();
         }

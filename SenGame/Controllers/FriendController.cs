@@ -1,10 +1,18 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Services.ChatService;
+using Services.Interface;
+using SqlModels.DTOModels;
 using SqlModels.FakeDate;
 using SqlModels.Models;
 using SqlModels.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using static SqlModels.ViewModels.FriendViewModel;
 
 namespace SenGame.Controllers
 {
@@ -12,53 +20,146 @@ namespace SenGame.Controllers
     //[Authorize]
     public class FriendController : Controller
     {
-        List<UserModel> user = new List<UserModel>()
+        private readonly UserManager<UserModel> _userManager;
+        private readonly FriendGroupService _service;
+        
+        public FriendController(UserManager<UserModel> usermodel, FriendGroupService service)
         {
-            new UserModel{Id="1",UserName="張學友",Account = "test123",PasswordHash="A!a123456",UserPicture="https://memeprod.ap-south-1.linodeobjects.com/user-gif-post/1653456571139.gif"},
-            new UserModel{Id="2",UserName="金城武",Account = "test321",PasswordHash="A!a123456",UserPicture="https://memeprod.ap-south-1.linodeobjects.com/user-gif-post/1649456466797.gif"},
-            new UserModel{Id="3",UserName="郭富城",Account = "test456",PasswordHash="A!a123456",UserPicture="https://memeprod.ap-south-1.linodeobjects.com/user-gif-thumbnail/7893d953a0c3fed57d6f8eaea1c064cf.gif"},
-            new UserModel{Id="4",UserName="劉德華",Account = "test654",PasswordHash="A!a123456",UserPicture="https://j.gifs.com/5QX3NY.gif"},
+            _userManager = usermodel;
+            _service = service;
+        }
 
-        };
-        List<Usergroup> usergroup = new List<Usergroup>()
-        {
-            new Usergroup{UserGroupId=1,FriendGroupId=1,UserId="1"},
-            new Usergroup{UserGroupId=2,FriendGroupId=1,UserId="2"},
-            new Usergroup{UserGroupId=3,FriendGroupId=1,UserId="3"},
-            new Usergroup{UserGroupId=4,FriendGroupId=1,UserId="4"},
-        };
-        List<FriendGroup> friendgroup = new List<FriendGroup>()
-        {
-            new FriendGroup{FriendGoupId=1,GroupName="高中同學"},
-        };
+
 
         public IActionResult Index()
         {
             return View();
         }
-        //[Authorize]
+        [Authorize]
         [HttpGet]
-        public IActionResult Chat(string id)
+        public async Task<IActionResult> Chat(string id)
         {
-            //id = User.Identity.GetUserId();
-            id = "1";
-            var TheUser = from u in user
-                       join ug in usergroup on u.Id equals ug.UserId
-                       join fg in friendgroup on ug.FriendGroupId equals fg.FriendGoupId
-                       where u.Id != id
-                       group u by fg.GroupName into allgroup
-                       select allgroup;
-            return View();
+
+         
+        UserModel LoginUser = await _userManager.GetUserAsync(HttpContext.User);
+        id = LoginUser.Id;
+
+         TempData["pic"] = LoginUser.UserPicture;
+
+
+
+            var groupname =  _service.GetGroup(id);
+            var allfriend = _service.GetFriend(id);
+          
+            var result = new FriendViewModel()
+            {
+                Groups = groupname.Select(x => new FriendViewModel.Group
+                {
+                    GroupName = x.GroupName,
+                    Friends = allfriend.Select(y => new FriendViewModel.Friend
+                    {
+                        GroupName = y.GroupName,
+                        Name = y.UserName,
+                        Photo = y.UserPicture,
+                        Id = y.UserId,
+                    }).ToList()
+
+                }).ToList(),
+            };
+
+
+            TempData["actiontype"] = "friend";
+
+
+            return View(result);
         }
         [HttpPost]
-        public IActionResult Chat()
+        public async Task<IActionResult> Chat([FromBody] FriendViewModel group)
         {
-            return View();
+            UserModel LoginUser = await _userManager.GetUserAsync(HttpContext.User);
+            var userid = LoginUser.Id;
+
+            for (int i = 0; i < group.GroupNames.Length; i++)
+            {
+                var friendgroup = new FriendGroup();
+                friendgroup.GroupName = group.GroupNames[i];
+                friendgroup.UserId = group.Ids[i];
+                _service.Create<FriendGroup>(friendgroup);
+
+                var usergroup = new Usergroup();
+                usergroup.UserId = userid;
+                usergroup.FriendGroupId = friendgroup.FriendGroupId;
+                _service.Create<Usergroup>(usergroup);
+            }
+
+
+            return Ok();
+        }
+        [HttpPost]
+        public async Task<IActionResult> PostFriendId([FromBody]ForumViewModel friendid)
+        {
+            UserModel LoginUser = await _userManager.GetUserAsync(HttpContext.User);
+            var  id = LoginUser.Id;
+            var result = _service.GetChatContent(id);
+           
+            return RedirectToAction("ReadChatContent", result);
+        }
+        [HttpGet]
+        public async Task<IActionResult> ReadChatContent(string id)
+        {
+            UserModel LoginUser = await _userManager.GetUserAsync(HttpContext.User);
+             id = LoginUser.Id;
+            var result = _service.GetChatContent(id);
+            return Ok(result);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> CreateChatContext([FromBody]FriendViewModel context)
+        {
+            UserModel LoginUser = await _userManager.GetUserAsync(HttpContext.User);
+            var userid = LoginUser.Id;
+
+            FriendChat fc = new FriendChat();
+            fc.ChatContent = context.ChatContent;
+            fc.UserId = context.UserId;
+            var chattime = DateTime.Now;
+            fc.ChatTime = chattime;
+            _service.Create<FriendChat>(fc);
+
+            Chat chat = new Chat();
+            chat.FriendChatId = fc.FriendChatId;
+            chat.UserId = userid;
+            _service.Create<Chat>(chat);
+
+            return Ok();
+        }
+        public async Task<IActionResult> DeleteGroup([FromBody] FriendViewModel context)
+        {
+            UserModel LoginUser = await _userManager.GetUserAsync(HttpContext.User);
+            var userid = LoginUser.Id;
+            var friend = _service.DeleteGroup(context.Groupname);
+           foreach(var item in friend)
+            {
+             var fg = new FriendGroup();
+                fg.FriendGroupId = item.FriendGroupId;
+                fg.GroupName = item.GroupName;
+                fg.UserId = item.UserId;
+
+                var ug = new Usergroup();
+                ug.UserGroupId = item.UserGroupId;
+                ug.UserId = userid;
+                ug.FriendGroupId = fg.FriendGroupId;
+
+                 _service.Delete<Usergroup>(ug);
+                 _service.Delete<FriendGroup>(fg);                   
+
+            }
 
 
-        public IActionResult FriendList()
+            return Ok();
+        }
+
+        public IActionResult User__information()
         {
             return View();
         }

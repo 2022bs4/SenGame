@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 
 namespace SqlModels.Models
 {
-    public class FriendGroup
+    public class FriendChat
     {
-
-
-        public int FriendGroupId { get; set; }
+        public int FriendChatId { get; set; }
         public string UserId { get; set; }
-        public string GroupName { get; set; }
-
+        public string ChatContent { get; set; }
+        public DateTime ChatTime { get; set; }
+        public string PictureFile { get; set; }
         public virtual UserModel User { get; set; }
     }
 }
