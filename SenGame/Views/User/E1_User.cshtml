@@ -1,8 +1,8 @@
-﻿@using SqlModels.ViewModels.UserViewModels
+﻿@*@using SqlModels.ViewModels.UserViewModels
 @model EditUserLibraryViewModel
 @{
     ViewData["Title"] = "SelectTagHelper";
-} 
+} *@
 
 @section Css{
     <link rel="stylesheet" href="~/css/User/User.css" asp-append-version="true"/>
@@ -28,8 +28,8 @@
 
                 <!-- 右邊上方按鈕們 -->
                 <div class="Edit1-btn mb-3">
-                    <button type="button" class="btn btn-info" id="edit-btn" onclick="ChangeDisabled(1)" >確定編輯</button>
-                    <button type="button" class="btn btn-warning" id="cancel-btn" onclick="ChangeDisabled(2)">取消編輯</button>
+                    <button type="button" class="btn btn-warning " id="edit-btn" onclick="ChangeDisabled(1)" >確定編輯</button>
+                    <button type="button" class="btn btn-dark" id="cancel-btn" onclick="ChangeDisabled(2)">取消編輯</button>
                 </div>
                 <!-- 一般編輯主要部分 -->
                 <div class=" form-validation" id="Edit1-main">
@@ -45,8 +45,10 @@
                             <label class="col-lg-4 col-form-label" for="val-username">個人檔案名稱 <span
                                     class="text-danger">*</span></label>
                             <div class="col-lg-6">
-                                <input type="text" class="form-control " name="val-username"
+                                
+                                <input type="text" class="E1_UserName form-control " name="val-username"
                                     placeholder="輸入您想要的個人檔案名稱.." id="EditInput01" disabled >
+                                <p id="valueInput1"></p>
                             </div>
                         </div>
 
@@ -62,7 +64,7 @@
                                     class="text-danger">*</span>
                             </label>
                             <div class="col-lg-6">
-                                <input type="password" class="form-control" name="val-password"
+                                <input type="password" class="E1_password form-control" name="val-password"
                                     placeholder="輸入一組安全的密碼.." id="EditInput02" disabled>
                             </div>
                         </div>
@@ -89,9 +91,16 @@
                                     class="text-danger">*</span>
                             </label>
                             <div class="col-lg-6">
-                                <select asp-for="UserCountry" asp-items="Model.UserCountryies" class="form-control" id="EditInput04" disabled>
+                                @*<select asp-for="UserCountry" asp-items="Model.UserCountryies" class="form-control" id="EditInput04" disabled>
                                     <option value="">==請選擇你的國家==</option>
-                                 </select>
+                                 </select>*@
+                                 <select  class="E1_list1 form-control" value="" id="EditInput04" disabled>
+                                    <option >請選擇</option>
+                                    <option class="1"  value="1">帕拉迪島</option>
+                                    <option class="2" value="2">卡加布列島</option>
+                                    <option class="3"  value="3">黎明島</option>
+                                </select>
+
                             </div>
                         </div>
                         <!-- 摘要 -->
@@ -105,14 +114,16 @@
                             <label class="col-lg-4 col-form-label" for="val-suggestions">關於我
                             </label>
                             <div class="col-lg-6">
-                                <textarea class="form-control" name="val-suggestions" rows="5"
+                                <textarea class="E1_UserAbout form-control" name="val-suggestions" rows="5"
                                     placeholder="輸入狀態消息"  id="EditInput05" disabled></textarea>
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <div class="col-lg-8 ml-auto">
-                                <button type="button" class="btn btn-success" id="confirm-btn" onclick="ChangeDisabled(3)">確認修改送出</button>
+                                <button type="button" class="Test_E1post_btn btn btn-success"  onclick="ChangeDisabled(3)">確認修改送出</button>
+                                @*<button type="button" class="E1post_btn btn btn-success"  onclick="getValueInput()">測試按鈕1</button>*@
+                                <input type="submit" class="E1post_btn btn btn-success" value="測試按鈕2"/>
                             </div>
                         </div>
                     </form>

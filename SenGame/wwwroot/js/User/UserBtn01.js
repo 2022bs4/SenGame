@@ -46,3 +46,52 @@ function ChangeDisabled(value) {
     }
 }
 
+//初始按鈕
+let sumbit = document.querySelector('.E1post_btn')
+//最終按鈕
+let testsumbit = document.querySelector('Test_E1post_btn')
+
+//個人檔案名稱
+let UserName = document.querySelector('.E1_UserName')
+//密碼
+let password = document.querySelector('.E1_password')
+//國家/地區
+let country = document.querySelector('.E1_list1')
+//關於我
+let UserAbout = document.querySelector('.E1_UserAbout')
+
+E1_submitValue()
+function E1_submitValue() {
+
+    //先抓國家的東東
+    country.addEventListener('change', function () {
+        var option = this.options[this.selectedIndex];
+        $(`.E1_list1`).attr("value", `${option.value}`)
+    })
+}
+//使用者編輯
+sumbit.addEventListener("click", function () {
+    EditUserFile()
+})
+//fetch寫法
+async function EditUserFile() {
+    const url = '/User/E1_User'
+    let E1_request = new Request(url, {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            UserCountry: `${country.value}`
+        })
+
+    })
+}
+
+
+
+
+//抓取使用者輸入的個人檔案名稱
+//const getValueInput = () => {
+//    let inputValue = UserName.value;
+//    InputUserName.innerHTML = inputValue;
+//}
+
