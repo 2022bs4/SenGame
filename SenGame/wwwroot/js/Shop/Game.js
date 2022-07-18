@@ -69,7 +69,7 @@ function NewReleaese() {
             SwipperFetch(item.innerText)
         })
     })
-   
+  
     async function SwipperFetch(UserRequest) {
         const url = `/api/Shop/PostIndex`
         let request = new Request(url, {
