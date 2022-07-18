@@ -39,6 +39,7 @@ namespace SqlModels.Data
         public virtual DbSet<ShoppingCart> ShoppingCarts { get; set; }
         public virtual DbSet<SystemSpecification> SystemSpecifications { get; set; }
         public virtual DbSet<Typelist> Typelists { get; set; }
+        public virtual DbSet<TypeGroup> TypeGroups {get ; set ;}
         public virtual DbSet<UserBackground> UserBackgrounds { get; set; }
         public virtual DbSet<UserCountry> UserCountries { get; set; }
         public virtual DbSet<UserPrivacy> UserPrivacies { get; set; }
@@ -293,6 +294,8 @@ namespace SqlModels.Data
                     .IsRequired()
                     .HasComment("開發商家");
 
+                entity.Property(e => e.ReleaseState).HasComment("1.已發佈 2.尚未發佈");
+
                 entity.Property(e => e.DownTime)
                     .HasColumnType("datetime")
                     .HasComment("商品下架日期");
@@ -481,7 +484,13 @@ namespace SqlModels.Data
             {
                 entity.ToTable("Order");
 
-                entity.Property(e => e.OrderId).ValueGeneratedNever();
+                entity.Property(e => e.OrderId).IsRequired();
+
+                //entity.Property(e => e.OrderId).ValueGeneratedNever();
+
+
+                entity.HasIndex(e => e.UserId, "IX_ShoppingCart_UserId");
+
 
                 entity.Property(e => e.CancelTime)
                     .HasColumnType("datetime")
@@ -492,17 +501,17 @@ namespace SqlModels.Data
                     .HasComment("訂單時間");
 
                 entity.Property(e => e.EcpayId)
-                    .IsRequired()
+                    //.IsRequired()
                     .HasComment("Ecpay訂單編號");
 
                 entity.Property(e => e.Invoice)
-                    .IsRequired()
+                    //.IsRequired()
                     .HasMaxLength(255)
                     .IsFixedLength(true)
                     .HasComment("發票編碼");
 
                 entity.Property(e => e.InvoiceWay)
-                    .IsRequired()
+                    //.IsRequired()
                     .HasMaxLength(255)
                     .IsFixedLength(true)
                     .HasComment("1.電子發票2.載具3.捐贈");
@@ -518,15 +527,24 @@ namespace SqlModels.Data
                 entity.Property(e => e.UpdateTime)
                     .HasColumnType("datetime")
                     .HasComment("訂單更新時間");
+
+                //
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Orders)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("FK_Order_AspNetUsers1");
             });
 
             modelBuilder.Entity<Orderdetail>(entity =>
             {
+                
+                entity.Property(e => e.OrderdetailId).IsRequired();
+
                 entity.HasIndex(e => e.GameId, "IX_Orderdetails_GameId");
 
                 entity.HasIndex(e => e.OrderId, "IX_Orderdetails_OrderId");
 
-                entity.Property(e => e.OrderdetailId).ValueGeneratedNever();
+                //entity.Property(e => e.OrderdetailId).ValueGeneratedNever();
 
                 entity.Property(e => e.Discount).HasComment("購買後則顯示當時折扣");
 
@@ -609,7 +627,7 @@ namespace SqlModels.Data
 
                 //entity.Property(e => e.ShoppingCartId).ValueGeneratedNever();
                 
-                //測試自動識別?
+                //測試自動識別
                 entity.Property(e => e.UserId).IsRequired();
 
 
@@ -661,9 +679,31 @@ namespace SqlModels.Data
             {
                 entity.ToTable("Typelist");
 
+                entity.HasIndex(e => e.GroupId, "IX_Typelist_GroupId");
+
                 entity.Property(e => e.TypelistId).ValueGeneratedNever();
 
                 entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(255);
+
+                //entity.Property(e => e.GroupId);
+
+                entity.HasOne(d => d.TypeGroup)
+                    .WithMany(p => p.Typelist)
+                    .HasForeignKey(d => d.GroupId)
+                    .HasConstraintName("FK_Typelisy_TypeGroup");
+            });
+
+            modelBuilder.Entity<TypeGroup>(entity =>
+            {
+                entity.HasKey(e => e.GroupId);
+
+                entity.ToTable("TypeGroup");
+
+                entity.Property(e => e.GroupId).ValueGeneratedNever();
+
+                entity.Property(e => e.GroupName)
                     .IsRequired()
                     .HasMaxLength(255);
             });

@@ -31,6 +31,12 @@ namespace SqlModels.Repository
         //實作
         public void Update<TEntity>(TEntity entity) where TEntity : class
         {
+
+            //參數會是參考位址,所以傳入的必須是context的物件，來更改追蹤實體。
+            //var entity=_DbContext.Get(x => x.Id == viewModel.Id);
+            //service.Update(entity);
+
+            // https://docs.microsoft.com/zh-tw/ef/core/change-tracking/entity-entries
             _DbContext.Entry(entity).State = EntityState.Modified;
         }
 
@@ -46,6 +52,11 @@ namespace SqlModels.Repository
             return _DbContext.Set<TEntity>().Where(predicate).AsQueryable();
         }
 
+        //實作
+        public TEntity Get<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : class
+        {
+            return _DbContext.Set<TEntity>().FirstOrDefault(predicate);
+        }
         //實作
         public IQueryable<TEntity> GetAll<TEntity>() where TEntity : class
         {

@@ -11,7 +11,9 @@ $(document).ready(function () {
     ProductSystem();
     BtnFunction();
     //CloneGame()
-    
+
+    setTimeout(function () { RecommendTemplate()}, 1500);
+
 })
 
 
@@ -19,30 +21,29 @@ $(document).ready(function () {
 function BtnFunction() {
     let btn_Add = document.querySelector('.AddItem');
     let btn_Wish = document.querySelector('.Wish');
+
     //加入購物車fetch post
     btn_Add.addEventListener('click', function () {
-        const url = '/Shop/AddShoppingCart';
+        AddCartFetch()    
+    })
+
+    async function AddCartFetch() {
+        const url = '/api/Shop/AddShoppingCart';
         let request = new Request(url, {
             method: "POST",
             headers: new Headers({
-                'Content-Type' : 'application/json',
+                'Content-Type': 'application/json',
             }),
             body: JSON.stringify({
-                GameId: `${gameId.value}`
+                GameId: `${gameId.value}`,
+                //Success: "",
             })
         })
-
-        fetch(request)
-            .then(response => { response.json() })
-            .then(result => {
-                console.log(request)
-                //alert(result)
-            })
-            .catch(error => {
-                alert(`Error : ${error}`)
-            })
-    })
-
+        let fetchAction = await fetch(request)
+        let data = await fetchAction.json()
+        var response = data.success;
+        alert(response);
+    }
     //btn_Wish.addEventListener('click', function () {
     //})
 
@@ -51,8 +52,8 @@ function BtnFunction() {
 
 // 以下為幻燈片動態
 function GameSwipper() {
-    const swipper = `/Shop/ProductSwipper/${gameId.value}`;
-    fetch( swipper)
+    const swipper = `/api/Shop/ProductSwipper?id=${gameId.value}`;
+    fetch(swipper, {method:"GET"})
         .then(response => response.json())
         .then(result => {
             setSliders(result);
@@ -99,7 +100,7 @@ function GameSwipper() {
 
 //詳細圖文介紹區之動態產生
 function MianDetails() {
-    const url = `/Shop/ProductMain/${gameId.value}`
+    const url = `/api/Shop/ProductMain?id=${gameId.value}`
     fetch(url)
         .then(response => response.json())
         .then(result => {
@@ -107,10 +108,6 @@ function MianDetails() {
                 CloneGame(item)
             })
         })
-        .then(end => {
-            setTimeout(RecommendTemplate(), 3000);
-        });
-
     function CloneGame(Array) {
         let GameDatails = document.querySelector('.Game-Datails')
         let GameClone = GamePictureText.content.cloneNode(true)
@@ -122,7 +119,7 @@ function MianDetails() {
 
 //系統區域
 function ProductSystem() {
-    const systemAction = `/Shop/ProductSystem/${gameId.value}`
+    const systemAction = `/api/Shop/ProductSystem?id=${gameId.value}`
     fetch(systemAction,)
         .then(response => response.json())
         .then(result => {
@@ -173,10 +170,9 @@ function ProductSystem() {
     }
 }
 
-
 //推薦Template
 function RecommendTemplate() {
-    const ProductRecommend = "/Shop/ProductRecommend"
+    const ProductRecommend = "/api/Shop/ProductRecommend"
     let box = document.querySelector('.Recommend')
     var GameDatails = document.querySelector(".Game-Datails")
     let screenWidth = screen.width;
@@ -208,6 +204,7 @@ function RecommendTemplate() {
             })
         })
 }
+
 //廣告清除
 function adClear() {
     $('.Video-Clear').click(function () {

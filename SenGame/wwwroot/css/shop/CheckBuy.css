@@ -1,0 +1,203 @@
+﻿.Check-Buy{
+    background: -webkit-gradient(linear, left top, right top, from(#0c273c), to(#475e6e));
+    background: linear-gradient(to right, #0c273c, #475e6e);
+    width: 100%;
+    margin-left: auto;
+    -webkit-transition: .5s;
+    transition: .5s;
+    padding: 1em 1em 5em 1em;
+    color: #fff;
+}
+
+    .Check-Buy .Review {
+        position: relative;
+    }
+
+        .Check-Buy .Review .Totoal-Price {
+            font-weight: 700;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: horizontal;
+            -webkit-box-direction: reverse;
+            -ms-flex-direction: row-reverse;
+            flex-direction: row-reverse;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            font-size: 1.5em;
+        }
+
+        .Check-Buy .Review .User-Protocol {
+            font-size: 0.5em;
+        }
+
+            .Check-Buy .Review .User-Protocol input {
+                display: block;
+                float: left;
+                clear: left;
+                height: 14px;
+                padding: 0px;
+                margin: 3px 5px 0px 0px;
+            }
+    .Check-Buy .Btn_Buy {
+        font-size: 1.5rem;
+        padding: 5px 10px;
+        background: linear-gradient(to bottom, #a5f5b7, #337342, #275a33);
+        font-weight: 700;
+        border-radius: 10px;
+        border: 0px;
+        position: absolute;
+        right: 5.2em;
+        bottom: 3em;
+        -webkit-box-shadow: 5px 5px 2px #00000099, -1px -1px 1px #c4d2e0;
+        box-shadow: 5px 5px 2px #00000099, -1px -1px 1px #c4d2e0;
+        color: #fff;
+    }
+
+            .Check-Buy .Review .Btn_Buy .Btn_Cancel:hover {
+                background-color: #66c0f4;
+                -webkit-box-shadow: none;
+                box-shadow: none;
+            }
+
+.Btn_Cancel {
+    font-size: 1.5rem;
+    padding: 5px 10px;
+    background: linear-gradient(to bottom, #c2c4c9, #3e5379, #2664d2);
+    font-weight: 700;
+    border-radius: 10px;
+    border: 0px;
+    position: absolute;
+    right: 0em;
+    bottom: 3em;
+    -webkit-box-shadow: 5px 5px 2px #00000099, -1px -1px 1px #c4d2e0;
+    box-shadow: 5px 5px 2px #00000099, -1px -1px 1px #c4d2e0;
+    color: #fff;
+}
+
+        .Check-Buy .Review a {
+            /* bs內建text-decoration-none */
+            text-decoration: underline !important;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+    .Check-Buy .Buy-Hint div {
+        padding: 0.5em;
+        border: 1px solid #000;
+        border-radius: 5px;
+        font-size: 0.8em;
+        -webkit-box-shadow: 5px 5px 2px #00000099, -1px -1px 1px #c4d2e0;
+        box-shadow: 5px 5px 2px #00000099, -1px -1px 1px #c4d2e0;
+        font-weight: 600;
+    }
+
+@media (min-width: 768px) {
+    .Check-Buy .Buy-Hint {
+        margin-top: 1em;
+    }
+
+        .Check-Buy .Buy-Hint div {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 5em;
+        }
+}
+
+@media (min-width: 576px) {
+    .Check-Buy {
+        width: calc(100% - 60px);
+        margin-left: auto;
+    }
+}
+
+@media (min-width: 768px) {
+    .Check-Buy {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+    }
+
+    .open-section {
+        width: calc(100% - 220px) !important;
+        -webkit-transition: 0.5s;
+        transition: 0.5s;
+    }
+}
+
+.MainScreen {
+    width: 100% !important;
+}
+
+.Sum-Price {
+    color: #fff;
+    text-shadow: 3px 2px 1px #0000003d, -1px -1px 1px #c4d2e0;
+}
+
+.Game-Item {
+    border-bottom: 1px solid #fff;
+    margin-bottom: 1em;
+}
+
+    .Game-Item h2 {
+        font-size: 1.3em;
+        font-weight: 900;
+    }
+
+@media (min-width: 576px) {
+    .Game-Item h2 {
+        font-size: 2em;
+    }
+}
+
+.Game-Item div .Game-Price-Box span {
+    font-weight: 600;
+    font-size: 0.8em;
+    margin-right: 0.8em;
+}
+
+.Game-Item div .Game-Price-Box p {
+    font-weight: 800;
+    font-size: 0.8em;
+    text-shadow: 3px 2px 1px #0000003d, -1px -1px 1px #c4d2e0;
+    color: #fff;
+}
+
+@media (min-width: 768px) {
+    .Game-Item div .Game-Price-Box {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+    }
+
+        .Game-Item div .Game-Price-Box span, .Game-Item div .Game-Price-Box p {
+            font-size: 0.8em;
+        }
+}
+
+@media (min-width: 768px) and (min-width: 992px) {
+    .Game-Item div .Game-Price-Box span, .Game-Item div .Game-Price-Box p {
+        font-size: 1.2em;
+    }
+}
+
+@media (min-width: 768px) and (min-width: 1200px) {
+    .Game-Item div .Game-Price-Box span, .Game-Item div .Game-Price-Box p {
+        font-size: 1.5em;
+    }
+}
+
+img {
+    border-radius: 0.4em;
+    border: 1px solid black;
+}
+
+
+
+/*# sourceMappingURL=CheckBuy.css.map */

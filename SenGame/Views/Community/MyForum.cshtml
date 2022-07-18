@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "討論區";
 }
-@model IEnumerable<Forum>
+@model SqlModels.ViewModels.Community.ForumViewModel
 @section Css{
 <link rel="stylesheet" href="~/css/Forum/Forum.css">
 }
@@ -38,12 +38,12 @@
     </div>
 </div>
 <div id="page-content" class="row">
-    @foreach (var item in Model)
+    @foreach (var item in Model.ForumCollection)
     {
         <div class="col">
-            <a href="">
+            <a href="@item.Id">
                 <div class="card">
-                    <img src="@item.Banner" class="card-img-top" alt="...">
+                    <img src="@item.Banner" class="card-img-top" alt="@item.Banner">
                     <div class="card-body">
                         <div class="card-body-head">
                             <h3 class="card-title">@item.Name</h3>

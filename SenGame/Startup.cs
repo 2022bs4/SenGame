@@ -20,7 +20,9 @@ using Services;
 using Services.Interface;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
-using Services.ChatService;
+using Services.ShopSevice;
+using Services.Mappings;
+using SenGame.Service;
 
 namespace SenGame
 {
@@ -36,46 +38,61 @@ namespace SenGame
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            #region -- DataBase --
             //DB DI
             services.AddDbContext<SenGameContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDatabaseDeveloperPageExceptionFilter();            
+            services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddDefaultIdentity<UserModel>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<SenGameContext>();
-            
-            services.AddControllersWithViews();
-            
-            //Repositories DI
+            #endregion
+            #region -- Repository --
             services.AddScoped<IRepository, GenericRepository>();
-            
-            //Services DI
-            services.AddScoped<IBaseService,BaseService>();
-            services.AddScoped<ICommunityService,CommunityService>();
-            services.AddScoped<IUserService, UserService>();
-
-            services.AddScoped<FriendGroupService>();
-            //Swagger Use
+            #endregion
+            #region -- Service --
+            services.AddScoped<IBaseService, BaseService>();
+            services.AddScoped<ICommunityService, CommunityService>();
+            services.AddScoped<ShopServices>();
+            services.AddScoped<ShopCartServices>();
+            services.AddScoped<EcpayService>();
+            #endregion
+            #region -- AutoMapper DI --
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            #endregion
+            #region -- Swagger --
             services.AddSignalR();
             services.AddSwaggerGen();
-
+            #endregion
+            #region -- Google 第三方登入 --
             //Google 第三方登入
             services.AddAuthentication().AddGoogle(googleOptions =>
             {
                 googleOptions.ClientId = "319105508231-b14a9vlbq3sobjfruc8sd8kp9iplgrkf.apps.googleusercontent.com";
                 googleOptions.ClientSecret = "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";
             });
-            //FB 第三方登入
-
+            #endregion
+            #region -- Facebook 第三方登入 --
             services.AddAuthentication().AddFacebook(options =>
             {
                 options.AppId = "363016615774590";
                 options.AppSecret = "f3ccc3f70ef3b114a2d0fce1562be7c1";
                 options.AccessDeniedPath = "/AccessDeniedPathInfo";
             });
+            #endregion
+            //API跨域設定(測試中  by 羅 )
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                builder => builder.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowAnyOrigin()
+                .AllowCredentials());
+            });
         }
 
-     
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())

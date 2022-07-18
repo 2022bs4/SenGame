@@ -9,13 +9,13 @@ namespace SqlModels.Models
     {
         public Order()
         {
-            AspNetUsers = new HashSet<UserModel>();
+            //AspNetUsers = new HashSet<UserModel>();
             Orderdetails = new HashSet<Orderdetail>();
         }
 
         public int OrderId { get; set; }
         public DateTime CreateTime { get; set; }
-        public DateTime UpdateTime { get; set; }
+        public DateTime? UpdateTime { get; set; }
         public DateTime? TradeTime { get; set; }
         public DateTime? CancelTime { get; set; }
         public decimal TotalPrice { get; set; }
@@ -24,7 +24,12 @@ namespace SqlModels.Models
         public string Invoice { get; set; }
         public string InvoiceWay { get; set; }
 
-        public virtual ICollection<UserModel> AspNetUsers { get; set; }
+        //
+        public string UserId { get; set; }
+
+        //
+        public virtual UserModel User { get; set; }
+        //public virtual ICollection<UserModel> AspNetUsers { get; set; }
         public virtual ICollection<Orderdetail> Orderdetails { get; set; }
     }
 }

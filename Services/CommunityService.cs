@@ -1,5 +1,7 @@
-﻿using Services.Interface;
+﻿using AutoMapper;
+using Services.Interface;
 using SqlModels.DTOModels;
+using SqlModels.DTOModels.Community;
 using SqlModels.Models;
 using SqlModels.Repository.Interface;
 using System.Collections.Generic;
@@ -8,17 +10,21 @@ namespace Services
 {
     public class CommunityService : BaseService, ICommunityService
     {
-        public CommunityService(IRepository repository) : base(repository)
+        public CommunityService(IRepository repository, IMapper mapper) : base(repository, mapper)
         {
         }
-        public IQueryable<Forum> GetUserForum(string _name)
+        public List<ForumDTO> GetForums()
         {
-            var id = Repository.FindBy<UserModel>(x => x.UserName == _name).First().UserId;
-            var ids = Repository.FindBy<MyForum>(x => x.UserId == id.ToString()).Select(x => x.ForumId);
-            var data = Repository.FindBy<Forum>(x => ids.Contains(x.ForumId));
+            var data = Mapper.Map<List<ForumDTO>>(Repository.GetAll<Forum>());
             return data;
         }
-
+        public List<ForumDTO> GetForums(string name)
+        {
+            var forumIds = Repository.FindBy<MyForum>(x => x.UserId == this.GetUserId(name)).Select(i => i.ForumId).ToList();
+            var Forums = Repository.FindBy<Forum>(x => forumIds.Contains(x.ForumId));
+            var data = Mapper.Map<List<ForumDTO>>(Forums);
+            return data;
+        }
         public List<CommunityDTO> Article()
         {
             var game = Repository.GetAll<Game>();
@@ -40,8 +46,6 @@ namespace Services
             return articlelist;
         }
 
-
-
         public List<Swipers> Swipers()
         {
             var img = Repository.GetAll<GameMedium>().Where(g => g.Instruction == 1 && g.InstructionType == 1);
@@ -54,6 +58,12 @@ namespace Services
                 });
             }
             return swipers;
+        }
+        //把User.Identity.Name轉成id
+        public string GetUserId(string name)
+        {
+            var id = Repository.GetAll<UserModel>().First(x => x.UserName == name).Id;
+            return id;
         }
 
     }

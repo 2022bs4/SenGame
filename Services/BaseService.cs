@@ -1,22 +1,27 @@
-﻿using Services.Interface;
-using SqlModels.Repository.Interface;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
+using Services.Interface;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using SqlModels.Models;
+using SqlModels.Repository.Interface;
 
 namespace Services
 {
     public class BaseService : IBaseService
     {
         private readonly IRepository _Repository;
-
-        //DI注入Repository
-        public BaseService(IRepository repository)
+        private readonly IMapper _Mapper;
+        public IRepository Repository { get { return _Repository; } }
+        public IMapper Mapper { get { return _Mapper; } }
+        //DI注入Repository,Mapper
+        public BaseService(IRepository repository, IMapper mapper)
         {
             this._Repository = repository;
+            this._Mapper = mapper;
         }
-        public IRepository Repository { get { return _Repository; } }
         //提供外部調用DbContext
         public virtual void Create<TEntity>(TEntity entity) where TEntity : class
         {

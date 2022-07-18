@@ -1,146 +1,330 @@
-﻿//using Services.Interface;
-//using SqlModels.DTOModels;
-//using SqlModels.Models;
-//using SqlModels.Repository.Interface;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Threading.Tasks;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using Services.Interface;
+using SqlModels.DTOModels;
+using SqlModels.Models;
+using SqlModels.Repository.Interface;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-//namespace Services
-//{
-//    public class ShopServices : BaseService<Game>
-//    {
-//        private readonly IRepository<Game> _game;
-//        private readonly IRepository<GameMedium> _gameMedium;
-//        private readonly IRepository<Typelist> _typelist;
-//        private readonly IRepository<GameType> _gametype;
-//        private readonly IRepository<GameDiscount> _discount;
-//        private readonly IRepository<SystemSpecification> _productSystem;
-//        //private readonly IRepository<ProductViewDTO> _productView;
+namespace Services
+{
+    public class ShopServices : BaseService, IShopServices
+    {
+        
+        public ShopServices(IRepository repository, IMapper mapper) : base(repository, mapper)
+        {
+        }
 
-//        public ShopServices(IRepository<Game> repository, IRepository<GameMedium> gameMedium, IRepository<Typelist> typlist , IRepository<GameType> gameTyple , IRepository<GameDiscount> disscount , IRepository<SystemSpecification> productSystem , IRepository<ProductViewDTO> productView) : base(repository)
-//        {
-//            this._game = repository;
-//            this._gameMedium = gameMedium;
-//            this._typelist = typlist;
-//            this._gametype = gameTyple;
-//            this._discount = disscount;
-//            this._productSystem = productSystem;
-//            //this._productView = productView;
+        //Index標籤讀取
+        public async Task<IEnumerable<ResponseTypeGroupDTO>> GetIndexTag() {
+            var typeGroup =  Repository.GetAll<TypeGroup>();
+            var typelist = Repository.GetAll<Typelist>();
+            var type = await typeGroup.Join(typelist, x => x.GroupId, y => y.GroupId,
+                (x, y) => new { x.GroupName, y.Name }).OrderByDescending(x => x.GroupName).ToListAsync();
+                var result = type.GroupBy(x => x.GroupName).Select(r => 
+                new ResponseTypeGroupDTO
+                {
+                    ParentCategory = r.Key,
+                    GameTyple = r.ToList().Select(item=> 
+                    new ResponseTypeGroupDTO.Data 
+                    { TypleName = item.Name }).ToList(),
+                });
+            return  result;
+        } 
 
-//        }
 
-//        public List<ProductViewDTO> ProductView(int id)
-//        {
-//            var game = _game.GetById(id);
-//            var medium = _gameMedium.GetAll().Where(x => x.GameId == id && x.InstructionType == 2 && x.Instruction == 1).FirstOrDefault();
-//            var disscount = _discount.GetAll().Where(x => x.GameId == id).FirstOrDefault();
-//            var typelist = _typelist.GetAll();
-//            var gameType = _gametype.GetAll();
-//            var productList = gameType.Join(typelist, g => g.TypelistId, s => s.TypelistId, (g, s) => new { g.GameId, s.Name }).Where(x=>x.GameId==id);
 
-//            var result = new List<ProductViewDTO>();
-//            foreach (var typle in productList)
-//            {
-//                //凱凱修改原本為productView.Add(new ProductViewDTO
-//                result.Add(new ProductViewDTO
-//                {
-//                    GameId = game.GameId,
-//                    GameName = game.GameName,
-//                    GamePrice = game.GamePrice,
-//                    GameIntroduction = game.GameIntroduction,
-//                    ReleaseTime = game.ReleaseTime,
-//                    Developer = game.Developer,
-//                    Marker = game.Marker,
-//                    DisscountTake =disscount.DiscountTake,
-//                    TypleName = typle.Name,
-//                    ProductMainPicture = medium.MediaUrl,
-//                });   
-//            };
+        //獲取指定數量及是否上架之遊戲Method
+        public async Task<List<IndexList>> GetSingleProducts(int IsShop)
+        {
+            var game = Repository.GetAll<Game>().Where(x => x.ReleaseState == IsShop);
+            var pic = Repository.GetAll<GameMedium>().Where(x => x.InstructionType == 2 && x.Instruction == 1);
+            var gameMedia = await game.Join(pic, x => x.GameId, p => p.GameId, (x, p) =>
+            new IndexList {
+                GameId = x.GameId,
+                GameName = x.GameName,
+                GameIndexPicture = p.MediaUrl,
+                GamePrice = x.GamePrice
+            }).ToListAsync();
+            return gameMedia;
+        }
 
-//            return result;
-//        }
-//        public  List<ProductSwipperDTO> ProductSwipper(int id)
-//        {
-//            var media = _gameMedium.GetAll().Where(x => x.GameId == id && x.InstructionType == 1 && x.Instruction == 1).OrderByDescending(x => x.Sort);
+        //首頁Method
+        public async Task<IndexProductDTO> GetIndesSwipper(string request)
+        {
+            var firstArea = new List<ResponseProductItem>();
+            var secondArea = new List<ResponseProductItem>();
+            if (request == "預設")
+            {
+                firstArea = await GetProductItem(1);
+                firstArea.Take(7);
+                secondArea = await GetProductItem(1);
+                //之後要skip()
+                secondArea.Take(3);
+            }
 
-//            var result = new List<ProductSwipperDTO>();
-//            foreach (var swipper in media)
-//            {
-//                result.Add(new ProductSwipperDTO { SwipperUrl = swipper.MediaUrl });
-//            }
+            //日期
+            else if (request == "最新發行日期")
+            {
+                firstArea = await GetProductItem(1);
+                firstArea.OrderBy(x => x.Date).Take(7);
+                secondArea = await GetProductItem(1);
+                //之後要skip()
+                secondArea.OrderBy(x => x.Date).Take(3);
+            }
+            else if (request == "較早發行日期")
+            {
+                firstArea = await GetProductItem(1);
+                firstArea.OrderByDescending(x => x.Date).Take(7);
+                secondArea = await GetProductItem(1);
+                //之後要skip()
+                secondArea.OrderByDescending(x => x.Date).Take(3);
+            }
+            else if (request == "即將發行")
+            {
+                firstArea = await GetProductItem(2);
+                firstArea.OrderByDescending(x => x.Date).Take(7);
+                secondArea = await GetProductItem(1);
+                //之後要skip()
+                secondArea.OrderByDescending(x => x.Date).Take(3);
+            }
 
-//            return result;
-//        }
-//        public List<ProdductIntroductDTO> ProductMainText(int id)
-//        {
-//            var game = _game.GetById(id).GameDetailsText;
-//            var gameArray = game.Split("<img>");
-//            var media = _gameMedium.GetAll().Where(x => x.GameId == id && x.InstructionType == 3 && x.Instruction == 1);
-//            var result = new List<ProdductIntroductDTO>();
-//            int i = 0;
-//            result.Add(new ProdductIntroductDTO
-//            {
-//                GameDetailsText = gameArray[i],
-//            }) ;
-//            i++;
-//            if (gameArray.Length > 1)
-//            {
-//                foreach (var pic in media)
-//                {
-//                    var newtext = gameArray[i].Insert(0, $"<img src='{pic.MediaUrl}'' class='w-100''>");
-//                    result.Add(new ProdductIntroductDTO
-//                    {
-//                        GameDetailsText = newtext,
-//                    });
-//                    i++;
-//                }
-//            }
-//            return result;
-//        }
 
-//        public  List<ProductSystemDTO> ProductSystem(int id)
-//        { 
-//            var system =  _productSystem.GetAll().Where(x => x.GameId == id).ToList();
-//            var result = new List<ProductSystemDTO>();
+            //價錢
+            else if (request == "價格由低至高")
+            {
+                firstArea = await GetProductItem(1);
+                firstArea.OrderByDescending(x => x.GamePrice).Take(7);
+                secondArea = await GetProductItem(1);
+                //之後要skip()
+                secondArea.OrderByDescending(x => x.GamePrice).Take(3);
+            }
+            else if (request == "價格由高至低")
+            {
+                firstArea = await GetProductItem(1);
+                firstArea.OrderBy(x => x.GamePrice).Take(7);
+                secondArea = await GetProductItem(1);
+                //之後要skip()
+                secondArea.OrderBy(x => x.GamePrice).Take(3);
+            }
 
-//            foreach (var item in system)
-//            {
-//                result.Add(
-//                    new ProductSystemDTO
-//                    {
-//                        SystemType = item.SystemType,
-//                        Configure = item.Configure,
-//                        Hddspace = item.Hddspace,
-//                        System = item.System,   
-//                        SystemRam = item.SystemRam,
-//                        SystemCpu = item.SystemCpu,
-//                        SystemGpu = item.SystemGpu,
-//                    });
-//            }
+            var result = new IndexProductDTO
+            {
+                FirstAreaProduct = firstArea,
+                SecondAreaProduct = secondArea
+            };
+            return result;
 
-//            return result;
-//        }
-//        public List<ProductRecommend> ProductRecommend()
-//        {
-//            var recommend = _game.GetAll().OrderBy(x => Guid.NewGuid());
-//            var pic = _gameMedium.GetAll().Where(x => x.InstructionType == 2 && x.Instruction == 1);
-//            var newRecommend = recommend.Join(pic, r => r.GameId, p => p.GameId, (r, p) => new { r.GameId, r.GameName, r.GamePrice, p.MediaUrl }).Take(5).ToList();
-//            var result = new List<ProductRecommend>();
-//            foreach (var item in newRecommend)
-//            {
-//                result.Add(new ProductRecommend
-//                {
-//                    GameId = item.GameId,
-//                    ProductUrl = item.MediaUrl,
-//                    ProductName = item.GameName,
-//                    ProductPrice = item.GamePrice,
-//                 });
-//            }
-//            return result;
-//        }
-//    }
+             
 
-   
-//}
+        }
+
+        //基於首頁Swipper衍生之Method
+        public async Task<List<ResponseProductItem>> GetProductItem(int IsShop)
+        {
+            var gameMedium = await GetSingleProducts(IsShop);
+            var result = new List<ResponseProductItem>();
+            foreach (var item in gameMedium)
+            {
+                result.Add(new ResponseProductItem
+                {
+                    GameId = item.GameId,
+                    GameName = item.GameName,
+                    GamePrice = item.GamePrice,
+                    GameUrl = item.GameIndexPicture,
+                    Date = item.ReleaseTime,
+                });
+            }
+            return result;
+        }
+        
+        //抓取全圖片版銷售最好(之後會將其他需求擴充至此)
+        public async Task<List<IndexList>> GetProductList()
+        {
+            var game = await GetSingleProducts(1);
+
+            //之後會添加判斷是來篩選各類需求產品排序
+            var newGame = game.OrderBy(x => x.ReleaseTime).Take(5);
+
+            var result = new List<IndexList>();
+            foreach (var item in newGame)
+            {
+                result.Add(new IndexList
+                {
+                    GameId = item.GameId,
+                    GameName = item.GameName,
+                    GamePrice = item.GamePrice,
+                    GameIndexPicture = item.GameIndexPicture,
+                });
+            }
+            return result;
+        }
+        //更多list
+        //public async Task<List<IndexList>> GetMoreProductList()
+        //{ 
+
+        //};
+
+        //GetProductList  多徒多標籤介紹
+        public async Task<IndexList> GetDetailsList(int id)
+        {
+            var game = await GetProductItemDateals(id);
+           
+            var pic = await Repository.FindBy<GameMedium>(x => x.GameId == id && x.InstructionType == 1 && x.Instruction == 1).OrderByDescending(x => x.Sort).ToListAsync();
+            var result = new IndexList()
+            {
+                GameId = game.GameId,
+                GameName = game.GameName,
+                GamePrice = game.GamePrice,
+                TypeData = game.GameTyple.Select(item => new IndexList.ProductType
+                { 
+                    TypleName = item.TypleName 
+                }).ToList(),
+                GameUrl = pic.Select(item=> new IndexList.ProductUrl {
+                    Url = item.MediaUrl 
+                }).ToList()
+            };
+            return result;
+        }
+
+        //商品詳細頁面
+        public async Task<ResponseProducDetailsDTO> ProductView(int id)
+        {
+            var getGame = await GetProductItemDateals(id);
+            var pic = await Repository.FindBy<GameMedium>(x => x.GameId == id && x.InstructionType == 2 && x.Instruction == 1).FirstOrDefaultAsync();
+            
+            var discount = await Repository.FindBy<GameDiscount>(x => x.GameId == id ).FirstOrDefaultAsync();
+
+            var result = new ResponseProducDetailsDTO()
+            { 
+                GameId = getGame.GameId,
+                GameName = getGame.GameName,
+                GamePrice = getGame.GamePrice,
+                GameIntroduction = getGame.GameIntroduction,
+                ReleaseTime = getGame.ReleaseTime,
+                Developer = getGame.Developer,
+                Marker = getGame.Marker,
+                DisscountTake = discount.DiscountTake,
+                GameTyple = getGame.GameTyple,
+                GamePicture = pic.MediaUrl,
+            };
+            return result;
+        }
+
+        public async Task<ResponseProducDetailsDTO> GetProductItemDateals(int id) 
+        {
+            var game = await Repository.FindBy<Game>(x => x.GameId == id).FirstOrDefaultAsync();
+            var typle = Repository.FindBy<GameType>(x => x.GameId == id);
+            var typlist = Repository.GetAll<Typelist>();
+            var gameTyple = await typle.Join(typlist, x => x.TypelistId, y => y.TypelistId, (x, y) => new { x.GameId, y.Name }).ToListAsync();
+
+            var result = new ResponseProducDetailsDTO()
+            {
+                GameId = game.GameId,
+                GameName = game.GameName,
+                GamePrice = game.GamePrice,
+                GameIntroduction = game.GameIntroduction,
+                ReleaseTime = game.ReleaseTime,
+                Developer = game.Developer,
+                Marker = game.Marker,
+                GameTyple = gameTyple.Select(item => new ResponseProducDetailsDTO.TypleData
+                {
+                    GameId = item.GameId,
+                    TypleName = item.Name,
+                }).ToList(),
+            };
+            return result;
+        }
+
+        //以下為商品詳細之GET API 考慮整合
+        public async Task<RequestProducDetailsDTO> ProductSwipper(int id)
+        {
+            var pic = await Repository.FindBy<GameMedium>(x => x.GameId == id && x.InstructionType == 1 && x.Instruction == 1).OrderByDescending(x => x.Sort).ToListAsync();
+
+            var result = new RequestProducDetailsDTO()
+            {
+                SwipperData = pic.Select(
+                    item => new RequestProducDetailsDTO.ResponseProductSwipperDTO 
+                    {
+                    SwipperUrl=item.MediaUrl
+                }).ToList(),
+            };
+            return result;
+        }
+        public  async Task<List<ProdductIntroductDTO>> ProductMainText(int id)
+        {
+            var game = await Repository.FindBy<Game>(x => x.GameId == id).Select(x=>x.GameDetailsText).FirstAsync();
+
+            var gameArray = game.Split("<img>");
+            var pic = await Repository.FindBy<GameMedium>(x => x.GameId == id && x.InstructionType == 3 && x.Instruction == 1).ToListAsync();
+
+            var result = new List<ProdductIntroductDTO>();
+            int i = 0;
+            result.Add(new ProdductIntroductDTO
+            {
+                GameDetailsText = gameArray[i],
+            });
+            i++;
+            if (gameArray.Length > 1)
+            {
+                foreach (var item in pic)
+                {
+                    var newtext = gameArray[i].Insert(0, $"<img src='{item.MediaUrl}'' class='w-100''>");
+                    result.Add(new ProdductIntroductDTO
+                    {
+                        GameDetailsText = newtext,
+                    });
+                    i++;
+                }
+            }
+            return  result  ;
+        }
+        public async Task<RequestProducDetailsDTO> ProductSystem(int id)
+        {
+            var system = await Repository.FindBy<SystemSpecification>(x => x.GameId == id).ToListAsync();
+
+            var result = new RequestProducDetailsDTO()
+            {
+                SystemData =  system.Select(item =>
+                new RequestProducDetailsDTO.ProductSystemDTO
+                {
+                    SystemType = item.SystemType,
+                    Configure = item.Configure,
+                    Hddspace = item.Hddspace,
+                    System = item.System,
+                    SystemRam = item.SystemRam,
+                    SystemCpu = item.SystemCpu,
+                    SystemGpu = item.SystemGpu,
+                }).ToList(),
+            };
+            return result;
+        }
+        
+        //遊戲推薦有兩個頁面有使用，考慮重構和封裝
+        public async Task<List<ProductRecommend>> ProductRecommend()
+        {
+            var recommend =  Repository.GetAll<Game>().OrderBy(x => Guid.NewGuid());
+
+            var pic =  Repository.GetAll<GameMedium>().Where(x => x.InstructionType == 2 && x.Instruction == 1);
+            var newRecommend = await recommend.Join(pic, r => r.GameId, p => p.GameId, (r, p) => new { r.GameId, r.GameName, r.GamePrice, p.MediaUrl }).Take(5).ToListAsync();
+            var result = new List<ProductRecommend>();
+            foreach (var item in newRecommend)
+            {
+                result.Add(new ProductRecommend
+                {
+                    GameId = item.GameId,
+                    ProductUrl = item.MediaUrl,
+                    ProductName = item.GameName,
+                    ProductPrice = item.GamePrice,
+                });
+            }
+            return result;
+        }
+    
+    }
+
+}
+

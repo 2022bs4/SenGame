@@ -643,7 +643,9 @@ namespace SqlModels.Migrations
             modelBuilder.Entity("SqlModels.Models.Order", b =>
                 {
                     b.Property<int>("OrderId")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime?>("CancelTime")
                         .HasColumnType("datetime")
@@ -654,19 +656,16 @@ namespace SqlModels.Migrations
                         .HasComment("訂單時間");
 
                     b.Property<string>("EcpayId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasComment("Ecpay訂單編號");
 
                     b.Property<string>("Invoice")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nchar(255)")
                         .IsFixedLength(true)
                         .HasComment("發票編碼");
 
                     b.Property<string>("InvoiceWay")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nchar(255)")
                         .IsFixedLength(true)
@@ -683,11 +682,16 @@ namespace SqlModels.Migrations
                         .HasColumnType("datetime")
                         .HasComment("訂單成立時間");
 
-                    b.Property<DateTime>("UpdateTime")
+                    b.Property<DateTime?>("UpdateTime")
                         .HasColumnType("datetime")
                         .HasComment("訂單更新時間");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("OrderId");
+
+                    b.HasIndex(new[] { "UserId" }, "IX_ShoppingCart_UserId");
 
                     b.ToTable("Order");
                 });
@@ -695,7 +699,9 @@ namespace SqlModels.Migrations
             modelBuilder.Entity("SqlModels.Models.Orderdetail", b =>
                 {
                     b.Property<int>("OrderdetailId")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<double?>("Discount")
                         .HasColumnType("float")
@@ -793,7 +799,8 @@ namespace SqlModels.Migrations
 
                     b.HasIndex(new[] { "GameId" }, "IX_ShoppingCart_GameId");
 
-                    b.HasIndex(new[] { "UserId" }, "IX_ShoppingCart_UserId");
+                    b.HasIndex(new[] { "UserId" }, "IX_ShoppingCart_UserId")
+                        .HasDatabaseName("IX_ShoppingCart_UserId1");
 
                     b.ToTable("ShoppingCart");
                 });
@@ -842,9 +849,27 @@ namespace SqlModels.Migrations
                     b.ToTable("SystemSpecification");
                 });
 
+            modelBuilder.Entity("SqlModels.Models.TypeGroup", b =>
+                {
+                    b.Property<int>("GroupId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.HasKey("GroupId");
+
+                    b.ToTable("TypeGroup");
+                });
+
             modelBuilder.Entity("SqlModels.Models.Typelist", b =>
                 {
                     b.Property<int>("TypelistId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GroupId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -853,6 +878,8 @@ namespace SqlModels.Migrations
                         .HasColumnType("nvarchar(255)");
 
                     b.HasKey("TypelistId");
+
+                    b.HasIndex(new[] { "GroupId" }, "IX_Typelist_GroupId");
 
                     b.ToTable("Typelist");
                 });
@@ -932,9 +959,6 @@ namespace SqlModels.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("int");
-
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
@@ -990,8 +1014,6 @@ namespace SqlModels.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.HasIndex("OrderId");
 
                     b.HasIndex("UserBackgroundId");
 
@@ -1331,6 +1353,16 @@ namespace SqlModels.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("SqlModels.Models.Order", b =>
+                {
+                    b.HasOne("SqlModels.Models.UserModel", "User")
+                        .WithMany("Orders")
+                        .HasForeignKey("UserId")
+                        .HasConstraintName("FK_Order_AspNetUsers1");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("SqlModels.Models.Orderdetail", b =>
                 {
                     b.HasOne("SqlModels.Models.Game", "Game")
@@ -1416,12 +1448,20 @@ namespace SqlModels.Migrations
                     b.Navigation("Game");
                 });
 
+            modelBuilder.Entity("SqlModels.Models.Typelist", b =>
+                {
+                    b.HasOne("SqlModels.Models.TypeGroup", "TypeGroup")
+                        .WithMany("Typelist")
+                        .HasForeignKey("GroupId")
+                        .HasConstraintName("FK_Typelisy_TypeGroup")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TypeGroup");
+                });
+
             modelBuilder.Entity("SqlModels.Models.UserModel", b =>
                 {
-                    b.HasOne("SqlModels.Models.Order", "Order")
-                        .WithMany("AspNetUsers")
-                        .HasForeignKey("OrderId");
-
                     b.HasOne("SqlModels.Models.UserBackground", "UserBackground")
                         .WithMany("UserModel")
                         .HasForeignKey("UserBackgroundId");
@@ -1429,8 +1469,6 @@ namespace SqlModels.Migrations
                     b.HasOne("SqlModels.Models.UserCountry", "UserCountry")
                         .WithMany("AspNetUsers")
                         .HasForeignKey("UserCountryId");
-
-                    b.Navigation("Order");
 
                     b.Navigation("UserBackground");
 
@@ -1529,14 +1567,17 @@ namespace SqlModels.Migrations
 
             modelBuilder.Entity("SqlModels.Models.Order", b =>
                 {
-                    b.Navigation("AspNetUsers");
-
                     b.Navigation("Orderdetails");
                 });
 
             modelBuilder.Entity("SqlModels.Models.Reply", b =>
                 {
                     b.Navigation("ReplyLikes");
+                });
+
+            modelBuilder.Entity("SqlModels.Models.TypeGroup", b =>
+                {
+                    b.Navigation("Typelist");
                 });
 
             modelBuilder.Entity("SqlModels.Models.Typelist", b =>
@@ -1569,6 +1610,8 @@ namespace SqlModels.Migrations
                     b.Navigation("MyForums");
 
                     b.Navigation("MyGames");
+
+                    b.Navigation("Orders");
 
                     b.Navigation("Replies");
 

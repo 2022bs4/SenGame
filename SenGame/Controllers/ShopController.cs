@@ -1,141 +1,146 @@
-﻿//using Microsoft.AspNetCore.Mvc;
-//using Services;
-//using Services.ShopSevice;
-//using SqlModels.ViewModels;
-//using SqlModels.ViewModels.ShopViewModels;
-//using System.Collections.Generic;
-//using Microsoft.AspNet.Identity;
-
-//namespace SenGame.Controllers
-//{
-//    public class ShopController : Controller
-//    {
-//        private readonly ShopServices _services;
-//        private readonly ShopCartServices _ShopCartServices;
-//        public ShopController(ShopServices service, ShopCartServices ShopCartServices)
-//        {
-//            _services = service;
-//            _ShopCartServices = ShopCartServices;
-//        }
-
-//        //產品詳細
-//        public IActionResult ProductDetails(int id)
-//        {
-//            var DtoData = _services.ProductView(id);
-
-//            var result = new List<ProductDetailsViewModel>();
-//            foreach (var item in DtoData)
-//            {
-//                result.Add(new ProductDetailsViewModel
-//                {
-//                    GameId = item.GameId,
-//                    GameName = item.GameName,
-//                    GamePrice = item.GamePrice,
-//                    GameIntroduction = item.GameIntroduction,
-//                    ReleaseTime = item.ReleaseTime,
-//                    Developer = item.Developer,
-//                    Marker = item.Marker,
-//                    ProductMainPicture = item.ProductMainPicture,
-//                    TypleName = item.TypleName,
-//                    DisscountTake = item.DisscountTake,
-//                });
-//            }
-//            TempData["actiontype"] = "shop";
-//            return View(result);
-//        }
-//        public IActionResult ProductMain(int id)
-//        {
-//            var result = _services.ProductMainText(id);
-//            return Ok(result);
-//        }
-
-//        //Json
-//        public IActionResult ProductDetailsJson(int id)
-//        {
-//            var result = _services.ProductSwipper(id);
-//            TempData["actiontype"] = "shop";
-//            return Json(result);
-//        }
-
-//        public IActionResult ProductSwipper(int id)
-//        {
-//            var result = _services.ProductSwipper(id);
-//            return Ok(result);
-//        }
-
-//        public IActionResult ProductSystem(int id)
-//        {
-//            var result = _services.ProductSystem(id);
-//            return Ok(result);
-//        }
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using SenGame.Service;
+using Services;
+using Services.ShopSevice;
+using SqlModels.Models;
+using SqlModels.ViewModels;
+using SqlModels.ViewModels.ShopViewModels;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 
-//        //遊戲購物車
-//        public IActionResult ShoppingCart() 
-//        {
-//            string UserId = "39f0f114-e6e0-4eb1-b3a0-2df9fd4b413c";
-//            // UserId = User.Identity.GetUserId();
+namespace SenGame.Controllers
+{
+    public class ShopController : Controller
+    {
+        private readonly ShopServices _Shop;
+        private readonly ShopCartServices _ShoppingCart;
+        private readonly UserManager<UserModel> _manger;
+        private readonly EcpayService _Ecpay;
+        public ShopController(ShopServices shop, ShopCartServices shoppingCart, UserManager<UserModel> manger, EcpayService ecpay)
+        {
+            _Shop = shop;
+            _ShoppingCart = shoppingCart;
+            _manger = manger;
+            _Ecpay = ecpay;
+        }
+        public async Task<IActionResult> Index()
+        {
+            //var product = await _Shop.ProductIndex();
 
-//            var shoppingCartInformation = _ShopCartServices.GetShoppingCarts(UserId);
+            //var result = new ProductDetailsVM()
+            //{
+            //    ProductPlural = product.Product.Select(
+            //        item=> new ProductDetailsVM.ProductInformation {
+            //        GameId = item.GameId,
+            //        GameName = item.GameName,
+            //        GamePrice = item.GamePrice,
+            //        GamePicture =item.GameUrl,
+            //    }).ToList()
+            //};
 
-//            var result = new List<ShoppingCartViewModel>();
+            //return View("Game",result);
+            return View("Game");
+        }
+        //產品詳細
+        public async Task<IActionResult> ProductDetails(int id)
+        {
+            var game = await _Shop.ProductView(id);
 
-//            foreach (var item in shoppingCartInformation)
-//            {
-//                result.Add(new ShoppingCartViewModel
-//                {
-//                    UserId = item.UserId,
-//                    GameId = item.GameId,
-//                    GameName = item.GameName,
-//                    GamePrice = item.GamePrice,
-//                    GameUrl = item.GameUrl,
-//                    Created = item.Created,
-//                });
-//            }
-//            TempData["actiontype"] = "shop";
-//            return View(result);
-//        }
+            var result = new ProductDetailsVM()
+            {
+                ProductItem = new ProductDetailsVM.ProductInformation
+                {
+                    GameId = game.GameId,
+                    GameName = game.GameName,
+                    GamePrice = game.GamePrice,
+                    GameIntroduction = game.GameIntroduction,
+                    ReleaseTime = game.ReleaseTime,
+                    Developer = game.Developer,
+                    Marker = game.Marker,
+                    GamePicture = game.GamePicture,
+                },
+                DisscountTake = game.DisscountTake,
+                GameTyple = game.GameTyple.Select(item => new ProductDetailsVM.TypleData
+                {
+                    GameId = item.GameId,
+                    TypleName = item.TypleName
+                }).ToList(),
+            };
+            TempData["Title"] = "Shop";
+            return View(result);
+        }
+        
+        //遊戲購物車
+        public async Task<IActionResult> ShoppingCart()
+        {
+            var userId = await GetUserId();
 
-//        [HttpPost]
-//        //fetch防跨網站偽造要求研究中
-//        //[ValidateAntiForgeryToken]
-//        public IActionResult AddShoppingCart([FromBody] ShoppingCartViewModel model)
-//        {
-//            string UserId = "39f0f114-e6e0-4eb1-b3a0-2df9fd4b413c";
-//            // UserId = User.Identity.GetUserId();
-//            var GameId = model.GameId;
-//            var result = _ShopCartServices.AddShopingCart(GameId, UserId);
-//            return Content(result);
-//        }
+            var shoppingCart = await _ShoppingCart.GetShoppingCarts(userId);
 
-//        [HttpPost]
-//        [ValidateAntiForgeryToken]
-//        public IActionResult RemoveShoppingItem(int GameId, string UserId)
-//        {
-//            _ShopCartServices.RemveShoppingCartItem(GameId, UserId);
-//            return RedirectToAction(nameof(ShoppingCart));
-//        }
+            var result = new List<InputShoppingCartVM>();
+
+            foreach (var item in shoppingCart)
+            {
+                result.Add(new InputShoppingCartVM
+                {
+                    UserId = item.UserId,
+                    GameId = item.GameId,
+                    GameName = item.GameName,
+                    GamePrice = (int)item.GamePrice,
+                    GameUrl = item.GameUrl,
+                    Created = item.Date,
+                });
+            }
+            TempData["actiontype"] = "shop";
+            return View(result);
+        }
+
+        public async Task<IActionResult> CheckBuy()
+        {
+            var userId = await GetUserId();
+            var gameInformation = await _ShoppingCart.GetCheckItem(userId);
+            var result = new List<InputCheckBuyVM>();
+            if (gameInformation == null)
+            {
+                //return RedirectToRoute(new { controller = "Game", action = "Game" });
+                return View();
+            }
+            else
+            {
+                foreach (var item in gameInformation)
+                {
+                    result.Add(new InputCheckBuyVM
+                    {
+                        UserId = item.UserId,
+                        GameId = item.GameId,
+                        GameName = item.GameName,
+                        GamePrice = item.GamePrice,
+                        GameUrl = item.GameUrl,
+                    });
+                }
+                return View(result);
+            }
+        }
+
+        public async Task<string> GetUserId()
+        {
+            UserModel user = await _manger.GetUserAsync(HttpContext.User);
+            var userId = user.Id;
+            return userId;
+        }
 
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RemoveShoppingItem(int GameId)
+        {
+            var userId = await GetUserId();
 
-
-//        [HttpPost]
-//        //[ValidateAntiForgeryToken]
-//        public IActionResult DeleteAll() 
-//        {
-//            string UserId = "39f0f114-e6e0-4eb1-b3a0-2df9fd4b413c";
-//            // UserId = User.Identity.GetUserId();
-//            _ShopCartServices.RemoveAllItem(UserId);
-
-//            //return RedirectToAction(nameof(ShoppingCart));
-//            return View("ShoppingCart");
-//        }
-
-//        public IActionResult ProductRecommend()
-//        {
-//            var result = _services.ProductRecommend();
-//            return Ok(result);
-//        }
-
-//    }
-//}
+            _ShoppingCart.RemveShoppingCartItem(GameId, userId);
+            return RedirectToAction(nameof(ShoppingCart));
+        }
+    }
+}
