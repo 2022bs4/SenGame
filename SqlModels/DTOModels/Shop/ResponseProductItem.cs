@@ -21,6 +21,7 @@ namespace SqlModels.DTOModels
         public string GameName { get; set; }
         public string GameUrl { get; set; }
         public decimal GamePrice { get; set; }
+        public int TotalBuyCount { get; set; }
         public DateTime Date { get; set; }
     }
 
@@ -30,7 +31,7 @@ namespace SqlModels.DTOModels
         public string GameName { get; set; }
         public decimal GamePrice { get; set; }
         public string  GameIndexPicture { get; set; }
-
+        public int TotalBuyCount { get; set; }
         public DateTime ReleaseTime { get; set; }
         public int ReleaseState {get; set; }
 

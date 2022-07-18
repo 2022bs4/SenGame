@@ -92,6 +92,7 @@ namespace SenGame.Areas.Identity.Pages.Account
             {
                 var user = new UserModel 
                 { 
+                   
                     Address = Input.Address,
                     Account = Input.Account,
                     UserName = Input.Account, 

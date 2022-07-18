@@ -46,7 +46,8 @@ namespace SenGame.ApiController
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            string request = "預設";
+            //首頁預設加載
+            string request = "人氣最高";
             var result = await _Shop.GetIndesSwipper(request);
             return Ok(result);
         }

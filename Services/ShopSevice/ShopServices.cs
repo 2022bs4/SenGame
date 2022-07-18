@@ -47,81 +47,12 @@ namespace Services
                 GameId = x.GameId,
                 GameName = x.GameName,
                 GameIndexPicture = p.MediaUrl,
-                GamePrice = x.GamePrice
+                GamePrice = x.GamePrice,
+                ReleaseTime = x.ReleaseTime,
+                TotalBuyCount = x.TotalBuyCount
             }).ToListAsync();
             return gameMedia;
         }
-
-        //首頁Method
-        public async Task<IndexProductDTO> GetIndesSwipper(string request)
-        {
-            var firstArea = new List<ResponseProductItem>();
-            var secondArea = new List<ResponseProductItem>();
-            if (request == "預設")
-            {
-                firstArea = await GetProductItem(1);
-                firstArea.Take(7);
-                secondArea = await GetProductItem(1);
-                //之後要skip()
-                secondArea.Take(3);
-            }
-
-            //日期
-            else if (request == "最新發行日期")
-            {
-                firstArea = await GetProductItem(1);
-                firstArea.OrderBy(x => x.Date).Take(7);
-                secondArea = await GetProductItem(1);
-                //之後要skip()
-                secondArea.OrderBy(x => x.Date).Take(3);
-            }
-            else if (request == "較早發行日期")
-            {
-                firstArea = await GetProductItem(1);
-                firstArea.OrderByDescending(x => x.Date).Take(7);
-                secondArea = await GetProductItem(1);
-                //之後要skip()
-                secondArea.OrderByDescending(x => x.Date).Take(3);
-            }
-            else if (request == "即將發行")
-            {
-                firstArea = await GetProductItem(2);
-                firstArea.OrderByDescending(x => x.Date).Take(7);
-                secondArea = await GetProductItem(1);
-                //之後要skip()
-                secondArea.OrderByDescending(x => x.Date).Take(3);
-            }
-
-
-            //價錢
-            else if (request == "價格由低至高")
-            {
-                firstArea = await GetProductItem(1);
-                firstArea.OrderByDescending(x => x.GamePrice).Take(7);
-                secondArea = await GetProductItem(1);
-                //之後要skip()
-                secondArea.OrderByDescending(x => x.GamePrice).Take(3);
-            }
-            else if (request == "價格由高至低")
-            {
-                firstArea = await GetProductItem(1);
-                firstArea.OrderBy(x => x.GamePrice).Take(7);
-                secondArea = await GetProductItem(1);
-                //之後要skip()
-                secondArea.OrderBy(x => x.GamePrice).Take(3);
-            }
-
-            var result = new IndexProductDTO
-            {
-                FirstAreaProduct = firstArea,
-                SecondAreaProduct = secondArea
-            };
-            return result;
-
-             
-
-        }
-
         //基於首頁Swipper衍生之Method
         public async Task<List<ResponseProductItem>> GetProductItem(int IsShop)
         {
@@ -136,10 +67,79 @@ namespace Services
                     GamePrice = item.GamePrice,
                     GameUrl = item.GameIndexPicture,
                     Date = item.ReleaseTime,
+                    TotalBuyCount = item.TotalBuyCount,
                 });
             }
             return result;
         }
+        //首頁Method
+        public async Task<IndexProductDTO> GetIndesSwipper(string request)
+        {
+            var response = await GetProductItem(1);
+            var firstArea = new List<ResponseProductItem>();
+            var secondArea = new List<ResponseProductItem>();
+            if (request == "人氣最高")
+            {
+                response.Sort((x,y)=> -x.TotalBuyCount.CompareTo(y.TotalBuyCount));
+                firstArea = response.Take(7).ToList();
+                secondArea = response.Skip(4).Take(3).ToList();
+                return SwipperModel(firstArea, secondArea);
+            }
+
+            //日期
+            else if (request == "最新發行日期")
+            {
+                response.Sort((x, y) => -x.Date.CompareTo(y.Date));
+                firstArea = response.Take(7).ToList();
+                secondArea = response.Skip(4).Take(3).ToList();
+                return SwipperModel(firstArea, secondArea);
+            }
+            else if (request == "較早發行日期")
+            {
+                
+                response.Sort((x, y) => x.Date.CompareTo(y.Date));
+                firstArea = response.Take(7).ToList();
+                secondArea = response.Skip(4).Take(3).ToList();
+                return SwipperModel(firstArea, secondArea);
+            }
+            else if (request == "即將發行")
+            {
+                //firstArea = await GetProductItem(2);
+                //firstArea.OrderByDescending(x => x.Date).Take(7);
+                //secondArea = await GetProductItem(1);
+                ////之後要skip()
+                //secondArea.OrderByDescending(x => x.Date).Take(3);
+            }
+
+            //價錢
+            else if (request == "價格由低至高")
+            {
+                response.Sort((x,y)=>x.GamePrice.CompareTo(y.GamePrice));
+                firstArea = response.Take(7).ToList();
+                secondArea = response.Skip(4).Take(3).ToList();
+                return SwipperModel(firstArea, secondArea);
+            }
+            else if (request == "價格由高至低")
+            {
+                response.Sort((x, y) => -x.GamePrice.CompareTo(y.GamePrice));
+                firstArea = response.Take(7).ToList();
+                secondArea = response.Skip(4).Take(3).ToList();
+                return SwipperModel(firstArea, secondArea);
+            }
+
+            return null; 
+
+        }
+        public IndexProductDTO SwipperModel(List<ResponseProductItem> a , List<ResponseProductItem> b) 
+        {
+            var result = new IndexProductDTO
+            {
+                FirstAreaProduct = a,
+                SecondAreaProduct = b
+            };
+            return result;
+        } 
+
         
         //抓取全圖片版銷售最好(之後會將其他需求擴充至此)
         public async Task<List<IndexList>> GetProductList()

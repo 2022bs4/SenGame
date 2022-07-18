@@ -33,7 +33,6 @@ namespace SqlModels.Models
         public DateTime? EmailConfirmDate { get; set; }
         public string Address { get; set; }
         public string UserPicture { get; set; }
-        public new string UserName { get; set; }
         public int? UserCountryId { get; set; }
         public DateTime? CreateTime { get; set; }
         public string UserAbout { get; set; }

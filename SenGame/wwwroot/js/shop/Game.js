@@ -63,32 +63,13 @@ async function TopSwipper(){
 }
 
 function NewReleaese() {
-    let popular = document.querySelector('.popular')
-    let ComingSoon = document.querySelector('.ComingSoon')
-    let New_Releaese = document.querySelector('.New-Releaese')
-    let Ealier_Release = document.querySelector('.Ealier-Release')
-    let Expensive = document.querySelector('.Expensive-Product')
-    let Cheap = document.querySelector('.Cheap-Product')
-
-    popular.addEventListener('click', function () {
-        SwipperFetch(popular.innerText)
+    let Filter_Prodeuct = document.querySelectorAll('.Filter-Prodeuct')
+    Filter_Prodeuct.forEach(item => {
+        item.addEventListener('click', function () {
+            SwipperFetch(item.innerText)
+        })
     })
-    ComingSoon.addEventListener('click', function () {
-        SwipperFetch(ComingSoon.innerText)
-    })
-    New_Releaese.addEventListener('click', function () {
-        SwipperFetch(New_Releaese.innerText)
-        debugger
-    })
-    Ealier_Release.addEventListener('click', function () {
-        SwipperFetch(Ealier_Release.innerText)
-    })
-    Expensive.addEventListener('click', function () {
-        SwipperFetch(Expensive.innerText)
-    })
-    Cheap.addEventListener('click', function () {
-        SwipperFetch(Cheap.innerText)
-    })
+  
     async function SwipperFetch(UserRequest) {
         const url = `/api/Shop/PostIndex`
         let request = new Request(url, {
@@ -101,7 +82,7 @@ function NewReleaese() {
         let action = await fetch(request);
         let response = await action.json();
         clearSwipper()
-        IndexTemplate(response)
+        setTimeout(function () { IndexTemplate(response) }, 500)
     }
 
 }
@@ -109,7 +90,7 @@ function clearSwipper() {
     let first = document.querySelector('.swiper-wrapper')
     let second = document.querySelector('.carousel-inner')
     first.innerHTML= ''
-    second.innerHTML=''
+    second.innerHTML = ''
 }
 function IndexTemplate(response) {
     let first = response.firstAreaProduct
