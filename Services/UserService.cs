@@ -1,21 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
 using Services.Interface;
 using SqlModels.DTOModels;
 using SqlModels.Models;
 using SqlModels.Repository.Interface;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static SqlModels.DTOModels.UserDTO;
+
 
 namespace Services
 {
     public class UserService : BaseService, IUserService
     {
-        public UserService(IRepository repository) : base(repository)
+        public UserService(IRepository repository, IMapper mapper) : base(repository, mapper)
         {
 
         }
@@ -27,7 +23,8 @@ namespace Services
             //uncategorized 未分類
             //my favourite  我的最愛
 
-            var uncategorized = Repository.GetAll<MyGame>().Where(u => u.Id == UserId && u.MyFavourite == false);
+          
+            var uncategorized = Repository.GetAll<MyGame>();
             var img = Repository.GetAll<GameMedium>().Where(i => i.InstructionType == 2 && i.Instruction == 1);
             var gametotal = Repository.GetAll<Game>();
             var mygame = uncategorized.Join(img, g => g.GameId, i => i.GameId, (g, s) => new { g.GameId, g.Id, s.MediaUrl });
@@ -38,13 +35,14 @@ namespace Services
                 {
                     Id = item.Id,
                     GameName = item.GameName,
-                    MediaUrl= item.MediaUrl
+                    MediaUrl = item.MediaUrl
 
                 }).ToList()
             };
-            
+
 
             return gamelist;
+            
         }
 
         public UserDTO MyFavouritrGame(string UserId)
