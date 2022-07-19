@@ -46,6 +46,7 @@ namespace Services
         //獲取指定數量及是否上架之遊戲Method
         public async Task<List<IndexList>> GetSingleProducts(int IsShop)
         {
+            
             var game = Repository.GetAll<Game>().Where(x => x.ReleaseState == IsShop);
             var pic = Repository.GetAll<GameMedium>().Where(x => x.InstructionType == 2 && x.Instruction == 1);
             var gameMedia = await game.Join(pic, x => x.GameId, p => p.GameId, (x, p) =>

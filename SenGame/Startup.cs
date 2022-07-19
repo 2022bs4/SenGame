@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Builder;
+ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
@@ -57,6 +57,8 @@ namespace SenGame
             services.AddScoped<ShopServices>();
             services.AddScoped<ShopCartServices>();
             services.AddScoped<EcpayService>();
+            services.AddScoped<OrderService>();
+
             services.AddScoped<FriendGroupService>();
             
             #endregion

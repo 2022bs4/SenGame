@@ -142,6 +142,7 @@ namespace SenGame.Controllers
 
 
         //-------------------------從這裡開始是 璇   的OOOOOOOOOOOOO-----------------------------------
+        [Authorize]
         [HttpGet]
         public IActionResult User_information()
         {
@@ -208,11 +209,13 @@ namespace SenGame.Controllers
         #endregion
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public IActionResult Post_E4_UserPrivacy([FromBody]OutputUserDTO model)
+        public async Task<IActionResult> Post_E4_UserPrivacy([FromBody]OutputUserDTO model)
         {
             //抓登入使用者的id
             //var userId = GetUserId();
-            string userId = "4c01f614-06bf-4fd6-897a-a62a0af4b64c";
+            //string userId = "4c01f614-06bf-4fd6-897a-a62a0af4b64c";
+            UserModel LoginUser = await _userManager.GetUserAsync(HttpContext.User);
+            string userId = LoginUser.Id;
             TempData["actiontype"] = "privacy";
             //model.UserPriPersonal == null || model.UserFriendList == null || model.Userprygame == null
             if (model == null)
@@ -231,7 +234,7 @@ namespace SenGame.Controllers
                 return Ok(result);
 
             }
-            
+            #region
             ////遊戲資料隱私
             //var result1 = _service.prypersonalFile(userId, id);
             ////遊戲資料隱私
@@ -240,7 +243,6 @@ namespace SenGame.Controllers
             //var result = _service.test(userId , id);
 
 
-            #region
             //if (ModelState.IsValid)
             //{
             //    //讀隱私代碼
