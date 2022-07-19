@@ -58,8 +58,7 @@ async function TopSwipper(){
     IndexTemplate(response) 
 }
 
-function NewReleaese() {
-    
+async function NewReleaese() {
     let Filter_Prodeuct = document.querySelectorAll('.Filter-Prodeuct')
     Filter_Prodeuct.forEach(item => {
         item.addEventListener('click', function () {
@@ -67,7 +66,6 @@ function NewReleaese() {
             ListFetch(item.innerText)
         })
     })    
-
 
     async function SwipperFetch(UserRequest) {
         const url = `/api/Shop/PostIndex`
@@ -81,9 +79,7 @@ function NewReleaese() {
         let action = await fetch(request);
         let response = await action.json();
         clearSwipper()
-
-        //測試用 間格時差
-        setTimeout(function () { IndexTemplate(response) }, 500)
+        IndexTemplate(response) 
     }
 
 
@@ -97,7 +93,6 @@ function NewReleaese() {
                 UserRequest: `${UserRequest}`
             })
         })
-        
         let action = await fetch(request)
         let response = await action.json();
         ClearList()
@@ -140,19 +135,12 @@ function IndexTemplate(response) {
     }
 }
 
-
-
-
-
 async function PresetList() {
     const url = '/api/Shop/IndexList'
-
     let request = await fetch(url)
     let response = await request.json();
     ProductList(response)
 }
-
-
 
 function ClearList() {
     let box = document.querySelector('.Game-List')
@@ -250,9 +238,8 @@ async function ProductList(url) {
         i = 0;
         j = 0;
         newIdArray = [];
+        await Hover()
     }
-
-    setTimeout(function () { Hover() }, 2000)
     //牌卡觸碰效果
     function Hover() {
         for (let i = 0; i < 5; i++) {

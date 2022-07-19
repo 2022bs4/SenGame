@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using SenGame.Service;
 using Services;
 using Services.ShopSevice;
@@ -61,8 +62,6 @@ namespace SenGame.ApiController
             var result = await _Shop.GetIndesSwipper(request);
             return Ok(result);
         }
-
-        
 
         //首頁預設清單
         [HttpGet]
@@ -179,10 +178,20 @@ namespace SenGame.ApiController
 
         //跨域問題尚未解決，目的:接收綠借回傳值且驗證購買結果
         [HttpPost]
-        public HttpResponseMessage ReturnResult([FromBody] Dictionary<string, string> data)
+        [Consumes("application/x-www-form-urlencoded")]
+        public HttpResponseMessage ReturnResult([FromForm] test data)
         {
+            //return Ok();
             return ResponseOK();
         }
+
+        public class test
+        { 
+            public string MerchantID { get; set; }
+            public string MerchantTradeNo { get; set; }
+
+            public string RtnMsg { get; set; }
+        };
 
         private HttpResponseMessage ResponseOK()
         {
