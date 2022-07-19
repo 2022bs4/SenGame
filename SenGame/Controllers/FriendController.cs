@@ -2,10 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Services.ChatService;
-using Services.Interface;
-using SqlModels.DTOModels;
-using SqlModels.FakeDate;
+using Services;
 using SqlModels.Models;
 using SqlModels.ViewModels;
 using System;
@@ -13,6 +10,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using static SqlModels.ViewModels.FriendViewModel;
+
+
+
 
 namespace SenGame.Controllers
 {
@@ -81,14 +81,18 @@ namespace SenGame.Controllers
 
             for (int i = 0; i < group.GroupNames.Length; i++)
             {
-                var friendgroup = new FriendGroup();
-                friendgroup.GroupName = group.GroupNames[i];
-                friendgroup.UserId = group.Ids[i];
+                var friendgroup = new FriendGroup
+                {
+                    GroupName = group.GroupNames[i],
+                    UserId = group.Ids[i]
+                };
                 _service.Create<FriendGroup>(friendgroup);
 
-                var usergroup = new Usergroup();
-                usergroup.UserId = userid;
-                usergroup.FriendGroupId = friendgroup.FriendGroupId;
+                var usergroup = new Usergroup
+                {
+                    UserId = userid,
+                    FriendGroupId = friendgroup.FriendGroupId
+                };
                 _service.Create<Usergroup>(usergroup);
             }
 
@@ -112,15 +116,20 @@ namespace SenGame.Controllers
             var userid = LoginUser.Id;
 
             FriendChat fc = new FriendChat();
+
             fc.ChatContent = context.ChatContent;
             fc.UserId = context.UserId;
             var chattime = DateTime.Now;
             fc.ChatTime = chattime;
             _service.Create<FriendChat>(fc);
 
-            Chat chat = new Chat();
-            chat.FriendChatId = fc.FriendChatId;
-            chat.UserId = userid;
+
+
+            Chat chat = new Chat
+            {
+                FriendChatId = fc.FriendChatId,
+                UserId = userid
+            };
             _service.Create<Chat>(chat);
 
             return Ok();
@@ -133,17 +142,21 @@ namespace SenGame.Controllers
             var friend = _service.GetAllGroup(context.Groupname);
            foreach(var item in friend)
             {
-                 FriendGroup fg = new FriendGroup();
-                fg.FriendGroupId = item.FriendGroupId;
-                fg.GroupName = item.GroupName;
-                fg.UserId = item.UserId;
+                FriendGroup fg = new FriendGroup
+                {
+                    FriendGroupId = item.FriendGroupId,
+                    GroupName = item.GroupName,
+                    UserId = item.UserId
+                };
 
-                Usergroup ug = new Usergroup();
-                ug.UserGroupId = item.UserGroupId;
-                ug.UserId = userid;
-                ug.FriendGroupId = fg.FriendGroupId;
+                Usergroup ug = new Usergroup
+                {
+                    UserGroupId = item.UserGroupId,
+                    UserId = userid,
+                    FriendGroupId = fg.FriendGroupId
+                };
 
-                 _service.Delete<Usergroup>(ug);
+                _service.Delete<Usergroup>(ug);
                  _service.Delete<FriendGroup>(fg);                   
 
             }
@@ -159,10 +172,12 @@ namespace SenGame.Controllers
             var friend =  _service.GetAllGroup(groupname.Groupname);
             foreach (var item in friend)
             {
-                var fg = new FriendGroup();
-                fg.FriendGroupId = item.FriendGroupId;
-                fg.GroupName = groupname.NewGroupName;
-                fg.UserId = item.UserId;
+                var fg = new FriendGroup
+                {
+                    FriendGroupId = item.FriendGroupId,
+                    GroupName = groupname.NewGroupName,
+                    UserId = item.UserId
+                };
 
                 _service.Update<FriendGroup>(fg);
 
@@ -170,6 +185,7 @@ namespace SenGame.Controllers
 
             return Ok();
         }
+        [HttpPost]
         public async Task<IActionResult> DeleteFriend([FromBody]FriendViewModel friend)
         {
             UserModel LoginUser = await _userManager.GetUserAsync(HttpContext.User);
@@ -179,22 +195,51 @@ namespace SenGame.Controllers
             {
                 if (item.UserId == friend.UserId && item.GroupName.Trim() == friend.Groupname.Trim())
                 {
-                    FriendGroup fg = new FriendGroup();
-                    fg.FriendGroupId=item.FriendGroupId;
-                    fg.UserId = friend.UserId;
-                    fg.GroupName = friend.Groupname;
-                   
-                    Usergroup ug = new Usergroup();
-                    ug.UserId = userid;
-                    ug.FriendGroupId = fg.FriendGroupId;
-                    ug.UserGroupId = item.UserGroupId;
+                    FriendGroup fg = new FriendGroup
+                    {
+                        FriendGroupId = item.FriendGroupId,
+                        UserId = friend.UserId,
+                        GroupName = friend.Groupname
+                    };
+
+                    Usergroup ug = new Usergroup
+                    {
+                        UserId = userid,
+                        FriendGroupId = fg.FriendGroupId,
+                        UserGroupId = item.UserGroupId
+                    };
 
 
                     _service.Delete<Usergroup>(ug);
                     _service.Delete<FriendGroup>(fg);
+                   
                 } ;
     
             }
+            return Ok();
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddFriendInGroup([FromBody]FriendViewModel friend)
+        {
+            UserModel LoginUser = await _userManager.GetUserAsync(HttpContext.User);
+            var userid = LoginUser.Id;
+            for (int i = 0; i < friend.GroupNames.Length; i++)
+            {
+                var friendgroup = new FriendGroup
+                {
+                    GroupName = friend.GroupNames[i],
+                    UserId = friend.Ids[i]
+                };
+                _service.Create<FriendGroup>(friendgroup);
+
+                var usergroup = new Usergroup
+                {
+                    UserId = userid,
+                    FriendGroupId = friendgroup.FriendGroupId
+                };
+                _service.Create<Usergroup>(usergroup);
+            }
+
             return Ok();
         }
         public IActionResult User__information()

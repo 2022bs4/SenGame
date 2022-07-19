@@ -36,11 +36,15 @@
 </div>
 <div id="groupdelete">
     <span class="edit">編輯群組名稱</span>
+    <span class="add-friend">新增好友</span>
     <span class="delete-type">刪除群組</span>
 </div> 
 <!-- 群組分類的modal -->
 <div id="myModal" class="modal">
     <partial name="_GroupPartial"/>
+</div>
+<div id="groupModal" class="modal">
+    <partial name="_AddFriendInGroupPartial"/>
 </div>
 <!--刪除群組Modal-->
 <div id="delModal" class="modal">
@@ -58,6 +62,8 @@
       </div>
     </div>
   </div>
+
+
   <!--刪除好友的Modal-->
 <div id="delfriendModal" class="modal">
     <div class="modal-content-del  position-relative">

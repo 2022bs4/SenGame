@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Services.Interface;
 using SqlModels.DTOModels;
@@ -7,14 +8,14 @@ using SqlModels.Repository.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Services.ChatService
+
+namespace Services
 {
     public class FriendGroupService : BaseService
     {
-        public FriendGroupService(IRepository repository) : base(repository)
+        
+        public FriendGroupService(IRepository repository,IMapper mapper) : base(repository, mapper)
         {
 
         }

@@ -38,7 +38,7 @@ let addtype = document.querySelector(".add-type")
 let delfriend = document.querySelector(".del-friend")
 //群組分類
 let modal = document.getElementById("myModal");
-
+let addfriend = document.querySelector(".add-friend")
 //modal的選擇好友區塊
 let addblock = document.querySelector(".add")
 //modal內的確認按鈕
@@ -78,7 +78,7 @@ function computer(){
         //控制群組縮放及刪除
         fspan.onmousedown = function (e) {
             if (e.which == 3) {
-
+               
                 delmenuCTRL(fspan)
                 let delcheck = document.querySelector(".del-check")
                 delcheck.onclick = function () {
@@ -101,9 +101,22 @@ function computer(){
                     fspan.innerHTML = editgroup.value
                     editModal.style.display = 'none'
                 }
+                AddFriend(fspan)
+                var addcheck = document.querySelector(".add-check")
+                addcheck.onclick = function () {
+                    var data = {
+                        GroupNames: groupnameArray,
+                        Ids: useridArray,
+                    }
+                    var url = "/Friend/AddFriendInGroup"
+                    Post(url, data)
+                    groupModal.style.display = 'none'
+                }
+                
             }
             else {
                 $(list).toggle()
+ 
             }
 
 
@@ -124,15 +137,14 @@ function computer(){
                         }
                       
                         
-                        console.log(data)
+                        
                         var url = "/Friend/DeleteFriend"
                         Post(url, data)
                         delfriendModal.style.display = 'none'
                     }
-
-                    //新增群組
                     
-                   
+
+                    //新增群組              
                     chooseFriend()
                     check.onclick = function () {
                         var data = {
@@ -158,7 +170,7 @@ function computer(){
                         friendgroup.append(group)
                         modal.style.display = 'none'
                         addblock.innerHTML = ' '
-                        //choose.innerHTML = ' '
+                      
                         groupname.value = ' '
                         var url = "/Friend/Chat"
                         Post(url, data)
@@ -168,6 +180,7 @@ function computer(){
                     }
                 }
                 else {
+                      
                     document.ondragend = function (e2) {
                         if (e2.clientX > 250 && bool == true) {
                             bool = false
@@ -188,9 +201,9 @@ function computer(){
 
                             }
                             $("#text").keydown(function (e) {
-                                if (e.which == 13) {
-                                    
-                                    let text = document.getElementById("text")
+                                let text = document.getElementById("text")
+                                if (e.which == 13 && text.value != "") {
+
                                     var time = new Date()
                                     let p = document.createElement("p")
                                     let timep = document.createElement("p")
@@ -225,6 +238,9 @@ function computer(){
 }
 
 
+addfriend.onclick = function () {
+    groupModal.style.display = 'block'
+}
 //modal的取消按紐
 let cancel = document.querySelector(".cancel");
 //modal的X
@@ -264,6 +280,15 @@ let editclose = document.querySelector(".edit-close")
 editclose.onclick = function () {
     editModal.style.display = 'none'
 }
+let addclose = document.querySelector(".add-close")
+addclose.onclick = function () {
+    groupModal.style.display = 'none'
+}
+let addcancel = document.querySelector(".add-cancel")
+addcancel.onclick = function () {
+    groupModal.style.display = 'none'
+}
+
 
 
 
@@ -360,12 +385,17 @@ async function Get(url) {
                 let timep = document.createElement("p")
                 let show = document.querySelector(".show")
                 p.setAttribute("class", "content px-2 py-2 my-1")
-                p.innerHTML = index.chatContent
-                //timep.innerHTML = index.ChatTime
-                div.append(p)
+                div.setAttribute("class", "d-flex")
+                timep.setAttribute("class","pt-3 pl-2 mb-0")
+                p.innerHTML = index.chatContent;
+                timep.innerHTML = index.chatTime;
+
+
+                div.append(p, timep)
                 show.append(div)
                
             }
+           
 
         })))
        
@@ -406,6 +436,25 @@ function chooseFriend() {
             }
 
         }
+    })
+}
+function AddFriend(data) {
+    var li2 = document.querySelectorAll(".friend-li2")
+    li2.forEach(item => {
+        item.onclick = function () {
+                var tagname = item.querySelector(".friend-name2")
+                var userid = item.querySelector("#userid")
+
+                groupnameArray.push(data.innerHTML)
+                useridArray.push(userid.value)
+                console.log(groupnameArray)
+                console.log(useridArray)
+
+                addblock.append(tag(tagname))
+                item.style.display = 'none'
+              
+
+            }        
     })
 }
 

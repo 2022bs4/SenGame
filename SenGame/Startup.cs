@@ -57,6 +57,7 @@ namespace SenGame
             services.AddScoped<ShopServices>();
             services.AddScoped<ShopCartServices>();
             services.AddScoped<EcpayService>();
+            services.AddScoped<FriendGroupService>();
             
             #endregion
             #region -- AutoMapper DI --
