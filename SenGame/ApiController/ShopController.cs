@@ -1,17 +1,12 @@
-﻿using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
 using SenGame.Service;
 using Services;
 using Services.ShopSevice;
 using SqlModels.DTOModels;
 using SqlModels.Models;
 using SqlModels.ViewModels.ShopViewModels;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace SenGame.ApiController
@@ -23,16 +18,17 @@ namespace SenGame.ApiController
         private readonly ShopServices _Shop;
         private readonly ShopCartServices _ShoppingCart;
         private readonly UserManager<UserModel> _manger;
+        private readonly OrderService _Order;
         private readonly EcpayService _Ecpay;
 
 
-
-        public ShopController(ShopServices shop, ShopCartServices shoppingCart, UserManager<UserModel> manger, EcpayService ecpay)
+        public ShopController(ShopServices shop, ShopCartServices shoppingCart, UserManager<UserModel> manger, EcpayService ecpay, OrderService  orderService)
         {
             _Shop = shop;
             _ShoppingCart = shoppingCart;
             _manger = manger;
             _Ecpay = ecpay;
+            _Order = orderService;
         }
 
         //首頁Tag
@@ -89,8 +85,6 @@ namespace SenGame.ApiController
         }
 
         
-
-
         //商品詳細之Swipper
         [HttpGet]
         public async Task<IActionResult> ProductSwipper(int id)
@@ -152,8 +146,15 @@ namespace SenGame.ApiController
         {
             var gameId = model.SelectId;
             var userId = await GetUserId();
-            var result = _ShoppingCart.AddCarts(gameId, userId);
-            return Ok(result);
+            var result = _Order.SureOrder(gameId, userId);
+            if (result == "請至結帳畫面結帳付款")
+            {
+                return Ok(result);
+            }
+            else {
+                _ShoppingCart.RemoveAllItem(userId);
+                return Ok(result);
+            }
         }
 
         //取消結帳，訂單狀態更改完取消
@@ -161,7 +162,7 @@ namespace SenGame.ApiController
         public async Task<IActionResult> RemoveCheckBuy()
         {
             var userId = await GetUserId();
-            var result = await _ShoppingCart.RemoveCheckBuy(userId);
+            var result = await _Order.RemoveCheckBuy(userId);
             return Ok(result);
         }
 
@@ -176,31 +177,39 @@ namespace SenGame.ApiController
         }
 
 
-        //跨域問題尚未解決，目的:接收綠借回傳值且驗證購買結果
-        [HttpPost]
-        [Consumes("application/x-www-form-urlencoded")]
-        public HttpResponseMessage ReturnResult([FromForm] test data)
-        {
-            //return Ok();
-            return ResponseOK();
-        }
+        ////localhoost無法驗證，目的:接收綠借回傳值且驗證購買結果
+        //[HttpPost]
+        //[Consumes("application/x-www-form-urlencoded")]
+        //public HttpResponseMessage ReturnResult([FromForm] EcpayReturnResult data)
+        //{
+        //    //return Ok();
+        //    return ResponseOK();
+        //}
 
-        public class test
-        { 
-            public string MerchantID { get; set; }
-            public string MerchantTradeNo { get; set; }
+        //[HttpPost]
+        //[Consumes("application/x-www-form-urlencoded")]
+        //public IActionResult Index([FromForm] EcpayReturnResult data)
+        //{
+        //    return Ok(data);
+        //}
 
-            public string RtnMsg { get; set; }
-        };
 
-        private HttpResponseMessage ResponseOK()
-        {
-            var response = new HttpResponseMessage();
-            response.Content = new StringContent("1|OK");
-            response.Content.Headers.ContentType = new MediaTypeHeaderValue("text/html");
-            return response;
-        }
-
+        //private HttpResponseMessage ResponseOK()
+        //{
+        //    var response = new HttpResponseMessage();
+        //    response.Content = new StringContent("1|OK");
+        //    response.Content.Headers.ContentType = new MediaTypeHeaderValue("text/html");
+        //    return response;
+        //}
+        //private HttpResponseMessage ResponseError()
+        //{
+        //    var response = new HttpResponseMessage();
+        //    response.Content = new StringContent("0|Error");
+        //    response.Content.Headers.ContentType = new MediaTypeHeaderValue("text/html");
+        //    return response;
+        //}
+        
+        
         //或許會員ID之後會請會員模組負責人封裝
         public async Task<string> GetUserId()
         {

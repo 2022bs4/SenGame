@@ -26,7 +26,7 @@ namespace SenGame.Controllers
             _manger = manger;
             _Ecpay = ecpay;
         }
-        public async Task<IActionResult> Index()
+        public  IActionResult Index()
         {
             return View("Game");
         }
@@ -91,7 +91,6 @@ namespace SenGame.Controllers
             var result = new List<InputCheckBuyVM>();
             if (gameInformation == null)
             {
-                //return RedirectToRoute(new { controller = "Game", action = "Game" });
                 return View();
             }
             else
@@ -109,6 +108,18 @@ namespace SenGame.Controllers
                 }
                 return View(result);
             }
+        }
+
+
+        //綠界付款回傳資訊
+        [HttpPost]
+        [Consumes("application/x-www-form-urlencoded")]
+        public IActionResult Index([FromForm] EcpayReturnResult data)
+        {
+            var result = data.RtnCode;
+            //交易是否成功
+            ViewBag["result"] = result;
+            return View("CheckBuy");
         }
 
         public async Task<string> GetUserId()

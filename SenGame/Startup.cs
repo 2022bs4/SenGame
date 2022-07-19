@@ -57,7 +57,8 @@ namespace SenGame
             services.AddScoped<ShopServices>();
             services.AddScoped<ShopCartServices>();
             services.AddScoped<EcpayService>();
-            
+            services.AddScoped<OrderService>();
+
             #endregion
             #region -- AutoMapper DI --
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
