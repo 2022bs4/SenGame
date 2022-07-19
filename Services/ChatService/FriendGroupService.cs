@@ -18,7 +18,7 @@ namespace Services.ChatService
         {
 
         }
-        public List<FriendGroupDTO> GetGroup(string id)
+        public List<FriendGroupDTO> GetGroupName(string id)
         {      
             
             //取得使用者所擁有的群組         
@@ -46,9 +46,6 @@ namespace Services.ChatService
 
         public List<FriendGroupDTO> GetFriend(string id)
         {
-
-           
-
             var groups = Repository.GetAll<Usergroup>().Where(x => x.UserId == id).Select(x => x.FriendGroupId);
 
 
@@ -63,6 +60,7 @@ namespace Services.ChatService
                     {
                         result.Add(new FriendGroupDTO
                         {
+                            
                             GroupName = item.GroupName,
                             UserName = friend.UserName,
                             UserPicture = friend.UserPicture,
@@ -95,7 +93,7 @@ namespace Services.ChatService
             }
             return result;
         }
-        public List<FriendGroupDTO> DeleteGroup(string groupname)
+        public List<FriendGroupDTO> GetAllGroup(string groupname)
         {
             var group = Repository.GetAll<FriendGroup>().Where(x => x.GroupName == groupname).Select(x => new { x.FriendGroupId, x.UserId, x.GroupName });
             var friend = group.Join(Repository.GetAll<Usergroup>(), s => s.FriendGroupId, x => x.FriendGroupId, (s, x) => new { s.FriendGroupId, s.GroupName, x.UserGroupId, s.UserId });

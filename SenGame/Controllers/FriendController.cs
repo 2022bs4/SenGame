@@ -48,7 +48,7 @@ namespace SenGame.Controllers
 
 
 
-            var groupname =  _service.GetGroup(id);
+            var groupname =  _service.GetGroupName(id);
             var allfriend = _service.GetFriend(id);
           
             var result = new FriendViewModel()
@@ -95,20 +95,12 @@ namespace SenGame.Controllers
 
             return Ok();
         }
-        [HttpPost]
-        public async Task<IActionResult> PostFriendId([FromBody]FriendViewModel friendid)
-        {
-            UserModel LoginUser = await _userManager.GetUserAsync(HttpContext.User);
-            var  id = LoginUser.Id;
-            var result = _service.GetChatContent(id);
-           
-            return RedirectToAction("ReadChatContent", result);
-        }
+
         [HttpGet]
-        public async Task<IActionResult> ReadChatContent(string id)
+        public async Task<IActionResult> ReadChatContent()
         {
             UserModel LoginUser = await _userManager.GetUserAsync(HttpContext.User);
-             id = LoginUser.Id;
+             var id = LoginUser.Id;
             var result = _service.GetChatContent(id);
             return Ok(result);
         }
@@ -133,19 +125,20 @@ namespace SenGame.Controllers
 
             return Ok();
         }
+        //刪除群組及好友
         public async Task<IActionResult> DeleteGroup([FromBody] FriendViewModel context)
         {
             UserModel LoginUser = await _userManager.GetUserAsync(HttpContext.User);
             var userid = LoginUser.Id;
-            var friend = _service.DeleteGroup(context.Groupname);
+            var friend = _service.GetAllGroup(context.Groupname);
            foreach(var item in friend)
             {
-             var fg = new FriendGroup();
+                 FriendGroup fg = new FriendGroup();
                 fg.FriendGroupId = item.FriendGroupId;
                 fg.GroupName = item.GroupName;
                 fg.UserId = item.UserId;
 
-                var ug = new Usergroup();
+                Usergroup ug = new Usergroup();
                 ug.UserGroupId = item.UserGroupId;
                 ug.UserId = userid;
                 ug.FriendGroupId = fg.FriendGroupId;
@@ -158,7 +151,52 @@ namespace SenGame.Controllers
 
             return Ok();
         }
+        //編輯群組名稱
+        [HttpPost]
+        public IActionResult EditGroupName([FromBody]FriendViewModel groupname)
+        {
+    
+            var friend =  _service.GetAllGroup(groupname.Groupname);
+            foreach (var item in friend)
+            {
+                var fg = new FriendGroup();
+                fg.FriendGroupId = item.FriendGroupId;
+                fg.GroupName = groupname.NewGroupName;
+                fg.UserId = item.UserId;
 
+                _service.Update<FriendGroup>(fg);
+
+            }
+
+            return Ok();
+        }
+        public async Task<IActionResult> DeleteFriend([FromBody]FriendViewModel friend)
+        {
+            UserModel LoginUser = await _userManager.GetUserAsync(HttpContext.User);
+            var userid = LoginUser.Id;
+            var allfriend = _service.GetAllGroup(friend.Groupname);
+            foreach(var item in allfriend)
+            {
+                if (item.UserId == friend.UserId && item.GroupName.Trim() == friend.Groupname.Trim())
+                {
+                    FriendGroup fg = new FriendGroup();
+                    fg.FriendGroupId=item.FriendGroupId;
+                    fg.UserId = friend.UserId;
+                    fg.GroupName = friend.Groupname;
+                   
+                    Usergroup ug = new Usergroup();
+                    ug.UserId = userid;
+                    ug.FriendGroupId = fg.FriendGroupId;
+                    ug.UserGroupId = item.UserGroupId;
+
+
+                    _service.Delete<Usergroup>(ug);
+                    _service.Delete<FriendGroup>(fg);
+                } ;
+    
+            }
+            return Ok();
+        }
         public IActionResult User__information()
         {
             return View();
