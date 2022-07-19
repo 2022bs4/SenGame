@@ -131,7 +131,8 @@ function computer(){
                     }
 
                     //新增群組
-                    let choose = document.querySelector(".choose-friend")
+                    
+                   
                     chooseFriend()
                     check.onclick = function () {
                         var data = {
@@ -157,7 +158,7 @@ function computer(){
                         friendgroup.append(group)
                         modal.style.display = 'none'
                         addblock.innerHTML = ' '
-                        choose.innerHTML = ' '
+                        //choose.innerHTML = ' '
                         groupname.value = ' '
                         var url = "/Friend/Chat"
                         Post(url, data)
