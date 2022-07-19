@@ -1,15 +1,12 @@
 ﻿$(document).ready(function () {
-    PresetList()
     $('main').addClass("Game")
     Tag()
     TopSwipper()
 
+    PresetList()
     NewReleaese()
 })
 
-let i = 0
-let j = 0;
-let newIdArray = []
 
 async function Tag() {
     let box = document.querySelector('.Game-Type')
@@ -62,14 +59,16 @@ async function TopSwipper(){
 }
 
 function NewReleaese() {
+    
     let Filter_Prodeuct = document.querySelectorAll('.Filter-Prodeuct')
     Filter_Prodeuct.forEach(item => {
         item.addEventListener('click', function () {
             SwipperFetch(item.innerText)
-            ListFetch(UserRequest)
+            ListFetch(item.innerText)
         })
-    })
-   
+    })    
+
+
     async function SwipperFetch(UserRequest) {
         const url = `/api/Shop/PostIndex`
         let request = new Request(url, {
@@ -82,12 +81,15 @@ function NewReleaese() {
         let action = await fetch(request);
         let response = await action.json();
         clearSwipper()
+
+        //測試用 間格時差
         setTimeout(function () { IndexTemplate(response) }, 500)
-        //ProductList(url)
     }
 
+
+    //下層清單。還在嘗試
     async function ListFetch(UserRequest) {
-        const url = `/api/Shop/`
+        const url = '/api/Shop/PostIndexListCard'
         let request = new Request(url, {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
@@ -95,13 +97,15 @@ function NewReleaese() {
                 UserRequest: `${UserRequest}`
             })
         })
-        let action = await fetch(request);
+        
+        let action = await fetch(request)
         let response = await action.json();
-     /*   clearSwipper()*/
-        setTimeout(function () { IndexTemplate(response) }, 500)
+        ClearList()
+        ProductList(response)
     }
 
 }
+//Swipper Node清除清空
 function clearSwipper() {
     let first = document.querySelector('.swiper-wrapper')
     let second = document.querySelector('.carousel-inner')
@@ -138,30 +142,43 @@ function IndexTemplate(response) {
 
 
 
-function PresetList() {
+
+
+async function PresetList() {
     const url = '/api/Shop/IndexList'
-    ProductList(url)
+
+    let request = await fetch(url)
+    let response = await request.json();
+    ProductList(response)
 }
 
 
+
+function ClearList() {
+    let box = document.querySelector('.Game-List')
+    box.innerHTML = ""
+}
+
+// 控制Id 以及 Get產品順序，以便用來指定post
+let i = 0
+let j = 0;
+let newIdArray = []
 //Product List
 async function ProductList(url) {
     let GameList = document.querySelector('.Game-List')
-    let request = await fetch(url)
-    let response = await request.json(); 
-    response.forEach((item) => {
+
+    url.forEach((item) => {
         ListData(item)
     });
-
     let newId = await GetNewIdArray()
-    
+
+    //單一牌卡
     function ListData(item) {
         let cloneBox = Template_List.content.cloneNode(true);
         let box = cloneBox.querySelector('.Template-List');
         cloneBox.querySelector('input').value = item.gameId;
         box.setAttribute("id", `a${j}`)
         j++
-
         cloneBox.querySelector('img').src = item.gameIndexPicture;
         cloneBox.querySelector('img').alt = item.gameName;
         cloneBox.querySelector('h2').innerText = item.gameName;
@@ -172,6 +189,7 @@ async function ProductList(url) {
         GameList.append(cloneBox)
     }
 
+    //抓取牌卡Id儲存
     function GetNewIdArray() {
         var All_GameList = document.querySelectorAll('.Template-List')
         All_GameList.forEach(item => {
@@ -180,10 +198,11 @@ async function ProductList(url) {
         })
     }
 
+    //下方多圖片和標籤
     ItemDetails()
     async function ItemDetails() {
         let newItemDetailsSort = []
-        let a = 0;
+        //指定Id依序請求
         for (let k = 0; k < newIdArray.length; k++)
         {
             const url = '/api/Shop/IndexListDetails'
@@ -196,10 +215,14 @@ async function ProductList(url) {
             });
             let action = await fetch(request);
             let response = await action.json();
+            //依序push，以便template使用
             newItemDetailsSort.push(response)
         }
 
-        newItemDetailsSort.forEach(item => { Details(item)})
+        newItemDetailsSort.forEach(item => {
+            Details(item)
+        })
+        //下方多圖片和標籤 Template
         function Details(e) {
             let cloneBox = Template_Data.content.cloneNode(true)
             let box = cloneBox.querySelector('.Template-Data');
@@ -223,10 +246,14 @@ async function ProductList(url) {
             Listbox[i].append(cloneBox)
             i++
         }
+        //歸零id 以及 post gameId順序
+        i = 0;
+        j = 0;
+        newIdArray = [];
     }
 
-    setTimeout(function () { Hover() }, 3000)
-
+    setTimeout(function () { Hover() }, 2000)
+    //牌卡觸碰效果
     function Hover() {
         for (let i = 0; i < 5; i++) {
             let a = document.getElementById(`a${i}`)
@@ -240,3 +267,5 @@ async function ProductList(url) {
         }
     }
 }
+
+

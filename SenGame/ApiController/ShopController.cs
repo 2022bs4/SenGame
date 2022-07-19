@@ -43,6 +43,15 @@ namespace SenGame.ApiController
 
         }
 
+        //首頁上排觸發回傳
+        [HttpPost]
+        public async Task<IActionResult> PostIndex([FromBody] IndexProductDTO model)
+        {
+            var request = model.UserRequest;
+            var result = await _Shop.GetIndesSwipper(request);
+            return Ok(result);
+        }
+
         //首頁預設Swipper
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -53,20 +62,22 @@ namespace SenGame.ApiController
             return Ok(result);
         }
 
-        //首頁上排觸發回傳
-        [HttpPost]
-        public async Task<IActionResult> PostIndex([FromBody] IndexProductDTO model)
-        {
-            var request = model.UserRequest;
-            var result = await _Shop.GetIndesSwipper(request);
-            return Ok(result);
-        }
+        
 
         //首頁預設清單
         [HttpGet]
         public async Task<IActionResult> IndexList()
         {
-            var result = await _Shop.GetProductList();
+            //預設
+            var request = "人氣最高";
+            var result = await _Shop.GetProductList(request);
+            return Ok(result);
+        }
+        [HttpPost]
+        public async Task<IActionResult> PostIndexListCard([FromBody] CustomerSelectIndexList model)
+        {
+            string request = model.UserRequest;
+            var result = await _Shop.GetProductList(request);
             return Ok(result);
         }
         [HttpPost]
@@ -78,7 +89,7 @@ namespace SenGame.ApiController
             return Ok(result);
         }
 
-
+        
 
 
         //商品詳細之Swipper
