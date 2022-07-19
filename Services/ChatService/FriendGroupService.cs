@@ -46,9 +46,6 @@ namespace Services.ChatService
 
         public List<FriendGroupDTO> GetFriend(string id)
         {
-
-           
-
             var groups = Repository.GetAll<Usergroup>().Where(x => x.UserId == id).Select(x => x.FriendGroupId);
 
 

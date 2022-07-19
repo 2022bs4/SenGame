@@ -15,7 +15,7 @@
 
                 @foreach(var item in friend.Friends)
                 {
-                    @if(item.GroupName == "好友名單      " && friend.GroupName == item.GroupName)
+                    @if(item.GroupName.Trim() == "好友名單" && friend.GroupName == item.GroupName)
                     {
                     <div class="friend-li2 pl-2 py-3 w-100">
                         <input id="userid" value="@item.Id" hidden="hidden"/>
