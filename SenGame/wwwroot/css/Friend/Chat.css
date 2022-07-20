@@ -15,21 +15,23 @@ body::-webkit-scrollbar-thumb {
     body::-webkit-scrollbar-thumb:hover {
         background: #fff;
     }
-
+    
 .chat-content {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
     height: 100vh;
 }
-
-    .chat-content .chat-left {
-        background-color: #1e262c;
-        color: #fff;
-        position: relative;
-        z-index: 0;
-        width: 100%;
-    }
+.user-img{
+    width:60px;
+}
+.chat-content .chat-left {
+    background-color: #1e262c;
+    color: #fff;
+    position: relative;
+    z-index: 0;
+    width: 100%;
+}
 
 .chat-content .chat-right {
     display: none;
@@ -245,7 +247,7 @@ div[class^="friend-li"] {
         background-color: #edf1f2;
         top: 90px;
         -webkit-box-flex: 1;
-        -ms-flex-positive: 1;
+
         flex-grow: 1;
         max-width: 100%;
     }
@@ -284,7 +286,7 @@ div[class^="friend-li"] {
     margin-top: 20em;
 }
 
-.modal-content .close, .del-close {
+.modal-content .close, .del-close, .del-friend-close, .edit-close, .add-close {
     right: 0;
     top: 0;
     width: 30px;
@@ -299,11 +301,22 @@ div[class^="friend-li"] {
     text-align: start;
     padding-left: 1.4em;
 }
-
-    .modal-content .text {
-        text-align: start;
-        margin-left: 3em;
-    }
+.edit-type{
+    font-size:2em;
+    text-align: center;
+    width:100%;
+}
+#editgroup{
+    width:80%;
+}
+.edit-body{
+    padding-top:2em;
+    padding-bottom:2em;
+}
+.modal-content .text {
+    text-align: start;
+    margin-left: 3em;
+}
 
 .modal-content .modal-title #groupname {
     background-color: #edf1f2;
@@ -377,12 +390,12 @@ div[class^="friend-li"] {
             color: #eee;
             border: none;
         }
-.del-check {
+.del-check, .del-friend-check,.edit-check ,.add-check{
     background-color: #f56c2d;
     color: #eee;
     border: none;
 }
-.del-cancel {
+.del-cancel, .del-friend-cancel, .edit-cancel, .add-cancel {
     background-color: #3d4450;
     color: #fff;
     border: 1px solid #fff;
@@ -397,22 +410,28 @@ div[class^="friend-li"] {
     border: 1px solid #ccc;
     background: #eee;
     position: absolute;
-    width: 100px;
+    width: 9em;
     height: auto;
     display: none;
     cursor: pointer;
+
 }
 
-    #rightmenu:hover ,#groupdelete:hover{
-        background-color: #1e262c;
-        color: #fff;
-        -webkit-transition: 1s;
-        transition: 1s;
-    }
-
-    #rightmenu .add-type ,#groupdelete .delete-type{
-        padding-left: 1em;
-    }
+.add-type:hover,.del-friend:hover, .delete-type:hover, .edit:hover,.add-friend:hover {
+    background-color: #1e262c;
+    color: #fff;
+    -webkit-transition: 1s;
+    transition: 1s;
+}
+#delfriendModal{
+    display:none;
+}
+#rightmenu .add-type, #rightmenu .del-friend, #groupdelete .delete-type, #groupdelete .edit,.add-friend {
+    width: 100%;
+    display: block;
+    padding: 1em;
+    box-sizing: border-box;
+}
 
 .tag {
     text-align: center;

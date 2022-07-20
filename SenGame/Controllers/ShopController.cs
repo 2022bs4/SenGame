@@ -26,22 +26,8 @@ namespace SenGame.Controllers
             _manger = manger;
             _Ecpay = ecpay;
         }
-        public async Task<IActionResult> Index()
+        public  IActionResult Index()
         {
-            //var product = await _Shop.ProductIndex();
-
-            //var result = new ProductDetailsVM()
-            //{
-            //    ProductPlural = product.Product.Select(
-            //        item=> new ProductDetailsVM.ProductInformation {
-            //        GameId = item.GameId,
-            //        GameName = item.GameName,
-            //        GamePrice = item.GamePrice,
-            //        GamePicture =item.GameUrl,
-            //    }).ToList()
-            //};
-
-            //return View("Game",result);
             return View("Game");
         }
         //產品詳細
@@ -105,7 +91,6 @@ namespace SenGame.Controllers
             var result = new List<InputCheckBuyVM>();
             if (gameInformation == null)
             {
-                //return RedirectToRoute(new { controller = "Game", action = "Game" });
                 return View();
             }
             else
@@ -125,13 +110,24 @@ namespace SenGame.Controllers
             }
         }
 
+
+        //綠界付款回傳資訊
+        [HttpPost]
+        [Consumes("application/x-www-form-urlencoded")]
+        public IActionResult Index([FromForm] EcpayReturnResult data)
+        {
+            var result = data.RtnCode;
+            //交易是否成功
+            ViewBag["result"] = result;
+            return View("CheckBuy");
+        }
+
         public async Task<string> GetUserId()
         {
             UserModel user = await _manger.GetUserAsync(HttpContext.User);
             var userId = user.Id;
             return userId;
         }
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]

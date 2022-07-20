@@ -7,7 +7,7 @@
     <div class="chat-content position-relative">
         <div class="chat-left">
             <div class="user-content position-relative">
-                <img class="pl-2 py-3  user-select-none w-25" src="@pic">
+                <img class="pl-2 py-3  user-select-none user-img" src="@pic">
                 <p class="pl-2 py-3  user-select-none">@User.Identity.Name</p>
                 <span class="user-span pl-2 py-3  user-select-none">∨</span>
                 <ul class="state-ul position-fixed p-0 m-0">
@@ -32,14 +32,21 @@
 </div>
 <div id="rightmenu">
      <span class="add-type">建立群組</span>
+     <span class="del-friend">刪除好友</span>
 </div>
 <div id="groupdelete">
+    <span class="edit">編輯群組名稱</span>
+    <span class="add-friend">新增好友</span>
     <span class="delete-type">刪除群組</span>
 </div> 
 <!-- 群組分類的modal -->
 <div id="myModal" class="modal">
     <partial name="_GroupPartial"/>
 </div>
+<div id="groupModal" class="modal">
+    <partial name="_AddFriendInGroupPartial"/>
+</div>
+<!--刪除群組Modal-->
 <div id="delModal" class="modal">
     <div class="modal-content-del  position-relative">
       <div class="modal-header">
@@ -55,6 +62,43 @@
       </div>
     </div>
   </div>
+
+
+  <!--刪除好友的Modal-->
+<div id="delfriendModal" class="modal">
+    <div class="modal-content-del  position-relative">
+      <div class="modal-header">
+        <span class="del-type">刪除好友</span>
+          <span aria-hidden="true" class="del-friend-close position-absolute">&times;</span>
+      </div>
+      <div class="modal-body">
+        <p class="del-text">確定要將此好友從群組中刪除嗎?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn del-friend-cancel" data-dismiss="modal">取消</button>
+        <button type="button" class="btn del-friend-check">狠心刪除</button>
+      </div>
+    </div>
+  </div>
+
+  <!--編輯群組名稱的Modal-->
+  <div id="editModal" class="modal">
+    <div class="modal-content-del  position-relative">
+      <div class="modal-header">
+        <span class="edit-type">請輸入新的群組名稱</span>
+          <span aria-hidden="true" class="edit-close position-absolute">&times;</span>
+      </div>
+      <div class="modal-body edit-body">
+      
+      <input id="editgroup" type="text"/>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn edit-cancel" data-dismiss="modal">取消</button>
+        <button type="button" class="btn edit-check">確認</button>
+      </div>
+    </div>
+  </div>
+
 <template id="friendcard">
     <div class="friend-li pl-2 py-3 w-100">
         <img class="friend-img user-select-none"  src="https://picsum.photos/50/50/?random=150">
@@ -78,7 +122,7 @@
     <div class="message-window d-flex flex-wrap">
         <input type="text" id="fid" hidden="hidden"/>
         <div class="message-title position-relative d-flex pl-3 ms-2">
-            <img class="py-3 message-img user-select-none" src="https://picsum.photos/30/30/?random=10">
+                <img class="py-3 message-img user-select-none" src="https://picsum.photos/30/30/?random=10">
             <p class="pl-3 py-3 mb-0 text-light user-select-none">名稱</p>
             <span class="close py-3 position-absolute text-light user-select-none">X</span>
         </div>

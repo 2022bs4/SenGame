@@ -13,7 +13,7 @@ let useridArray = []
 let groupnameArray = []
 let del = document.querySelector(".delete-type")
 let rightmenudel = document.querySelector("#groupdelete")
-let group = document.querySelectorAll(".friend-group")
+let allgroup = document.querySelectorAll(".friend-group")
 let friendarray = []
 let frienddetails = {}
 //用來限制聊天框一次只能產出一個
@@ -32,14 +32,13 @@ let left = document.querySelector(".chat-left")
 let right = document.querySelector(".chat-right")
 //滑鼠右鍵的自定義選單
 let rightmenu = document.getElementById('rightmenu');
-//選單內選項
+//新增群組的span
 let addtype = document.querySelector(".add-type")
+//刪除好友的span
+let delfriend = document.querySelector(".del-friend")
 //群組分類
 let modal = document.getElementById("myModal");
-//modal的取消按紐
-let cancel = document.querySelector(".cancel");
-//modal的X
-let span = document.querySelector(".close");
+let addfriend = document.querySelector(".add-friend")
 //modal的選擇好友區塊
 let addblock = document.querySelector(".add")
 //modal內的確認按鈕
@@ -57,39 +56,240 @@ window.onload = function () {
         phone()
     }
 }
-let allgrouop = document.querySelectorAll(".friend-group")
-allgrouop.forEach(item => {
-    item.style.cursor = 'pointer'
-    let span = item.querySelector(".friends-span")
-    let list = item.querySelector(".friend-ul")
-    span.onmousedown = function (e) {
-        if (e.which == 3) {
+//送出資料到後端
+async function Post(url, data) {
+    await fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+            'content-type': 'application/json'
+        }
 
-            delmenuCTRL(item)
-            let delcheck = document.querySelector(".del-check")
-            delcheck.onclick = function () {
-                var data = {
-                    Groupname: span.innerHTML,
+    })
+        .then(res => { return res.json() })
+        .then(result => console.log(result))
+}
+
+function computer(){
+    allgroup.forEach(item => {
+        item.style.cursor = 'pointer'
+        let fspan = item.querySelector(".friends-span")
+        let list = item.querySelector(".friend-ul")
+        //控制群組縮放及刪除
+        fspan.onmousedown = function (e) {
+            if (e.which == 3) {
+               
+                delmenuCTRL(fspan)
+                let delcheck = document.querySelector(".del-check")
+                delcheck.onclick = function () {
+                    var data = {
+                        Groupname: fspan.innerHTML,
+                    }
+                    console.log(data)
+                    var url = "/Friend/DeleteGroup"
+                    Post(url, data)
+                    delModal.style.display = 'none'
                 }
-                var url = "/Friend/DeleteGroup"
-                Post(url,data)
+                let editcheck = document.querySelector(".edit-check")
+                editcheck.onclick = function () {
+                    var data = {
+                        NewGroupName: editgroup.value,
+                        Groupname: fspan.innerHTML,
+                    }
+                    var url = "/Friend/EditGroupName"
+                    Post(url, data)
+                    fspan.innerHTML = editgroup.value
+                    editModal.style.display = 'none'
+                }
+                AddFriend(fspan)
+                var addcheck = document.querySelector(".add-check")
+                addcheck.onclick = function () {
+                    var data = {
+                        GroupNames: groupnameArray,
+                        Ids: useridArray,
+                    }
+                    var url = "/Friend/AddFriendInGroup"
+                    Post(url, data)
+                    groupModal.style.display = 'none'
+                }
+                
             }
+            else {
+                $(list).toggle()
+ 
+            }
+
+
         }
-        else {
-            $(list).toggle()
-        }
-       
-        
-    }
-})
+
+        var allfriendlist = item.querySelectorAll(".friend-li")
+        allfriendlist.forEach(friend => {
+            friend.onmousedown = function (e) {
+                if (e.which == 3) {
+                    rightmenuCTRL(friend)
+                    //從群組中刪除好友
+                    let delfriendcheck = document.querySelector(".del-friend-check")
+                    let friendId = friend.querySelector("#friendid")
+                    delfriendcheck.onclick = function () {
+                        var data = {
+                            UserId: friendId.value,
+                            Groupname:fspan.innerHTML,
+                        }
+                      
+                        
+                        
+                        var url = "/Friend/DeleteFriend"
+                        Post(url, data)
+                        delfriendModal.style.display = 'none'
+                    }
+                    
+
+                    //新增群組              
+                    chooseFriend()
+                    check.onclick = function () {
+                        var data = {
+                            GroupNames: groupnameArray,
+                            Ids: useridArray,
+                        }
+                        let span = document.createElement("span")
+                        span.setAttribute("class", "friends-span w-100 pl-2 py-2 d-block user-select-none")
+                        let group = document.createElement("div")
+                        group.append(span)
+                        group.setAttribute("class", "friend-group new-group w-100")
+                        let div = document.createElement("div")
+                        div.setAttribute("class", `friend-ul w-100`)
+                        friendarray.forEach(item => {
+
+                            //自定義群組名稱
+                            span.innerText = `${groupname.value}`
+                            div.append(getfriend(item.img, item.name, item.line))
+                            group.append(div)
+
+                        })
+                        friendarray = []
+                        friendgroup.append(group)
+                        modal.style.display = 'none'
+                        addblock.innerHTML = ' '
+                      
+                        groupname.value = ' '
+                        var url = "/Friend/Chat"
+                        Post(url, data)
+
+
+
+                    }
+                }
+                else {
+                      
+                    document.ondragend = function (e2) {
+                        if (e2.clientX > 250 && bool == true) {
+                            bool = false
+                            var url = "/Friend/ReadChatContent"
+                            
+                            let id = friend.querySelector("#friendid").value
+                            Get(url,id)
+                            let img = friend.querySelector("img").src
+                            let name = friend.querySelector(".friend-name").innerText
+                            right.append(getcard(id, img, name))
+                           
+                            let show = document.querySelector(".show")
+                            //點擊X後關閉聊天視窗
+                            let close = document.querySelector(".close")
+                            close.onclick = function () {
+                                right.innerHTML = ' '
+                                bool = true
+
+                            }
+                            $("#text").keydown(function (e) {
+                                let text = document.getElementById("text")
+                                if (e.which == 13 && text.value != "") {
+
+                                    var time = new Date()
+                                    let p = document.createElement("p")
+                                    let timep = document.createElement("p")
+                                    timep.setAttribute("class", "pt-3 mb-0")
+
+                                    var chatdata = {
+                                        ChatContent: text.value,
+                                        UserId: fid.value,
+                                    }
+                                    var url = "/Friend/CreateChatContext"
+
+
+                                    timep.innerText = `${time.getHours().toString().padStart(2, "0")}:${time.getMinutes().toString().padStart(2, "0")}`
+                                    let div = document.createElement("div")
+                                    div.style.display = 'flex'
+                                    p.setAttribute("class", "content px-2 py-2 my-1")
+                                    p.innerText = text.value
+                                    text.value = ' '
+                                    div.append(p, timep)
+                                    show.append(div)
+                                    Post(url, chatdata)
+                                }
+                            })
+                        }
+                        
+                    }
+                }
+                
+            }
+        })
+    })
+}
+
+
+addfriend.onclick = function () {
+    groupModal.style.display = 'block'
+}
+//modal的取消按紐
+let cancel = document.querySelector(".cancel");
+//modal的X
+let span = document.querySelector(".close");
+span.onclick = function () {
+    modalReset()
+    groupnameReset()
+}
+cancel.onclick = function () {
+   modalReset()
+    groupnameReset()
+}
+
+
+//關閉刪除群組的Modal
 let delcancel = document.querySelector(".del-cancel")
 delcancel.onclick = function () {
     delModal.style.display = 'none'
+}
+let editcancel = document.querySelector(".edit-cancel")
+editcancel.onclick = function () {
+    editModal.style.display = 'none'
+}
+let delfriendcancel = document.querySelector(".del-friend-cancel")
+delfriendcancel.onclick = function () {
+    delfriendModal.style.display = 'none'
 }
 let delclose = document.querySelector(".del-close")
 delclose.onclick = function () {
     delModal.style.display = 'none'
 }
+let delfriendclose = document.querySelector(".del-friend-close")
+delfriendclose.onclick = function () {
+    delfriendModal.style.display = 'none'
+}
+let editclose = document.querySelector(".edit-close")
+editclose.onclick = function () {
+    editModal.style.display = 'none'
+}
+let addclose = document.querySelector(".add-close")
+addclose.onclick = function () {
+    groupModal.style.display = 'none'
+}
+let addcancel = document.querySelector(".add-cancel")
+addcancel.onclick = function () {
+    groupModal.style.display = 'none'
+}
+
+
 
 
 //產出好友清單
@@ -158,41 +358,47 @@ document.onclick = function () {
     rightmenu.style.display = 'none';
     groupdelete.style.display = 'none'
 }
+let edit = document.querySelector(".edit")
+edit.onclick = function () {
+    editModal.style.display = 'block'
+}
 addtype.onclick = function () {
     modal.style.display = "block";
+}
+delfriend.onclick = function () {
+    delfriendModal.style.display = 'block'
 }
 del.onclick = function () {
     delmodal.style.display = "block"
 }
-function Post(url,data) {
-    fetch(url, {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-            'content-type': 'application/json'
-        }
 
-    })
-        .then(res => { return res.json() })
-        .then(result => console.log(result))
-}
+
+//顯示聊天紀錄
 async function Get(url) {
     await fetch(url)
         .then(res => res.json())
         .then(res => res.forEach((index => {
-            
             if (index.userId == fid.value) {
+                
                 let div = document.createElement("div")
                 let p = document.createElement("p")
                 let timep = document.createElement("p")
                 let show = document.querySelector(".show")
                 p.setAttribute("class", "content px-2 py-2 my-1")
-                p.innerHTML = index.chatContent
-                div.append(p)
+                div.setAttribute("class", "d-flex")
+                timep.setAttribute("class","pt-3 pl-2 mb-0")
+                p.innerHTML = index.chatContent;
+                timep.innerHTML = index.chatTime;
+
+
+                div.append(p, timep)
                 show.append(div)
+               
             }
+           
 
         })))
+       
 
        
 }
@@ -232,145 +438,27 @@ function chooseFriend() {
         }
     })
 }
+function AddFriend(data) {
+    var li2 = document.querySelectorAll(".friend-li2")
+    li2.forEach(item => {
+        item.onclick = function () {
+                var tagname = item.querySelector(".friend-name2")
+                var userid = item.querySelector("#userid")
 
+                groupnameArray.push(data.innerHTML)
+                useridArray.push(userid.value)
+                console.log(groupnameArray)
+                console.log(useridArray)
 
+                addblock.append(tag(tagname))
+                item.style.display = 'none'
+              
 
-//桌機能用的功能
-function computer() {
-    AllFriends.forEach((item, index) => {
-        let choose = document.querySelector(".choose-friend")
-        chooseFriend()
-        check.onclick = function () {
-            var data = {
-                GroupNames: groupnameArray,
-                Ids: useridArray,               
-            }
-
-
-
-            
-
-                let span = document.createElement("span")
-                span.setAttribute("class", "friends-span w-100 pl-2 py-2 d-block user-select-none")
-                let group = document.createElement("div")
-                group.append(span)
-                group.setAttribute("class", "friend-group new-group w-100")
-                let div = document.createElement("div")
-                div.setAttribute("class", `friend-ul w-100`)
-                friendarray.forEach(item => {
- 
-                    //自定義群組名稱
-                    span.innerText = `${groupname.value}`
-                    div.append(getfriend(item.img, item.name, item.line))
-                    group.append(div)
-           
-                })
-                friendarray = []
-                friendgroup.append(group)
-                modal.style.display = 'none'
-                addblock.innerHTML = ' '
-                choose.innerHTML = ' '
-            groupname.value = ' '
-            var url = "/Friend/Chat"
-                Post(url,data)
-                //AllFriends.forEach(item => {
-                //    choose.append(getfriend2(item.img, item.name, item.line))
-                //    chooseFriend()
-                //})
-
-            
-        }
-
-        //關閉modal的話，復原全部好友
-        span.onclick = function () {
-            modalReset()
-            li2.forEach(item => {
-                item.style.display = 'flex'
-            });
-            groupnameReset()
-        }
-        cancel.onclick = function () {
-            modalReset()
-            li2.forEach(item => {
-                item.style.display = 'flex'
-            });
-            groupnameReset()
-        }
+            }        
     })
-
-    let friend = document.querySelectorAll(".friend-li")
-    friend.forEach((item => {
-        item.setAttribute("draggable", true)
-        item.onmousedown = function (e) {
-            if (e.which == 3) {
-                //自定義滑鼠右鍵展開的菜單
-                rightmenuCTRL(item)
-
-            }
-            //滑鼠放開時
-            document.ondragend = function (e2) {
-                //如果將目標拖移至右側，則展開與該目標的對話畫面
-                if (e2.clientX > 250 && bool == true) {
-                    bool = false
-                    var url = "/Friend/ReadChatContent"
-                    Get(url)
-                   
-                    let id = item.querySelector("#friendid").value
-                    let img = item.querySelector("img").src
-                    let name = item.querySelector(".friend-name").innerText
-                    right.append(getcard(id,img, name))
-
-                    let show = document.querySelector(".show")
-                    //點擊X後關閉聊天視窗
-                    let close = document.querySelector(".close")
-                    close.addEventListener('click', function () {
-                        right.innerHTML = " "
-                        bool = true
-                    })
-                    //按下enter鍵後送出對話
-                    $("#text").keydown(function (e) {
-                        if (e.which == 13) {
-                            let text = document.getElementById("text")
-                            var time = new Date()
-                            let p = document.createElement("p")
-                            let timep = document.createElement("p")
-                            timep.setAttribute("class", "pt-3 mb-0")
-
-                            var chatdata = {
-                                ChatContent: text.value,
-                                UserId: fid.value,
-                            }
-                            var url = "/Friend/CreateChatContext"
-
-
-                            timep.innerText = `${time.getHours().toString().padStart(2, "0")}:${time.getMinutes().toString().padStart(2, "0")}`
-                            let div = document.createElement("div")
-                            div.style.display = 'flex'
-                            p.setAttribute("class", "content px-2 py-2 my-1")
-                            p.innerText = text.value
-                            text.value = ' '
-                            div.append(p, timep)
-                            show.append(div)
-                            Post(url,chatdata)
-                        }
-                    })
-                    //上傳圖片
-                    upload.addEventListener('change', function (e) {
-                        let img = document.createElement("img")
-                        var [file] = upload.files
-                        if (file) {
-                            img.style.display = "block"
-                            img.style.maxWidth = "100px"
-                            img.src = URL.createObjectURL(file)
-                            show.append(img)
-                        }
-                    })
-                }
-            }
-        }
-    }))
-    // })
 }
+
+
 //手機能用的功能
 function phone() {
     AllFriends.forEach(item => {

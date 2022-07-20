@@ -37,7 +37,7 @@ function CancelPurchase() {
         Return()
     }
     async function Return() {
-         window.location.href = '/Game/Game';
+         window.location.href = '/Shop/ShoppingCart';
     }
 }
 

@@ -22,5 +22,7 @@ namespace SqlModels.ViewModels.ShopViewModels
         public int GameId { get; set; }
 
         public string SelectId { get; set; }
+
+
     }
 }

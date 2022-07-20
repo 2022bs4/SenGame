@@ -28,7 +28,6 @@ namespace SenGame.Service
             var CheckMacValue  = EcpayInformation(userOrder.TotalPrice,"測試");
             return CheckMacValue;
         }
-
         public Dictionary<string,string> EcpayInformation(decimal totalPrice, string tradeDetails)
         {
             var orderId = Guid.NewGuid().ToString().Replace("-", "").Substring(0, 20);
@@ -49,7 +48,7 @@ namespace SenGame.Service
             order.Add("ItemName", $"{tradeDetails}");
             order.Add("ExpireDate", "1");
             order.Add("ReturnURL", $"https://localhost:44316/api/Shop/ReturnResult");
-            order.Add("OrderResultURL", $"{website}/Home/Index");
+            order.Add("OrderResultURL", $"{website}/Shop/Index");
             order.Add("CheckMacValue", $"{GetCheckMacValue(order)}");
             return order;
         }

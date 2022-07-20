@@ -25,6 +25,13 @@ namespace SqlModels.DTOModels
         public DateTime Date { get; set; }
     }
 
+    public class CustomerSelectIndexList
+    { 
+        public List<IndexList> ListData { get; set; }
+        public string UserRequest { get; set; }
+
+    }
+
     public class IndexList
     {
         public int GameId { get; set; }
@@ -34,8 +41,8 @@ namespace SqlModels.DTOModels
         public int TotalBuyCount { get; set; }
         public DateTime ReleaseTime { get; set; }
         public int ReleaseState {get; set; }
-
-
+        
+        public DateTime Date { get; set; }
 
         public List<ProductUrl> GameUrl { get; set; }
 
@@ -43,13 +50,12 @@ namespace SqlModels.DTOModels
         {
             public string Url { get; set; }
         }
-
         public List<ProductType> TypeData { get; set; }
-
         public class ProductType
         {
             public int GameId { get; set; }
             public string TypleName { get; set; }
         }
+
     }
 }

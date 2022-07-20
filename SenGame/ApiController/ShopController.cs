@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SenGame.Service;
@@ -8,9 +7,6 @@ using Services.ShopSevice;
 using SqlModels.DTOModels;
 using SqlModels.Models;
 using SqlModels.ViewModels.ShopViewModels;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace SenGame.ApiController
@@ -22,16 +18,17 @@ namespace SenGame.ApiController
         private readonly ShopServices _Shop;
         private readonly ShopCartServices _ShoppingCart;
         private readonly UserManager<UserModel> _manger;
+        private readonly OrderService _Order;
         private readonly EcpayService _Ecpay;
 
 
-
-        public ShopController(ShopServices shop, ShopCartServices shoppingCart, UserManager<UserModel> manger, EcpayService ecpay)
+        public ShopController(ShopServices shop, ShopCartServices shoppingCart, UserManager<UserModel> manger, EcpayService ecpay, OrderService  orderService)
         {
             _Shop = shop;
             _ShoppingCart = shoppingCart;
             _manger = manger;
             _Ecpay = ecpay;
+            _Order = orderService;
         }
 
         //首頁Tag
@@ -42,6 +39,16 @@ namespace SenGame.ApiController
             return Ok(result);
 
         }
+
+        //首頁上排觸發回傳
+        [HttpPost]
+        public async Task<IActionResult> PostIndex([FromBody] IndexProductDTO model)
+        {
+            var request = model.UserRequest;
+            var result = await _Shop.GetIndesSwipper(request);
+            return Ok(result);
+        }
+
         //首頁預設Swipper
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -51,19 +58,21 @@ namespace SenGame.ApiController
             var result = await _Shop.GetIndesSwipper(request);
             return Ok(result);
         }
-        //首頁上排觸發回傳
-        [HttpPost]
-        public async Task<IActionResult> PostIndex([FromBody] IndexProductDTO model)
-        {
-            var request = model.UserRequest;
-            var result = await _Shop.GetIndesSwipper(request);
-            return Ok(result);
-        }
+
         //首頁預設清單
         [HttpGet]
         public async Task<IActionResult> IndexList()
         {
-            var result = await _Shop.GetProductList();
+            //預設
+            var request = "人氣最高";
+            var result = await _Shop.GetProductList(request);
+            return Ok(result);
+        }
+        [HttpPost]
+        public async Task<IActionResult> PostIndexListCard([FromBody] CustomerSelectIndexList model)
+        {
+            string request = model.UserRequest;
+            var result = await _Shop.GetProductList(request);
             return Ok(result);
         }
         [HttpPost]
@@ -75,9 +84,7 @@ namespace SenGame.ApiController
             return Ok(result);
         }
 
-
-
-
+        
         //商品詳細之Swipper
         [HttpGet]
         public async Task<IActionResult> ProductSwipper(int id)
@@ -139,8 +146,15 @@ namespace SenGame.ApiController
         {
             var gameId = model.SelectId;
             var userId = await GetUserId();
-            var result = _ShoppingCart.AddCarts(gameId, userId);
-            return Ok(result);
+            var result = _Order.SureOrder(gameId, userId);
+            if (result == "請至結帳畫面結帳付款")
+            {
+                return Ok(result);
+            }
+            else {
+                _ShoppingCart.RemoveAllItem(userId);
+                return Ok(result);
+            }
         }
 
         //取消結帳，訂單狀態更改完取消
@@ -148,7 +162,7 @@ namespace SenGame.ApiController
         public async Task<IActionResult> RemoveCheckBuy()
         {
             var userId = await GetUserId();
-            var result = await _ShoppingCart.RemoveCheckBuy(userId);
+            var result = await _Order.RemoveCheckBuy(userId);
             return Ok(result);
         }
 
@@ -163,21 +177,39 @@ namespace SenGame.ApiController
         }
 
 
-        //跨域問題尚未解決，目的:接收綠借回傳值且驗證購買結果
-        [HttpPost]
-        public HttpResponseMessage ReturnResult([FromBody] Dictionary<string, string> data)
-        {
-            return ResponseOK();
-        }
+        ////localhoost無法驗證，目的:接收綠借回傳值且驗證購買結果
+        //[HttpPost]
+        //[Consumes("application/x-www-form-urlencoded")]
+        //public HttpResponseMessage ReturnResult([FromForm] EcpayReturnResult data)
+        //{
+        //    //return Ok();
+        //    return ResponseOK();
+        //}
 
-        private HttpResponseMessage ResponseOK()
-        {
-            var response = new HttpResponseMessage();
-            response.Content = new StringContent("1|OK");
-            response.Content.Headers.ContentType = new MediaTypeHeaderValue("text/html");
-            return response;
-        }
+        //[HttpPost]
+        //[Consumes("application/x-www-form-urlencoded")]
+        //public IActionResult Index([FromForm] EcpayReturnResult data)
+        //{
+        //    return Ok(data);
+        //}
 
+
+        //private HttpResponseMessage ResponseOK()
+        //{
+        //    var response = new HttpResponseMessage();
+        //    response.Content = new StringContent("1|OK");
+        //    response.Content.Headers.ContentType = new MediaTypeHeaderValue("text/html");
+        //    return response;
+        //}
+        //private HttpResponseMessage ResponseError()
+        //{
+        //    var response = new HttpResponseMessage();
+        //    response.Content = new StringContent("0|Error");
+        //    response.Content.Headers.ContentType = new MediaTypeHeaderValue("text/html");
+        //    return response;
+        //}
+        
+        
         //或許會員ID之後會請會員模組負責人封裝
         public async Task<string> GetUserId()
         {

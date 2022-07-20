@@ -33,13 +33,20 @@ namespace Services
                     { TypleName = item.Name }).ToList(),
                 });
             return  result;
-        } 
+        }
 
-
+        //使用tag篩選產品
+        public void SelectTag(string UserSelectTag) 
+        {
+            var tag = Repository.FindBy<Typelist>(x => x.Name == UserSelectTag);
+            var gametype = Repository.GetAll<GameType>();
+            //var gameTag = gametype.Join(tag,gt=>gt.TypelistId)
+        }
 
         //獲取指定數量及是否上架之遊戲Method
         public async Task<List<IndexList>> GetSingleProducts(int IsShop)
         {
+            
             var game = Repository.GetAll<Game>().Where(x => x.ReleaseState == IsShop);
             var pic = Repository.GetAll<GameMedium>().Where(x => x.InstructionType == 2 && x.Instruction == 1);
             var gameMedia = await game.Join(pic, x => x.GameId, p => p.GameId, (x, p) =>
@@ -142,15 +149,47 @@ namespace Services
 
         
         //抓取全圖片版銷售最好(之後會將其他需求擴充至此)
-        public async Task<List<IndexList>> GetProductList()
+        public async Task<List<IndexList>> GetProductList(string request)
         {
-            var game = await GetSingleProducts(1);
+            var game = new List<IndexList>();
+            var response = await GetSingleProducts(1);
 
-            //之後會添加判斷是來篩選各類需求產品排序
-            var newGame = game.OrderBy(x => x.ReleaseTime).Take(5);
+            if (request == "人氣最高")
+            {
+                response.Sort((x, y) => -x.TotalBuyCount.CompareTo(y.TotalBuyCount));
+                game = response.Take(5).ToList();
+            }
+
+            //日期
+            else if (request == "最新發行日期")
+            {
+                response.Sort((x, y) => -x.Date.CompareTo(y.Date));
+                game = response.Take(5).ToList();
+            }
+            else if (request == "較早發行日期")
+            {
+                response.Sort((x, y) => x.Date.CompareTo(y.Date));
+                game = response.Take(5).ToList();
+            }
+            else if (request == "即將發行")
+            {
+
+            }
+
+            //價錢
+            else if (request == "價格由低至高")
+            {
+                response.Sort((x, y) => x.GamePrice.CompareTo(y.GamePrice));
+                game = response.Take(5).ToList();
+            }
+            else if (request == "價格由高至低")
+            {
+                response.Sort((x, y) => -x.GamePrice.CompareTo(y.GamePrice));
+                game = response.Take(5).ToList();
+            }
 
             var result = new List<IndexList>();
-            foreach (var item in newGame)
+            foreach (var item in game)
             {
                 result.Add(new IndexList
                 {
@@ -162,18 +201,14 @@ namespace Services
             }
             return result;
         }
-        //更多list
-        //public async Task<List<IndexList>> GetMoreProductList()
-        //{ 
+        
 
-        //};
-
-        //GetProductList  多徒多標籤介紹
+        //GetProductList  多圖多標籤介紹
         public async Task<IndexList> GetDetailsList(int id)
         {
             var game = await GetProductItemDateals(id);
            
-            var pic = await Repository.FindBy<GameMedium>(x => x.GameId == id && x.InstructionType == 1 && x.Instruction == 1).OrderByDescending(x => x.Sort).ToListAsync();
+            var pic = await Repository.FindBy<GameMedium>(x => x.GameId == id && x.InstructionType == 1 && x.Instruction == 1).OrderByDescending(x => x.Sort).Take(3).ToListAsync();
             var result = new IndexList()
             {
                 GameId = game.GameId,
@@ -189,6 +224,12 @@ namespace Services
             };
             return result;
         }
+
+        //更多list
+        //public async Task<List<IndexList>> GetMoreProductList()
+        //{ 
+
+        //};
 
         //商品詳細頁面
         public async Task<ResponseProducDetailsDTO> ProductView(int id)
@@ -323,7 +364,7 @@ namespace Services
             }
             return result;
         }
-    
+
     }
 
 }
