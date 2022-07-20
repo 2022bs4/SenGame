@@ -5,14 +5,14 @@
     <link rel="stylesheet" href="~/css/User/GameLibrary.css" asp-append-version="true"/>
 }
     <div class="mygame d-flex ">
-        <div class="mygame-list col-md-3" oncontextmenu="myFunction()">
+        <div class="mygame-list col-2 col-md-3" oncontextmenu="myFunction()">
             <partial name="_GameListPartial" />
         </div>
-        <div class="game col-md-9">
-            <div class="d-flex game-list-detail">
+        <div class="game col-10 col-md-9">
+            <div class="d-flex  game-list-detail">
                 
             </div>  
-            <div class="col-12 col-md-12 col-xl-12 p-0">
+            <div class="swiperclass  p-0">
                 <div class="swiper mySwiper">
                     <div class="swiper-wrapper">
                         
@@ -23,6 +23,8 @@
              </div> 
         </div>
     </div>
+
+
     <div id="ul">
         <li>加到我的最愛</li>
         <li>移除我的最愛</li>
@@ -36,42 +38,43 @@
 
     @*模板*@
     <template id="getgamecard">
-        <div class="game-img col-xs-8 col-8 col-md-8 col-xl-8 p-0">
-                    <img src=""alt=""  >
-                </div>
-                <div class="game-details d-flex col-xs-4 col-md-4 col-xl-4">
+            <div class="game-img col-12 col-sm-12 col-md-12 col-lg-8  p-0">
+                        <img src=""alt=""  >
+             </div>
+
+            <div class="game-details d-flex col-12 col-sm-12 col-md-12 col-lg-4">
                     
-                    <p class="gameIntroduction"></p>
+                <p class="gameIntroduction"></p>
                            
-                    <div class="d-flex game-maker">
-                        <div class="col-md-4 p-0">
-                            <p>開發人員:</p>
-                        </div>
-                        <div class="col-md-8">
-                            <p></p>
-                        </div>
+                <div class="d-flex game-maker">
+                    <div class="col-md-4 p-0">
+                        <p>開發人員:</p>
                     </div>
-                    <div class="d-flex  game-develpoer ">
-                        <div class="col-md-4 p-0">
-                            <p>開發商:</p>
-                        </div>
-                        <div class="col-md-8">
-                            <p></p>
-                        </div>
+                    <div class="col-md-8">
+                        <p></p>
                     </div>
-                    <div class="d-flex game-releaseTime">
-                        <div class="col-md-4 p-0">
-                            <p>發行日期:</p>
-                        </div>
-                        <div class="col-md-8">
-                            <p></p>
-                        </div>
+                </div>
+                <div class="d-flex  game-develpoer ">
+                    <div class="col-md-4 p-0">
+                        <p>開發商:</p>
                     </div>
-                    <div class="game-button d-flex">
-                        <button class="button "><p>安裝SenGame<ion-icon name="download-outline"></ion-icon></p></button>
-                        <button class=" zxc"><a href="steam://store">執行遊戲</a></button>
+                    <div class="col-md-8">
+                        <p></p>
                     </div>
-                 </div>
+                </div>
+                <div class="d-flex game-releaseTime">
+                    <div class="col-md-4 p-0">
+                        <p>發行日期:</p>
+                    </div>
+                    <div class="col-md-8">
+                        <p></p>
+                    </div>
+                </div>
+                <div class="game-button d-flex">
+                    <button class="button "><p>安裝SenGame<ion-icon name="download-outline"></ion-icon></p></button>
+                    <button class=" zxc"><a href="steam://store">執行遊戲</a></button>
+                </div>
+            </div>
     </template>
     <template id="swiper">
         <div class="swiper-slide"><img src=""></div>

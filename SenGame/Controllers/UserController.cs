@@ -29,6 +29,7 @@ namespace SenGame.Controllers
             _service = service;
             _config = config;
         }
+        
 
         public IActionResult Index()
         {
@@ -79,7 +80,7 @@ namespace SenGame.Controllers
         }
 
         [HttpPost]
-        public IActionResult GameLibrary([FromBody] Game_Name name)
+        public IActionResult GameLibrary([FromBody] EditGame name)             
         {
 
             #region
@@ -131,13 +132,32 @@ namespace SenGame.Controllers
             {
                 return Content("null");
             }
-
-
-
-
-
-
         }
+        [HttpPost]
+        public async Task<IActionResult> EditGameLibrary([FromBody] EditGame mygmaelibrary)
+        {
+            
+            try
+            {
+                EditGame eg = new EditGame();
+                UserModel LoginUser = await _userManager.GetUserAsync(HttpContext.User);
+                string UserId = LoginUser.Id;
+                string gamename = mygmaelibrary.GameName;
+                bool myfavourite = mygmaelibrary.MyFavourite;
+                _service.EditMyGame(UserId,gamename, myfavourite);
+                
+
+                return Json("修改成功");
+            }
+            catch(Exception ex)
+            {
+                return Content("null");
+            }
+
+            return Ok();
+        }
+
+
         //-------------------------從這裡結束是 明翰 的OOOOOOOOOOOOO-----------------------------------
 
 

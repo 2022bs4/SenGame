@@ -26,10 +26,11 @@ namespace SqlModels.DTOModels
             public string GameIntroduction { get; set; }
             public string MediaUrl { get; set; }
         }
-        //回傳字串到service裡面
-        public class Game_Name
+        //回傳集合service裡面
+        public class EditGame
         {
             public string GameName { get; set; }
+            public bool MyFavourite { get; set; }
         }
 
         public class GameDetail

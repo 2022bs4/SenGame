@@ -11,6 +11,8 @@ namespace SqlModels.ViewModels
         public List<GameData> GameList { get; set; }
         public List<GameData> MyFavourite { get; set; }
         public List<GameDetail> GetGameDetails { get; set; }
+        
+
 
         public class GameData
         {
@@ -20,9 +22,10 @@ namespace SqlModels.ViewModels
             public string MediaUrl { get; set; }
         }
         //接收字串
-        public class Game_Name
+        public class EditGame
         {
             public string GameName { get; set; }
+            public bool MyFavourite { get; set; }
         }
         public class GameDetail
         {

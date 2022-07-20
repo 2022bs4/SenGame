@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static SqlModels.DTOModels.UserDTO;
 
 namespace Services.Interface
 {
@@ -18,6 +19,9 @@ namespace Services.Interface
         public UserDTO MyFavouritrGame(string UserId);
         //選到的遊戲加載
         public UserDTO MyGameDetail(string GameName);
+        //修改遊戲是否為我的最愛
+        public void EditMyGame(string UserId,string mygmaelibrary,bool myfavourite);
+
         //-------------------------從這裡結束是 明翰 的OOOOOOOOOOOOO-----------------------------------
 
 

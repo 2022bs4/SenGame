@@ -20,34 +20,56 @@ main .mygame {
 main .mygame-list {
     border-right: 2px solid;
 }
-main .mygame-list-detail li  {
-    margin:10px 0;
+
+main .mygame-list-detail li {
+    margin: 10px 0;
 }
+
 main .mygame-list-detail li img {
-    width:60%;
-    border-radius: 10px;
+    width: 40%;
+    display: none;
+    border-radius: 30px;
+}
+
+@media (mix-width: 992px) {
+    main .mygame-list-detail li img { 
+        display: block;
+    }
 }
 
 main .mygame-list-detail li p {
     margin: auto 10px;
 }
 
+    main .mygame-list-detail li p:hover {
+        cursor: pointer;
+    }
+
 main .mygame .game {
     margin-top: 10px;
 }
 
-main .mygame .game-img {
-    display: none;
+main .mygame .game-img img {
+    width: 100%;
 }
 
-@media (min-width: 768px) {
-    main .mygame .game-img {
-        display: block;
-    }
+main .mygame .game-list-detail {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
 
-        main .mygame .game-img img {
-            width: 100%;
-        }
+@media (min-width: 992px) {
+    main .mygame .game-list-detail {
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+        flex-direction: row;
+    }
 }
 
 main .mygame .game-details {
@@ -122,16 +144,28 @@ main .mygame .game-button {
                 color: #1e262c;
             }
 
-main .mygame .swiper {
+main .mygame .swiperclass {
+    margin: 20px 0;
+    height:100%;
+}
+
+/*@media (min-width: 992px) {
+    main .mygame .swiperclass {
+        height: 500px;
+    }
+}*/
+
+main .mygame .swiperclass .swiper {
     margin: 10px 0;
     height: 100%;
 }
 
-main .mygame .swiper-slide {
-    width: 50%;
+main .mygame  .swiper-slide {
+    width:50%;
 }
 
-    main .mygame .swiper-slide img {
+    main .mygame .swiperclass .swiper-slide img {
+        
         width: 100%;
     }
 
@@ -150,6 +184,7 @@ main .mygame .swiper-slide {
         transition: 0.5s;
     }
 }
+
 #ul {
     width: 120px;
     height: 150px;
@@ -162,11 +197,11 @@ main .mygame .swiper-slide {
     display: none;
 }
 
-#ul li {
-    padding-left: 15px;
-}
+    #ul li {
+        padding-left: 15px;
+    }
 
-#ul li:hover {
-    color: azure;
-    cursor: pointer;
-}
+        #ul li:hover {
+            color: azure;
+            cursor: pointer;
+        }

@@ -1,4 +1,4 @@
-//§Ô³N
+//å¿è¡“å…¨åŸŸè®Šæ•¸
 var gamebutton = document.querySelector(".drop-button");
 var ul = document.querySelector(".drop");
 var gamebutton = document.querySelector('.button');
@@ -7,29 +7,63 @@ var game = document.querySelector(".game-list-detail");
 var getgamecard = document.getElementById("gamedetail");
 var swiperwrapper = document.querySelector(".swiper-wrapper");
 var swiper = document.getElementById("swiper");
-//¦Û©w¸q¥kÁäµæ³æ
+//è‡ªè¨‚ç¾©menu
 var ul = document.getElementById("ul");
 
 
 $(document).ready(function () {
     custommenu()
 });
+
 function custommenu() {
-    document.querySelector(".mygame-list-detail").onmousedown = function (e) {
+    var gamedtials = document.querySelectorAll(".mygame-list-detail")
+    var gamename;
+    gamedtials.forEach(item => {
+        var p = item.querySelectorAll("p")
+        p.forEach(x => {
+            x.onmousedown = function (e) {
+                if (e.which == 3) {
+                    console.log(x.innerHTML);
+                    gamename = x.innerHTML;
 
-        document.getElementById("ul").onmousedown = function (h) {
-            console.log(e.target.innerHTML);
-            console.log(h.target.innerHTML)
-            if (h.target.innerHTML == "¥[¨ì§Úªº³Ì·R") {
-                console.log("zxc");
-            }
-            else {
-                console.log("asd")
-            }
 
+                }
+            }
+        })
+    })
+    document.getElementById("ul").onmousedown = function (h) {
+        var myfavourite;
+
+        console.log(h.target.innerHTML);
+
+        switch (h.target.innerHTML) {
+            case "åŠ åˆ°æˆ‘çš„æœ€æ„›":
+                myfavourite = true;
+                break;
+
+            default:
+                myfavourite = false;
+                break;
         }
+        var mygamelibrary =
+        {
+            GameName: gamename,
+            MyFavourite: myfavourite
+        }
+        fetch('/User/EditGameLibrary', {
+            method: 'Post',
+            headers: new Headers({
+                'Content-Type': 'application/json :charset=UTF-8'
+            }),
+            body: JSON.stringify(mygamelibrary)
+        })
+        //.then((res) => res.json())
+        //.then((res) => {
+        //    console.log(res,"");
+        //});
+
     }
-}
+}  
 
 function myFunction(e) {
     e = e || window.event;
@@ -49,13 +83,12 @@ document.onmousedown = function (e) {
 
 
 
-
-//Àò¨ú·í«eÂIÀ»¨ìªº¹CÀ¸¸ê®Æ
+//é»žæ“Šåˆ°æ‰“å“ªå€‹éŠæˆ²åŠ è¼‰å‚³é€éŠæˆ²è«‹æ±‚ 
 $(function () {
     $(".mygame-list-detail>li").click((e) => {
-        //¥ý²MªÅ¸`ÂI¸Ìªº¤l¤¸¯À
         var main = document.querySelector("main");
         main.style.height = "100%";
+        
         game.innerHTML = "";
         swiperwrapper.innerHTML = "";
         console.log(e.target.innerHTML);
@@ -75,8 +108,7 @@ $(function () {
             .then((res) => {
                 console.log(res)
                 getgamedetail(res)
-                //§ì¨ì¶°¦X±a¶i¥h°Ñ¼Æ
-                //¥Îtemplate¤è¦¡append¶i¥h¸`ÂI
+               
 
             });
     })
@@ -85,17 +117,17 @@ $(function () {
 
 function getcard(mediaUrl, gameIntroduction, developer,marker, releaseTime) {
     let clonecard = document.getElementById("getgamecard").content.cloneNode(true);
-    //¹CÀ¸¥D­n¹Ï¤ù
+    //éŠæˆ²åœ–ç‰‡ 
     clonecard.querySelector(".game-img>img").src = mediaUrl;
-    //¹CÀ¸¥kÃä¤p¹Ï&¹CÀ¸Â²¤¶
-    //clonecard.querySelector(".game-details>img").src = mediaUrl;
+   
+   
     clonecard.querySelector(".gameIntroduction").innerHTML=gameIntroduction;
 
-    //¶}µo¤H­û
+    //é–‹ç™¼è€…
     clonecard.querySelector(".game-maker>.col-md-8>p").innerHTML = marker;
-    //¶}µo°Ó
+    //é–‹ç™¼å•†
     clonecard.querySelector(".game-develpoer>.col-md-8>p").innerHTML=developer;
-    //µo¦æ¤é´Á
+    //ä¸Šæž¶æ™‚é–“
     clonecard.querySelector(".game-releaseTime>.col-md-8>p").innerHTML = releaseTime
     
     clonecard.querySelector("button").addEventListener('click', function () {
@@ -133,7 +165,8 @@ function getgamedetail(res) {
     
             
 }
-//«ö¶s®ÄªG
+
+//æŒ‰éˆ•å‹•ç•«
 function buttoneffect(button) {
     var duration = 0.3,
         delay = 0.08;
@@ -144,7 +177,7 @@ function buttoneffect(button) {
     
     
 
-//swiper¥[¸ü
+//swiperåŠ è¼‰
 var swiper = new Swiper(".mySwiper", {
     slidesPerView: "auto",
     spaceBetween: 30,

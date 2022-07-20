@@ -5,7 +5,7 @@ using SqlModels.Models;
 using SqlModels.Repository.Interface;
 using System.Collections.Generic;
 using System.Linq;
-
+using static SqlModels.DTOModels.UserDTO;
 
 namespace Services
 {
@@ -24,7 +24,7 @@ namespace Services
             //my favourite  我的最愛
 
           
-            var uncategorized = Repository.GetAll<MyGame>();
+            var uncategorized = Repository.GetAll<MyGame>().Where(g=>g.Id == UserId && g.MyFavourite == false);
             var img = Repository.GetAll<GameMedium>().Where(i => i.InstructionType == 2 && i.Instruction == 1);
             var gametotal = Repository.GetAll<Game>();
             var mygame = uncategorized.Join(img, g => g.GameId, i => i.GameId, (g, s) => new { g.GameId, g.Id, s.MediaUrl });
@@ -90,6 +90,25 @@ namespace Services
                 }).ToList()
             };
             return gamedetail;
+        }
+        public void EditMyGame(string UserId,string gamename,bool myfavourite)
+        {
+            var a = Repository.FindBy<Game>(g => g.GameName == gamename).FirstOrDefault();
+            //var a = Repository.FindBy<MyGame>(g=>g.GameId==7).FirstOrDefault();
+            //a.MyFavourite = false;
+            var g = Repository.FindBy<MyGame>(g => g.GameId == a.GameId).FirstOrDefault();
+            g.MyFavourite = myfavourite;
+            //var test = new MyGame() { };
+
+            //test.GameId = 1;
+
+            //int i = 0;
+
+            //i = 1;
+
+
+
+            Update<MyGame>(g);
         }
 
         //-------------------------從這裡結束是 明翰 的OOOOOOOOOOOOO-----------------------------------
